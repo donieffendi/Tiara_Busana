@@ -604,6 +604,13 @@ Route::post('jasper-komisi-report', 'App\Http\Controllers\OReport\RKomisiControl
 Route::get('/rpantau', 'App\Http\Controllers\OReport\RPantaubsnController@report')->middleware(['auth'])->name('rpantau');
 Route::get('/get-pantau-report', 'App\Http\Controllers\OReport\RPantaubsnController@getPantaubsnReport')->middleware(['auth'])->name('get-pantau-report');
 Route::post('jasper-pantau-report', 'App\Http\Controllers\OReport\RPantaubsnController@jasperPantaubsnReport')->middleware(['auth']);
+
+// Report Penjualan
+
+Route::get('/rpenjualan', 'App\Http\Controllers\OReport\RPenjualanController@report')->middleware(['auth'])->name('rpenjualan');
+Route::get('/get-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@getPenjualanReport')->middleware(['auth'])->name('get-penjualan-report');
+Route::post('jasper-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanReport')->middleware(['auth']);
+Route::post('/report/penjualan/proses', 'App\Http\Controllers\OReport\RPenjualanController@prosesPenjualanBC')->middleware(['auth']);
       
     
 // Operational Beli

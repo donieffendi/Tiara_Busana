@@ -29,7 +29,7 @@
 						<div class="col-md-1">
 							<label><strong>Cabang :</strong></label>
 							<select name="cbg" id="cbg" class="form-control cbg" style="width: 200px">
-								<option value="">--Pilih Periode--</option>
+								<option value="">--Pilih Cabang--</option>
 								@foreach($cbg as $cbgD)
 									<option value="{{$cbgD->KODE}}"  {{ (session()->get('filter_cbg') == $cbgD->KODE) ? 'selected' : '' }}>{{$cbgD->KODE}}</option>
 								@endforeach
@@ -67,7 +67,7 @@
 					</div> --}}
 						
                     <button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
-                    <button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rkomisi")}}'">Reset</button>
+                    <button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rpantau")}}'">Reset</button>
 					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>

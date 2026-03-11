@@ -901,7 +901,7 @@
               <div class="row d-flex">
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-                      <a href="javascript:addTab('Report Penjualan', '{{url('rso')}}')">
+                      <a href="javascript:addTab('Report Penjualan', '{{url('rpenjualan')}}')">
                         <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user-tie icon-purple"></i>
                         <h6>Report Penjualan</h6>
