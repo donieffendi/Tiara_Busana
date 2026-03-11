@@ -6,11 +6,11 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0">Laporan Diskon Penjualan </h1>
+					<h1 class="m-0">Laporan Pemantauan Barang Busana Turun Harga</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item active">Laporan Diskon Penjualan </li>
+					<li class="breadcrumb-item active">Laporan Pemantauan Barang Busana Turun Harga</li>
 					</ol>
 				</div>
 			</div>
@@ -23,15 +23,15 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-komisi-report')}}">
+					<form method="POST" action="{{url('jasper-pantau-report')}}">
 					@csrf					
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label><strong>Periode</strong></label>
-							<select name="per" id="per" class="form-control per" style="width: 200px">
+							<label><strong>Cabang :</strong></label>
+							<select name="cbg" id="cbg" class="form-control cbg" style="width: 200px">
 								<option value="">--Pilih Periode--</option>
-								@foreach($per as $perD)
-									<option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
+								@foreach($cbg as $cbgD)
+									<option value="{{$cbgD->KODE}}"  {{ (session()->get('filter_cbg') == $cbgD->KODE) ? 'selected' : '' }}>{{$cbgD->KODE}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -48,11 +48,11 @@
 							type="text" autocomplete="off" value="{{ session()->get('filter_tglSampai') }}">
 						</div>
 
-						<div class="col-md-1">
+						{{-- <div class="col-md-1">
 							<input type="hidden" name="semua" value="0">
 							<input type="checkbox" class="form-check-input" id="semua" name="semua" value="1" {{ session()->get('filter_semua',1) == 1 ? 'checked' : '' }}>
 							<label class="form-check-label" id="label_semua" for="semua"><strong>semua</strong></label>
-						</div>
+						</div> --}}
 					</div>
 
 					{{-- <div class="form-group row">
@@ -107,59 +107,50 @@
                                 "showFooter" => "bottom",
                                 "columns" => array(
                                     "NO_BUKTI" => array(
-                                        "label" => "No. Bukti",
+                                        "label" => "No. Perubahan Harga Jual",
                                     ),
-									"TGL" => array(
-                                        "label" => "Tanggal",
-										"type" => "date",
-										"format" => "Y-m-d",
-										"displayFormat" => "d-m-Y",
+									"SUB" => array(
+                                        "label" => "Sub",
                                     ),
-									"CNT" => array(
-                                        "label" => "Counter",
+									"ITEM" => array(
+                                        "label" => "Item / PLU",
                                     ),
-
-									"NA_CNT" => array(
-                                        "label" => "Nama Counter",
-                                    ),                                   
-                                    "DIS" => array(
-                                        "label" => "Diskon",
+									"NA_BRG" => array(
+                                        "label" => "Nama Barang",
+                                    ),
+									"QTY_LAKU" => array(
+                                        "label" => "Jumlah Laku",
                                         "type" => "number",
                                         "decimals" => 2,
                                         "decimalPoint" => ".",
                                         "thousandSeparator" => ",",
                                     ),
-                                    "PAR" => array(
-                                        "label" => "Partisipasi",
+									"SISA" => array(
+                                        "label" => "Sisa",
                                         "type" => "number",
                                         "decimals" => 2,
                                         "decimalPoint" => ".",
                                         "thousandSeparator" => ",",
                                     ),
-									"TYPE" => array(
-                                        "label" => "Nama Counter",
-                                    ),
-									"TGLM" => array(
-                                        "label" => "Start",
+									"TGL_BELI" => array(
+                                        "label" => "Tanggal Beli",
 										"type" => "date",
 										"format" => "Y-m-d",
 										"displayFormat" => "d-m-Y",
                                     ),
-									"TGLS" => array(
-                                        "label" => "End",
-										"type" => "date",
-										"format" => "Y-m-d",
-										"displayFormat" => "d-m-Y",
+									"HARI" => array(
+                                        "label" => "Masa Jual",
+										"decimals" => 0,
+                                        "decimalPoint" => ".",
+                                        "thousandSeparator" => ",",
                                     ),
-									"NOTES" => array(
-                                        "label" => "Notes",
+									"DISKON" => array(
+                                        "label" => "% Diskon",
+										"decimals" => 2,
+                                        "decimalPoint" => ".",
+                                        "thousandSeparator" => ",",
                                     ),
-									"TG_SMP" => array(
-                                        "label" => "Tgl Entry",
-										"type" => "datetime",
-										"format" => "Y-m-d H:i:s",
-										"displayFormat" => "d-m-Y",
-                                    ),
+									
                                 ),
                                 "cssClass" => array(
                                     "table" => "table table-hover table-striped table-bordered compact",

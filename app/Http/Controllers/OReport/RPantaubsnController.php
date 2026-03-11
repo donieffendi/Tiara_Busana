@@ -17,25 +17,23 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RKomisiController extends Controller
+class RPantaubsnController extends Controller
 {
  	public function report()
     {
-		$per = Perid::query()->get();
-		session()->put('filter_periode', '');
+		$cbg = DB::SELECT("SELECT KODE FROM toko WHERE STA='MA'");
+		session()->put('filter_cbg', '');
 
 		session()->put('filter_tglDari', date("d-m-Y"));
 		session()->put('filter_tglSampai', date("d-m-Y"));
-		session()->put('filter_CNT1', '');
-		session()->put('filter_CNT2', '');
 
-        return view('oreport_komisi.report')->with(['per' => $per])->with(['hasil' => []]);
+        return view('oreport_pantau.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	
 
-	public function jasperKomisiReport(Request $request) 
+	public function jasperPantaubsnReport(Request $request) 
 	{
-		$file 	= 'komisin';
+		$file 	= 'pantaun';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		
@@ -44,33 +42,21 @@ class RKomisiController extends Controller
             $tglSmpD = date("Y-m-d", strtotime($request['tglSmp']));
 			
 			// Check Filter
-			$semua = $request->semua;
-			$per = $request->per;
+			$cbg = $request->cbg;
 
-			$bulan = substr($per,0,2);
-			$tahun = substr($per,3,4);
-
-			$kode1 = $request->CNT1;
-			$kode2 = $request->CNT2;
+			$cabang = strtolower($cbg);
 
 			session()->put('filter_tglDari', $request->tglDr);
 			session()->put('filter_tglSampai', $request->tglSmp);
-			session()->put('filter_CNT', $request->CNT);
-			session()->put('filter_NA_CNT', $request->NA_CNT);
-			session()->put('filter_periode', $request->per);
-			session()->put('filter_semua', $request->semua);
+			session()->put('filter_cbg', $request->cbg);
 
-		if($semua == 1){
-			$query = DB::SELECT("SELECT * FROM DISBSN where TGLM>='$tglDrD' and TGLM<='$tglSmpD' and FLAG='DS' and `TYPE`='ALL' order by NO_BUKTI DESC");
-		} else {
-			$query = DB::SELECT("SELECT * FROM DISBSN where TGLM>='$tglDrD' and TGLM<='$tglSmpD' and FLAG='DS' and `TYPE`='SATU' order by NO_BUKTI DESC");
-		}
+		$query = DB::SELECT("CALL {$cabang}.bsn_turun_harga_terima('PANTAU_TH', '$cbg', '$tglDrD', '$tglSmpD')");
 
 		if($request->has('filter'))
 		{
-			$per = Perid::query()->get();
+			$cbg = DB::SELECT("SELECT KODE FROM toko WHERE STA='MA'");
 
-			return view('oreport_komisi.report')->with(['per' => $per])->with(['hasil' => $query]);
+			return view('oreport_pantau.report')->with(['cbg' => $cbg])->with(['hasil' => $query]);
 		}
         
 		$data=[];

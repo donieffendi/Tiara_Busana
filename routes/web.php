@@ -598,6 +598,12 @@ Route::post('jasper-tagih-report', 'App\Http\Controllers\OReport\RTagihControlle
 Route::get('/rkomisi', 'App\Http\Controllers\OReport\RKomisiController@report')->middleware(['auth'])->name('rkomisi');
 Route::get('/get-komisi-report', 'App\Http\Controllers\OReport\RKomisiController@getKomisiReport')->middleware(['auth'])->name('get-komisi-report');
 Route::post('jasper-komisi-report', 'App\Http\Controllers\OReport\RKomisiController@jasperKomisiReport')->middleware(['auth']);
+
+// Report Pemantauan Barang Busana Turun Harga
+
+Route::get('/rpantau', 'App\Http\Controllers\OReport\RPantaubsnController@report')->middleware(['auth'])->name('rpantau');
+Route::get('/get-pantau-report', 'App\Http\Controllers\OReport\RPantaubsnController@getPantaubsnReport')->middleware(['auth'])->name('get-pantau-report');
+Route::post('jasper-pantau-report', 'App\Http\Controllers\OReport\RPantaubsnController@jasperPantaubsnReport')->middleware(['auth']);
       
     
 // Operational Beli
