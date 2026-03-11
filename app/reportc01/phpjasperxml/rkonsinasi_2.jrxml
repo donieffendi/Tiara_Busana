@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kasc" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="98"/>
+	<property name="ireport.y" value="613"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="JUDUL" class="java.lang.String"/>
+	<field name="kd_brg" class="java.lang.String"/>
+	<field name="na_brg" class="java.lang.String"/>
+	<field name="KODES" class="java.lang.String"/>
+	<field name="sts" class="java.lang.String"/>
+	<field name="tgl" class="java.lang.String"/>
+	<field name="kel_pt" class="java.lang.String"/>
+	<field name="qtyb" class="java.lang.String"/>
+	<field name="cnt" class="java.lang.String"/>
+	<field name="na_cnt" class="java.lang.String"/>
+	<field name="hargajl" class="java.lang.String"/>
+	<field name="KET" class="java.lang.String"/>
+	<field name="TERBILANG" class="java.lang.String"/>
+	<field name="NOTES" class="java.lang.String"/>
+	<field name="REC" class="java.lang.String"/>
+	<field name="NACNO" class="java.lang.String"/>
+	<field name="JUDUL" class="java.lang.String"/>
+	<field name="per" class="java.lang.String"/>
+	<field name="NA_TOKO" class="java.lang.String"/>
+	<field name="NOW" class="java.lang.String"/>
+	<field name="NAMAS" class="java.lang.String"/>
+	<field name="NO_BUKTI" class="java.lang.String"/>
+	<field name="SUB" class="java.lang.String"/>
+	<field name="ITEM" class="java.lang.String"/>
+	<field name="STOK" class="java.lang.String"/>
+	<field name="TGL_BELI" class="java.lang.String"/>
+	<field name="HARI" class="java.lang.String"/>
+	<field name="DISKON" class="java.lang.String"/>
+	<field name="NO_FORM" class="java.lang.String"/>
+	<field name="kodes" class="java.lang.String"/>
+	<field name="namas" class="java.lang.String"/>
+	<field name="barcode" class="java.lang.String"/>
+	<field name="hargaksr" class="java.lang.String"/>
+	<field name="harga" class="java.lang.String"/>
+	<field name="tgmin" class="java.lang.String"/>
+	<field name="tgmax" class="java.lang.String"/>
+	<field name="tgl_ctk" class="java.lang.String"/>
+	<field name="jam_ctk" class="java.lang.String"/>
+	<field name="no_trm" class="java.lang.String"/>
+	<field name="tgl_trm" class="java.lang.String"/>
+	<field name="qtyk" class="java.lang.String"/>
+	<field name="tgl_jual" class="java.lang.String"/>
+	<field name="qcash" class="java.lang.String"/>
+	<field name="qjml" class="java.lang.String"/>
+	<field name="qkred" class="java.lang.String"/>
+	<field name="cash" class="java.lang.String"/>
+	<field name="kred" class="java.lang.String"/>
+	<field name="jml" class="java.lang.String"/>
+	<field name="qtyrf" class="java.lang.String"/>
+	<field name="totalrf" class="java.lang.String"/>
+	<field name="st_pjk" class="java.lang.String"/>
+	<field name="yer" class="java.lang.String"/>
+	<field name="st_cnt" class="java.lang.String"/>
+	<field name="B01" class="java.lang.String"/>
+	<field name="B02" class="java.lang.String"/>
+	<field name="B03" class="java.lang.String"/>
+	<field name="B04" class="java.lang.String"/>
+	<field name="B05" class="java.lang.String"/>
+	<field name="B06" class="java.lang.String"/>
+	<field name="B07" class="java.lang.String"/>
+	<field name="B08" class="java.lang.String"/>
+	<field name="B09" class="java.lang.String"/>
+	<field name="B10" class="java.lang.String"/>
+	<field name="B11" class="java.lang.String"/>
+	<field name="B12" class="java.lang.String"/>
+	<field name="jumb" class="java.lang.String"/>
+	<field name="P01" class="java.lang.String"/>
+	<field name="P02" class="java.lang.String"/>
+	<field name="P03" class="java.lang.String"/>
+	<field name="P04" class="java.lang.String"/>
+	<field name="P05" class="java.lang.String"/>
+	<field name="P06" class="java.lang.String"/>
+	<field name="P07" class="java.lang.String"/>
+	<field name="P08" class="java.lang.String"/>
+	<field name="P09" class="java.lang.String"/>
+	<field name="P10" class="java.lang.String"/>
+	<field name="P11" class="java.lang.String"/>
+	<field name="P12" class="java.lang.String"/>
+	<field name="jump" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="aw" class="java.lang.String"/>
+	<field name="ma" class="java.lang.String"/>
+	<field name="ke" class="java.lang.String"/>
+	<field name="ln" class="java.lang.String"/>
+	<field name="saldo" class="java.lang.String"/>
+	<field name="cbg" class="java.lang.String"/>
+	<field name="ak" class="java.lang.String"/>
+	<field name="hjual" class="java.lang.String"/>
+	<field name="tsisa" class="java.lang.String"/>
+	<field name="conter" class="java.lang.String"/>
+	<field name="tgl_min" class="java.lang.String"/>
+	<field name="tgl_max" class="java.lang.String"/>
+	<field name="nett" class="java.lang.String"/>
+	<field name="ncnt" class="java.lang.String"/>
+	<field name="kota" class="java.lang.String"/>
+	<variable name="qcash" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qcash}]]></variableExpression>
+	</variable>
+	<variable name="qkred" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qkred}]]></variableExpression>
+	</variable>
+	<variable name="qjml" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qjml}]]></variableExpression>
+	</variable>
+	<variable name="cash" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cash}]]></variableExpression>
+	</variable>
+	<variable name="kred" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{kred}]]></variableExpression>
+	</variable>
+	<variable name="jml" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{jml}]]></variableExpression>
+	</variable>
+	<variable name="qtyrf" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtyrf}]]></variableExpression>
+	</variable>
+	<variable name="totalrf" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalrf}]]></variableExpression>
+	</variable>
+	<variable name="B01" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B01}]]></variableExpression>
+	</variable>
+	<variable name="B02" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B02}]]></variableExpression>
+	</variable>
+	<variable name="B03" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B03}]]></variableExpression>
+	</variable>
+	<variable name="B04" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B04}]]></variableExpression>
+	</variable>
+	<variable name="B05" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B05}]]></variableExpression>
+	</variable>
+	<variable name="B06" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B06}]]></variableExpression>
+	</variable>
+	<variable name="B07" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B07}]]></variableExpression>
+	</variable>
+	<variable name="B08" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B08}]]></variableExpression>
+	</variable>
+	<variable name="B09" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B09}]]></variableExpression>
+	</variable>
+	<variable name="B10" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B10}]]></variableExpression>
+	</variable>
+	<variable name="B11" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B11}]]></variableExpression>
+	</variable>
+	<variable name="B12" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{B12}]]></variableExpression>
+	</variable>
+	<variable name="jumb" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{jumb}]]></variableExpression>
+	</variable>
+	<variable name="P01" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P01}]]></variableExpression>
+	</variable>
+	<variable name="P02" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P02}]]></variableExpression>
+	</variable>
+	<variable name="P03" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P03}]]></variableExpression>
+	</variable>
+	<variable name="P04" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P04}]]></variableExpression>
+	</variable>
+	<variable name="P05" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P05}]]></variableExpression>
+	</variable>
+	<variable name="P06" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P06}]]></variableExpression>
+	</variable>
+	<variable name="P07" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P07}]]></variableExpression>
+	</variable>
+	<variable name="P08" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P08}]]></variableExpression>
+	</variable>
+	<variable name="P09" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P09}]]></variableExpression>
+	</variable>
+	<variable name="P10" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P10}]]></variableExpression>
+	</variable>
+	<variable name="P11" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P11}]]></variableExpression>
+	</variable>
+	<variable name="P12" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{P12}]]></variableExpression>
+	</variable>
+	<variable name="jump" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{jump}]]></variableExpression>
+	</variable>
+	<variable name="aw" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{aw}]]></variableExpression>
+	</variable>
+	<variable name="ma" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ma}]]></variableExpression>
+	</variable>
+	<variable name="ke" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ke}]]></variableExpression>
+	</variable>
+	<variable name="ln" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ln}]]></variableExpression>
+	</variable>
+	<variable name="saldo" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<variable name="ak" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ak}]]></variableExpression>
+	</variable>
+	<variable name="hjual" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{hjual}]]></variableExpression>
+	</variable>
+	<variable name="tsisa" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tsisa}]]></variableExpression>
+	</variable>
+	<variable name="nett" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{nett}]]></variableExpression>
+	</variable>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="260" splitType="Stretch">
+			<textField>
+				<reportElement x="216" y="40" width="123" height="15" uuid="434ad85b-ba87-4ce9-aa26-d0769ff41579"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["# KWITANSI #"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="0" width="259" height="20" uuid="1952a119-3b83-4d78-af15-0d73756a45cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["# TIARA GATZU #"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="82" height="15" uuid="1fa1c851-bb31-41a0-a0f4-8ec2ec7b106a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["# Busana #"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="20" width="259" height="20" uuid="0bec212b-4566-4680-8948-e3f7a3e1e022"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DENPASAR - BALI"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="15" width="93" height="15" uuid="44daacda-19a1-4aaf-9d32-821201d25d4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NO_BUKTI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="60" width="82" height="15" uuid="36dfe38f-0a92-48e1-bad6-6aaeebf29881"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sudah terima"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="60" width="82" height="15" uuid="7903f221-e888-4478-a126-5eed7d5d7d62"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ncnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="60" width="82" height="15" uuid="a9b64711-fabb-4080-927a-67852de178f4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="75" width="82" height="15" uuid="29e29d3e-c100-4b52-b456-69c73f78f659"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="75" width="82" height="15" uuid="b018690d-7b82-41d1-b114-ba82fc95d53d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="75" width="82" height="15" uuid="c58c9bba-0009-4b22-8c47-d1cf600a7cd9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KODES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="93" width="246" height="15" uuid="3672960e-cef4-40f2-90a9-066c35bd6ea2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Banyaknya uang sejumlah : Rp. 4000,-"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="108" width="246" height="15" uuid="ee73933c-d93d-474f-acef-49c7d13c8649"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(Empat Ribu Rupiah)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="135" width="246" height="15" uuid="018155da-9a37-4fe8-9138-3121400188ad"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Untuk pembayaran :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="150" width="246" height="15" uuid="b60f00a8-d22e-4a5e-8bf9-c8768bc30172"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Biaya Pencetakan & Pengiriman Laporan."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="180" width="43" height="13" uuid="cfd39b0b-ca08-4999-b23e-343efc3bf1dd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Distribusi :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="193" width="195" height="13" uuid="c1245b55-613e-4bf2-b929-5b4a98756ae9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1. Counter (Suplier) yang bersangkutan."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="239" width="82" height="12" uuid="8402add2-0174-457b-bf99-e9a02d7f2b6c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ZPD-TGZ-PBK.330.1"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="206" width="195" height="13" uuid="2dc58b5c-0eb3-4705-b5d7-7e057dfb47a9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2. Staff Adm. Pembayaran."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="190" width="40" height="13" uuid="ec42a198-21aa-413b-9272-5e43670905f2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Denpasar,"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="236" width="140" height="12" uuid="7d9a7d77-08a0-4af6-951c-d07afe244230"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(________________________________)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="203" width="140" height="13" uuid="5c0c64d6-55ac-41d0-864d-380c6249ad44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Yang Menerbitkan"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="190" width="100" height="13" uuid="481f63f3-b32d-4b04-b216-51cb589a6d36"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="248" width="140" height="12" uuid="1d37e73c-e9aa-4058-a143-a90dfa27a633"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Staff Pbl. Urs. Budget SPM & Busana"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+</jasperReport>

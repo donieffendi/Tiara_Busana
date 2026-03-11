@@ -1,0 +1,72 @@
+[06-Oct-2024 17:43:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[07-Oct-2024 03:11:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[07-Mar-2025 11:39:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[08-Mar-2025 17:14:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[08-Mar-2025 18:54:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[12-Mar-2025 04:26:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[13-Mar-2025 13:45:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[13-Mar-2025 20:48:50 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[15-Mar-2025 16:03:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[19-Mar-2025 07:03:33 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[19-Mar-2025 09:04:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[19-Mar-2025 18:03:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[20-Mar-2025 14:39:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[21-Mar-2025 20:54:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[23-Mar-2025 03:23:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[24-Mar-2025 15:29:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[25-Mar-2025 23:48:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8
+[26-Mar-2025 16:56:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/januar13/public_html/plastik/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Exceptions/Handler.php on line 8

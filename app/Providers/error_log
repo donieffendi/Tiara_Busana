@@ -1,0 +1,280 @@
+[05-Oct-2024 19:51:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[06-Oct-2024 03:48:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[06-Oct-2024 03:49:52 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[06-Oct-2024 03:50:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[08-Oct-2024 19:40:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[07-Mar-2025 11:23:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[07-Mar-2025 11:23:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[07-Mar-2025 11:31:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[07-Mar-2025 11:32:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[07-Mar-2025 11:37:13 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[08-Mar-2025 16:20:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[08-Mar-2025 16:30:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[08-Mar-2025 16:40:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[08-Mar-2025 16:41:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[08-Mar-2025 16:50:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[08-Mar-2025 18:37:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[08-Mar-2025 18:38:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[08-Mar-2025 18:44:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[08-Mar-2025 18:45:58 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[08-Mar-2025 18:51:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[09-Mar-2025 16:03:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[09-Mar-2025 16:14:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[10-Mar-2025 02:50:58 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[10-Mar-2025 02:53:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[10-Mar-2025 02:53:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[12-Mar-2025 04:13:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[12-Mar-2025 04:44:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[12-Mar-2025 17:54:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[13-Mar-2025 01:37:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[13-Mar-2025 13:22:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[13-Mar-2025 17:40:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[13-Mar-2025 19:37:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[13-Mar-2025 23:10:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[13-Mar-2025 23:55:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[14-Mar-2025 01:08:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[15-Mar-2025 21:54:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[15-Mar-2025 22:37:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[19-Mar-2025 02:31:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[19-Mar-2025 03:31:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[19-Mar-2025 03:35:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[19-Mar-2025 04:35:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[19-Mar-2025 09:47:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[19-Mar-2025 10:18:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[19-Mar-2025 11:52:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[19-Mar-2025 12:32:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[19-Mar-2025 15:18:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[19-Mar-2025 15:22:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[20-Mar-2025 09:31:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[20-Mar-2025 09:32:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[20-Mar-2025 14:03:13 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[20-Mar-2025 16:32:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[20-Mar-2025 17:41:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[21-Mar-2025 19:45:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[21-Mar-2025 19:49:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[21-Mar-2025 19:52:52 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[21-Mar-2025 19:53:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[21-Mar-2025 20:03:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[23-Mar-2025 06:42:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[23-Mar-2025 09:07:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[24-Mar-2025 18:28:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11
+[24-Mar-2025 21:29:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[24-Mar-2025 22:40:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[24-Mar-2025 22:58:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[24-Mar-2025 23:49:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[25-Mar-2025 21:05:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[26-Mar-2025 16:38:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/BroadcastServiceProvider.php on line 8
+[26-Mar-2025 17:01:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/EventServiceProvider.php on line 10
+[26-Mar-2025 17:08:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\AuthServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AuthServiceProvider.php on line 8
+[26-Mar-2025 17:19:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\ServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/AppServiceProvider.php on line 7
+[26-Mar-2025 17:42:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\RouteServiceProvider' not found in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Providers/RouteServiceProvider.php on line 11

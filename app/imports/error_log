@@ -1,0 +1,124 @@
+[08-Mar-2025 16:35:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[08-Mar-2025 16:52:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[08-Mar-2025 16:54:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[08-Mar-2025 21:26:52 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[08-Mar-2025 21:27:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[08-Mar-2025 21:29:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[12-Mar-2025 19:54:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[13-Mar-2025 03:08:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[13-Mar-2025 03:17:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[13-Mar-2025 15:31:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[13-Mar-2025 23:06:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[14-Mar-2025 03:20:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[19-Mar-2025 03:23:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[19-Mar-2025 04:24:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[19-Mar-2025 04:25:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[19-Mar-2025 05:32:42 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[19-Mar-2025 09:45:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[19-Mar-2025 12:01:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[19-Mar-2025 13:20:58 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[19-Mar-2025 14:08:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[19-Mar-2025 14:57:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[20-Mar-2025 08:50:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[20-Mar-2025 10:08:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[23-Mar-2025 02:16:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[23-Mar-2025 10:57:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[24-Mar-2025 17:32:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19
+[24-Mar-2025 21:23:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[24-Mar-2025 21:24:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[26-Mar-2025 16:40:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/SupImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/SupImport.php on line 19
+[26-Mar-2025 16:41:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/CustImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/CustImport.php on line 19
+[26-Mar-2025 17:33:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Interface 'Maatwebsite\Excel\Concerns\ToModel' not found in /home/januar13/public_html/plastik/app/imports/BrgImport.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/imports/BrgImport.php on line 19

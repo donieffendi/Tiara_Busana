@@ -1,0 +1,28 @@
+[11-Nov-2024 03:54:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Auth' not found in /home/januar13/public_html/plastik/resources/views/profile.blade.php:114
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/profile.blade.php on line 114
+[07-Dec-2024 11:28:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Auth' not found in /home/januar13/public_html/plastik/resources/views/profile.blade.php:114
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/profile.blade.php on line 114
+[07-Dec-2024 16:26:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Auth' not found in /home/januar13/public_html/plastik/resources/views/profile.blade.php:114
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/profile.blade.php on line 114
+[07-Dec-2024 16:44:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Auth' not found in /home/januar13/public_html/plastik/resources/views/profile.blade.php:114
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/profile.blade.php on line 114
+[14-Mar-2025 04:19:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Auth' not found in /home/januar13/public_html/plastik/resources/views/profile.blade.php:114
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/profile.blade.php on line 114
+[19-Mar-2025 10:12:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Auth' not found in /home/januar13/public_html/plastik/resources/views/profile.blade.php:114
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/profile.blade.php on line 114
+[19-Mar-2025 17:59:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Auth' not found in /home/januar13/public_html/plastik/resources/views/profile.blade.php:114
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/profile.blade.php on line 114

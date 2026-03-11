@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kasc" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="98"/>
+	<property name="ireport.y" value="613"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="JUDUL" class="java.lang.String"/>
+	<field name="BYR" class="java.lang.String"/>
+	<field name="B_BANK" class="java.lang.String"/>
+	<field name="KODES" class="java.lang.String"/>
+	<field name="B_ACC" class="java.lang.String"/>
+	<field name="tgl_1" class="java.lang.String"/>
+	<field name="B_NAMA" class="java.lang.String"/>
+	<field name="ppn" class="java.lang.String"/>
+	<field name="no_bukti" class="java.lang.String"/>
+	<field name="B_KOTA" class="java.lang.String"/>
+	<field name="TOTAL" class="java.lang.Double"/>
+	<field name="CNT" class="java.lang.String"/>
+	<field name="TERBILANG" class="java.lang.String"/>
+	<field name="ST_PJK" class="java.lang.String"/>
+	<field name="REC" class="java.lang.String"/>
+	<field name="no_trans" class="java.lang.String"/>
+	<field name="per" class="java.lang.String"/>
+	<field name="nmtoko" class="java.lang.String"/>
+	<field name="date_time" class="java.lang.String"/>
+	<field name="ref" class="java.lang.String"/>
+	<field name="cbg" class="java.lang.String"/>
+	<field name="barcode" class="java.lang.String"/>
+	<field name="ket" class="java.lang.String"/>
+	<field name="judul" class="java.lang.String"/>
+	<field name="jtempo" class="java.lang.String"/>
+	<field name="dis" class="java.lang.String"/>
+	<field name="ncnt" class="java.lang.String"/>
+	<field name="no_sp" class="java.lang.String"/>
+	<field name="kk_sts" class="java.lang.String"/>
+	<field name="formal" class="java.lang.String"/>
+	<field name="st_cnt" class="java.lang.String"/>
+	<field name="basic" class="java.lang.String"/>
+	<field name="nota_khs" class="java.lang.String"/>
+	<field name="diskon1" class="java.lang.String"/>
+	<field name="diskon2" class="java.lang.String"/>
+	<field name="diskon3" class="java.lang.String"/>
+	<field name="diskon4" class="java.lang.String"/>
+	<field name="namas" class="java.lang.String"/>
+	<field name="acno" class="java.lang.String"/>
+	<field name="KOTA" class="java.lang.String"/>
+	<field name="TINGGIL" class="java.lang.String"/>
+	<field name="TOTAL0" class="java.lang.Double"/>
+	<field name="HLMDM" class="java.lang.Double"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="klb" class="java.lang.String"/>
+	<field name="tgl_trm" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<variable name="HTOTAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="HRETUR" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="HPROM" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="REFUND" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="HLAIN" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="HTOTAL0" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL0}]]></variableExpression>
+	</variable>
+	<variable name="HPPN" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL0}]]></variableExpression>
+	</variable>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="180" splitType="Stretch">
+			<textField>
+				<reportElement x="480" y="1" width="74" height="13" uuid="7b7b2370-6c33-41d1-8b3d-fc368a1656b7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_trans}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="82" width="86" height="12" uuid="3e311393-7c16-4965-b726-ea810e5cac6a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{klb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="82" width="83" height="12" uuid="b51ca6bb-c043-4e89-b6ed-069dc44a2ae1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="70" width="83" height="12" uuid="2016e2a9-245c-41e0-b1ae-ef304e4ddbe1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{namas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="58" width="86" height="12" uuid="140b6f34-1a4a-41a2-9aa1-3fdda55f6816"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TINGGIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="58" width="20" height="12" uuid="8d0764c9-d3e3-404d-a968-606e06d3c941"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["s/d"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="58" width="83" height="12" uuid="eac58beb-434c-436a-889b-5201d9272432"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="94" width="83" height="12" uuid="98a21d21-e55d-4f60-9301-0deba82699a5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ppn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="312" y="150" width="140" height="12" uuid="17035b0b-62b7-4ca6-b3e9-ade5b25467d8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TINGGIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="46" width="83" height="12" uuid="c370a9ce-b211-4a5c-8a72-7e1ea4a4718a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_bukti}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="70" width="20" height="12" uuid="8ad0cf38-9586-499e-abf6-5867c9154dd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="70" width="86" height="12" uuid="7e2b386d-7d18-40df-b887-1539389db721"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KODES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="82" width="20" height="12" uuid="24ae68d8-8078-4303-b494-673b2d1ca8d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+</jasperReport>

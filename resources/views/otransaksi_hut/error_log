@@ -1,0 +1,20 @@
+[09-Mar-2025 03:18:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function session() in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php:922
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php on line 922
+[11-Mar-2025 14:44:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function session() in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php:922
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php on line 922
+[16-Mar-2025 22:29:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function session() in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php:922
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php on line 922
+[21-Mar-2025 19:03:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function session() in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php:922
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php on line 922
+[22-Mar-2025 05:35:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function session() in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php:922
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/resources/views/otransaksi_hut/edit.blade.php on line 922

@@ -1,0 +1,340 @@
+[19-Nov-2024 04:39:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[19-Nov-2024 05:27:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[19-Nov-2024 05:49:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[09-Mar-2025 08:30:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[09-Mar-2025 08:31:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[09-Mar-2025 08:33:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[09-Mar-2025 08:43:17 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[09-Mar-2025 08:53:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[09-Mar-2025 08:55:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[09-Mar-2025 09:30:53 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[09-Mar-2025 18:56:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[09-Mar-2025 19:36:42 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[09-Mar-2025 19:43:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[09-Mar-2025 19:48:17 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[09-Mar-2025 19:49:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[09-Mar-2025 19:56:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[09-Mar-2025 20:24:07 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[09-Mar-2025 21:00:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[09-Mar-2025 21:03:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[09-Mar-2025 21:05:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[09-Mar-2025 21:23:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[09-Mar-2025 21:34:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[09-Mar-2025 21:35:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[09-Mar-2025 21:45:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[09-Mar-2025 22:12:17 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[09-Mar-2025 22:57:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[09-Mar-2025 22:59:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[09-Mar-2025 23:02:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[09-Mar-2025 23:08:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[10-Mar-2025 09:31:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[10-Mar-2025 09:43:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[10-Mar-2025 09:45:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[10-Mar-2025 09:51:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[10-Mar-2025 09:56:12 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[10-Mar-2025 09:57:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[12-Mar-2025 04:07:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[12-Mar-2025 04:13:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[12-Mar-2025 04:28:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[12-Mar-2025 04:56:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[12-Mar-2025 05:06:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[12-Mar-2025 13:49:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[12-Mar-2025 17:12:49 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[12-Mar-2025 17:59:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[15-Mar-2025 15:46:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[15-Mar-2025 17:16:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[15-Mar-2025 20:14:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[15-Mar-2025 20:53:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[15-Mar-2025 22:01:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[15-Mar-2025 22:12:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[15-Mar-2025 22:17:27 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[19-Mar-2025 05:46:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[19-Mar-2025 06:56:17 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[19-Mar-2025 13:33:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[19-Mar-2025 15:19:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[20-Mar-2025 00:01:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[20-Mar-2025 02:27:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[20-Mar-2025 14:07:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[20-Mar-2025 14:47:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[20-Mar-2025 15:56:59 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[20-Mar-2025 16:58:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[20-Mar-2025 17:14:16 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[20-Mar-2025 17:51:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[20-Mar-2025 20:29:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[23-Mar-2025 05:57:27 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[23-Mar-2025 07:01:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[23-Mar-2025 09:50:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[23-Mar-2025 10:31:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[23-Mar-2025 10:56:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[24-Mar-2025 07:41:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[24-Mar-2025 11:58:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[24-Mar-2025 13:42:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[24-Mar-2025 14:52:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[24-Mar-2025 15:03:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14
+[24-Mar-2025 18:23:32 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[24-Mar-2025 18:27:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[24-Mar-2025 19:59:45 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[24-Mar-2025 20:20:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[24-Mar-2025 21:01:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[24-Mar-2025 21:26:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBankController.php on line 14
+[24-Mar-2025 23:08:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[24-Mar-2025 23:09:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[24-Mar-2025 23:16:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[25-Mar-2025 00:15:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[25-Mar-2025 01:16:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RAccountController.php on line 15
+[25-Mar-2025 12:16:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[25-Mar-2025 12:45:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[25-Mar-2025 13:41:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RKasController.php on line 14
+[26-Mar-2025 00:49:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[26-Mar-2025 01:01:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[26-Mar-2025 16:57:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RRlController.php on line 15
+[26-Mar-2025 17:28:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RBukuController.php on line 14
+[26-Mar-2025 17:36:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RNeraController.php on line 15
+[26-Mar-2025 17:39:34 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/memon.php on line 11
+[26-Mar-2025 17:50:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FReport\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FReport/RMemoController.php on line 14

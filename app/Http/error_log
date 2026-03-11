@@ -1,0 +1,52 @@
+[06-Oct-2024 17:38:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[09-Nov-2024 18:21:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[16-Nov-2024 20:55:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[16-Dec-2024 18:42:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[09-Mar-2025 07:13:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[09-Mar-2025 15:03:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[09-Mar-2025 16:53:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[12-Mar-2025 17:22:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[14-Mar-2025 01:48:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[19-Mar-2025 06:50:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[19-Mar-2025 10:40:52 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[23-Mar-2025 10:26:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7
+[24-Mar-2025 13:24:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Kernel' not found in /home/januar13/public_html/plastik/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Kernel.php on line 7

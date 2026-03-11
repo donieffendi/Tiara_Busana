@@ -1,0 +1,208 @@
+[09-Mar-2025 07:21:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[09-Mar-2025 07:25:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken' not found in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php on line 7
+[09-Mar-2025 07:35:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[09-Mar-2025 07:36:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Cookie\Middleware\EncryptCookies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php on line 7
+[09-Mar-2025 07:54:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7
+[09-Mar-2025 07:59:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[09-Mar-2025 08:01:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Http\Middleware\TrustHosts' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php on line 7
+[09-Mar-2025 15:10:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[09-Mar-2025 15:13:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken' not found in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php on line 7
+[12-Mar-2025 09:18:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[12-Mar-2025 09:20:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Http\Middleware\TrustHosts' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php on line 7
+[12-Mar-2025 09:21:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[12-Mar-2025 09:21:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken' not found in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php on line 7
+[12-Mar-2025 09:26:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[15-Mar-2025 20:25:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[15-Mar-2025 20:35:42 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[15-Mar-2025 22:41:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[16-Mar-2025 11:15:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7
+[16-Mar-2025 11:49:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[16-Mar-2025 12:10:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[16-Mar-2025 17:27:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Cookie\Middleware\EncryptCookies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php on line 7
+[16-Mar-2025 18:40:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[16-Mar-2025 22:13:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken' not found in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php on line 7
+[16-Mar-2025 23:51:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Http\Middleware\TrustHosts' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php on line 7
+[20-Mar-2025 13:16:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[20-Mar-2025 17:58:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[21-Mar-2025 16:17:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[21-Mar-2025 18:03:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[21-Mar-2025 18:07:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Cookie\Middleware\EncryptCookies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php on line 7
+[21-Mar-2025 20:59:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7
+[21-Mar-2025 21:37:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[22-Mar-2025 00:02:33 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Cookie\Middleware\EncryptCookies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/EncryptCookies.php on line 7
+[22-Mar-2025 00:26:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7
+[22-Mar-2025 03:30:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Http\Middleware\TrustHosts' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php on line 7
+[22-Mar-2025 03:44:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken' not found in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php on line 7
+[22-Mar-2025 04:24:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken' not found in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/VerifyCsrfToken.php on line 7
+[22-Mar-2025 05:45:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[22-Mar-2025 07:49:42 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[22-Mar-2025 08:02:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[23-Mar-2025 06:01:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7
+[23-Mar-2025 08:14:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[23-Mar-2025 10:45:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[23-Mar-2025 11:37:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[24-Mar-2025 17:50:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7
+[24-Mar-2025 21:18:13 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Fideloper\Proxy\TrustProxies' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustProxies.php on line 8
+[25-Mar-2025 01:35:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[25-Mar-2025 19:35:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Http\Middleware\TrustHosts' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php on line 7
+[25-Mar-2025 21:37:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7
+[26-Mar-2025 16:37:33 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Auth\Middleware\Authenticate' not found in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/Authenticate.php on line 7
+[26-Mar-2025 16:39:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Http\Middleware\TrustHosts' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrustHosts.php on line 7
+[26-Mar-2025 17:56:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance' not found in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/PreventRequestsDuringMaintenance.php on line 7
+[27-Mar-2025 07:27:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\Middleware\TrimStrings' not found in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Middleware/TrimStrings.php on line 7

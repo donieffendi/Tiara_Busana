@@ -1,0 +1,64 @@
+[06-Oct-2024 10:28:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[08-Oct-2024 14:51:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[16-Dec-2024 09:25:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[07-Mar-2025 11:55:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[08-Mar-2025 19:14:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[08-Mar-2025 19:22:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[10-Mar-2025 03:06:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[12-Mar-2025 04:45:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[13-Mar-2025 14:31:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[13-Mar-2025 22:40:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[19-Mar-2025 10:21:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[19-Mar-2025 11:42:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[20-Mar-2025 09:43:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[23-Mar-2025 09:30:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[24-Mar-2025 23:17:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8
+[26-Mar-2025 17:18:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/plastik/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Console/Kernel.php on line 8

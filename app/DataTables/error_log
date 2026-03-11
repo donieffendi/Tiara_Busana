@@ -1,0 +1,52 @@
+[07-Oct-2024 00:19:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[07-Mar-2025 11:28:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[08-Mar-2025 16:25:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[08-Mar-2025 18:41:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[09-Mar-2025 16:50:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[14-Mar-2025 02:52:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[15-Mar-2025 13:55:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[19-Mar-2025 03:12:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[19-Mar-2025 06:28:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[19-Mar-2025 13:44:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[21-Mar-2025 19:48:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[25-Mar-2025 18:05:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12
+[26-Mar-2025 16:07:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Yajra\DataTables\Services\DataTable' not found in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/DataTables/TruckDataTable.php on line 12

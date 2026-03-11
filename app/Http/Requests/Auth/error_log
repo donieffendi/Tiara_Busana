@@ -1,0 +1,40 @@
+[18-Nov-2024 19:34:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[16-Dec-2024 09:31:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[08-Mar-2025 06:36:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[09-Mar-2025 09:00:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[13-Mar-2025 05:12:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[20-Mar-2025 09:21:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[22-Mar-2025 05:04:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[24-Mar-2025 23:24:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[25-Mar-2025 16:05:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12
+[26-Mar-2025 16:57:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Http\FormRequest' not found in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Requests/Auth/LoginRequest.php on line 12

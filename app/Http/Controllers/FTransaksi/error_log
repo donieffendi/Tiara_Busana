@@ -1,0 +1,124 @@
+[16-Nov-2024 19:11:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[16-Nov-2024 22:25:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[07-Mar-2025 06:55:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[09-Mar-2025 08:09:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[09-Mar-2025 08:17:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[09-Mar-2025 08:19:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[10-Mar-2025 09:44:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[10-Mar-2025 10:00:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[12-Mar-2025 05:12:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[12-Mar-2025 12:56:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[13-Mar-2025 15:19:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[15-Mar-2025 21:16:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[15-Mar-2025 22:25:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[18-Mar-2025 22:35:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[19-Mar-2025 01:50:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[19-Mar-2025 06:38:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[19-Mar-2025 10:24:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[20-Mar-2025 18:10:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[23-Mar-2025 06:19:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[24-Mar-2025 11:51:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[24-Mar-2025 13:13:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[24-Mar-2025 14:13:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[24-Mar-2025 16:48:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[24-Mar-2025 19:09:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[24-Mar-2025 21:36:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[24-Mar-2025 22:56:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[25-Mar-2025 00:47:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[25-Mar-2025 19:19:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/BankController.php on line 16
+[25-Mar-2025 20:28:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[26-Mar-2025 17:04:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[26-Mar-2025 17:33:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/plastik/app/Http/Controllers/FTransaksi/KasController.php on line 17
