@@ -606,11 +606,12 @@ Route::get('/get-pantau-report', 'App\Http\Controllers\OReport\RPantaubsnControl
 Route::post('jasper-pantau-report', 'App\Http\Controllers\OReport\RPantaubsnController@jasperPantaubsnReport')->middleware(['auth']);
 
 // Report Penjualan
-
 Route::get('/rpenjualan', 'App\Http\Controllers\OReport\RPenjualanController@report')->middleware(['auth'])->name('rpenjualan');
 Route::get('/get-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@getPenjualanReport')->middleware(['auth'])->name('get-penjualan-report');
-Route::post('jasper-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanReport')->middleware(['auth']);
-Route::post('/report/penjualan/proses', 'App\Http\Controllers\OReport\RPenjualanController@prosesPenjualanBC')->middleware(['auth']);
+Route::post('/jasper-penjualandetail-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanDetailReport')->middleware(['auth'])->name('jasper-penjualandetail-report');
+Route::post('/jasper-penjualansummary-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanSummaryReport')->middleware(['auth'])->name('jasper-penjualansummary-report');
+Route::post('/jasper-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanReport')->middleware(['auth'])->name('jasper-penjualan-report');
+Route::get('/get-penjualan-report-ajax', 'App\Http\Controllers\OReport\RPenjualanController@getPenjualanReportAjax')->name('get-penjualan-report-ajax');
       
     
 // Operational Beli
