@@ -72,6 +72,37 @@ class PoController extends Controller
         return response()->json($po);
     }
 
+    public function browse_brg(Request $request)
+    {   
+        // $KD_BRG = $request->KD_BRG;
+		$CNT = $request->CNT;
+        $po = DB::SELECT("SELECT KD_BRG, NA_BRG, BARCODE, HJUAL AS HARGA, 1 AS STOK FROM brgbsn WHERE CNT = '$CNT'");
+        return response()->json($po);
+    }
+
+    public function browse_sup(Request $request)
+    {
+
+		
+    	if (!empty(request('q'))) {
+
+
+                 $po = DB::SELECT("SELECT NO_ID, KODES, NAMAS
+                            from supbsn 
+                            WHERE  NAMAS LIKE ('%$request->q%') 
+                            ORDER BY NAMAS "); 
+	
+    	    
+        } else {
+			$po = DB::SELECT("SELECT NO_ID, KODES, NAMAS
+                            from supbsn
+                            
+                            ORDER BY NAMAS ");			
+		}
+		
+        return response()->json($po);
+    }
+
     public function browseuang(Request $request)
     {
         $CBG = Auth::user()->CBG;
@@ -164,7 +195,7 @@ class PoController extends Controller
         $PPN = Auth::user()->PPN;
 		
 	  
-        $po = DB::SELECT("SELECT * FROM pobsn where per= '$periode'  AND FLAG= '$this->FLAGZ'  order by NO_BUKTI ");
+        $po = DB::SELECT("SELECT * FROM pobsn where per= '$periode' AND FLAG= '$this->FLAGZ'  order by NO_BUKTI ");
 	   
         // ganti 6
 
@@ -264,10 +295,6 @@ class PoController extends Controller
 
         $kodesx = $request->KODES;
         
-        $xxx= DB::table('sup')->select('PKP')->where('KODES', $kodesx)->get();
-
-        $PPN = $xxx[0]->PKP ;
-        
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $GOLZ = $this->GOLZ;
@@ -334,21 +361,17 @@ class PoController extends Controller
                 'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
                 'PER'              => $periode,
 				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-                'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
+                'NA_CNT'           => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
-                'KOTA'             => ($request['KOTA'] == null) ? "" : $request['KOTA'],
-                'POSTED'           => (float) str_replace(',', '', $request['POSTED']),
                 'FLAG'             => 'PO',						
                 'GOL'              => $GOLZ,
-                'CBG'              => $CBG,
-                'KET'              => ($request['KET'] == null) ? "" : $request['KET'],
+                'CBG'              => ($request['CBG'] == null) ? "" : $request['CBG'],
+                'NOTES'              => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
                 'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
-				'created_by'       => Auth::user()->username,
             ]
         );
 
@@ -361,7 +384,8 @@ class PoController extends Controller
         $HARGA      = $request->input('HARGA');		
         $TOTAL      = $request->input('TOTAL');	
         $SISA       = $request->input('SISA');		
-        $LAKU       = $request->input('LAKU');		
+        $KDLAKU     = $request->input('KDLAKU');		
+        $KET        = $request->input('KET');		
 
         // Check jika value detail ada/tidak
         if ($REC) {
@@ -370,20 +394,21 @@ class PoController extends Controller
                 $detail    = new PoDetail;
 
                 // Insert ke Database
-                $detail->NO_BUKTI    = $no_bukti;
-                $detail->REC         = $REC[$key];
-                $detail->PER         = $periode;
-                $detail->FLAG        = $FLAGZ;		
+                $detail->no_bukti    = $no_bukti;
+                $detail->rec         = $REC[$key];
+                $detail->per         = $periode;
+                $detail->flag        = $FLAGZ;		
                 $detail->GOL 	     = $GOLZ; 		
                 $detail->CBG 	     = $CBG;        
                 $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
                 $detail->BARCODE     = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
-                $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);
-                $detail->HARGA       = (float) str_replace(',', '', $HARGA[$key]);
-                $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]); 
+                $detail->qty         = (float) str_replace(',', '', $QTY[$key]);
+                $detail->harga       = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->total       = (float) str_replace(',', '', $TOTAL[$key]); 
                 $detail->SISA        = (float) str_replace(',', '', $QTY[$key]); 
-                $detail->LAKU        = (float) str_replace(',', '', $LAKU[$key]);		
+                $detail->KDLAKU      = ($KDLAKU[$key] == null) ? "" :  $KDLAKU[$key];
+                $detail->KET         = ($KET[$key] == null) ? "" :  $KET[$key];
                 $detail->save();
             }
         }	
@@ -393,13 +418,13 @@ class PoController extends Controller
 		$po = Po::where('NO_BUKTI', $no_buktix )->first();
 
 
-        DB::SELECT("UPDATE po, sup
-                    SET po.NAMAS = sup.NAMAS, po.ALAMAT = sup.ALAMAT, po.KOTA = sup.KOTA, po.PKP=sup.PKP, po.HARI = sup.HARI  WHERE po.KODES = sup.KODES 
-                    AND po.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn, supbsn
+                    SET pobsn.NAMAS = supbsn.NAMAS  WHERE pobsn.KODES = supbsn.KODES 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
 
-        DB::SELECT("UPDATE po,  pod
-                            SET  pod.ID =  po.NO_ID  WHERE  po.NO_BUKTI =  pod.NO_BUKTI 
-							AND  po.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn,  pobsnd
+                            SET  pobsnd.ID =  pobsn.NO_ID  WHERE  pobsn.NO_BUKTI =  pobsnd.no_bukti 
+							AND  pobsn.NO_BUKTI='$no_buktix';");
         
         return redirect('/po?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
 		
@@ -442,11 +467,10 @@ class PoController extends Controller
 		   	
     	   $buktix = $request->buktix;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from po
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
                          and GOL ='$this->GOLZ' 
                          AND CBG = '$CBG'
-                         AND PKP = '$PPN'
 						 and NO_BUKTI = '$buktix'						 
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
@@ -466,12 +490,11 @@ class PoController extends Controller
 		if ($tipx=='top') {
 			
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from po
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn
 		                 where PER ='$per' 
 						 and FLAG ='$this->FLAGZ' 
                          and GOL ='$this->GOLZ' 
-                         AND CBG = '$CBG'   
-                         AND PKP = '$PPN'
+                         AND CBG = '$CBG'
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
 		
@@ -492,12 +515,11 @@ class PoController extends Controller
 			
     	   $buktix = $request->buktix;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from po     
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn     
 		             where PER ='$per' 
 					 and FLAG ='$this->FLAGZ' 
                      and GOL ='$this->GOLZ' 
                      AND CBG = '$CBG'
-                     AND PKP = '$PPN'
                      and NO_BUKTI < 
 					 '$buktix' ORDER BY NO_BUKTI DESC LIMIT 1" );
 			
@@ -519,12 +541,11 @@ class PoController extends Controller
 				
       	   $buktix = $request->buktix;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from po    
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn    
 		             where PER ='$per'  
 					 and FLAG ='$this->FLAGZ' 
                      and GOL ='$this->GOLZ'
-                     AND CBG = '$CBG' 
-                     AND PKP = '$PPN'
+                     AND CBG = '$CBG'
                      and NO_BUKTI > 
 					 '$buktix' ORDER BY NO_BUKTI ASC LIMIT 1" );
 					 
@@ -542,12 +563,11 @@ class PoController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from po
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn
 						where PER ='$per'
 						and FLAG ='$this->FLAGZ'
                         and GOL ='$this->GOLZ'
-                        AND CBG = '$CBG'    
-                        AND PKP = '$PPN'
+                        AND CBG = '$CBG'
 		                ORDER BY NO_BUKTI DESC  LIMIT 1" );
 					 
 			if(!empty($bingco)) 
@@ -586,21 +606,17 @@ class PoController extends Controller
 		 }
 
         $no_bukti = $po->NO_BUKTI;
-        $poDetail = DB::table('pod')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
+        $poDetail = DB::table('pobsnd')->where('no_bukti', $no_bukti)->orderBy('REC')->get();
 		
 		$data = [
             'header'        => $po,
 			'detail'        => $poDetail
 
         ];
- 
- 		$sup = DB::SELECT("SELECT KODES, CONCAT(NAMAS,'-',KOTA) AS NAMAS FROM sup
-		                 ORDER BY NAMAS ASC" );
+
 		
          
-         return view('otransaksi_po.edit', $data)->with(['sup' => $sup])
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ, 'judul'=> $this->judul ]);
-			 
+        return view('otransaksi_po.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ, 'judul'=> $this->judul ]);
 
     }
 
@@ -646,21 +662,16 @@ class PoController extends Controller
                 'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
                 'PER'              => $periode,
 				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-                'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
+                'NA_CNT'           => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
-                'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
-                'KOTA'             => ($request['KOTA'] == null) ? "" : $request['KOTA'],
-                'POSTED'           => (float) str_replace(',', '', $request['POSTED']),
                 'FLAG'             => 'PO',						
                 'GOL'              => $GOLZ,
                 'CBG'              => $CBG,
-                'KET'              => ($request['KET'] == null) ? "" : $request['KET'],
+                'NOTES'              => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
 				'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
-				'updated_by'       => Auth::user()->username,
             ]
         );
 
@@ -679,9 +690,10 @@ class PoController extends Controller
         $HARGA      = $request->input('HARGA');		
         $TOTAL      = $request->input('TOTAL');	
         $SISA       = $request->input('SISA');		
-        $LAKU       = $request->input('LAKU');	
+        $KDLAKU     = $request->input('KDLAKU');	
+        $KET        = $request->input('KET');	
 
-        $query = DB::table('pod')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
+        $query = DB::table('pobsnd')->where('no_bukti', $request->no_bukti)->whereNotIn('NO_ID',  $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
@@ -689,21 +701,21 @@ class PoController extends Controller
             if ($NO_ID[$i] == 'new') {
                 $insert = PoDetail::create(
                     [
-                        'NO_BUKTI'   => $request->NO_BUKTI,
-                        'REC'        => $REC[$i],
-                        'PER'        => $periode,
+                        'no_bukti'   => $request->no_bukti,
+                        'rec'        => $REC[$i],
+                        'per'        => $periode,
                         'FLAG'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,
                         'CBG'        => $CBG,
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'SISA'       => (float) str_replace(',', '', $SISA[$i]),
-                        'LAKU'       => (float) str_replace(',', '', $LAKU[$i]),
-						
+                        'KDLAKU'     => ($KDLAKU[$i] == null) ? "" :  $KDLAKU[$i],
+                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
                     ]
                 );
             } else {
@@ -717,18 +729,19 @@ class PoController extends Controller
                     [
                         'REC'        => $REC[$i],
 
-                        'FLAG'       => $this->FLAGZ,
+                        'flag'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,
                         'CBG'        => $CBG,
-                        'PER'        => $periode,						
+                        'per'        => $periode,						
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'SISA'       => (float) str_replace(',', '', $SISA[$i]),
-                        'LAKU'       => (float) str_replace(',', '', $LAKU[$i]),
+                        'KDLAKU'     => ($KDLAKU[$i] == null) ? "" :  $KDLAKU[$i],
+                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
                     ]
                 );
             }
@@ -738,14 +751,14 @@ class PoController extends Controller
 
         $no_bukti = $po->NO_BUKTI;
         
-        DB::SELECT("UPDATE po, sup
-                    SET po.NAMAS = sup.NAMAS, po.ALAMAT = sup.ALAMAT, po.KOTA = sup.KOTA, po.PKP=sup.PKP, po.HARI = sup.HARI  WHERE po.KODES = sup.KODES 
-                    AND po.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn, supbsn
+                    SET pobsn.NAMAS = supbsn.NAMAS WHERE pobsn.KODES = supbsn.KODES 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
 
 
-        DB::SELECT("UPDATE po,  pod
-                    SET  pod.ID =  po.NO_ID  WHERE  po.NO_BUKTI =  pod.NO_BUKTI 
-                    AND  po.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE pobsn,  pobsnd
+                    SET  pobsnd.ID =  pobsn.NO_ID  WHERE  pobsn.NO_BUKTI =  pobsnd.NO_BUKTI 
+                    AND  pobsn.NO_BUKTI='$no_bukti';");
 
         // $variablell = DB::select('call poins(?)', array($po['NO_BUKTI']));
 					 

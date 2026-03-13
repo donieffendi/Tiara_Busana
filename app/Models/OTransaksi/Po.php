@@ -12,7 +12,7 @@ class Po extends Model
     use HasFactory;
 
 // ganti 2
-    protected $table = 'po';
+    protected $table = 'pobsn';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
@@ -21,7 +21,7 @@ class Po extends Model
     [
         "NO_BUKTI", "TGL", "JTEMPO", "PER","KODES", "NAMAS", "ALAMAT", "KOTA", "FLAG", "GOL", 
         "TOTAL", "TOTAL_QTY", "NOTES", "FLAG", "GOL", "USRNM", "TG_SMP",
-        "PKP", "CBG", "POSTED", "CNT", "NCNT"
+        "PKP", "CBG", "POSTED", "CNT", "NA_CNT"
 
         
     ];

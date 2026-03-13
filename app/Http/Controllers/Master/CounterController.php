@@ -30,19 +30,16 @@ class CounterController extends Controller
     	if (!empty(request('q'))) {
 
 
-                 $counter = DB::SELECT("SELECT NO_ID, CNT, NAMAS, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
-                            PKP, HARI
+                 $counter = DB::SELECT("SELECT NO_ID, CNT, NA_CNT, SUP, NAMAS
                             FROM cntbsn 
-                            WHERE  NAMAS LIKE ('%$request->q%') 
-                            ORDER BY NAMAS "); 
+                            WHERE  NA_CNT LIKE ('%$request->q%') 
+                            ORDER BY NA_CNT "); 
 	
     	    
         } else {
-			$counter = DB::SELECT("SELECT NO_ID, CNT, NAMAS, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
-                                PKP, HARI
+			$counter = DB::SELECT("SELECT NO_ID, CNT, NA_CNT, SUP, NAMAS
                             FROM cntbsn
-                            
-                            ORDER BY NAMAS ");			
+                            ORDER BY NA_CNT ");			
 		}
 		
         return response()->json($counter);

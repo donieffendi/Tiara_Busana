@@ -246,7 +246,7 @@
 
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'action', name: 'action'},
-                { data: 'BUKTI', name: 'BUKTI'},
+                { data: 'NO_BUKTI', name: 'NO_BUKTI'},
                 { data: 'TGL', name: 'TGL'},
                 { data: 'KODES', name: 'KODES'},
                 { data: 'NAMAS', name: 'NAMAS',
@@ -268,10 +268,10 @@
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
                 },
                 
-		        {
-                    "className": "dt-right", 
-                    "targets": 7
-                },
+		        // {
+                //     "className": "dt-right", 
+                //     "targets": 7
+                // },
 			
                 
                 

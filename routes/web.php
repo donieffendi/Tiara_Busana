@@ -222,6 +222,8 @@ Route::post('/po/store', 'App\Http\Controllers\OTransaksi\PoController@store')->
 Route::get('/rpo', 'App\Http\Controllers\OReport\RPoController@report')->middleware(['auth'])->name('rpo');
     // GET BELI
     Route::get('/po/browse', 'App\Http\Controllers\OTransaksi\PoController@browse')->middleware(['auth'])->name('po/browse');
+    Route::get('/po/browse_brg', 'App\Http\Controllers\OTransaksi\PoController@browse_brg')->middleware(['auth'])->name('po/browse_brg');
+    Route::get('/po/browse_sup', 'App\Http\Controllers\OTransaksi\PoController@browse_sup')->middleware(['auth'])->name('po/browse_sup');
     Route::get('/po/browse_detail', 'App\Http\Controllers\OTransaksi\PoController@browse_detail')->middleware(['auth'])->name('po/browse_detail');
     Route::get('/po/browse_detail2', 'App\Http\Controllers\OTransaksi\PoController@browse_detail2')->middleware(['auth'])->name('po/browse_detail2');
     Route::get('/po/browse_pod', 'App\Http\Controllers\OTransaksi\PoController@browse_pod')->middleware(['auth'])->name('po/browse_pod');

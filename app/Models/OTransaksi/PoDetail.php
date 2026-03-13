@@ -9,13 +9,13 @@ class PoDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'pod';
+    protected $table = 'pobsnd';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
     protected $fillable =
     [
-        "REC", "NO_BUKTI", "ID", "KD_BRG", "NA_BRG","SATUAN","QTY", "HARGA", 
-        "TOTAL", "KET", "GOL", "FLAG", "PER", "SISA", "LAKU"
+        "rec", "no_bukti", "ID", "KD_BRG", "NA_BRG","BARCODE","qty", "harga", 
+        "total", "KET", "GOL", "flag", "per", "SISA", "KDLAKU"
     ];
 }
