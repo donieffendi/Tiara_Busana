@@ -166,7 +166,7 @@
 									<div class="col-md-3 form-group row special-input-label">
 
 										<input type="text" class="P_TELP" id="P_TELP" name="P_TELP" 
-											value="{{$header->P_TELP}}" placeholder=" " >
+											value="{{$header->P_TLP}}" placeholder=" " >
 										<label for="P_TELP">Telp</label>
 									</div>
 									<!-- tutupannya --> 

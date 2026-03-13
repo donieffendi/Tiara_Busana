@@ -20,7 +20,7 @@ class Brg extends Model
     protected $fillable = 
     [
         'CNT',
-        'NA_CNT',
+        'NCNT',
         'KD_BRG',
         'NA_BRG',
         'BARCODE',

@@ -378,7 +378,8 @@
         </div>
 		    <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-                <a href="javascript:addTab('Pembelian', '{{url('beli?flagz=BL&golz=BS')}}')">
+                {{-- <a href="javascript:addTab('Pembelian', '{{url('beli?flagz=BL&golz=BS')}}')"> --}}
+                <a href="javascript:addTab('Pembelian', '{{url('po?flagz=PO&golz=BS')}}')">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-15px;font-size: 40px;" class="nav-icon fas fa-store icon-purple"></i>
                   <h6>Pembelian</h6>
@@ -387,7 +388,8 @@
         </div>
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-              <a href="javascript:addTab('Pelayanan Outlet', '{{url('kirim?flagz=KR&golz=KO')}}')">
+              {{-- <a href="javascript:addTab('Pelayanan Outlet', '{{url('kirim?flagz=KR&golz=KO')}}')"> --}}
+              <a href="javascript:addTab('Pelayanan Outlet', '{{url('po?flagz=PO&golz=KO')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-15px;font-size: 40px;" class="nav-icon fas fa-money-bill icon-purple"></i>
                 <h6>Pelayanan Outlet</h6>
@@ -399,7 +401,8 @@
 	    <div class="row">
 		    <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-              <a href="javascript:addTab('Stock Opname', '{{url('stockb?flagz=KB')}}')">
+              {{-- <a href="javascript:addTab('Stock Opname', '{{url('stockb?flagz=KB')}}')"> --}}
+              <a href="javascript:addTab('Stock Opname', '{{url('po?flagz=PO&golz=KB')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-hand-holding-heart icon-purple"></i>
                 <h6>Stock Opname</h6>
@@ -408,7 +411,8 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-              <a href="javascript:addTab('Terima Barang TGZ', '{{url('beli?flagz=BL&golz=BO')}}')">
+              {{-- <a href="javascript:addTab('Terima Barang TGZ', '{{url('beli?flagz=BL&golz=BO')}}')"> --}}
+              <a href="javascript:addTab('Terima Barang TGZ', '{{url('po?flagz=PO&golz=BO')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cash-register icon-purple"></i>
                 <h6>Terima Barang TGZ</h6>
@@ -420,7 +424,8 @@
       <div class="row">
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Rencana Retur', '{{url('retur?flagz=RS')}}')">
+              {{-- <a href="javascript:addTab('Rencana Retur', '{{url('retur?flagz=RS')}}')"> --}}
+              <a href="javascript:addTab('Rencana Retur', '{{url('po?flagz=PO&golz=RS')}}')">
                 <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
                   <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-cart-plus icon-orange"></i>
                 <h6>Rencana Retur</h6>
@@ -430,7 +435,8 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                <a href="javascript:addTab('Retur Pembelian', '{{url('beli?flagz=BL&golz=RX')}}')">
+                {{-- <a href="javascript:addTab('Retur Pembelian', '{{url('beli?flagz=BL&golz=RX')}}')"> --}}
+                <a href="javascript:addTab('Retur Pembelian', '{{url('po?flagz=PO&golz=RX')}}')">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Retur Pembelian</h6>
@@ -440,7 +446,8 @@
         
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                <a href="javascript:addTab('Retur ke TGZ', '{{url('retur?flagz=RO')}}')">                
+                {{-- <a href="javascript:addTab('Retur ke TGZ', '{{url('retur?flagz=RO')}}')">       --}}
+                <a href="javascript:addTab('Retur ke TGZ', '{{url('po?flagz=PO&golz=RO')}}')">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Retur ke TGZ</h6>
@@ -450,8 +457,9 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')">
-                <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Terima Retur Outlet', '{{url('po?flagz=PO&golz=RM')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Terima Retur Outlet</h6>
                 </a>
@@ -460,7 +468,160 @@
 
       </div>
 
-	  
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Surat Teguran', '{{url('po?flagz=PO&golz=ST')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Surat Teguran / Budget Minus</h6>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Suplier tidak kirim barang', '{{url('po?flagz=PO&golz=PS')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Proses suplier tidak kirim barang</h6>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Suplier tidak kirim barang', '{{url('po?flagz=PO&golz=PS')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Proses suplier tidak kirim barang</h6>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Usl. Ganti   No. Sup', '{{url('po?flagz=PO&golz=UG')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Usulan Ganti No. Sup</h6>
+                </a>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Pantau Surat', '{{url('po?flagz=PO&golz=PP')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Pemantauan Surat Pernyataan</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Pengesahan Data Sup', '{{url('po?flagz=PO&golz=PD')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Pengesahan Data Sup</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Entry Konsinyasi', '{{url('po?flagz=PO&golz=ES')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Entry Sistem Konsinyasi</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Buat Data', '{{url('po?flagz=PO&golz=BD')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Buat Data Status Pajak ke TG</h6>
+                </a>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Pending Nota', '{{url('po?flagz=PO&golz=DS')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Daftar Suplier Pending Nota</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Laporan Awal', '{{url('po?flagz=PO&golz=LA')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Laporan Awal Budget Suplier</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Tanda Bintang', '{{url('po?flagz=PO&golz=TB')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Memberi Tanda Bintang</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Rcn Data Barang', '{{url('po?flagz=PO&golz=ER')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Entry Rencana Data barang</h6>
+                </a>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Data Brg. Non Budget', '{{url('po?flagz=PO&golz=LD')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Laporan Data Barang Non Budget</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Kriteria Laku', '{{url('po?flagz=PO&golz=LK')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Laporan Kriteria Laku</h6>
+                </a>
+            </div>
+        </div>
+      </div>
     </div>
 
 <!----- batas ----->
@@ -634,7 +795,8 @@
         
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Diskon Penjualan', '{{url('diskon?flagz=DS')}}')" >
+              {{-- <a href="javascript:addTab('Diskon Penjualan', '{{url('diskon?flagz=DS')}}')" > --}}
+              <a href="javascript:addTab('Diskon Penjualan', '{{url('po?flagz=PO&golz=DP')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-blue"></i>
                 <h6>Dikson</h6>
@@ -645,7 +807,8 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Form Bayar Busana', '{{url('tagi?flagz=BS')}}')" >
+              {{-- <a href="javascript:addTab('Form Bayar Busana', '{{url('tagi?flagz=BS')}}')" > --}}
+                <a href="javascript:addTab('Form Bayar Busana', '{{url('po?flagz=PO&golz=FB')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
                 <h6>Form Bayar</h6>
@@ -657,7 +820,8 @@
         
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Pengajuan Harga Jual', '{{url('harga?flagz=HG&golz=BS')}}')" >
+              {{-- <a href="javascript:addTab('Pengajuan Harga Jual', '{{url('harga?flagz=HG&golz=BS')}}')" > --}}
+                <a href="javascript:addTab('Pengajuan Harga Jual', '{{url('po?flagz=PO&golz=HJ')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
                 <h6>Pengajuan</h6>
@@ -682,7 +846,8 @@
         
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Pencetakan Label Harga', '{{url('harga?flagz=HG&golz=LB')}}')" >
+              {{-- <a href="javascript:addTab('Pencetakan Label Harga', '{{url('harga?flagz=HG&golz=LB')}}')" > --}}
+                <a href="javascript:addTab('Pencetakan Label Harga', '{{url('po?flagz=PO&golz=LH')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-blue"></i>
                 <h6>Pencetakan Label Harga</h6>
@@ -692,7 +857,8 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Transaksi Lain-Lain', '{{url('lain?flagz=TL')}}')" >
+              {{-- <a href="javascript:addTab('Transaksi Lain-Lain', '{{url('lain?flagz=TL')}}')" > --}}
+                <a href="javascript:addTab('Transaksi Lain-Lain', '{{url('po?flagz=PO&golz=TL')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
                 <h6>Transaksi Lain-Lain</h6>
@@ -703,7 +869,8 @@
         
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Budget Order Lebih', '{{url('budget?flagz=BO')}}')" >
+              {{-- <a href="javascript:addTab('Budget Order Lebih', '{{url('budget?flagz=BO')}}')" > --}}
+                <a href="javascript:addTab('Budget Order Lebih', '{{url('po?flagz=PO&golz=OB')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
                 <h6>Budget Order Lebih</h6>
@@ -713,7 +880,8 @@
         
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Conter Pembelian', '{{url('counter?flagz=CT')}}')" >
+              {{-- <a href="javascript:addTab('Conter Pembelian', '{{url('counter?flagz=CT')}}')" > --}}
+                <a href="javascript:addTab('Conter Pembelian', '{{url('po?flagz=PO&golz=CT')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
                 <h6>Conter Pembelian</h6>
@@ -919,7 +1087,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-                      <a href="javascript:addTab('Kasir Bantu', '{{url('rjual')}}')">
+                      <a href="javascript:addTab('Kasir Bantu', '{{url('rkasirbantu')}}')">
                           <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                             <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-purple"></i>
                           <h6>Kasir Bantu</h6>
@@ -1001,6 +1169,84 @@
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
                         <h6>Brg Busana Turun Harga</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Lap. Barang Yang di Order Per Sup', '{{url('rsup')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>lap. Bgr. Order Per Sup</h6>
+                      </a>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Lap. Brg. Tidak Laku', '{{url('rpo')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Barang tidak Laku Td. Bintang</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Jadwal Pemantauan barang Tidak Laku', '{{url('rhut')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Jadwal Pemantauan barang Tidak Laku</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Laporan Barang TL & Tidak ada T.J', '{{url('rso')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Barang TL & Tidak ada T.J</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Laporan Barang Belum Dilayani', '{{url('rodcbelum')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Barang Belum Dilayani</h6>
+                      </a>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Lap. Brg. yang Diorder', '{{url('rrcnorder9')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Barang yang Diorder (K.9)</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Lap. Brg. Datang', '{{url('rfakturpj')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Barang Datang</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Lap. Brg. Datang', '{{url('rjual')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan SP per PLU</h6>
                       </a>
                     </div>
                 </div>

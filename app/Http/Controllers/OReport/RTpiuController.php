@@ -21,7 +21,6 @@ class RTpiuController extends Controller
 
    	public function report()
     {
-		$kodec = Cust::orderBy('KODEC')->get();
 		session()->put('filter_gol', '');
 		session()->put('filter_kodec1', '');
 		session()->put('filter_namac1', '');
@@ -29,8 +28,8 @@ class RTpiuController extends Controller
 		session()->put('filter_namat1', '');
 		session()->put('filter_tglDari', date("d-m-Y"));
 		session()->put('filter_tglSampai', date("d-m-Y"));
-		
-        return view('oreport_tpiu.report')->with(['kodec' => $kodec])->with(['hasil' => []]);
+
+        return view('oreport_tpiu.report')->with(['hasil' => []]);
     }
 	
 	

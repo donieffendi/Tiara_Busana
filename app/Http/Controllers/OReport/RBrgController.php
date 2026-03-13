@@ -27,11 +27,10 @@ class RBrgController extends Controller
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
 
-		$kd_brg = Brg::query()->get();
 		$per = Perid::query()->get();
 		session()->put('filter_per', '');
 
-        return view('oreport_brg.report')->with(['kd_brg' => $kd_brg])->with(['per' => $per])->with(['cbg' => $cbg])->with(['hasil' => []]);
+        return view('oreport_brg.report')->with(['per' => $per])->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	
    

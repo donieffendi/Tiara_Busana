@@ -25,7 +25,6 @@ class RJualController extends Controller
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
 
-		$kodec = Cust::orderBy('KODEC')->get();
 		session()->put('filter_gol', '');
 		session()->put('filter_kodec1', '');
 		session()->put('filter_kodec2', '');
@@ -36,7 +35,7 @@ class RJualController extends Controller
 		session()->put('filter_nabrg1', '');
 		session()->put('filter_kdgd1', '');
 	
-        return view('oreport_jual.report')->with(['kodec' => $kodec])->with(['cbg' => $cbg])->with(['hasil' => []]);
+        return view('oreport_jual.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	  
 
