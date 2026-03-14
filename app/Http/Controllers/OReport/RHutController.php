@@ -26,7 +26,6 @@ class RHutController extends Controller
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
 
-		$kodes = Sup::orderBy('KODES')->get();
 		session()->put('filter_gol', '');
 		session()->put('filter_kodes1', '');
 		session()->put('filter_kodes2', 'ZZZ');
@@ -34,7 +33,7 @@ class RHutController extends Controller
 		session()->put('filter_tglDari', date("d-m-Y"));
 		session()->put('filter_tglSampai', date("d-m-Y"));
 		
-        return view('oreport_hut.report')->with(['kodes' => $kodes])->with(['cbg' => $cbg])->with(['hasil' => []]);
+        return view('oreport_hut.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	
 	 

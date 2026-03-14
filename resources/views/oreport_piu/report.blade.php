@@ -6,11 +6,11 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0">Laporan Pembayaran Piutang </h1>
+					<h1 class="m-0">Laporan Pembelian </h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item active">Laporan Pembayaran Piutang </li>
+					<li class="breadcrumb-item active">Laporan Pembelian </li>
 					</ol>
 				</div>
 			</div>
@@ -34,17 +34,6 @@
 								<option value="Z" {{ session()->get('filter_gol')=='Z' ? 'selected': ''}}>Z</option>
 							</select>
 						</div> -->
-						<!--
-						<div class="col-md-3">
-							<label><strong>Customer :</strong></label>
-							<select name="kodec" id="kodec" class="form-control kodec" style="width: 200px">
-								<option value="">--Pilih Customer--</option>
-								@foreach($kodec as $kodecD)
-									<option value="{{$kodecD->KODEC}}">{{$kodecD->KODEC}} {{$kodecD->NAMAC}}</option>
-								@endforeach
-							</select>
-						</div>
-						-->
 
 						<div class="col-md-2">							
 							<label class="form-label">Customer 1</label>				

@@ -24,7 +24,6 @@ class RPiuController extends Controller
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
 
-		$kodec = Cust::orderBy('KODEC')->get();
 		session()->put('filter_gol', '');
 		session()->put('filter_kodec1', '');
 		session()->put('filter_kodec2', '');
@@ -34,7 +33,7 @@ class RPiuController extends Controller
 		session()->put('filter_tglDari', date("d-m-Y"));
 		session()->put('filter_tglSampai', date("d-m-Y"));
 		
-        return view('oreport_piu.report')->with(['kodec' => $kodec])->with(['cbg' => $cbg])->with(['hasil' => []]);
+        return view('oreport_piu.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	
 	public function getPiuReport(Request $request)

@@ -167,9 +167,9 @@
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
 
-										<input type="text" class="P_KOTA" id="P_KOTA" name="P_KOTA"
-											value="{{$header->P_KOTA}}" placeholder=" " >
-										<label for="P_KOTA">Kota</label>
+										<input type="text" class="P_TLP" id="P_TLP" name="P_TLP"
+											value="{{$header->P_TLP}}" placeholder=" " >
+										<label for="P_TLP">Telp</label>
 									</div>
 									<!-- tutupannya -->
 

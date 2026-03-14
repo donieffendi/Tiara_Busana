@@ -29,7 +29,7 @@ class RSuratsController extends Controller
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
 
-		$kodec = Cust::orderBy('KODEC')->get();
+		// $kodec = Cust::orderBy('KODEC')->get();
 		session()->put('filter_gol', '');
 		session()->put('filter_kodec1', '');
 		session()->put('filter_kodec2', 'ZZZ');
@@ -40,7 +40,7 @@ class RSuratsController extends Controller
 		session()->put('filter_tglSampai', date("d-m-Y"));
 		session()->put('filter_pilih', '');
 	
-        return view('oreport_surats.report')->with(['kodec' => $kodec])->with(['cbg' => $cbg])->with(['hasil' => []]);
+        return view('oreport_surats.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
 		
     }
 	

@@ -146,10 +146,10 @@ class SupController extends Controller
             [
                 'KODES'     => ($request['KODES'] == null) ? "" : $request['KODES'],				
                 'NAMAS'     => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'TYPE'      => ($request['TYPE'] == null) ? "" : $request['TYPE'],
+                // 'TYPE'      => ($request['TYPE'] == null) ? "" : $request['TYPE'],
                 'GSUP'      => ($request['GSUP'] == null) ? "" : $request['GSUP'],
                 'PEMILIK'   => ($request['PEMILIK'] == null) ? "" : $request['PEMILIK'],
-                'P_TELP'    => ($request['P_TELP'] == null) ? "" : $request['P_TELP'],
+                // 'P_TELP'    => ($request['P_TELP'] == null) ? "" : $request['P_TELP'],
                 'EMAIL'     => ($request['EMAIL'] == null) ? "" : $request['EMAIL'],
                 'P_ALMT'    => ($request['P_ALMT'] == null) ? "" : $request['P_ALMT'],
                 'P_KOTA'    => ($request['P_KOTA'] == null) ? "" : $request['P_KOTA'],
@@ -169,18 +169,18 @@ class SupController extends Controller
                 'B_KOTA'    => ($request['B_KOTA'] == null) ? "" : $request['B_KOTA'],
                 'NM_NPWP'   => ($request['NM_NPWP'] == null) ? "" : $request['NM_NPWP'],
                 'B_NAMA'    => ($request['B_NAMA'] == null) ? "" : $request['B_NAMA'],
-                'NPPKPP'    => ($request['NPPKPP'] == null) ? "" : $request['NPPKPP'],
+                'NPPKP'    => ($request['NPPKPP'] == null) ? "" : $request['NPPKPP'],
                 'B_ACC'     => ($request['B_ACC'] == null) ? "" : $request['B_ACC'],
                 'AL_MPWP'   => ($request['AL_MPWP'] == null) ? "" : $request['AL_MPWP'],
                 'CARA'      => ($request['CARA'] == null) ? "" : $request['CARA'],
                 'KT_NPWP'   => ($request['KT_NPWP'] == null) ? "" : $request['KT_NPWP'],
-                'ADA_CNTP'  => ($request['ADA_CNTP'] == null) ? "" : $request['ADA_CNTP'],
+                'ADA_CNT'  => ($request['ADA_CNTP'] == null) ? "" : $request['ADA_CNTP'],
                 'BAY'       => (float) str_replace(',', '', $request['BAY']),
                 'BAN'       => (float) str_replace(',', '', $request['BAN']),
                 'C_SP'      => ($request['C_SP'] == null) ? "" : $request['C_SP'],
 
-                'USRNM'     => Auth::user()->username,
-                'TG_SMP'    => Carbon::now()
+                // 'USRNM'     => Auth::user()->username,
+                // 'TG_SMP'    => Carbon::now()
             ]
         );
 
@@ -368,10 +368,8 @@ class SupController extends Controller
             [
 				
                 'NAMAS'     => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'TYPE'      => ($request['TYPE'] == null) ? "" : $request['TYPE'],
                 'GSUP'      => ($request['GSUP'] == null) ? "" : $request['GSUP'],
                 'PEMILIK'   => ($request['PEMILIK'] == null) ? "" : $request['PEMILIK'],
-                'P_TELP'    => ($request['P_TELP'] == null) ? "" : $request['P_TELP'],
                 'EMAIL'     => ($request['EMAIL'] == null) ? "" : $request['EMAIL'],
                 'P_ALMT'    => ($request['P_ALMT'] == null) ? "" : $request['P_ALMT'],
                 'P_KOTA'    => ($request['P_KOTA'] == null) ? "" : $request['P_KOTA'],
@@ -391,18 +389,18 @@ class SupController extends Controller
                 'B_KOTA'    => ($request['B_KOTA'] == null) ? "" : $request['B_KOTA'],
                 'NM_NPWP'   => ($request['NM_NPWP'] == null) ? "" : $request['NM_NPWP'],
                 'B_NAMA'    => ($request['B_NAMA'] == null) ? "" : $request['B_NAMA'],
-                'NPPKPP'    => ($request['NPPKPP'] == null) ? "" : $request['NPPKPP'],
+                'NPPKP'    => ($request['NPPKPP'] == null) ? "" : $request['NPPKPP'],
                 'B_ACC'     => ($request['B_ACC'] == null) ? "" : $request['B_ACC'],
                 'AL_MPWP'   => ($request['AL_MPWP'] == null) ? "" : $request['AL_MPWP'],
                 'CARA'      => ($request['CARA'] == null) ? "" : $request['CARA'],
                 'KT_NPWP'   => ($request['KT_NPWP'] == null) ? "" : $request['KT_NPWP'],
-                'ADA_CNTP'  => ($request['ADA_CNTP'] == null) ? "" : $request['ADA_CNTP'],
-                'BAY'       => (float) str_replace(',', '', $request['BAY']),
-                'BAN'       => (float) str_replace(',', '', $request['BAN']),
+                'ADA_CNT'  => ($request['ADA_CNTP'] == null) ? "" : $request['ADA_CNTP'],
+                // 'BAY'       => (float) str_replace(',', '', $request['BAY']),
+                // 'BAN'       => (float) str_replace(',', '', $request['BAN']),
                 'C_SP'      => ($request['C_SP'] == null) ? "" : $request['C_SP'],
 
-                'USRNM'     => Auth::user()->username,
-                'TG_SMP'    => Carbon::now()
+                // 'USRNM'     => Auth::user()->username,
+                // 'TG_SMP'    => Carbon::now()
             ]
         );
 

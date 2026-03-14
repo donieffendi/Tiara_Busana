@@ -121,9 +121,9 @@
 									</div>
 
 									<div class="col-md-4 form-group row special-input-label">
-										<input type="text" class="NA_CNT" id="NA_CNT" name="NA_CNT" 
-											value="{{$header->NA_CNT}}" placeholder=" " >
-										<!-- <label for="NA_CNT">Nama</label> -->
+										<input type="text" class="NCNT" id="NCNT" name="NCNT" 
+											value="{{$header->NCNT}}" placeholder=" " >
+										<!-- <label for="NCNT">Nama</label> -->
 									</div>
 								</div>
 

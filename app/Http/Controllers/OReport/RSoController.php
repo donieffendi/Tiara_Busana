@@ -25,7 +25,6 @@ class RSoController extends Controller
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
 
-		$kodec = Cust::query()->get();
 		session()->put('filter_gol', '');
 		session()->put('filter_kodec1', '');
 		session()->put('filter_kodec2', 'ZZZ');
@@ -38,7 +37,7 @@ class RSoController extends Controller
 		session()->put('filter_brg1', '');
 		session()->put('filter_nabrg1', '');
 
-        return view('oreport_so.report')->with(['kodec' => $kodec])->with(['cbg' => $cbg])->with(['hasil' => []]);
+        return view('oreport_so.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	
 	

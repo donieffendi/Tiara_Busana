@@ -614,7 +614,18 @@ Route::post('/jasper-penjualandetail-report', 'App\Http\Controllers\OReport\RPen
 Route::post('/jasper-penjualansummary-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanSummaryReport')->middleware(['auth'])->name('jasper-penjualansummary-report');
 Route::post('/jasper-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanReport')->middleware(['auth'])->name('jasper-penjualan-report');
 Route::get('/get-penjualan-report-ajax', 'App\Http\Controllers\OReport\RPenjualanController@getPenjualanReportAjax')->name('get-penjualan-report-ajax');
-      
+
+// RKasirBantu
+Route::get('/rkasirbantu', 'App\Http\Controllers\OReport\RKasirBantuController@report')->middleware(['auth'])->name('rkasirbantu');
+Route::get('/get-kasirbantu-report', 'App\Http\Controllers\OReport\RKasirBantuController@getKasirBantuReport')->middleware(['auth'])->name('get-kasirbantu-report');
+Route::post('/jasper-kasirbantudetail-report', 'App\Http\Controllers\OReport\RKasirBantuController@jasperKasirBantuDetailReport')->middleware(['auth'])->name('jasper-kasirbantudetail-report');
+Route::post('/jasper-kasirbantusummary-report', 'App\Http\Controllers\OReport\RKasirBantuController@jasperKasirBantuSummaryReport')->middleware(['auth'])->name('jasper-kasirbantusummary-report');
+Route::post('/jasper-kasirbantu-report', 'App\Http\Controllers\OReport\RKasirBantuController@jasperKasirBantuReport')->middleware(['auth'])->name('jasper-kasirbantu-report');
+Route::get('/get-kasirbantu-report-ajax', 'App\Http\Controllers\OReport\RKasirBantuController@getKasirBantuReportAjax')->name('get-kasirbantu-report-ajax');
+// Routes tambahan untuk AJAX
+Route::get('/get-kasir-list/{cbg}', 'App\Http\Controllers\OReport\RKasirBantuController@getKasirList')->middleware(['auth']);
+Route::get('/get-periode-list/{cbg}', 'App\Http\Controllers\OReport\RKasirBantuController@getPeriodeList')->middleware(['auth']);
+Route::get('/search-kasirbantu', 'App\Http\Controllers\OReport\RKasirBantuController@searchKasirBantu')->middleware(['auth']);
     
 // Operational Beli
 Route::get('/beli', 'App\Http\Controllers\OTransaksi\BeliController@index')->middleware(['auth'])->name('beli');
@@ -729,6 +740,19 @@ Route::get('/rum', 'App\Http\Controllers\OReport\RUmController@report')->middlew
 Route::post('jasper-um-report', 'App\Http\Controllers\OReport\RUmController@jasperUmReport')->middleware(['auth']);
 
 
+Route::get('/rso', 'App\Http\Controllers\OReport\RSoController@report')->middleware(['auth'])->name('rso');
+Route::post('jasper-so-report', 'App\Http\Controllers\OReport\RSoController@jasperSoReport')->middleware(['auth']);
+
+
+// Barang belum Dilayani
+Route::get('/rodcbelum', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@report')->middleware(['auth'])->name('rodcbelum');
+Route::get('/get-odcbelum-report', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@getODCBelumDilayaniReport')->middleware(['auth'])->name('get-odcbelum-report');
+Route::post('/jasper-odcbelum-report', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@jasperRODCBelumLayaniReport')->middleware(['auth'])->name('jasper-odcbelum-report');
+
+// Rencana Order Kode 9
+Route::get('/rrcnorder9', 'App\Http\Controllers\OReport\RRcnorder9Controller@report')->middleware(['auth'])->name('rrcnorder9');
+Route::get('/get-rcnorder9-report', 'App\Http\Controllers\OReport\RRcnorder9Controller@getRcnorder9Report')->middleware(['auth'])->name('get-rcnorder9-report');
+Route::get('/print-report', 'App\Http\Controllers\OReport\RRcnorder9Controller@print')->name('print.report');
 
 // Operational Jual
 

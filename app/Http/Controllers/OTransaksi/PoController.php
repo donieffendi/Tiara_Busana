@@ -195,7 +195,7 @@ class PoController extends Controller
         $PPN = Auth::user()->PPN;
 		
 	  
-        $po = DB::SELECT("SELECT * FROM pobsn where per= '$periode' AND FLAG= '$this->FLAGZ'  order by NO_BUKTI ");
+        $po = DB::SELECT("SELECT * FROM pobsn where per= '$periode' AND FLAG= '$this->FLAGZ' AND GOL= '$this->GOLZ'  order by NO_BUKTI ");
 	   
         // ganti 6
 
@@ -313,44 +313,132 @@ class PoController extends Controller
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('po')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', $CBG)
+        $query = DB::table('pobsn')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', $CBG)
                 ->where('GOL', $this->GOLZ )->orderByDesc('NO_BUKTI')->limit(1)->get();
 
-        if ($FLAGZ=='PO') {
+        // if ($FLAGZ=='PO') {
 
-            if( $GOLZ =='PB' ){
+        //     if( $GOLZ =='PB' ){
 
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = 'PB'  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = 'PB'  . $CBG . $tahun . $bulan . '-0001';
-                }
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'PB'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'PB'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
 
-            } elseif ( $GOLZ =='PZ' ) {
+        //     } elseif ( $GOLZ =='PZ' ) {
 
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = 'PZ'  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = 'PZ'  . $CBG . $tahun . $bulan . '-0001';
-                }
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'PZ'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'PZ'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
                 
-            } elseif ( $GOLZ =='PN' ){
+        //     } elseif ( $GOLZ =='PN' ){
 
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = 'PN'  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = 'PN'  . $CBG . $tahun . $bulan . '-0001';
-                }
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'PN'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'PN'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
                 
-            }
+        //     } elseif ( $GOLZ =='BS' ){
 
-        } 
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'BS'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'BS'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='KO' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'KO'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'KO'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='KB' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'KB'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'KB'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='BO' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'BO'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'BO'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RS' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RS'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RS'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RX' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RX'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RX'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RO' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RO'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RO'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RM' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RM'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RM'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     }
+
+        // } 
+
+        if ($query != '[]') {
+            $query = substr($query[0]->NO_BUKTI, -4);
+            $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+            $no_bukti = $GOLZ  . $CBG . $tahun . $bulan . '-' . $query;
+        } else {
+            $no_bukti = $GOLZ  . $CBG . $tahun . $bulan . '-0001';
+        }
 
         		
 
@@ -420,6 +508,10 @@ class PoController extends Controller
 
         DB::SELECT("UPDATE pobsn, supbsn
                     SET pobsn.NAMAS = supbsn.NAMAS  WHERE pobsn.KODES = supbsn.KODES 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
+
+        DB::SELECT("UPDATE pobsn, cntbsn
+                    SET pobsn.NA_CNT = cntbsn.NA_CNT  WHERE pobsn.CNT = cntbsn.CNT 
                     AND pobsn.NO_BUKTI='$no_buktix';");
 
         DB::SELECT("UPDATE pobsn,  pobsnd
@@ -755,6 +847,9 @@ class PoController extends Controller
                     SET pobsn.NAMAS = supbsn.NAMAS WHERE pobsn.KODES = supbsn.KODES 
                     AND pobsn.NO_BUKTI='$no_buktix';");
 
+        DB::SELECT("UPDATE pobsn, cntbsn
+                    SET pobsn.NA_CNT = cntbsn.NA_CNT  WHERE pobsn.CNT = cntbsn.CNT 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
 
         DB::SELECT("UPDATE pobsn,  pobsnd
                     SET  pobsnd.ID =  pobsn.NO_ID  WHERE  pobsn.NO_BUKTI =  pobsnd.NO_BUKTI 
@@ -779,40 +874,20 @@ class PoController extends Controller
 
     public function destroy(Request $request, Po $po)
     {
-
-		$this->setFlag($request);
-        $FLAGZ = $this->FLAGZ;
-        $GOLZ = $this->GOLZ;
+        $this->setFlag($request);
+        $FLAGZ = $_GET['flagz'];
+        $GOLZ = $_GET['golz'];
         $judul = $this->judul;
 
-        // ini dr mana $this->GOLZ?
-        $GOLZ = $_GET['golz'];    
-        $FLAGZ = $_GET['flagz'];
-      
-		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
-        $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
-        if ($cekperid[0]->POSTED==1)
-        {
-            return redirect()->route('po')
-                ->with('status', 'Maaf Periode sudah ditutup!')
-                ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
-        }
-		
-        $deletePo = Po::find($po->NO_ID);
+        // hapus detail dulu
+        DB::table('pobsnd')->where('ID', $po->NO_ID)->delete();
 
-        // $variablell = DB::select('call podel(?)', array($po['NO_BUKTI']));//
+        // hapus header
+        DB::table('pobsn')->where('NO_ID', $po->NO_ID)->delete();
 
-
-        $deletePo->delete();
-        // return redirect('/po?flagz=' . $FLAGZ . '&golz=J')
-        return redirect('/po?flagz='. $FLAGZ.'&golz='.$GOLZ )
-        ->with(['judul' => $judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ])
-        ->with('statusHapus', 'Data ' . $po->NO_BUKTI . ' berhasil dihapus');
-
-        
-    
- 
-
+        return redirect('/po?flagz='.$FLAGZ.'&golz='.$GOLZ)
+            ->with(['judul'=>$judul,'flagz'=>$this->FLAGZ,'golz'=>$this->GOLZ])
+            ->with('statusHapus','Data '.$po->NO_BUKTI.' berhasil dihapus');
     }
     
     public function cetak(Po $po)
