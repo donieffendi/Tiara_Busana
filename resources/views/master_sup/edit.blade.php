@@ -294,7 +294,7 @@
 									<div class="col-md-3 form-group row special-input-label">
 										<input type="text" class="KOTA_B" id="KOTA_B" name="KOTA_B"
 											value="{{$header->KOTA_B}}" placeholder=" " >
-										<label for="KOTA_B">Kota</label>
+										<label for="KOTA_B">Kota Bank</label>
 									</div>
 									<!-- tutupannya -->
 
