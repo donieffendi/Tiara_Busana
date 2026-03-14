@@ -115,6 +115,16 @@
 												<i class="fas fa-warehouse mr-1"></i>Rekap Conter
 											</a>
 										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" id="rjual-tab" data-toggle="tab" href="#rjual" role="tab" aria-controls="rjual" aria-selected="false">
+												<i class="fas fa-cart-plus mr-1"></i>Rekap Penjualan
+											</a>
+										</li>
+										<li class="nav-item" role="presentation">
+											<a class="nav-link" id="rhari-tab" data-toggle="tab" href="#rhari" role="tab" aria-controls="rhari" aria-selected="false">
+												<i class="fas fa-clock mr-1"></i>Rekap Harian
+											</a>
+										</li>
 									</ul>
 
 									<!-- Tab panes -->
@@ -399,6 +409,206 @@
 																				<td class="text-right">{{ number_format($item->nilai_jual ?? 0, 0, ',', '.') }}</td>
 																				<td class="text-right">{{ number_format($item->nilai_nota ?? 0, 0, ',', '.') }}</td>
 																				<td class="text-right">{{ number_format($item->ppn ?? 0, 0, ',', '.') }}</td>
+																			</tr>
+																		@endforeach
+																	</tbody>
+																</table>
+															</div>
+														@else
+															<div class="alert alert-info">
+																<i class="fas fa-info-circle mr-2"></i>
+																Silakan Klik Filter untuk menampilkan ringkasan barang.
+															</div>
+														@endif
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- Data Rekap Penjualan Tab -->
+										<div class="tab-pane fade" id="rjual" role="tabpanel" aria-labelledby="rjual-tab">
+											<div class="pt-3">
+												<div class="form-group">
+													<div class="row align-items-end mb-3">
+														<div class="col-8">
+															<button class="btn btn-primary mr-1" type="button" id="btnFilterRJual" onclick="filterPenjualan('rjual')">
+																<i class="fas fa-search mr-1"></i>Filter
+															</button>
+															<button class="btn btn-danger mr-1" type="button" onclick="resetFilter('rjual')">
+																<i class="fas fa-redo mr-1"></i>Reset
+															</button>
+															<button class="btn btn-warning mr-1" type="button" onclick="cetakJual()">
+																<i class="fas fa-print mr-1"></i>Cetak
+															</button>
+														</div>
+													</div>
+
+													<div class="col-md-12 report-content" id="rjual-result">
+														@if (!empty($hasilPenjualan))
+															<div class="table-responsive">
+																<table id="tabelKasir" class="table table-striped table-bordered nowrap" style="width:100%">
+																	<thead>
+																		<tr>
+																			<th>Counter</th>
+																			<th>Nama Counter</th>
+																			<th>Yer</th>
+																			<th>01</th>
+																			<th>02</th>
+																			<th>03</th>
+																			<th>04</th>
+																			<th>05</th>
+																			<th>06</th>
+																			<th>07</th>
+																			<th>08</th>
+																			<th>09</th>
+																			<th>10</th>
+																			<th>11</th>
+																			<th>12</th>
+																			<th>Jumlah</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		@foreach ($hasilPenjualan as $item)
+																			<tr>
+																				{{-- <td>{{ isset($item->tgl_jual) ? date('d/m/Y', strtotime($item->tgl_jual)) : '' }}</td> --}}
+																				<td>{{ $item->CNT ?? '' }}</td>
+																				<td>{{ $item->NA_CNT ?? '' }}</td>
+																				<td>{{ $item->YER ?? '' }}</td>
+																				<td class="text-right">{{ number_format($item->B01 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B02 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B03 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B04 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B05 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B06 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B07 ?? 0, 0, ',', '.') }}</td>	
+																				<td class="text-right">{{ number_format($item->B08 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B09 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B10 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B11 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->B12 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->JUMB ?? 0, 0, ',', '.') }}</td>
+																			</tr>
+																		@endforeach
+																	</tbody>
+																</table>
+															</div>
+														@else
+															<div class="alert alert-info">
+																<i class="fas fa-info-circle mr-2"></i>
+																Silakan Klik Filter untuk menampilkan ringkasan barang.
+															</div>
+														@endif
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- Data Rekap Harian Tab -->
+										<div class="tab-pane fade" id="rhari" role="tabpanel" aria-labelledby="rhari-tab">
+											<div class="pt-3">
+												<div class="form-group">
+													<div class="row align-items-end mb-3">
+														<div class="col-8">
+															<button class="btn btn-primary mr-1" type="button" id="btnFilterRHari" onclick="filterPenjualan('rhari')">
+																<i class="fas fa-search mr-1"></i>Filter
+															</button>
+															<button class="btn btn-danger mr-1" type="button" onclick="resetFilter('rhari')">
+																<i class="fas fa-redo mr-1"></i>Reset
+															</button>
+															<button class="btn btn-warning mr-1" type="button" onclick="cetakHari()">
+																<i class="fas fa-print mr-1"></i>Cetak
+															</button>
+														</div>
+													</div>
+
+													<div class="col-md-12 report-content" id="rhari-result">
+														@if (!empty($hasilPenjualan))
+															<div class="table-responsive">
+																<table id="tabelKasir" class="table table-striped table-bordered nowrap" style="width:100%">
+																	<thead>
+																		<tr>
+																			<th>Cabang</th>
+																			<th>Cnt</th>
+																			<th>Counter</th>
+																			<th>Kode</th>
+																			<th>Nama</th>
+																			<th>01</th>
+																			<th>02</th>
+																			<th>03</th>
+																			<th>04</th>
+																			<th>05</th>
+																			<th>06</th>
+																			<th>07</th>
+																			<th>08</th>
+																			<th>09</th>
+																			<th>10</th>
+																			<th>11</th>
+																			<th>12</th>
+																			<th>13</th>
+																			<th>14</th>
+																			<th>15</th>
+																			<th>16</th>
+																			<th>17</th>
+																			<th>18</th>
+																			<th>19</th>
+																			<th>20</th>
+																			<th>21</th>
+																			<th>22</th>
+																			<th>23</th>
+																			<th>24</th>
+																			<th>25</th>
+																			<th>26</th>
+																			<th>27</th>
+																			<th>28</th>
+																			<th>29</th>
+																			<th>30</th>
+																			<th>31</th>
+																			<th>Harga</th>
+																			<th>Total</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		@foreach ($hasilPenjualan as $item)
+																			<tr>
+																				{{-- <td>{{ isset($item->tgl_jual) ? date('d/m/Y', strtotime($item->tgl_jual)) : '' }}</td> --}}
+																				<td>{{ $item->cbg ?? '' }}</td>
+																				<td>{{ $item->cnt ?? '' }}</td>
+																				<td>{{ $item->na_cnt ?? '' }}</td>
+																				<td>{{ $item->kd_brg ?? '' }}</td>
+																				<td>{{ $item->na_brg ?? '' }}</td>
+																				<td class="text-right">{{ number_format($item->b01 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b02 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b03 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b04 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b05 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b06 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b07 ?? 0, 0, ',', '.') }}</td>	
+																				<td class="text-right">{{ number_format($item->b08 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b09 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b10 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b11 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b12 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b13 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b14 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b15 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b16 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b17 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b18 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b19 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b20 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b21 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b22 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b23 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b24 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b25 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b26 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b27 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b28 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b29 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b30 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->b31 ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->hjual ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->total ?? 0, 0, ',', '.') }}</td>
 																			</tr>
 																		@endforeach
 																	</tbody>
@@ -719,6 +929,22 @@ function filterPenjualan(tabType){
                 return; 
             }
         break;
+
+		case 'rjual':
+            btnId = '#btnFilterRJual';
+            if(!cbg){ 
+                alert('Pilih cabang terlebih dahulu'); 
+                return; 
+            }
+        break;
+
+		case 'rhari':
+            btnId = '#btnFilterRHari';
+            if(!cbg){ 
+                alert('Pilih cabang terlebih dahulu'); 
+                return; 
+            }
+        break;
     }
 
     $(btnId).html('<i class="fas fa-spinner fa-spin mr-1"></i>Loading...').prop('disabled',true);
@@ -773,6 +999,10 @@ function displayTabData(tabType, data){
             html += '<th>Tanggal</th><th>Conter</th><th>Nama</th><th>Kodes</th><th>Qty</th><th>Bruto</th><th>Dis</th><th>Par</th><th>Dis Tiara</th><th>Dis Supp</th><th>Margin</th><th>Harga Jual</th><th>Nilai Margin</th><th>Nilai Nota</th><th>PPN</th><th>NETT</th>';
 		} else if(tabType==='rconter'){
 			html += '<th>Tanggal</th><th>Conter</th><th>Nama</th><th>Kodes</th><th>Qty</th><th>Bruto</th><th>Dis</th><th>Par</th><th>Dis Tiara</th><th>Dis Supp</th><th>Nilai jual</th><th>DPP</th><th>PPN</th>';
+		} else if(tabType==='rjual'){
+			html += '<th>Conter</th><th>Nama</th><th>YER</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>Total</th>';
+		} else if(tabType==='rhari'){
+			html += '<th>Cabang</th><th>Cnt</th><th>Counter</th><th>Kode</th><th>Nama</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th><th>31</th><th>Harga</th><th>Total</th>';
 		}
         html += '</tr></thead><tbody>';
 
@@ -786,6 +1016,10 @@ function displayTabData(tabType, data){
                 html += '<td>'+formatDate(item.tgl_jual)+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kodes+'</td><td class="text-right">'+formatNumber(item.qty)+'</td><td class="text-right">'+formatNumber(item.tharga)+'</td><td class="text-right">'+formatNumber(item.dis)+'</td><td class="text-right">'+formatNumber(item.par)+'</td><td class="text-right">'+formatNumber(item.ptiara)+'</td><td class="text-right">'+formatNumber(item.psup)+'</td><td class="text-right">'+formatNumber(item.margin)+'</td><td class="text-right">'+formatNumber(item.nilai_jual)+'</td><td class="text-right">'+formatNumber(item.nilai_margin)+'</td><td class="text-right">'+formatNumber(item.nilai_nota)+'</td><td class="text-right">'+formatNumber(item.ppn)+'</td><td class="text-right">'+formatNumber(item.nett)+'</td>';
 			} else if(tabType==='rconter'){
 				html += '<td>'+formatDate(item.tgl_jual)+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kodes+'</td><td class="text-right">'+formatNumber(item.qty)+'</td><td class="text-right">'+formatNumber(item.tharga)+'</td><td class="text-right">'+formatNumber(item.dis)+'</td><td class="text-right">'+formatNumber(item.par)+'</td><td class="text-right">'+formatNumber(item.ptiara)+'</td><td class="text-right">'+formatNumber(item.psup)+'</td><td class="text-right">'+formatNumber(item.nilai_jual)+'</td><td class="text-right">'+formatNumber(item.DPP)+'</td><td class="text-right">'+formatNumber(item.PPN)+'</td>';
+			} else if(tabType==='rjual'){
+				html += '<td>'+item.CNT+'</td><td>'+item.NA_CNT+'</td><td>'+item.YER+'</td><td class="text-right">'+formatNumber(item.B01)+'</td><td class="text-right">'+formatNumber(item.B02)+'</td><td class="text-right">'+formatNumber(item.B03)+'</td><td class="text-right">'+formatNumber(item.B04)+'</td><td class="text-right">'+formatNumber(item.B05)+'</td><td class="text-right">'+formatNumber(item.B06)+'</td><td class="text-right">'+formatNumber(item.B07)+'</td><td class="text-right">'+formatNumber(item.B08)+'</td><td class="text-right">'+formatNumber(item.B09)+'</td><td class="text-right">'+formatNumber(item.B10)+'</td><td class="text-right">'+formatNumber(item.B11)+'</td><td class="text-right">'+formatNumber(item.B12)+'</td><td class="text-right">'+formatNumber(item.JUMB)+'</td>';
+			} else if(tabType==='rhari'){
+				html += '<td>'+item.cbg+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kd_brg+'</td><td>'+item.na_brg+'</td><td class="text-right">'+formatNumber(item.b01)+'</td><td class="text-right">'+formatNumber(item.b02)+'</td><td class="text-right">'+formatNumber(item.b03)+'</td><td class="text-right">'+formatNumber(item.b04)+'</td><td class="text-right">'+formatNumber(item.b05)+'</td><td class="text-right">'+formatNumber(item.b06)+'</td><td class="text-right">'+formatNumber(item.b07)+'</td><td class="text-right">'+formatNumber(item.b08)+'</td><td class="text-right">'+formatNumber(item.b09)+'</td><td class="text-right">'+formatNumber(item.b10)+'</td><td class="text-right">'+formatNumber(item.b11)+'</td><td class="text-right">'+formatNumber(item.b12)+'</td><td class="text-right">'+formatNumber(item.b13)+'</td><td class="text-right">'+formatNumber(item.b14)+'</td><td class="text-right">'+formatNumber(item.b15)+'</td><td class="text-right">'+formatNumber(item.b16)+'</td><td class="text-right">'+formatNumber(item.b17)+'</td><td class="text-right">'+formatNumber(item.b18)+'</td><td class="text-right">'+formatNumber(item.b19)+'</td><td class="text-right">'+formatNumber(item.b20)+'</td><td class="text-right">'+formatNumber(item.b21)+'</td><td class="text-right">'+formatNumber(item.b22)+'</td><td class="text-right">'+formatNumber(item.b23)+'</td><td class="text-right">'+formatNumber(item.b24)+'</td><td class="text-right">'+formatNumber(item.b25)+'</td><td class="text-right">'+formatNumber(item.b26)+'</td><td class="text-right">'+formatNumber(item.b27)+'</td><td class="text-right">'+formatNumber(item.b28)+'</td><td class="text-right">'+formatNumber(item.b29)+'</td><td class="text-right">'+formatNumber(item.b30)+'</td><td class="text-right">'+formatNumber(item.b31)+'</td><td class="text-right">'+formatNumber(item.hjual)+'</td><td class="text-right">'+formatNumber(item.total)+'</td>';
 			}
             html += '</tr>';
         });
@@ -847,6 +1081,24 @@ function resetFilter(tabType){
 			$('#CNT2').val('');
             break;
 		case 'rconter':
+			$('#cbg').val('');
+			$('#per').val('');
+			$('#periode').val('');
+			$('#CNT').val('');
+			$('#NA_CNT').val('');
+			$('#tglDr').val('');
+			$('#tglSmp').val('');
+			break;
+		case 'rjual':
+			$('#cbg').val('');
+			$('#per').val('');
+			$('#periode').val('');
+			$('#CNT').val('');
+			$('#NA_CNT').val('');
+			$('#tglDr').val('');
+			$('#tglSmp').val('');
+			break;
+		case 'rhari':
 			$('#cbg').val('');
 			$('#per').val('');
 			$('#periode').val('');
