@@ -10,6 +10,10 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
+include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
+
+use PHPJasperXML;
+
 class BrgController extends Controller
 {
     /**
@@ -22,14 +26,21 @@ class BrgController extends Controller
         return view('master_brg.index');
     }
 
+    public function browse_sup(Request $request)
+    {
+        $brg = DB::SELECT("SELECT NO_SUPL AS SUPP, NAMA FROM nwmassup ORDER BY NO_SUPL ");
+		
+        return response()->json($brg);
+    }
+
     
     public function getBrg( Request $request )
     {
 		// $PPN = Auth::user()->PPN;
 		
-        $brg = DB::SELECT("SELECT NO_ID, KD_BRG,JNS,NA_BRG,HJUAL,HBELI,ST_PJK,ST_NOTA,kategori 
-                        from brgbsn 
-                        order by kd_brg ");
+        $brg = DB::SELECT("SELECT NO_ID, SUB, KDBAR, NMBAR, ITEM_SUP, KET AS PLU, KET_UK, KET_KEM, SUPP, QTY_BELI1, HB, DIS_A, DIS_B, DIS_C, TOT_BL 
+                        from nwmasbar 
+                        order by SUB ");
 
         return Datatables::of($brg)
             ->addIndexColumn()
@@ -101,68 +112,61 @@ class BrgController extends Controller
             $request,
             // GANTI 8 SESUAI NAMA KOLOM DI NAVICAT //
             [
-                'CNT'       => 'required'
+                'SUB'       => 'required'
             ]
         );
 
-        // Insert Header
+        $sub = $request->SUB;
 
-        $query = DB::table('brgbsn')->select('CNT')->orderByDesc('CNT')->limit(1)->get();
+        $last = DB::table('nwmasbar')
+                ->where('SUB', $sub)
+                ->orderByDesc('KDBAR')
+                ->first();
+
+        if($last){
+            $kdbarnum = (int)$last->KDBAR + 1;
+        }else{
+            $kdbarnum = 1;
+        }
+
+        $KDBAR = str_pad($kdbarnum,7,'0',STR_PAD_LEFT);
+
+        $count = DB::table('nwmasbar')
+                ->where('SUB',$sub)
+                ->count() + 1;
+
+        $urutbarcode = str_pad($count,5,'0',STR_PAD_LEFT);
+
+        $BARCODE = $KDBAR.$urutbarcode;
 
 		
         $brg = Brg::create(
             [
-                'CNT'     => ($request['CNT'] == null) ? "" : $request['CNT'],				
-                'NCNT'     => ($request['NCNT'] == null) ? "" : $request['NCNT'],
-                // 'SUP'      => ($request['SUP'] == null) ? "" : $request['SUP'],
-                'KD_BRG'      => ($request['KD_BRG'] == null) ? "" : $request['KD_BRG'],
-                'NA_BRG'      => ($request['NA_BRG'] == null) ? "" : $request['NA_BRG'],
-                'BARCODE'      => ($request['BARCODE'] == null) ? "" : $request['BARCODE'],
-                'JNS'   => ($request['JNS'] == null) ? "" : $request['JNS'],
-                'DIS_STS'    => ($request['DIS_STS'] == null) ? "" : $request['DIS_STS'],
-                'DIS_KHS'     => ($request['DIS_KHS'] == null) ? "" : $request['DIS_KHS'],
-                'HJUAL'       => (float) str_replace(',', '', $request['HJUAL']),
-                // 'BELI'       => (float) str_replace(',', '', $request['BELI']),
-                'HBNET'       => (float) str_replace(',', '', $request['HBNET']),
-                'DIS1'       => (float) str_replace(',', '', $request['DIS1']),
-                'DIS2'       => (float) str_replace(',', '', $request['DIS2']),
-                'DIS3'       => (float) str_replace(',', '', $request['DIS3']),
-                'DIS4'       => (float) str_replace(',', '', $request['DIS4']),
-                'ST_HRG'     => ($request['ST_HRG'] == null) ? "" : $request['ST_HRG'],
-                // 'LS_CNT'     => ($request['LS_CNT'] == null) ? "" : $request['LS_CNT'],
-                'DTH'     => ($request['DTH'] == null) ? "" : $request['DTH'],
-                'TTH'     => ($request['TTH'] == null) ? "" : $request['TTH'],
-                // 'JN_CNT'     => ($request['JN_CNT'] == null) ? "" : $request['JN_CNT'],
-                'DIS_PRO'       => (float) str_replace(',', '', $request['DIS_PRO']),
-                'DIS_CUST'       => (float) str_replace(',', '', $request['DIS_CUST']),
-                'DIS_CUSN'     => ($request['DIS_CUSN'] == null) ? "" : $request['DIS_CUSN'],
-                // 'ST_CNT'     => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],
-                'ST_NOTA'     => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
-                'MARGIN'       => (float) str_replace(',', '', $request['MARGIN']),
-                // 'ST_ORD'     => ($request['ST_ORD'] == null) ? "" : $request['ST_ORD'],
-                'ST_PJK'     => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
-                // 'CBAYAR'     => ($request['CBAYAR'] == null) ? "" : $request['CBAYAR'],
-                // 'KEL_PT'     => ($request['KEL_PT'] == null) ? "" : $request['KEL_PT'],
-                // 'LBAYAR'     => ($request['LBAYAR'] == null) ? "" : $request['LBAYAR'],
-                // 'KEL_BRG'     => ($request['KEL_BRG'] == null) ? "" : $request['KEL_BRG'],
-                // 'KW_RET'     => ($request['KW_RET'] == null) ? "" : $request['KW_RET'],
+                'RAK'       => ($request['RAK'] == null) ? "" : $request['RAK'],				
+                'PPN'       => ($request['PPN'] == null) ? "" : $request['PPN'],
                 'BASIC'     => ($request['BASIC'] == null) ? "" : $request['BASIC'],
-                // 'KW_LBL'     => ($request['KW_LBL'] == null) ? "" : $request['KW_LBL'],
-                'KATEGORI'     => ($request['KATEGORI'] == null) ? "" : $request['KATEGORI'],
-                'DIS_TGLM'     => date('Y-m-d', strtotime($request['DIS_TGLM'])),
-                'DIS_TGLS'   => date('Y-m-d', strtotime($request['DIS_TGLS'])),
-
-                'USRNM'     => Auth::user()->username,
-                'TG_SMP'    => Carbon::now()
+                'BARCODE'   => $BARCODE,
+                'STM'       => ($request['STM'] == null) ? "" : $request['STM'],
+                'QTY_BELI1' => (float) str_replace(',', '', $request['QTY_BELI1']),
+                'KD_EVENT'  => ($request['KD_EVENT'] == null) ? "" : $request['KD_EVENT'],
+                'HB'        => (float) str_replace(',', '', $request['HB']),
+                'HADIAH_1'  => ($request['HADIAH_1'] == null) ? "" : $request['HADIAH_1'],
+                'DIS_A'     => (float) str_replace(',', '', $request['DIS_A']),
+                'ITEM_SUP'  => ($request['ITEM_SUP'] == null) ? "" : $request['ITEM_SUP'],
+                'DIS_B'     => (float) str_replace(',', '', $request['DIS_B']),
+                'SUPP'      => ($request['SUPP'] == null) ? "" : $request['SUPP'],
+                'DIS_C'     => (float) str_replace(',', '', $request['DIS_C']),
+                'SUB'       => ($request['SUB'] == null) ? "" : $request['SUB'],
+                'KDBAR'     => $KDBAR,
+                'RETUR'     => ($request['RETUR'] == null) ? "" : $request['RETUR'],
+                'NMBAR'     => ($request['NMBAR'] == null) ? "" : $request['NMBAR'],
+                'KET'       => ($request['KET'] == null) ? "" : $request['KET'],
+                'KET_UK'    => ($request['KET_UK'] == null) ? "" : $request['KET_UK'],
+                'KET_KEM'   => ($request['KET_KEM'] == null) ? "" : $request['KET_KEM'],
+                'PMSR_PROD' => ($request['PMSR_PROD'] == null) ? "" : $request['PMSR_PROD']
             ]
         );
 
-
-	    $kodesx = $request['CNT'];
-		
-		$brg = Brg::where('CNT', $kodesx )->first();
-					       
-        //return redirect('/brg/edit/?idx=' . $brg->NO_ID . '&tipx=edit')->with('statusInsert', 'Data baru berhasil ditambahkan');
 		return redirect('/brg')->with('statusInsert', 'Data baru berhasil ditambahkan');		
 
 
@@ -172,9 +176,6 @@ class BrgController extends Controller
  
     public function edit(Request $request ,  Brg $brg)
     {
-
-        $pilihbank = DB::table('bang')->select('KODE', 'NAMA')->orderBy('KODE', 'ASC')->get();
-        // ganti 16
 
 
 		$tipx = $request->tipx;
@@ -195,9 +196,9 @@ class BrgController extends Controller
 		   	
     	   $kodex = $request->kodex;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, CNT from brgbsn 
-		                 where CNT = '$kodex'						 
-		                 ORDER BY CNT ASC  LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KDBAR from nwmasbar 
+		                 where KDBAR = '$kodex'						 
+		                 ORDER BY KDBAR ASC  LIMIT 1" );
 						 
 			
 			if(!empty($bingco)) 
@@ -214,8 +215,8 @@ class BrgController extends Controller
 		   
 		if ($tipx=='top') {
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, CNT from brgbsn      
-		                 ORDER BY CNT ASC  LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KDBAR from nwmasbar      
+		                 ORDER BY KDBAR ASC  LIMIT 1" );
 					 
 			if(!empty($bingco)) 
 			{
@@ -233,9 +234,9 @@ class BrgController extends Controller
 			
     	   $kodex = $request->kodex;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, CNT from brgbsn     
-		             where CNT < 
-					 '$kodex' ORDER BY CNT DESC LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KDBAR from nwmasbar     
+		             where KDBAR < 
+					 '$kodex' ORDER BY KDBAR DESC LIMIT 1" );
 			
 
 			if(!empty($bingco)) 
@@ -257,9 +258,9 @@ class BrgController extends Controller
 				
       	   $kodex = $request->kodex;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, CNT from brgbsn   
-		             where CNT > 
-					 '$kodex' ORDER BY CNT ASC LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KDBAR from nwmasbar   
+		             where KDBAR > 
+					 '$kodex' ORDER BY KDBAR ASC LIMIT 1" );
 					 
 			if(!empty($bingco)) 
 			{
@@ -275,8 +276,8 @@ class BrgController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, CNT from brgbsn    
-		              ORDER BY CNT DESC  LIMIT 1" );
+    		$bingco = DB::SELECT("SELECT NO_ID, KDBAR from nwmasbar    
+		              ORDER BY KDBAR DESC  LIMIT 1" );
 					 
 			if(!empty($bingco)) 
 			{
@@ -301,7 +302,12 @@ class BrgController extends Controller
 	
 	  	if ( $idx != 0 ) 
 		{
-			$brg = Brg::where('NO_ID', $idx )->first();	
+			// $brg = Brg::where('NO_ID', $idx )->first();
+            $brg = DB::table('nwmasbar')
+                        ->leftJoin('nwmassup','nwmasbar.SUPP','=','nwmassup.NO_SUPL')
+                        ->select('nwmasbar.*','nwmassup.NAMA')
+                        ->where('nwmasbar.NO_ID',$idx)
+                        ->first();	
 	     }
 		 else
 		 {
@@ -309,11 +315,9 @@ class BrgController extends Controller
 		 }
 
 		 $data = [
-						'header' => $brg,
-			        ];				
-			return view('master_brg.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ])->with(['pilihbank' => $pilihbank]);
-		 
-	 
+                    'header' => $brg,
+                ];				
+			return view('master_brg.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ]);
     }
 
     /**
@@ -329,7 +333,7 @@ class BrgController extends Controller
         $this->validate(
             $request,
             [
-                'CNT'       => 'required'
+                'SUB'       => 'required'
             ]
         );
 
@@ -338,53 +342,31 @@ class BrgController extends Controller
 		
         $brg->update(
             [
-                		
-                'NCNT'      => ($request['NCNT'] == null) ? "" : $request['NCNT'],
-                // 'SUP'         => ($request['SUP'] == null) ? "" : $request['SUP'],
-                'KD_BRG'      => ($request['KD_BRG'] == null) ? "" : $request['KD_BRG'],
-                'NA_BRG'      => ($request['NA_BRG'] == null) ? "" : $request['NA_BRG'],
-                'BARCODE'     => ($request['BARCODE'] == null) ? "" : $request['BARCODE'],
-                'JNS'         => ($request['JNS'] == null) ? "" : $request['JNS'],
-                'DIS_STS'     => ($request['DIS_STS'] == null) ? "" : $request['DIS_STS'],
-                'DIS_KHS'     => ($request['DIS_KHS'] == null) ? "" : $request['DIS_KHS'],
-                'HJUAL'       => (float) str_replace(',', '', $request['HJUAL']),
-                // 'BELI'        => (float) str_replace(',', '', $request['BELI']),
-                'HBNET'       => (float) str_replace(',', '', $request['HBNET']),
-                'DIS1'        => (float) str_replace(',', '', $request['DIS1']),
-                'DIS2'        => (float) str_replace(',', '', $request['DIS2']),
-                'DIS3'        => (float) str_replace(',', '', $request['DIS3']),
-                'DIS4'        => (float) str_replace(',', '', $request['DIS4']),
-                'ST_HRG'      => ($request['ST_HRG'] == null) ? "" : $request['ST_HRG'],
-                // 'LS_CNT'      => ($request['LS_CNT'] == null) ? "" : $request['LS_CNT'],
-                'DTH'         => ($request['DTH'] == null) ? "" : $request['DTH'],
-                'TTH'     => ($request['TTH'] == null) ? "" : $request['TTH'],
-                // 'JN_CNT'     => ($request['JN_CNT'] == null) ? "" : $request['JN_CNT'],
-                'DIS_PRO'       => (float) str_replace(',', '', $request['DIS_PRO']),
-                'DIS_CUST'       => (float) str_replace(',', '', $request['DIS_CUST']),
-                'DIS_CUSN'     => ($request['DIS_CUSN'] == null) ? "" : $request['DIS_CUSN'],
-                // 'ST_CNT'     => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],
-                'ST_NOTA'     => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
-                'MARGIN'       => (float) str_replace(',', '', $request['MARGIN']),
-                // 'ST_ORD'     => ($request['ST_ORD'] == null) ? "" : $request['ST_ORD'],
-                'ST_PJK'     => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
-                // 'CBAYAR'     => ($request['CBAYAR'] == null) ? "" : $request['CBAYAR'],
-                // 'KEL_PT'     => ($request['KEL_PT'] == null) ? "" : $request['KEL_PT'],
-                // 'LBAYAR'     => ($request['LBAYAR'] == null) ? "" : $request['LBAYAR'],
-                // 'KEL_BRG'     => ($request['KEL_BRG'] == null) ? "" : $request['KEL_BRG'],
-                // 'KW_RET'     => ($request['KW_RET'] == null) ? "" : $request['KW_RET'],
+                'RAK'       => ($request['RAK'] == null) ? "" : $request['RAK'],				
+                'PPN'       => ($request['PPN'] == null) ? "" : $request['PPN'],
                 'BASIC'     => ($request['BASIC'] == null) ? "" : $request['BASIC'],
-                // 'KW_LBL'     => ($request['KW_LBL'] == null) ? "" : $request['KW_LBL'],
-                'KATEGORI'     => ($request['KATEGORI'] == null) ? "" : $request['KATEGORI'],
-                'DIS_TGLM'     => date('Y-m-d', strtotime($request['DIS_TGLM'])),
-                'DIS_TGLS'   => date('Y-m-d', strtotime($request['DIS_TGLS'])),
-
-                'USRNM'     => Auth::user()->username,
-                'TG_SMP'    => Carbon::now()
+                'BARCODE'   => ($request['BARCODE'] == null) ? "" : $request['BARCODE'],
+                'STM'       => ($request['STM'] == null) ? "" : $request['STM'],
+                'QTY_BELI1' => (float) str_replace(',', '', $request['QTY_BELI1']),
+                'KD_EVENT'  => ($request['KD_EVENT'] == null) ? "" : $request['KD_EVENT'],
+                'HB'        => (float) str_replace(',', '', $request['HB']),
+                'HADIAH_1'  => ($request['HADIAH_1'] == null) ? "" : $request['HADIAH_1'],
+                'DIS_A'     => (float) str_replace(',', '', $request['DIS_A']),
+                'ITEM_SUP'  => ($request['ITEM_SUP'] == null) ? "" : $request['ITEM_SUP'],
+                'DIS_B'     => (float) str_replace(',', '', $request['DIS_B']),
+                'SUPP'      => ($request['SUPP'] == null) ? "" : $request['SUPP'],
+                'DIS_C'     => (float) str_replace(',', '', $request['DIS_C']),
+                'SUB'       => ($request['SUB'] == null) ? "" : $request['SUB'],
+                'KDBAR'     => ($request['KDBAR'] == null) ? "" : $request['KDBAR'],
+                'RETUR'     => ($request['RETUR'] == null) ? "" : $request['RETUR'],
+                'NMBAR'     => ($request['NMBAR'] == null) ? "" : $request['NMBAR'],
+                'KET'       => ($request['KET'] == null) ? "" : $request['KET'],
+                'KET_UK'    => ($request['KET_UK'] == null) ? "" : $request['KET_UK'],
+                'KET_KEM'   => ($request['KET_KEM'] == null) ? "" : $request['KET_KEM'],
+                'PMSR_PROD' => ($request['PMSR_PROD'] == null) ? "" : $request['PMSR_PROD']
             ]
         );
 
-
-        //return redirect('/brg/edit/?idx=' . $brg->NO_ID . '&tipx=edit');
 		return redirect('/brg')->with('statusInsert', 'Data baru berhasil diupdate');
 				
     }
@@ -405,7 +387,7 @@ class BrgController extends Controller
 
     public function cekbrg(Request $request)
     {
-        $getItem = DB::SELECT('select count(*) as ADA from brgbsn where CNT ="' . $request->CNT . '"');
+        $getItem = DB::SELECT('select count(*) as ADA from nwmasbar where KDBAR ="' . $request->KDBAR . '"');
 
         return $getItem;
     }
@@ -433,5 +415,53 @@ class BrgController extends Controller
         $select['total_count'] =  count($selectajax);
         $select['items'] = $selectajax;
         return response()->json($select);
+    }
+
+    public function Print(Request $request)
+    {
+        // Ambil filter dari request (misalnya dikirim via tombol print)
+        $sub = $request->input('sub');
+        $sup = $request->input('supp');
+
+        // Nama file laporan Jasper
+        $file = 'Daftar_Barang'; // ubah sesuai nama file .jrxml kamu, misalnya 'brg_list.jrxml'
+        $PHPJasperXML = new \PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+        // === Query utama (sesuai dengan query DataTables kamu) ===
+        $query = DB::table('nwmasbar as a')
+            ->join('nwmassup as b', 'a.SUPP', '=', 'b.NO_SUPL')
+            ->select(
+                'a.SUB',
+                'a.KDBAR',
+                'a.NMBAR',
+                'a.ITEM_SUP',
+                'a.SUPP',
+                'b.NAMA',
+                'a.KET_UK',
+                'a.KET_KEM',
+                'a.BARCODE'
+            );
+
+        // Filter sesuai input user
+        if (!empty($sub)) {
+            $query->whereRaw("a.SUB = ?", [$sub]);
+        }
+
+        if (!empty($sup)) {
+            $query->whereRaw("a.SUPP = ?", [$sup]);
+        }
+
+        $result = $query->orderBy('a.KDBAR')->get();
+
+        // === Konversi hasil ke array untuk Jasper ===
+        $data = [];
+        
+        $data = json_decode(json_encode($result), true);
+
+        // Kirim data ke Jasper
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I"); // "I" artinya inline (tampil di browser)
     }
 }

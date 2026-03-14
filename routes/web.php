@@ -170,10 +170,12 @@ Route::get('/rbrg', 'App\Http\Controllers\OReport\RBrgController@report')->middl
     Route::get('/get-brg', 'App\Http\Controllers\Master\BrgController@getBrg')->middleware(['auth'])->name('get-brg');
     Route::get('/brg/browse', 'App\Http\Controllers\Master\BrgController@browse')->middleware(['auth'])->name('brg/browse');
     Route::get('/brg/browsex', 'App\Http\Controllers\Master\BrgController@browsex')->middleware(['auth'])->name('brg/browsex');
+    Route::get('/brg/browse_sup', 'App\Http\Controllers\Master\BrgController@browse_sup')->middleware(['auth'])->name('brg/browse_sup');
     Route::get('/brg/browse_harga', 'App\Http\Controllers\Master\BrgController@browse_harga')->middleware(['auth'])->name('brg/browse_harga');
     Route::get('/brg/browse_beli', 'App\Http\Controllers\Master\BrgController@browse_beli')->middleware(['auth'])->name('brg/browse_beli');
     Route::get('/brg/browse_koreksi', 'App\Http\Controllers\Master\BrgController@browse_koreksi')->middleware(['auth'])->name('brg/browse_koreksi');
     Route::get('/brg/browse_sedia', 'App\Http\Controllers\Master\BrgController@browse_sedia')->middleware(['auth'])->name('brg/browse_sedia');
+    Route::get('/brg/print', 'App\Http\Controllers\Master\BrgController@Print')->middleware(['auth'])->name('brg.print');
 
     Route::get('/brg/browsedz', 'App\Http\Controllers\Master\BrgController@browsedz')->middleware(['auth'])->name('brg/browsedz');
     Route::get('/get-brg-report', 'App\Http\Controllers\OReport\RBrgController@getBrgReport')->middleware(['auth'])->name('get-brg-report');

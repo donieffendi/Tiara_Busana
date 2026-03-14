@@ -109,494 +109,226 @@
 										<input name="tipx" class="form-control flagz" id="tipx" value="{{$tipx}}" hidden>
 								
 
-									<!-- code text box baru -->
+									<div class="col-md-1">
+										<label for="RAK" class="form-label">Departement : </label>
+									</div>
+									<div class="col-md-1">
+										<select id="RAK" class="form-control"  name="RAK">
+											<option value="FF" {{ ($header->RAK == 'FF') ? 'selected' : '' }}>FF</option>
+											<option value="NF" {{ ($header->RAK == 'NF') ? 'selected' : '' }}>NF</option>
+											<option value="ST" {{ ($header->RAK == 'ST') ? 'selected' : '' }}>ST</option>
+											<option value="FO" {{ ($header->RAK == 'FO') ? 'selected' : '' }}>FO</option>
+										</select>
+									</div>
+
+									<div class="col-md-7"></div>
+
 									<div class="col-md-2 form-group row special-input-label">
 
-										<input type="text" class="CNT" id="CNT" name="CNT" 
-											value="{{$header->CNT}}" placeholder=" " >
-										<label for="CNT">Counter</label>
-									</div>
-
-									<div class="col-md-1">
-									</div>
-
-									<div class="col-md-4 form-group row special-input-label">
-										<input type="text" class="NCNT" id="NCNT" name="NCNT" 
-											value="{{$header->NCNT}}" placeholder=" " >
-										<!-- <label for="NCNT">Nama</label> -->
-									</div>
-								</div>
-
-								<div class="form-group row">	
-
-									<div class="col-md-4 form-group row special-input-label">
-										<input type="text" class="KD_BRG" id="KD_BRG" name="KD_BRG" 
-											value="{{$header->KD_BRG}}" placeholder=" " >
-										<label for="KD_BRG">Barang</label>
-									</div>
-
-									<div class="col-md-1">
-									</div>
-
-									<div class="col-md-4 form-group row special-input-label">
-										<input type="text" class="NA_BRG" id="NA_BRG" name="NA_BRG" 
-											value="{{$header->NA_BRG}}" placeholder=" " >
+										<input type="text" class="PPN" id="PPN" name="PPN" 
+											value="{{$header->PPN}}" placeholder=" " >
+										<label for="PPN">Tanda PPN [0,1,2,3]</label>
 									</div>
 								</div>
 
 								<div class="form-group row">
+									<div class="col-md-1">
+										<label for="BASIC" class="form-label">Jenis : </label>
+									</div>
+									<div class="col-md-1">
+										<select id="BASIC" class="form-control"  name="BASIC">
+											<option value="Y" {{ ($header->BASIC == 'Y') ? 'selected' : '' }}>Y</option>
+											<option value="N" {{ ($header->BASIC == 'N') ? 'selected' : '' }}>N</option>
+										</select>
+									</div>
+
+									<div class="col-md-7"></div>
 									
 									<div class="col-md-2 form-group row special-input-label">
 
 										<input type="text" class="BARCODE" id="BARCODE" name="BARCODE" 
-											value="{{$header->BARCODE}}" placeholder=" " >
+											value="{{$header->BARCODE}}" placeholder=" " readonly>
 										<label for="BARCODE">Barcode</label>
 									</div>
+								</div>
 
-									<div class="col-md-1">
-									</div>
-									
+								<div class="form-group row">
 									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="JNS" class="form-label">Jenis</label>
-									</div>
-									<div class="col-md-2">
-										<select id="JNS" class="form-control"  name="JNS">
-											<option value="A" {{ ($header->JNS == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->JNS == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-								</div>
-
-								<div class="form-group row">
-									
 									<div class="col-md-2 form-group row special-input-label">
 
-										<input type="text" class="SUP" id="SUP" name="SUP" 
-											value="{{$header->SUP}}" placeholder=" " >
-										<label for="SUP">Suplier</label>
+										<input type="text" class="STM" id="STM" name="STM" 
+											value="{{$header->STM}}" placeholder=" " >
+										<label for="STM">Event [Y/T]</label>
+									</div>
+
+									<div class="col-md-7">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="QTY_BELI1" id="QTY_BELI1" name="QTY_BELI1" 
+											value="{{$header->QTY_BELI1}}" placeholder=" " style="text-align: right">
+										<label for="QTY_BELI1">Jumlah Beli</label>
 									</div>
 								</div>
 
 								<div class="form-group row">
+									<!-- code text box baru -->
+									<div class="col-md-2 form-group row special-input-label">
+
+										<input type="text" class="KD_EVENT" id="KD_EVENT" name="KD_EVENT" 
+											value="{{$header->KD_EVENT}}" placeholder=" " >
+										<label for="KD_EVENT">Kode Event</label>
+									</div>
+
+									<div class="col-md-7">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="HB" id="HB" name="HB" 
+											value="{{$header->HB}}" placeholder=" " style="text-align: right">
+										<label for="HB">Harga Beli</label>
+									</div>
 								</div>
+
 								<div class="form-group row">
+									<!-- code text box baru -->
+									<div class="col-md-3 form-group row special-input-label">
+
+										<input type="text" class="HADIAH_1" id="HADIAH_1" name="HADIAH_1" 
+											value="{{$header->HADIAH_1}}" placeholder=" " >
+										<label for="HADIAH_1">Nama Event</label>
+									</div>
+
+									<div class="col-md-6">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="DIS_A" id="DIS_A" name="DIS_A" 
+											value="{{$header->DIS_A}}" placeholder=" " style="text-align: right">
+										<label for="DIS_A">Dis 1</label>
+									</div>
 								</div>
+
 								<div class="form-group row">
+									<!-- code text box baru -->
+									<div class="col-md-3 form-group row special-input-label">
+
+										<input type="text" class="ITEM_SUP" id="ITEM_SUP" name="ITEM_SUP" 
+											value="{{$header->ITEM_SUP}}" placeholder=" " >
+										<label for="ITEM_SUP">Item Suplier</label>
+									</div>
+
+									<div class="col-md-6">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="DIS_B" id="DIS_B" name="DIS_B" 
+											value="{{$header->DIS_B}}" placeholder=" " style="text-align: right">
+										<label for="DIS_B">Dis 2</label>
+									</div>
 								</div>
+
+								<div class="form-group row">
+
+									<div class="col-md-2 form-group row special-input-label">
+
+										<input type="text" class="SUPP" id="SUPP" name="SUPP" 
+											value="{{$header->SUPP}}" placeholder=" " >
+										<label for="SUPP">No. Suplier</label>
+									</div>
 			
-								<div class="form-group row">
-									
-									<div class="col-md-2 form-group row special-input-label">
-
-										<input type="text" class="DIS_STS" id="DIS_STS" name="DIS_STS" 
-											value="{{$header->DIS_STS}}" placeholder=" " >
-										<label for="DIS_STS">Status Diskon</label>
+									<div class="col-md-4 form-group row special-input-label">
+										<input type="text" class="NAMA" id="NAMA" name="NAMA" 
+											value="{{$header->NAMA}}" placeholder=" " >
+										{{-- <label for="Nama"></label> --}}
+									</div>
+									<div class="col-md-1 form-group row special-input-label">
+										<button type="button" class="btn btn-primary" onclick="browseSup()" style="width:40px"><i class="fa fa-search"></i></button>
 									</div>
 
-									<div class="col-md-1">
+									<div class="col-md-2">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="DIS_C" id="DIS_C" name="DIS_C" 
+											value="{{$header->DIS_C}}" placeholder=" " style="text-align: right">
+										<label for="DIS_C">Dis 3</label>
+									</div>
+
+								</div>
+
+								<div class="form-group row">
+									<!-- code text box baru -->
+									<div class="col-md-1 form-group row special-input-label">
+
+										<input type="text" class="SUB" id="SUB" name="SUB" 
+											value="{{$header->SUB}}" placeholder=" " >
+										<label for="SUB">No. Sub</label>
+									</div>
+
+									<div class="col-md-4 form-group row special-input-label">
+
+										<input type="text" class="KDBAR" id="KDBAR" name="KDBAR" 
+											value="{{$header->KDBAR}}" placeholder=" " readonly>
+										{{-- <label for="NAMA">No. Supplier</label> --}}
+									</div>
+
+									<div class="col-md-4">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="RETUR" id="RETUR" name="RETUR" 
+											value="{{$header->RETUR}}" placeholder=" " >
+										<label for="RETUR">Tanda Retur [Y/T]</label>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<!-- code text box baru -->
+									<div class="col-md-5 form-group row special-input-label">
+
+										<input type="text" class="NMBAR" id="NMBAR" name="NMBAR" 
+											value="{{$header->NMBAR}}" placeholder=" " >
+										<label for="NMBAR">Nama Barang</label>
+									</div>
+
+									<div class="col-md-4">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="KET" id="KET" name="KET" 
+											value="{{$header->KET}}" placeholder=" " >
+										<label for="KET">PLU Tiara</label>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<!-- code text box baru -->
+									<div class="col-md-2 form-group row special-input-label">
+
+										<input type="text" class="KET_UK" id="KET_UK" name="KET_UK" 
+											value="{{$header->KET_UK}}" placeholder=" " >
+										<label for="KET_UK">Ukuran</label>
+									</div>
+
+									<div class="col-md-2">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="KET_KEM" id="KET_KEM" name="KET_KEM" 
+											value="{{$header->KET_KEM}}" placeholder=" " >
+										<label for="KET_KEM">Kemasan</label>
 									</div>
 
 									<div class="col-md-3">
-										<input type="checkbox" class="form-check-input" id="DIS_KHS" name="DIS_KHS" value="1" {{ ($header->DIS_KHS == 1) ? 'checked' : '' }}>
-										<label for="DIS_KHS">Diskon Khusus Kosmetik</label>
-									</div>
-								</div>
-
-								<div class="form-group row">
-									
-									<div class="col-md-2 form-group row special-input-label">
-
-										<input type="text" class="HJUAL" id="HJUAL" name="HJUAL" 
-											value="{{$header->HJUAL}}" placeholder=" " >
-										<label for="HJUAL">Harga : Jual</label>
-									</div>
-
-									<div class="col-md-1">
 									</div>
 
 									<div class="col-md-2 form-group row special-input-label">
-
-										<input type="text" class="BELI" id="BELI" name="BELI" 
-											value="{{$header->BELI}}" placeholder=" " >
-										<label for="BELI">Beli</label>
-									</div>
-
-									<div class="col-md-1">
-									</div>
-
-									<div class="col-md-2 form-group row special-input-label">
-
-										<input type="text" class="HBNET" id="HBNET" name="HBNET" 
-											value="{{$header->HBNET}}" placeholder=" " >
-										<label for="HBNET">H.B Nett</label>
+										<input type="text" class="PMSR_PROD" id="PMSR_PROD" name="PMSR_PROD" 
+											value="{{$header->PMSR_PROD}}" placeholder=" " >
+										<label for="PMSR_PROD">Pemasaran Produk</label>
 									</div>
 								</div>
-			
-								<div class="form-group row">
-
-									<!-- code text box baru -->
-									<div class="col-md-1" >
-										<label class="form-label">Diskon :</label>
-									</div>
-									<!-- tutupannya -->
-									<div class="col-md-1 form-group row special-input-label">
-
-										<input type="text" class="DIS1" id="DIS1" name="DIS1" 
-											value="{{$header->DIS1}}" placeholder=" " >
-										<label for="DIS1">D1</label>
-									</div>
-									
-									<div class="col-md-1 form-group row special-input-label">
-
-										<input type="text" class="DIS2" id="DIS2" name="DIS2" 
-											value="{{$header->DIS2}}" placeholder=" " >
-										<label for="DIS2">D2</label>
-									</div>
-									
-									<div class="col-md-1 form-group row special-input-label">
-
-										<input type="text" class="DIS3" id="DIS3" name="DIS3" 
-											value="{{$header->DIS3}}" placeholder=" " >
-										<label for="DIS3">D3</label>
-									</div>
-									
-									<div class="col-md-1 form-group row special-input-label">
-
-										<input type="text" class="DIS4" id="DIS4" name="DIS4" 
-											value="{{$header->DIS4}}" placeholder=" " >
-										<label for="DIS4">D4</label>
-									</div>
-
-									
-									<div class="col-md-1">
-									</div>
-
-									<!-- code text box baru -->
-									<div class="col-md-1" >
-										<label for="ST_HRG" class="form-label">Status Harga</label>
-									</div>
-									<div class="col-md-1">
-										<select id="ST_HRG" class="form-control"  name="ST_HRG">
-											<option value="A" {{ ($header->ST_HRG == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->ST_HRG == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->	
-									
-									<div class="col-md-2 form-group row special-input-label">
-
-										<input type="text" class="DIS_PRO" id="DIS_PRO" name="DIS_PRO" 
-											value="{{$header->DIS_PRO}}" placeholder=" " >
-										<label for="DIS_PRO">Potongan Promosi</label>
-									</div>
-
-								</div>
-
-								<div class="form-group row">
-
-									<div class="col-md-1 form-group row special-input-label">
-
-										<input type="text" class="LS_CNT" id="LS_CNT" name="LS_CNT" 
-											value="{{$header->LS_CNT}}" placeholder=" " >
-										<label for="LS_CNT">Luas Counter</label>
-									</div>
-
-									<div class="col-md-1">
-									</div>
-
-									<div class="col-md-2 form-group row special-input-label">
-
-										<input type="text" class="DTH" id="DTH" name="DTH" 
-											value="{{$header->DTH}}" placeholder=" " >
-										<label for="DTH">Diskon Turun Harga</label>
-									</div>
-									
-									<div class="col-md-1">
-										<select id="TTH" class="form-control"  name="TTH">
-											<option value="A" {{ ($header->TTH == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->TTH == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-								</div>
-
-								<div class="form-group row">
-									
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="JN_CNT" class="form-label">Jenis Counter</label>
-									</div>
-									<div class="col-md-2">
-										<select id="JN_CNT" class="form-control"  name="JN_CNT">
-											<option value="A" {{ ($header->JN_CNT == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->JN_CNT == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-									<div class="col-md-1">
-									</div>
-
-									<!-- code text box baru -->
-									<div class="col-md-2 form-group row special-input-label">
-
-										<input type="text" class="DIST_CUST" id="DIST_CUST" name="DIST_CUST" 
-											value="{{$header->DIST_CUST}}" placeholder=" " >
-										<label for="DIST_CUST">Diskon Customer</label>
-									</div>
-									<!-- tutupannya -->
-									
-									<!-- code text box baru -->
-									<div class="col-md-1 form-group row special-input-label">
-
-										<input type="text" class="DIS_CUSN" id="DIS_CUSN" name="DIS_CUSN" 
-											value="{{$header->DIS_CUSN}}" placeholder=" " >
-									</div>
-									<!-- tutupannya -->
-								</div>
-
-
-								<div class="form-group row">
-									
-									
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="ST_CNT" class="form-label">Status Counter</label>
-									</div>
-									<div class="col-md-2">
-										<select id="ST_CNT" class="form-control"  name="ST_CNT">
-											<option value="A" {{ ($header->ST_CNT == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->ST_CNT == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-									
-									<div class="col-md-1">
-									</div>
-
-									<!-- code text box baru -->
-									<div class="col-md-2 form-group row special-input-label">
-										<input class="form-control date" id="DIS_TGLM" name="DIS_TGLM" 
-											data-date-format="dd-mm-yyyy" type="text" autocomplete="off" 
-											value="{{ $header->DIS_TGLM ? date('d-m-Y', strtotime($header->DIS_TGLM)) : date('d-m-Y') }}">
-										<label for="DIS_TGLM">Tanggal Mulai</label>
-									</div>
-									<!-- tutupannya -->
-
-									<!-- code text box baru -->
-									<div class="col-md-1" align="center">
-										<label>s/d</label>
-									</div>
-									<!-- tutupannya -->
-									
-									<!-- code text box baru -->
-									<div class="col-md-2 form-group row special-input-label">
-										<input class="form-control date" id="DIS_TGLS" name="DIS_TGLS" 
-											data-date-format="dd-mm-yyyy" type="text" autocomplete="off" 
-											value="{{ $header->DIS_TGLS ? date('d-m-Y', strtotime($header->DIS_TGLS)) : date('d-m-Y') }}">
-									</div>
-									<!-- tutupannya -->
-								</div>
-
-								<div class="form-group row">
-									
-									
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="SC_CNT" class="form-label">SPG</label>
-									</div>
-									<div class="col-md-1">
-										<select id="SC_CNT" class="form-control"  name="SC_CNT">
-											<option value="A" {{ ($header->SC_CNT == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->SC_CNT == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-								</div>
-
-								<div class="form-group row">
-									
-									
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="ST_NOTA" class="form-label">Status Nota</label>
-									</div>
-									<div class="col-md-2">
-										<select id="ST_NOTA" class="form-control"  name="ST_NOTA">
-											<option value="A" {{ ($header->ST_NOTA == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->ST_NOTA == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-									<div class="col-md-1">
-									</div>
-
-									<!-- code text box baru -->
-									<div class="col-md-1 form-group row special-input-label">
-										<input type="text" class="MARGIN" id="MARGIN" name="MARGIN" 
-											value="{{$header->MARGIN}}" placeholder=" " >
-										<label for="MARGIN">Margin</label>
-									</div>
-									<!-- tutupannya -->
-								</div>
-
-								<div class="form-group row">
-
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="ST_ORD" class="form-label">Status Order</label>
-									</div>
-									<div class="col-md-2">
-										<select id="ST_ORD" class="form-control"  name="ST_ORD">
-											<option value="A" {{ ($header->ST_ORD == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->ST_ORD == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-								</div>
-
-								<div class="form-group row">
-
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="ST_PJK" class="form-label">Status Pajak</label>
-									</div>
-									<div class="col-md-1">
-										<select id="ST_PJK" class="form-control"  name="ST_PJK">
-											<option value="A" {{ ($header->ST_PJK == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->ST_PJK == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-								</div>
-
-								
-
-								<div class="form-group row">
-
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="CBAYAR" class="form-label">Cara Bayar</label>
-									</div>
-									<div class="col-md-2">
-										<select id="CBAYAR" class="form-control"  name="CBAYAR">
-											<option value="A" {{ ($header->CBAYAR == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->CBAYAR == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-									<div class="col-md-1">
-									</div>
-									
-									<!-- code text box baru -->
-									<div class="col-md-1 form-group row special-input-label">
-										<input type="text" class="KEL_PT" id="KEL_PT" name="KEL_PT" 
-											value="{{$header->KEL_PT}}" placeholder=" " >
-										<label for="KEL_PT">Kelompok PT</label>
-									</div>
-									<!-- tutupannya -->
-
-								</div>
-
-								<div class="form-group row">
-
-									<!-- code text box baru -->
-									<div class="col-md-1 form-group row special-input-label">
-										<input type="text" class="LBAYAR" id="LBAYAR" name="LBAYAR" 
-											value="{{$header->LBAYAR}}" placeholder=" " >
-										<label for="LBAYAR">Lama Bayar</label>
-									</div>
-									<!-- tutupannya -->
-
-									<div class="col-md-1">
-									</div>
-									
-									<!-- code text box baru -->
-									<div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="KEL_BRG" id="KEL_BRG" name="KEL_BRG" 
-											value="{{$header->KEL_BRG}}" placeholder=" " >
-										<label for="KEL_BRG">Kelompok BRG</label>
-									</div>
-									<!-- tutupannya -->
-								</div>
-
-
-								<div class="form-group row">
-
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="KW_RET" class="form-label">Kwitansi Retur</label>
-									</div>
-									<div class="col-md-2">
-										<select id="KW_RET" class="form-control"  name="KW_RET">
-											<option value="A" {{ ($header->KW_RET == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->KW_RET == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-									<div class="col-md-1">
-									</div>
-									
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="BASIC" class="form-label">Basic</label>
-									</div>
-									<div class="col-md-1">
-										<select id="BASIC" class="form-control"  name="BASIC">
-											<option value="A" {{ ($header->BASIC == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->BASIC == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-								</div>
-
-								<div class="form-group row">
-
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="KW_LBL" class="form-label">Kwitansi Label</label>
-									</div>
-									<div class="col-md-2">
-										<select id="KW_LBL" class="form-control"  name="KW_LBL">
-											<option value="A" {{ ($header->KW_LBL == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->KW_LBL == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-									<div class="col-md-1">
-									</div>
-									
-									<!-- code text box baru -->
-									<div class="col-md-2" >
-										<label for="KATEGORI" class="form-label">Kategori</label>
-									</div>
-									<div class="col-md-1">
-										<select id="KATEGORI" class="form-control"  name="KATEGORI">
-											<option value="A" {{ ($header->KATEGORI == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->KATEGORI == 'N') ? 'selected' : '' }}>N</option>
-										</select>
-									</div>	
-									<!-- tutupannya -->
-
-								</div>
-
-								
-
-							</div>
-
-							
-							
-
-							
 
 							</div>
 
@@ -605,8 +337,8 @@
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
 								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/brg/edit/?idx=' .$idx. '&tipx=top')}}'" class="btn btn-outline-primary">Top</button>
-								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/brg/edit/?idx='.$header->NO_ID.'&tipx=prev&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Prev</button>
-								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/brg/edit/?idx='.$header->NO_ID.'&tipx=next&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Next</button>
+								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/brg/edit/?idx='.$header->NO_ID.'&tipx=prev&kodex='.$header->KDBAR )}}'" class="btn btn-outline-primary">Prev</button>
+								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/brg/edit/?idx='.$header->NO_ID.'&tipx=next&kodex='.$header->KDBAR )}}'" class="btn btn-outline-primary">Next</button>
 								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/brg/edit/?idx=' .$idx. '&tipx=bottom')}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">
@@ -638,20 +370,21 @@
     </div>
     <!-- /.content -->
 
-	<div class="modal fade" id="browseKotaModal" tabindex="-1" role="dialog" aria-labelledby="browseKotaModalLabel" aria-hidden="true">
+	<div class="modal fade" id="browseSupModal" tabindex="-1" role="dialog" aria-labelledby="browseSupModalLabel" aria-hidden="true">
 	 <div class="modal-dialog mw-100 w-75" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseKotaModalLabel">Cari Kota</h5>
+			<h5 class="modal-title" id="browseSupModalLabel">Cari Sup</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-kota">
+			<table class="table table-stripped table-bordered" id="table-sup">
 				<thead>
 					<tr>
-						<th>Kota</th>
+						<th>Kode</th>
+						<th>Nama Suplier</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -721,61 +454,58 @@
     		 ganti();
 		}    
 
-		// $("#TELPON1").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
-		// $("#HP").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
+		$("#QTY_BELI1").autoNumeric('init', {mDec: 0, aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("#HB").autoNumeric('init', {mDec: 0, aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("#DIS_A").autoNumeric('init', {mDec: 2, aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("DIS_B").autoNumeric('init', {mDec: 2, aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("#DIS_C").autoNumeric('init', {mDec: 2, aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		
     });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-		//CHOOSE Kota
-		var dTableBKota;
-		loadDataBKota = function(){
+		//CHOOSE Sup
+		var dTableBSup;
+		loadDataBSup = function(){
 			$.ajax(
 			{
 				type: 'GET',    
-				url: '{{url('kota/browse')}}',
+				url: '{{url('brg/browse_sup')}}',
 
 				success: function( response )
 				{
 			
 					resp = response;
-					if(dTableBKota){
-						dTableBKota.clear();
+					if(dTableBSup){
+						dTableBSup.clear();
 					}
 					for(i=0; i<resp.length; i++){
 						
-						dTableBKota.row.add([
-							'<a href="javascript:void(0);" onclick="chooseKota(\''+resp[i].KOTA+'\')">'+resp[i].KOTA+'</a>',
+						dTableBSup.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].SUPP+'\',  \''+resp[i].NAMA+'\')">'+resp[i].SUPP+'</a>',
+							resp[i].NAMA
 						]);
 					}
-					dTableBKota.draw();
+					dTableBSup.draw();
 				}
 			});
 		}
 		
-		dTableBKota = $("#table-kota").DataTable({
+		dTableBSup = $("#table-sup").DataTable({
 			
 		});
 		
-		browseKota = function(){
-			loadDataBKota();
-			$("#browseKotaModal").modal("show");
+		browseSup = function(){
+			loadDataBSup();
+			$("#browseSupModal").modal("show");
 		}
 		
-		chooseKota = function(KOTA){
-			$("#KOTA").val(KOTA);
-			$("#browseKotaModal").modal("hide");
+		chooseSup = function(SUPP, NAMA){
+			$("#SUPP").val(SUPP);
+			$("#NAMA").val(NAMA);
+			$("#browseSupModal").modal("hide");
 		}
-		
-		$("#KOTA").keypress(function(e){
-
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseKota();
-			}
-		}); 
 		
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -824,12 +554,12 @@
         if ( $tipx == 'new' )		
 		{	
 		  	
-			$("#CNT").attr("readonly", false);	
+			$("#KDBAR").attr("readonly", false);	
 
 		   }
 		else
 		{
-	     	$("#CNT").attr("readonly", true);	
+	     	$("#KDBAR").attr("readonly", true);	
 
 		   }
 		   
@@ -873,7 +603,7 @@
 	    $("#HAPUSX").attr("disabled", false);
 	    $("#CLOSEX").attr("disabled", false);
 		
-		$("#CNT").attr("readonly", true);			
+		$("#KDBAR").attr("readonly", true);			
 		$("#PLH").attr("readonly", true);	
 		$("#ALAMAT").attr("readonly", true);			
 		$("#KOTA").attr("readonly", true);		
@@ -905,7 +635,7 @@
 
 	function kosong() {
 				
-		 $('#CNT').val("");	
+		 $('#KDBAR').val("");	
 		 $('#NAMAS').val("");	
 		 $('#ALAMAT').val("");	
 		 $('#KOTA').val("");		
@@ -926,8 +656,11 @@
 		 $('#BANK_KOTA').val("");	
 		 $('#BANK_NAMA').val("");		
 		 $('#BANK_REK').val("");
-		 $('#HARI').val("0");
-		 $('#LIM').val("0");		
+		 $('#QTY_BELI1').val("0");
+		 $('#HB').val("0");		
+		 $('#DIS_A').val("0.00");		
+		 $('#DIS_B').val("0.00");		
+		 $('#DIS_C').val("0.00");		
 
 
 		 
@@ -1014,7 +747,7 @@
 			type: "GET",
 			url: "{{url('brg/cekbrg')}}",
             async: false,
-			data: ({ CNT: kodes, }),
+			data: ({ KDBAR: kodes, }),
 			success: function(data) {
                 if (data.length > 0) {
                     $.each(data, function(i, item) {
@@ -1035,11 +768,11 @@
 				
         if ( $tipx == 'new' )
 		{
-			cekSup($('#CNT').val());		
+			cekSup($('#KDBAR').val());		
 		}
 		
 
-        (hasilCek==0) ? document.getElementById("entri").submit() : alert('Suplier '+$('#CNT').val()+' sudah ada!');
+        (hasilCek==0) ? document.getElementById("entri").submit() : alert('Kode '+$('#KDBAR').val()+' sudah ada!');
 	}
 </script>
 @endsection

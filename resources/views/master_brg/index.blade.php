@@ -68,38 +68,68 @@
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="2" id="columnKode" checked>
-                                                        <label class="form-check-label" for="columnKode">Kode</label>
+                                                            value="2" id="columnItem" checked>
+                                                        <label class="form-check-label" for="columnItem">Item Supplier</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="3" id="columnNama" checked>
-                                                        <label class="form-check-label" for="columnNama">Nama</label>
+                                                            value="3" id="columnSub" checked>
+                                                        <label class="form-check-label" for="columnSub">Sub</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="4" id="columnJenis" checked>
-                                                        <label class="form-check-label" for="columnJenis">Jenis</label>
+                                                            value="4" id="columnPLU" checked>
+                                                        <label class="form-check-label" for="columnPLU">P.L.U</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="5" id="columnNota" checked>
-                                                        <label class="form-check-label" for="columnNota">Nota</label>
+                                                            value="5" id="columnNama" checked>
+                                                        <label class="form-check-label" for="columnNama">Nama Barang</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="6" id="columnHjual">
-                                                        <label class="form-check-label" for="columnHjual">H.Jual</label>
+                                                            value="6" id="columnUkuran" checked>
+                                                        <label class="form-check-label" for="columnUkuran">Ukuran</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="7" id="columnHbeli">
+                                                            value="7" id="columnKemasan" checked>
+                                                        <label class="form-check-label" for="columnKemasan">Kemasan</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="8" id="columnSupplier" checked>
+                                                        <label class="form-check-label" for="columnSupplier">Supplier</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="9" id="columnJumlah">
+                                                        <label class="form-check-label" for="columnJumlah">Jumlah</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="10" id="columnHbeli" checked>
                                                         <label class="form-check-label" for="columnHbeli">H.Beli</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="8" id="columnPajak">
-                                                        <label class="form-check-label" for="columnPajak">Pajak</label>
+                                                            value="11" id="columnDis1">
+                                                        <label class="form-check-label" for="columnDis1">Dis 1</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="12" id="columnDis2">
+                                                        <label class="form-check-label" for="columnDis2">Dis 2</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="12" id="columnDis3">
+                                                        <label class="form-check-label" for="columnDis3">Dis 3</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="13" id="columnTotal">
+                                                        <label class="form-check-label" for="columnTotal">Total</label>
                                                     </div>
                                                 </form>
                                             </div>
@@ -114,7 +144,25 @@
                                 </div>
                             
                             <!-- batas filter -->
+                                <div class="form-group">
+                                    <div class="row mb-2">
 
+                                        <div class="col-md-2">
+                                            <input type="text" id="sub" name="sub" class="form-control" placeholder="Sub">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <input type="text" id="supp" name="supp" class="form-control" placeholder="Supplier">
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <button id="btnPrint" class="btn btn-warning">
+                                                <i class="fas fa-print"></i> Print
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
                         
                                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable"
                                     id="datatable">
@@ -122,13 +170,19 @@
                                         <tr>
                                             <th scope="col" style="text-align: center">No</th>
                                             <th scope="col" style="text-align: center">-</th>
-                                            <th scope="col" style="text-align: center">Kode</th>
-                                            <th scope="col" style="text-align: center">Nama</th>
-                                            <th scope="col" style="text-align: center">Jenis</th>
-                                            <th scope="col" style="text-align: center">Nota</th>
-                                            <th scope="col" style="text-align: center">H.Jual</th>
-                                            <th scope="col" style="text-align: center">H.Beli</th>
-                                            <th scope="col" style="text-align: center">Pajak</th>
+                                            <th scope="col" style="text-align: center">Item Suplier</th>
+                                            <th scope="col" style="text-align: center">Sub</th>
+                                            <th scope="col" style="text-align: center">P.L.U</th>
+                                            <th scope="col" style="text-align: center">Nama Barang</th>
+                                            <th scope="col" style="text-align: center">Ukuran</th>
+                                            <th scope="col" style="text-align: center">Kemasan</th>
+                                            <th scope="col" style="text-align: center">Supplier</th>
+                                            <th scope="col" style="text-align: center">Jumlah</th>
+                                            <th scope="col" style="text-align: center">Harga Beli</th>
+                                            <th scope="col" style="text-align: center">Dis 1</th>
+                                            <th scope="col" style="text-align: center">Dis 2</th>
+                                            <th scope="col" style="text-align: center">Dis 3</th>
+                                            <th scope="col" style="text-align: center">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -152,6 +206,7 @@
 
     <!-- filter kolom di index -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- batas filter  -->
 
     <script>
@@ -190,31 +245,43 @@
                         name: 'action'
                     },
                     {
-                        data: 'KD_BRG',
-                        name: 'KD_BRG'
+                        data: 'ITEM_SUP',
+                        name: 'ITEM_SUP'
                     },
                     {
-                        data: 'NA_BRG',
-                        name: 'NA_BRG',
+                        data: 'SUB',
+                        name: 'SUB'
+                    },
+                    {
+                        data: 'PLU',
+                        name: 'PLU'
+                    },
+                    {
+                        data: 'NMBAR',
+                        name: 'NMBAR',
                         render: function(data) {
                             return '<span class="badge badge-pill badge-warning">' + data +
                                 '</span>';
                         }
                     },
                     {
-                        data: 'JNS',
-                        name: 'JNS'
+                        data: 'KET_UK',
+                        name: 'KET_UK'
                     },
                     {
-                        data: 'ST_NOTA',
-                        name: 'ST_NOTA'
+                        data: 'KET_KEM',
+                        name: 'KET_KEM'
                     },
-                    {data: 'HJUAL', name: 'HJUAL', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                    {data: 'HBELI', name: 'HBELI', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
                     {
-                        data: 'ST_PJK',
-                        name: 'ST_PJK'
-                    }
+                        data: 'SUPP',
+                        name: 'SUPP'
+                    },
+                    {data: 'QTY_BELI1', name: 'QTY_BELI1', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                    {data: 'HB', name: 'HB', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                    {data: 'DIS_A', name: 'DIS_A', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},			
+                    {data: 'DIS_B', name: 'DIS_B', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                    {data: 'DIS_C', name: 'DIS_C', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                    {data: 'TOT_BL', name: 'TOT_BL', render: $.fn.dataTable.render.number( ',', '.', 0, '' )}
                 ],
                 columnDefs: [
                     {
@@ -223,7 +290,7 @@
                     },
                     {
                         "className": "dt-right", 
-                        "targets": [6,7]
+                        "targets": [9,10,11,12,13,14]
                     }		
                 ],
                 dom: "<'row'<'col-md-6'><'col-md-6'>>" +
@@ -253,6 +320,38 @@
             $("div.test_btn").html(
                 '<a class="btn btn-lg btn-md btn-success" href="{{ url('brg/edit?idx=0&tipx=new') }}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
             );
+
+            $('#btnPrint').on('click', function() {
+				let sub = $('#sub').val();
+                let supp = $('#supp').val();
+
+				// if (!sub) {
+				// 	Swal.fire({
+				// 		icon: 'warning',
+				// 		title: 'Sub belum diisi!',
+				// 		text: 'Silakan isi Sub terlebih dahulu sebelum mencetak data.',
+				// 		confirmButtonText: 'OK',
+				// 		confirmButtonColor: '#3085d6'
+				// 	});
+				// 	return;
+				// }
+
+				Swal.fire({
+					title: 'Cetak Data Barang?',
+					text: "Laporan akan dibuka di tab baru sesuai filter Sub yang dipilih.",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonText: 'Ya, Cetak!',
+					cancelButtonText: 'Batal',
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// buka jasper report di tab baru
+						window.open(`{{ url('brg/print') }}?sub=${sub}&supp=${supp}`, '_blank');
+					}
+				});
+			});
         });
         // Open modal programmatically
         // document.querySelector('.btn-primary').addEventListener('click', function(e) {
