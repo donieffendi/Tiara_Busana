@@ -159,11 +159,11 @@
                                         </div>
 
                                         <div class="col-md-2" id="filterSub" style="display:none;">
-                                            <input type="text" id="sub" name="sub" class="form-control" placeholder="Sub">
+                                            <input type="text" id="sub" name="sub" class="form-control" placeholder="Masukkan Sub">
                                         </div>
 
                                         <div class="col-md-3" id="filterSupp" style="display:none;">
-                                            <input type="text" id="supp" name="supp" class="form-control" placeholder="Supplier">
+                                            <input type="text" id="supp" name="supp" class="form-control" placeholder="Masukkan Kode Supplier">
                                         </div>
 
                                         <div class="col-md-2">
