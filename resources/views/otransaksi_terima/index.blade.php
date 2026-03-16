@@ -162,9 +162,8 @@
              <!-- batas filter -->
 
 				        <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
-				        <input name="golz"  class="form-control golz" id="golz" value="{{$golz}}" hidden >
             
-            <form method="POST" action="{{ url('terima/batal_post?flagz='.$flagz.'&golz='.$golz.'') }}" id="form-batal-post">
+            <form method="POST" action="{{ url('terima/batal_post?flagz='.$flagz.'') }}" id="form-batal-post">
             @csrf
 
 
@@ -240,7 +239,6 @@
 				        data: 
                 {
                     flagz : $('#flagz').val(),
-                    golz : $('#golz').val(),
 				   
                 }
             },
@@ -282,10 +280,10 @@
                   }
                 },
                 { data: 'NO_PO', name: 'NO_PO'},
-                { data: 'TOTAL_QTY', name: 'TOTAL_QTY', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'TOTAL', name: 'TOTAL', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'NETT', name: 'NETT', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'USRNM', name: 'USRNM'},
+                { data: 'total_qty', name: 'total_qty', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                { data: 'total', name: 'total', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                { data: 'nett', name: 'nett', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                { data: 'usrnm', name: 'usrnm'},
                 { data: 'POSTED', name: 'POSTED',
                   render : function(data, type, row, meta) {
                     if(row['POSTED']=="0"){
@@ -336,13 +334,13 @@
         
         // batas filter
 		
-        // $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('terima/edit?flagz='.$flagz.'&golz='.$golz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
+        // $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('terima/edit?flagz='.$flagz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
         $("div.test_btn").html(`
             <div class="d-flex align-items-center" style="gap: 1rem;">
-                <a class="btn btn-success btn-md" href="{{ url('terima/edit?flagz=' . $flagz . '&golz=' . $golz . '&idx=0&tipx=new') }}">
+                <a class="btn btn-success btn-md" href="{{ url('terima/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
                     <i class="fas fa-plus fa-sm"></i>
                 </a>
-                <button type="submit" form="form-batal-post" class="btn btn-danger btn-md">
+                <button hidden type="submit" form="form-batal-post" class="btn btn-danger btn-md">
                     <i class="fa fa-ban"></i> BATAL POST
                 </button>
             </div>

@@ -27,26 +27,14 @@ class TerimaController extends Controller
 	 
     var $judul = '';
     var $FLAGZ = '';
-    var $GOLZ = '';
 	
     function setFlag(Request $request)
     {
-        if ( $request->flagz == 'TR' && $request->golz == 'RM' ) {
+        if ( $request->flagz == 'RM') {
             $this->judul = "Terima Retur Outlet";
-        } else if ( $request->flagz == 'RB' && $request->golz == 'B' ) {
-            $this->judul = "Retur Pemkiriman Bahan Baku";
-        } else if ( $request->flagz == 'BL' && $request->golz == 'J' ) {
-            $this->judul = "Pemkiriman Barang";
-        } else if ( $request->flagz == 'RB' && $request->golz == 'J' ) {
-            $this->judul = "Retur Pemkiriman Barang";
-        } else if ( $request->flagz == 'BL' && $request->golz == 'N' ) {
-            $this->judul = "Pemkiriman Non";
-        } else if ( $request->flagz == 'RB' && $request->golz == 'N' ) {
-            $this->judul = "Retur Pemkiriman Non";
         } 
 		
         $this->FLAGZ = $request->flagz;
-        $this->GOLZ = $request->golz;
         
 
 
@@ -58,7 +46,7 @@ class TerimaController extends Controller
 
 	    $this->setFlag($request);
         // ganti 3
-        return view('otransaksi_terima.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ , 'golz' => $this->GOLZ]);
+        return view('otransaksi_terima.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
 	
 		
     }
@@ -78,7 +66,7 @@ class TerimaController extends Controller
 		$PPN = Auth::user()->PPN;
 
         $terima = DB::SELECT("SELECT distinct retur.NO_BUKTI , retur.KODES, retur.NAMAS, 
-		                  retur.ALAMAT, retur.KOTA, retur.PKP, retur.NO_PO, retur.GUDANG from retur, returd 
+		                  retur.ALAMAT, retur.KOTA, retur.PKP, retur.NO_PO, retur.GUDANG from bretur, returd 
                           WHERE retur.NO_BUKTI = returd.NO_BUKTI AND retur.FLAG='BL' 
                           AND retur.GOL ='$golz'
                           AND retur.CBG = '$CBG'
@@ -94,7 +82,7 @@ class TerimaController extends Controller
         $terimad = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.SISA, 
                             a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, a.PPN, a.DPP, a.DISK,
                             a.QTY2 AS XQTY, a.KALI
-                        from returd a, brg b 
+                        from breturd a, brg b 
                         where a.NO_BUKTI='".$request->nobukti."' AND a.KD_BRG = b.KD_BRG");
 
 		return response()->json($terimad);
@@ -116,13 +104,41 @@ class TerimaController extends Controller
 		}
 		
 		$terima = DB::SELECT("SELECT NO_BUKTI, TGL, KODES, 
-		            NAMAS, NETT as TOTAL, BAYAR, SISA from retur  WHERE terima.CBG = '$CBG' and SISA <> 0
+		            NAMAS, NETT as TOTAL, BAYAR, SISA from bretur  WHERE terima.CBG = '$CBG' and SISA <> 0
 		            $filterkodes 
                     ORDER BY NO_BUKTI ");
  
         return response()->json($terima);
     }
 	
+    public function browse_brg(Request $request)
+    {   
+        // $KD_BRG = $request->KD_BRG;
+		$SUPP = $request->KODES;
+        $beli = DB::SELECT("SELECT CONCAT(SUB,KDBAR) AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, KET_KEM AS SATUAN, MARGIN 
+                            FROM nwmasbar 
+                            WHERE SUPP = '$SUPP'");
+        return response()->json($beli);
+    }
+
+    public function browse_sup(Request $request)
+    {
+
+    	$beli = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA 
+                            FROM nwmassup");
+		
+        return response()->json($beli);
+    }
+
+
+    public function browse_cnt(Request $request)
+    {
+
+    	$beli = DB::SELECT("SELECT CNT, NA_CNT AS NCNT 
+                            FROM cntbsn");
+		
+        return response()->json($beli);
+    }
     // ganti 4
 
 
@@ -139,13 +155,13 @@ class TerimaController extends Controller
 
 		$this->setFlag($request);	
         
+        $FLAG = $this->FLAGZ;
 		$CBG = Auth::user()->CBG;
-		$PPN = Auth::user()->PPN;
 
-        $terima = DB::SELECT("SELECT no_bukti, tgl, kodes, namas, no_po, total_qty, total, nett, usrnm, posted,outlet
+        $terima = DB::SELECT("SELECT NO_BUKTI, TGL, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, OUTLET, flag
                             FROM BRETUR
                             where PER = '$periode' AND CBG='$CBG' AND FLAG= '$FLAG' 
-                            order by no_bukti
+                            order by NO_BUKTI
                           ");
 
 	   
@@ -157,19 +173,19 @@ class TerimaController extends Controller
                 if ( (Auth::user()->divisi=="programmer" ) || (Auth::user()->divisi=="gudang" ))
 				{
                     //CEK POSTED di index dan edit
-                    $url = "'".url("terima/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG . "&golz=" . $row->GOL)."'";
+                    $url = "'".url("terima/delete/" . $row->NO_ID . "/?flagz=" . $row->flag)."'";
 
-                    // $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="terima/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';					
+                    // $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="terima/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';					
                     if (Auth::user()->divisi == 'gudang') {
                         // khusus gudang, cek CETAK
                         $btnEdit = ($row->CETAK == 1)
                             ? ' onclick="alert(\'LPB ini sudah dicetak, tidak bisa edit.\')" href="#" '
-                            : ' href="terima/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';
+                            : ' href="terima/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
                     } else {
                         // user lain, tetap cek POSTED
                         $btnEdit = ($row->POSTED == 1)
                             ? ' onclick="alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" '
-                            : ' href="terima/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';
+                            : ' href="terima/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
                     }
                     
                     
@@ -269,75 +285,37 @@ class TerimaController extends Controller
             // GANTI 9
 
             [
- //               'NO_PO'       => 'required',
                 'TGL'      => 'required',
-                'KODES'       => 'required'
 
             ]
         );
 
         //////     nomer otomatis
-        
-        $kodesx = $request->KODES;
-        
-        $xxx= DB::table('sup')->select('PKP')->where('KODES', $kodesx)->get();
-
-        $PPN = $xxx[0]->PKP ;
-        
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
-        $GOLZ = $this->GOLZ;
         $judul = $this->judul;
 		
         $CBG = Auth::user()->CBG;
- 
 
+        $CBG_KODE = DB::table('toko')
+            ->where('KODE', $CBG)
+            ->value('TYPE');
+		
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('retur')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', $FLAGZ )->where('GOL', $GOLZ )->where('CBG', $CBG)
-                    ->orderByDesc('NO_BUKTI')->limit(1)->get();
+        $query = DB::table('bretur')->select('NO_BUKTI')->where('PER', $periode)->where('flag', $FLAGZ)->where('CBG', $CBG)
+                ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
-        if ($FLAGZ=='TR') {
-
-            if( $GOLZ =='RM' ){
-
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = 'RM'  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = 'RM'  . $CBG . $tahun . $bulan . '-0001';
-                }
-
-            } elseif ( $GOLZ =='' ) {
-
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-0001';
-                }
-                
-            } elseif ( $GOLZ =='' ){
-
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-0001';
-                }
-                
-            }
-
-        } 
-        
-
-		
+        if ($query != '[]') {
+            $query = substr($query[0]->NO_BUKTI, -4);
+            $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+            $no_bukti = $FLAGZ . $tahun . $bulan . '-' . $query . $CBG_KODE;
+        } else {
+            $no_bukti = $FLAGZ . $tahun . $bulan . '-0001' . $CBG_KODE;
+        }
 //////////////////////////////////////////////////////////////////////////
        
 
@@ -367,18 +345,16 @@ class TerimaController extends Controller
                 'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
                 'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
                 'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
-                'FLAG'             => $FLAGZ,					
-                'GOL'              => $GOLZ,					
-                'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],				
+                'flag'             => $FLAGZ,				
+                'notes'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],				
                 'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
                 'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
                 'DPP'              => (float) str_replace(',', '', $request['TDPP']),
-                'PPN'              => (float) str_replace(',', '', $request['TPPN']),
-                'NETT'             => (float) str_replace(',', '', $request['TNETT']),
+                'ppn'              => (float) str_replace(',', '', $request['TPPN']),
+                'nett'             => (float) str_replace(',', '', $request['TNETT']),
 				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
-                'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
-				'created_by'       => Auth::user()->username,
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
                 'CBG'              => $CBG,
                 
             ]
@@ -389,7 +365,8 @@ class TerimaController extends Controller
 		$KD_BRG     = $request->input('KD_BRG');
         $BARCODE    = $request->input('BARCODE');
         $NA_BRG     = $request->input('NA_BRG');
-        $JNS        = $request->input('JNS');
+        $SATUAN     = $request->input('SATUAN');
+        $QTYK        = $request->input('QTYK');
         $QTY        = $request->input('QTY');
         $HARGA      = $request->input('HARGA');
         $MARGIN     = $request->input('MARGIN');
@@ -409,28 +386,26 @@ class TerimaController extends Controller
                 $detail    = new terimadetail;
 
                 // Insert ke Database
-                $detail->NO_BUKTI    = $no_bukti;
-                $detail->REC         = $REC[$key];
-                $detail->PER         = $periode;
-                $detail->FLAG        = $FLAGZ;		
-                $detail->GOL         = $GOLZ;		
-                $detail->CBG         = $CBG;		
-               
+                $detail->no_bukti    = $no_bukti;
+                $detail->rec         = $REC[$key];
+                $detail->per         = $periode;
+                $detail->flag        = $FLAGZ;
                 $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
                 $detail->BARCODE     = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];			
-                $detail->JNS         = ($JNS[$key] == null) ? "" :  $JNS[$key];			
-                $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);			
-                $detail->HARGA       = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->satuan      = ($SATUAN[$key] == null) ? "" :  $SATUAN[$key];			
+                $detail->qtyk         = (float) str_replace(',', '', $QTYK[$key]);			
+                $detail->qty         = (float) str_replace(',', '', $QTY[$key]);			
+                $detail->harga       = (float) str_replace(',', '', $HARGA[$key]);
                 $detail->MARGIN      = (float) str_replace(',', '', $MARGIN[$key]);			
                 $detail->DISKON1     = (float) str_replace(',', '', $DISKON1[$key]);
                 $detail->DISKON2     = (float) str_replace(',', '', $DISKON2[$key]);
                 $detail->DISKON3     = (float) str_replace(',', '', $DISKON3X[$key]);
                 $detail->DISKON4     = (float) str_replace(',', '', $DISKON4[$key]);
-                $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]);
+                $detail->total       = (float) str_replace(',', '', $TOTAL[$key]);
                 $detail->HARGA_JL    = (float) str_replace(',', '', $HARGA_JL[$key]); 
                 $detail->BLT         = (float) str_replace(',', '', $BLT[$key]); 	
-				$detail->KET         = ($KET[$key] == null) ? "" :  $KET[$key];				
+				$detail->ket         = ($KET[$key] == null) ? "" :  $KET[$key];				
                 $detail->save();
             }
         }	
@@ -440,23 +415,16 @@ class TerimaController extends Controller
 		
 		$terima = Terima::where('NO_BUKTI', $no_buktix )->first();
 
-
-
-        DB::SELECT("UPDATE retur, sup
-                    SET retur.NAMAS = sup.NAMAS, retur.ALAMAT = sup.ALAMAT, retur.KOTA = sup.KOTA, retur.PKP=sup.PKP  WHERE retur.KODES = sup.KODES 
-                    AND retur.NO_BUKTI='$no_buktix';");
-                    
-
-        DB::SELECT("UPDATE retur,  returd
-                            SET  returd.ID = retur.NO_ID  WHERE  retur.NO_BUKTI =  returd.NO_BUKTI 
-							AND  retur.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE bretur,  breturd
+                            SET  breturd.ID = bretur.NO_ID  WHERE  bretur.NO_BUKTI =  breturd.no_bukti 
+							AND  bretur.NO_BUKTI='$no_buktix';");
 
 		
 
         $variablell = DB::select('call terimains(?)', array($no_buktix));
        
         // return redirect('/terima/edit/?idx=' . $terima->NO_ID . '&tipx=edit&flagz=' . $FLAGZ . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '');
-        return redirect('/terima?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
+        return redirect('/terima?flagz='.$FLAGZ)->with(['status' => 'Data berhasil disimpan!', 'flagz' => $FLAGZ ]);
 
 					
     }
@@ -472,13 +440,13 @@ class TerimaController extends Controller
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
 		
 				
-        $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
-        if ($cekperid[0]->POSTED==1)
-        {
-            return redirect('/terima')
-			       ->with('status', 'Maaf Periode sudah ditutup!')
-                   ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ]);
-        }
+        // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
+        // if ($cekperid[0]->POSTED==1)
+        // {
+        //     return redirect('/terima')
+		// 	       ->with('status', 'Maaf Periode sudah ditutup!')
+        //            ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ]);
+        // }
 		
 		$this->setFlag($request);
 		
@@ -502,12 +470,12 @@ class TerimaController extends Controller
 		   	
     	   $buktix = $request->buktix;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from retur
-		                 where PER ='$per' and FLAG ='$this->FLAGZ' 
-                         and GOL ='$this->GOLZ' 
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+		                 where PER ='$per' and flag ='$this->FLAGZ' 
+                          
 						 and NO_BUKTI = '$buktix'						 
 		                 and CBG = '$CBG' 
-                         and PKP = '$PPN'
+                         
                          ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
 			
@@ -526,11 +494,11 @@ class TerimaController extends Controller
 		if ($tipx=='top') {
 			
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from retur 
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur 
 		                 where PER ='$per' 
-						 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'    
+						 and flag ='$this->FLAGZ'     
 		                 and CBG = '$CBG' 
-                         and PKP = '$PPN'
+                         
                          ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
 		
@@ -551,11 +519,11 @@ class TerimaController extends Controller
 			
     	   $buktix = $request->buktix;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from retur     
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur     
 		             where PER ='$per' 
-					 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'  and NO_BUKTI < 
+					 and flag ='$this->FLAGZ'   and NO_BUKTI < 
 					'$buktix' and CBG = '$CBG'
-                    and PKP = '$PPN'
+                    
                     ORDER BY NO_BUKTI DESC LIMIT 1" );
 			
 
@@ -576,11 +544,11 @@ class TerimaController extends Controller
 				
       	   $buktix = $request->buktix;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from retur    
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur    
 		             where PER ='$per'  
-					 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ' and NO_BUKTI > 
+					 and flag ='$this->FLAGZ'  and NO_BUKTI > 
 					 '$buktix' and CBG = '$CBG'
-                         and PKP = '$PPN'
+                         
                           ORDER BY NO_BUKTI ASC LIMIT 1" );
 					 
 			if(!empty($bingco)) 
@@ -597,11 +565,11 @@ class TerimaController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from retur
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 						where PER ='$per'
-						and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'   
+						and flag ='$this->FLAGZ'    
 		                and CBG = '$CBG' 
-                         and PKP = '$PPN'
+                         
                          ORDER BY NO_BUKTI DESC  LIMIT 1" );
 					 
 			if(!empty($bingco)) 
@@ -640,7 +608,7 @@ class TerimaController extends Controller
 		 }
 
         $no_bukti = $terima->NO_BUKTI;
-        $terimadetail = DB::table('returd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
+        $terimadetail = DB::table('breturd')->where('no_bukti', $no_bukti)->orderBy('REC')->get();
 		
 		$data = [
             'header'        => $terima,
@@ -650,7 +618,7 @@ class TerimaController extends Controller
  
          
          return view('otransaksi_terima.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul, 'golz' => $this->GOLZ ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
       
     }
 
@@ -674,12 +642,7 @@ class TerimaController extends Controller
             [
 
                 // ganti 19
-
- //               'NO_PO'       => 'required',
                 'TGL'      => 'required',
-                'KODES'       => 'required'
-
-
             ]
         );
 
@@ -717,20 +680,16 @@ class TerimaController extends Controller
                 'BASIC'            => ($request['BASIC'] == null) ? "" : $request['BASIC'],
                 'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
                 'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
-                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
-                'FLAG'             => $FLAGZ,					
-                'GOL'              => $GOLZ,					
-                'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],				
+                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],					
+                'notes'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],				
                 'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
                 'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
                 'DPP'              => (float) str_replace(',', '', $request['TDPP']),
-                'PPN'              => (float) str_replace(',', '', $request['TPPN']),
-                'NETT'             => (float) str_replace(',', '', $request['TNETT']),
+                'ppn'              => (float) str_replace(',', '', $request['TPPN']),
+                'nett'             => (float) str_replace(',', '', $request['TNETT']),
 				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
-                'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
-				'created_by'       => Auth::user()->username,
-                'CBG'              => $CBG,
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
             ]
         );
 
@@ -746,7 +705,8 @@ class TerimaController extends Controller
 		$KD_BRG     = $request->input('KD_BRG');
         $BARCODE    = $request->input('BARCODE');
         $NA_BRG     = $request->input('NA_BRG');
-        $JNS        = $request->input('JNS');
+        $SATUAN     = $request->input('SATUAN');
+        $QTYK       = $request->input('QTYK');
         $QTY        = $request->input('QTY');
         $HARGA      = $request->input('HARGA');
         $MARGIN     = $request->input('MARGIN');
@@ -759,67 +719,64 @@ class TerimaController extends Controller
         $BLT        = $request->input('BLT');	
         $KET = $request->input('KET');			
 
-        $query = DB::table('returd')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
+        $query = DB::table('breturd')->where('no_bukti', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
             // Insert jika NO_ID baru
             if ($NO_ID[$i] == 'new') {
-                $insert = terimadetail::create(
+                $insert = TerimaDetail::create(
                     [
-                        'NO_BUKTI'   => $request->NO_BUKTI,
-                        'REC'        => $REC[$i],
-                        'PER'        => $periode,
-                        'FLAG'       => $this->FLAGZ,
-                        'GOL'        => $this->GOLZ,
-                        'CBG'        => $CBG,
+                        'no_bukti'   => $request->NO_BUKTI,
+                        'rec'        => $REC[$i],
+                        'per'        => $periode,
+                        'flag'       => $this->FLAGZ,
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
                         'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
-                        'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],						
-                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'satuan'     => ($SATUAN[$i] == null) ? "" :  $SATUAN[$i],						
+                        'qtyk'        => (float) str_replace(',', '', $QTYK[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
                         'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
                         'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
                         'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
                         'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
                         'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),			
-                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),				
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),				
                         'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
                         'BLT'        => (float) str_replace(',', '', $BLT[$i]),
-                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],	
+                        'ket'        => ($KET[$i] == null) ? "" :  $KET[$i],	
 						
                     ]
                 );
             } else {
                 // Update jika NO_ID sudah ada
-                $upsert = terimadetail::updateOrCreate(
+                $upsert = TerimaDetail::updateOrCreate(
                     [
-                        'NO_BUKTI'  => $request->NO_BUKTI,
+                        'no_bukti'  => $request->NO_BUKTI,
                         'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
                     ],
 
                     [
-                        'REC'        => $REC[$i],
+                        'rec'        => $REC[$i],
 
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
                         'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
-                        'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],						
-                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'satuan'     => ($SATUAN[$i] == null) ? "" :  $SATUAN[$i],						
+                        'qtyk'       => (float) str_replace(',', '', $QTYK[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
                         'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
                         'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
                         'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
                         'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
                         'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),			
-                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),				
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),				
                         'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
                         'BLT'        => (float) str_replace(',', '', $BLT[$i]),
-                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
-                        'FLAG'       => $this->FLAGZ,
-                        'GOL'        => $this->GOLZ,
-                        'CBG'        => $CBG,						
+                        'ket'        => ($KET[$i] == null) ? "" :  $KET[$i],					
                     ]
                 );
             }
@@ -832,20 +789,14 @@ class TerimaController extends Controller
 
         $no_bukti = $terima->NO_BUKTI;
 
-
-        DB::SELECT("UPDATE retur, sup
-                    SET retur.NAMAS = sup.NAMAS, retur.ALAMAT = sup.ALAMAT, retur.KOTA = sup.KOTA, retur.PKP=sup.PKP  WHERE retur.KODES = sup.KODES 
-                    AND retur.NO_BUKTI='$no_buktix';");
-                    
-
-        DB::SELECT("UPDATE retur,  returd
-                    SET  returd.ID =  retur.NO_ID  WHERE  retur.NO_BUKTI =  returd.NO_BUKTI 
-                    AND  retur.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE bretur,  breturd
+                    SET  breturd.ID =  bretur.NO_ID  WHERE  bretur.NO_BUKTI =  breturd.no_bukti 
+                    AND  bretur.NO_BUKTI='$no_bukti';");
 
         $variablell = DB::select('call terimains(?)', array($terima['NO_BUKTI']));
         
         // return redirect('/terima/edit/?idx=' . $terima->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul .  '&golz=' . $this->GOLZ . '');	
-        return redirect('/terima?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
+        return redirect('/terima?flagz='.$FLAGZ)->with(['status' => 'Data berhasil disimpan', 'flagz' => $FLAGZ ]);
 		
 	   
     }
@@ -868,13 +819,13 @@ class TerimaController extends Controller
         $judul = $this->judul;
 		
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
-        $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
-        if ($cekperid[0]->POSTED==1)
-        {
-            return redirect()->route('terima')
-                ->with('status', 'Maaf Periode sudah ditutup!')
-                ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
-        }
+        // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
+        // if ($cekperid[0]->POSTED==1)
+        // {
+        //     return redirect()->route('terima')
+        //         ->with('status', 'Maaf Periode sudah ditutup!')
+        //         ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
+        // }
 		
 		
        $variablell = DB::select('call terimadel(?)', array($terima['NO_BUKTI']));//
@@ -890,7 +841,7 @@ class TerimaController extends Controller
 
         // ganti 
 
-       return redirect('/terima?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ ])->with('statusHapus', 'Data '.$terima->NO_BUKTI.' berhasil dihapus');
+       return redirect('/terima?flagz='.$FLAGZ)->with(['flagz' => $FLAGZ])->with('statusHapus', 'Data '.$terima->NO_BUKTI.' berhasil dihapus');
 
 
     }

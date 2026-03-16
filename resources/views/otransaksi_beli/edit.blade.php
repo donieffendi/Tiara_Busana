@@ -680,6 +680,28 @@
 		{
 			 ganti();			
 		} 
+
+		$('#TGL').on('change', function(){
+
+			let tgl = $(this).val();
+
+			if(tgl != ''){
+				let parts = tgl.split('-'); // dd-mm-yyyy
+
+				let date = new Date(parts[2], parts[1]-1, parts[0]);
+				date.setDate(date.getDate() + 30);
+
+				let dd = String(date.getDate()).padStart(2,'0');
+				let mm = String(date.getMonth()+1).padStart(2,'0');
+				let yyyy = date.getFullYear();
+
+				$('#JTEMPO').val(dd + '-' + mm + '-' + yyyy);
+			}
+
+		});
+
+		// jalankan saat halaman pertama dibuka
+		$('#TGL').trigger('change');
 		
 		$("#TTOTAL_QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#TTOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});

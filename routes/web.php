@@ -325,6 +325,9 @@ Route::get('/terima', 'App\Http\Controllers\OTransaksi\TerimaController@index')-
 Route::post('/terima/store', 'App\Http\Controllers\OTransaksi\TerimaController@store')->middleware(['auth'])->name('terima/store');
 Route::get('/terima/create', 'App\Http\Controllers\OTransaksi\TerimaController@create')->middleware(['auth'])->name('terima/create');
 Route::get('/get-terima', 'App\Http\Controllers\OTransaksi\TerimaController@getTerima')->middleware(['auth'])->name('get-terima');
+Route::get('/terima/browse_cnt', 'App\Http\Controllers\OTransaksi\TerimaController@browse_cnt')->middleware(['auth'])->name('terima/browse_cnt');
+Route::get('/terima/browse_brg', 'App\Http\Controllers\OTransaksi\TerimaController@browse_brg')->middleware(['auth'])->name('terima/browse_brg');
+Route::get('/terima/browse_sup', 'App\Http\Controllers\OTransaksi\TerimaController@browse_sup')->middleware(['auth'])->name('terima/browse_sup');
 Route::get('/rterima', 'App\Http\Controllers\OReport\RTerimaController@report')->middleware(['auth'])->name('rterima');
 Route::get('/get-terima-report', 'App\Http\Controllers\OReport\RTerimaController@getTerimaReport')->middleware(['auth'])->name('get-terima-report');
 
@@ -980,12 +983,6 @@ Route::get('/pakai/show/{pakai}', 'App\Http\Controllers\OTransaksi\PakaiControll
 Route::post('/pakai/update/{pakai}', 'App\Http\Controllers\OTransaksi\PakaiController@update')->name('pakai.update');
 Route::get('/pakai/delete/{pakai}', 'App\Http\Controllers\OTransaksi\PakaiController@destroy')->name('pakai.delete');
 
-// Terima
-Route::get('/terima/show/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@show')->name('terimaid');
-//Route::get('/terima/edit/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@edit')->name('terima.edit');
-Route::post('/terima/update/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@update')->name('terima.update');
-Route::get('/terima/delete/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@destroy')->name('terima.delete');
-
 
 // Beli
 Route::get('/beli/show/{beli}', 'App\Http\Controllers\OTransaksi\BeliController@show')->name('beliid');
@@ -1059,13 +1056,6 @@ Route::get('/piun/show/{piun}', 'App\Http\Controllers\OTransaksi\PiunController@
 Route::get('/piun/edit/{piun}', 'App\Http\Controllers\OTransaksi\PiunController@edit')->name('piun.edit');
 Route::post('/piun/update/{piun}', 'App\Http\Controllers\OTransaksi\PiunController@update')->name('piun.update');
 Route::get('/piun/delete/{piun}', 'App\Http\Controllers\OTransaksi\PiunController@destroy')->name('piun.delete');
-
-
-// Terima
-Route::get('/terima/show/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@show')->name('terimaid');
-//Route::get('/terima/edit/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@edit')->name('terima.edit');
-Route::post('/terima/update/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@update')->name('terima.update');
-Route::get('/terima/delete/{terima}', 'App\Http\Controllers\OTransaksi\TerimaController@destroy')->name('terima.delete');
 
 
 // Operational Memo

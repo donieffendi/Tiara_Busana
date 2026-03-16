@@ -5,23 +5,79 @@ namespace App\Models\OTransaksi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+//ganti 1
 class Terima extends Model
 {
     use HasFactory;
 
-    protected $table = 'retur';
+// ganti 2
+    protected $table = 'bretur';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
+//ganti 3
     protected $fillable = 
     [
-        "NO_BUKTI","TGL", "CNT", "NCNT", "POSTED",
-        "NO_PO", "FLAG", "GOL", "PER","KODES", "NAMAS",
-        "REF", "MARGIN", "ST_NOTA", "ST_CNT", "POT_PROM",
-        "KK_STS", "BASIC", "JTEMPO", "ST_PJK", "FORMAL",
-        "NOTA_KHS", "NOTES", "BAYAR",
-		"USRNM", "TG_SMP", "JUMLAH", "PROM", "DPP",
-        "PPN", "NETT", "CBG"
+        "NO_BUKTI",
+        "BKTK",
+        "NO_TGZ",
+        "REF",
+        "NO_PO",
+        "KODES",
+        "NAMAS",
+        "NO_TAGI",
+        "NO_HUT",
+        "NO_PJK",
+        "TGL",
+        "TGLA",
+        "JTEMPO",
+        "HARI",
+        "PER",
+        "GOLONGAN",
+        "alamat",
+        "kota",
+        "wilayah",
+        "via",
+        "notes",
+        "POSTED",
+        "tgl_posted",
+        "usrnm",
+        "total_qty",
+        "flag",
+        "total",
+        "BPROM",
+        "PROM",
+        "ppn",
+        "nett",
+        "ppnym",
+        "na_file",
+        "TERM",
+        "disc",
+        "tg_smp",
+        "GOL",
+        "CBG",
+        "LAIN",
+        "SISA",
+        "BAYAR",
+        "EXP",
+        "TYPE",
+        "KURIR",
+        "DIVISI",
+        "NO_LAMA",
+        "CNT",
+        "NCNT",
+        "MARGIN",
+        "POT_PROM",
+        "ST_PJK",
+        "ST_NOTA",
+        "KK_STS",
+        "FORMAL",
+        "St_CNT",
+        "BASIC",
+        "NOTA_KHS",
+        "DPP",
+        "HPS",
+        "TYP"
     ];
 }
-
