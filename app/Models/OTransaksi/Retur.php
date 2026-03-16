@@ -12,15 +12,72 @@ class Retur extends Model
     use HasFactory;
 
 // ganti 2
-    protected $table = 'retur';
+    protected $table = 'bretur';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
 //ganti 3
     protected $fillable = 
     [
-        "NO_BUKTI", "TGL", "PER", "FLAG", "NOTES",
-        "TOTAL_QTY", "TOTAL",
-		"USRNM", "TG_SMP", "CBG", "CNT", "NCNT"
+        "NO_BUKTI",
+        "BKTK",
+        "NO_TGZ",
+        "REF",
+        "NO_PO",
+        "KODES",
+        "NAMAS",
+        "NO_TAGI",
+        "NO_HUT",
+        "NO_PJK",
+        "TGL",
+        "TGLA",
+        "JTEMPO",
+        "HARI",
+        "PER",
+        "GOLONGAN",
+        "alamat",
+        "kota",
+        "wilayah",
+        "via",
+        "notes",
+        "POSTED",
+        "tgl_posted",
+        "usrnm",
+        "total_qty",
+        "flag",
+        "total",
+        "BPROM",
+        "PROM",
+        "ppn",
+        "nett",
+        "ppnym",
+        "na_file",
+        "TERM",
+        "disc",
+        "tg_smp",
+        "GOL",
+        "CBG",
+        "LAIN",
+        "SISA",
+        "BAYAR",
+        "EXP",
+        "TYPE",
+        "KURIR",
+        "DIVISI",
+        "NO_LAMA",
+        "CNT",
+        "NCNT",
+        "MARGIN",
+        "POT_PROM",
+        "ST_PJK",
+        "ST_NOTA",
+        "KK_STS",
+        "FORMAL",
+        "St_CNT",
+        "BASIC",
+        "NOTA_KHS",
+        "DPP",
+        "HPS",
+        "TYP"
     ];
 }

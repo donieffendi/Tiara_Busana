@@ -234,11 +234,11 @@
                 {data: 'CNT', name: 'CNT'},
                 {data: 'NCNT', name: 'NCNT'},
                 {
-                  data: 'QTY',
-                  name: 'QTY',
+                  data: 'total_qty',
+                  name: 'total_qty',
                   render: $.fn.dataTable.render.number( ',', '.', 0, '' )
 				},								
-                {data: 'NOTES', name: 'NOTES'},
+                {data: 'notes', name: 'notes'},
             ],
             columnDefs: 
             [

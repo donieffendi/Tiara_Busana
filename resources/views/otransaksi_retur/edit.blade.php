@@ -74,7 +74,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{($tipx=='new')? url('/stockb/store?flagz='.$flagz.'') : url('/stockb/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
+                    <form action="{{($tipx=='new')? url('/retur/store?flagz='.$flagz.'') : url('/retur/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
   
                         @csrf
                         <div class="tab-content mt-3">
@@ -141,16 +141,18 @@
 									<div class="col-md-2">
 										<input type="text" class="form-control NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI"
 										placeholder="Masukkan Bukti#" value="{{$header->NO_BUKTI}}" readonly>
-									</div>					
-
-									<div class="col-md-1" align="left">	
-										<label for="CNT" class="form-label">Counter#</label>
 									</div>
-									
-									<div class="col-md-2" >
-										<select id="CNT" name="CNT" style="width: 100%" ></select>        							      
-										<input type="text" hidden class="form-control NCNT" id="NCNT" name="NCNT" value="{{$header->NCNT}}" placeholder="" >
 
+									<div class="col-md-1" align="left">							
+										<label for="CNT" class="form-label">Counter</label>
+									</div>
+									<div class="col-md-2">
+										<input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih Counter"value="{{$header->CNT}}" style="text-align: left" >
+									</div>
+
+									<div class="col-md-4 input-group" >
+										<input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""value="{{$header->NCNT}}" style="text-align: left" >
+										<button type="button" class="btn btn-primary" onclick="browseCounter()"><i class="fa fa-search"></i></button>
 									</div>
                         	</div>
 							
@@ -211,7 +213,7 @@
                                             <input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
                                             class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
 											
-                                            <input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
+                                            <input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->rec}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
                                         </td>
 									
 
@@ -228,15 +230,15 @@
                                             <input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}">
                                         </td>
 										<td>
-											<input name="TGL_MULAI[]" id	="TGL_MULAI{{$no}}" type="text" class="date form-control text_input TGL_MULAI" data-date-format="dd-mm-yyyy" value="{{($detail->TGL_MULAI=='0000-00-00')?'00-00-0000':date('d-m-Y',strtotime($detail->TGL_MULAI));}}">
+											<input name="TGL_MULAI[]" id	="TGL_MULAI{{$no}}" type="text" class="date form-control text_input TGL_MULAI" data-date-format="dd-mm-yyyy" value="{{($detail->tgl_mulai=='0000-00-00')?'00-00-0000':date('d-m-Y',strtotime($detail->tgl_mulai));}}">
 										</td>
 										
-										<td><input name="QTYK[]" onclick="select()" onkeyup="hitung()" value="{{$detail->QTYK}}" id="QTYK{{$no}}" type="text" style="text-align: right"  class="form-control QTYK text-primary"></td>                         
-										<td><input name="HARGA[]" onclick="select()" onkeyup="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA text-primary"></td>
-										<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY text-primary" readonly></td>
+										<td><input name="QTYK[]" onclick="select()" onkeyup="hitung()" value="{{$detail->qtyk}}" id="QTYK{{$no}}" type="text" style="text-align: right"  class="form-control QTYK text-primary"></td>                         
+										<td><input name="HARGA[]" onclick="select()" onkeyup="hitung()" value="{{$detail->harga}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA text-primary"></td>
+										<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="{{$detail->qty}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY text-primary" readonly></td>
                                         
 										<td>
-                                            <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->KET}}" required>
+                                            <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->ket}}" required>
                                         </td>
 				
 										<td>
@@ -278,22 +280,22 @@
 						   
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
-								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/stockb/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
-								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/stockb/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
-								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/stockb/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
-								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/stockb/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
+								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/retur/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
+								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/retur/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
+								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/retur/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
+								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/retur/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">
-								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/stockb/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
+								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/retur/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
 								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>                    
-								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/stockb/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
+								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/retur/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
 								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
 							<div class="col-md-3">
 								<button hidden type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
 								
-								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/stockb?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/retur?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
 							
 								<!-- tombol close sweet alert -->
 								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
@@ -325,8 +327,34 @@
 					<tr>
 						<th>Item#</th>
 						<th>Nama</th>
-						<th>Satuan</th>
-						
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="browseCounterModal" tabindex="-1" role="dialog" aria-labelledby="browseCounterModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseCounterModalLabel">Cari Counter</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bcounter">
+				<thead>
+					<tr>
+						<th>Counter</th>
+						<th>Nama Counter</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -434,6 +462,56 @@
             dateFormat: 'dd-mm-yy'
 		});
 		
+
+		//CHOOSE Counter
+		var dTableBCounter;
+		loadDataBCounter = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: '{{url('retur/browse_cnt')}}',
+
+				beforeSend: function(){
+					$("#LOADX").show();
+				},
+
+				success: function( response )
+				{
+					$("#LOADX").hide();
+
+					resp = response;
+					if(dTableBCounter){
+						dTableBCounter.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBCounter.row.add([
+							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
+							resp[i].NCNT
+						]);
+					}
+					dTableBCounter.draw();
+				}
+			});
+		}
+		
+		dTableBCounter = $("#table-bcounter").DataTable({
+			
+		});
+		
+		browseCounter = function(){
+			loadDataBCounter();
+			$("#browseCounterModal").modal("show");
+		}
+		
+		chooseCounter = function(CNT,NCNT){
+
+			$("#CNT").val(CNT);
+			$("#NCNT").val(NCNT);			
+			$("#browseCounterModal").modal("hide");
+			// getBelid(NO_BUKTI);
+		}
 		
 
 
@@ -446,24 +524,14 @@
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('brg/browse_koreksi')}}",
-
-				beforeSend: function(){
-					$("#LOADX").show();
-				},
-
+				url: "{{url('retur/browse_brg')}}",
 				async : false,
 				data: {
-						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
-					
+						'CNT': $("#CNT").val()
 				},
-
 				success: function( response )
 
 				{
-
-					$("#LOADX").hide();
-
 					resp = response;
 					
 					
@@ -475,9 +543,8 @@
 							for(i=0; i<resp.length; i++){
 								
 								dTableBBarang.row.add([
-									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\' , \''+resp[i].SATUAN+'\' )">'+resp[i].KD_BRG+'</a>',
+									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\',\''+resp[i].BARCODE+'\',\''+resp[i].TGL_MULAI+'\',\''+resp[i].QTY+'\',\''+resp[i].HARGA+'\')">'+resp[i].KD_BRG+'</a>',
 									resp[i].NA_BRG,
-									resp[i].SATUAN,
 								]);
 							}
 							dTableBBarang.draw();
@@ -487,7 +554,6 @@
 					{
 						$("#KD_BRG"+rowidBarang).val(resp[0].KD_BRG);
 						$("#NA_BRG"+rowidBarang).val(resp[0].NA_BRG);
-						$("#SATUAN"+rowidBarang).val(resp[0].SATUAN);
 					}
 				}
 			});
@@ -508,20 +574,15 @@
 			}	
 		}
 		
-		chooseBarang = function(KD_BRG,NA_BRG,SATUAN){
+		chooseBarang = function(KD_BRG,NA_BRG,BARCODE,TGL_MULAI,QTY,HARGA){
 			$("#KD_BRG"+rowidBarang).val(KD_BRG);
 			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
-			$("#SATUAN"+rowidBarang).val(SATUAN);
+			$("#BARCODE"+rowidBarang).val(BARCODE);
+			$("#TGL_MULAI"+rowidBarang).val(TGL_MULAI);
+			$("#QTY"+rowidBarang).val(QTY);
+			$("#HARGA"+rowidBarang).val(HARGA);	
 			$("#browseBarangModal").modal("hide");
 		}
-		
-		
-		/* $("#RAK0").onblur(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseRak(0);
-			}
-		});  */
 
 		////////////////////////////////////////////////////
 	});
@@ -559,18 +620,6 @@
 		var tahunPer = {{session()->get('periode')['tahun']}};
 		
         var check = '0';
-
-			if (baris==0)
-			{
-				check = '1';
-				Swal.fire({
-					icon: 'warning',
-					title: 'Warning',
-					text: 'Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)'
-				});
-				return; // Stop function execution
-			}
-		
 		
 			if ( tgl.substring(3,5) != bulanPer ) 
 			{
@@ -598,13 +647,13 @@
 				
 		    }	 
 
-			if ( $('#KD_BRG').val()=='' ) 
-            {				
-			    check = '1';
+			if (baris==0)
+			{
+				check = '1';
 				Swal.fire({
 					icon: 'warning',
 					title: 'Warning',
-					text: 'Barang# Harus Diisi.'
+					text: 'Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)'
 				});
 				return; // Stop function execution
 			}
@@ -681,13 +730,8 @@
 		$(".QTY").each(function() {
 			
 			let z = $(this).closest('tr');
-			var QTYRX = parseFloat(z.find('.QTYR').val().replace(/,/g, ''));
-			var QTYCX = parseFloat(z.find('.QTYC').val().replace(/,/g, ''));
-		
-            var QTYX  = QTYRX - QTYCX;
-			z.find('.QTY').val(QTYX);
-			
-		    z.find('.QTY').autoNumeric('update');
+			var QTYKX = parseFloat(z.find('.QTYK').val().replace(/,/g, ''));
+			var QTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
 		
             TTOTAL_QTY +=QTYX;				
 		
@@ -852,7 +896,7 @@
 	// 	let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
 	// 	if (confirm(text) == true) 
 	// 	{
-	// 		window.location ="{{url('/stockb/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
+	// 		window.location ="{{url('/retur/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
 	// 		//return true;
 	// 	} 
 	// 	return false;
@@ -885,7 +929,7 @@
 					confirmButtonText: 'OK'
 				}).then(() => {
 					// Redirect to delete the data after user confirms the success message
-	            	loc = "{{ url('/stockb/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz) ;
+	            	loc = "{{ url('/retur/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz) ;
 
 		            // alert(loc);
 	            	window.location = loc;
@@ -909,7 +953,7 @@
 			cancelButtonText: 'No, stay here'
 		}).then((result) => {
 			if (result.isConfirmed) {
-	        	loc = "{{ url('/stockb/') }}" + '?flagz=' + encodeURIComponent(flagz) ;
+	        	loc = "{{ url('/retur/') }}" + '?flagz=' + encodeURIComponent(flagz) ;
 				window.location = loc ;
 			} else {
 				Swal.fire({
@@ -928,7 +972,7 @@
 		
 		var flagz = "{{ $flagz }}";
 		var cari = $("#CARI").val();
-		var loc = "{{ url('/stockb/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
+		var loc = "{{ url('/retur/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
 		window.location = loc;
 		
 	}

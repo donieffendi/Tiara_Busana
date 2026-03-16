@@ -341,6 +341,8 @@ Route::get('/retur', 'App\Http\Controllers\OTransaksi\ReturController@index')->m
 Route::post('/retur/store', 'App\Http\Controllers\OTransaksi\ReturController@store')->middleware(['auth'])->name('retur/store');
 Route::get('/retur/create', 'App\Http\Controllers\OTransaksi\ReturController@create')->middleware(['auth'])->name('retur/create');
 Route::get('/get-retur', 'App\Http\Controllers\OTransaksi\ReturController@getRetur')->middleware(['auth'])->name('get-retur');
+Route::get('/retur/browse_cnt', 'App\Http\Controllers\OTransaksi\ReturController@browse_cnt')->middleware(['auth'])->name('retur/browse_cnt');
+Route::get('/retur/browse_brg', 'App\Http\Controllers\OTransaksi\ReturController@browse_brg')->middleware(['auth'])->name('retur/browse_brg');
 Route::get('/rretur', 'App\Http\Controllers\OReport\RReturController@report')->middleware(['auth'])->name('rretur');
 Route::get('/get-retur-report', 'App\Http\Controllers\OReport\RReturController@getReturReport')->middleware(['auth'])->name('get-retur-report');
 

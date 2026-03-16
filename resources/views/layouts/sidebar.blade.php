@@ -420,8 +420,7 @@
       <div class="row">
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              {{-- <a href="javascript:addTab('Rencana Retur', '{{url('retur?flagz=RS')}}')"> --}}
-              <a href="javascript:addTab('Rencana Retur', '{{url('po?flagz=PO&golz=RS')}}')">
+              <a href="javascript:addTab('Rencana Retur', '{{url('retur?flagz=RS')}}')">
                 <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
                   <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-cart-plus icon-orange"></i>
                 <h6>Rencana Retur</h6>
@@ -431,8 +430,7 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                {{-- <a href="javascript:addTab('Retur Pembelian', '{{url('beli?flagz=BL&golz=RX')}}')"> --}}
-                <a href="javascript:addTab('Retur Pembelian', '{{url('po?flagz=PO&golz=RX')}}')">
+                <a href="javascript:addTab('Retur Pembelian', '{{url('beli?flagz=RX')}}')">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Retur Pembelian</h6>
@@ -442,8 +440,7 @@
         
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                {{-- <a href="javascript:addTab('Retur ke TGZ', '{{url('retur?flagz=RO')}}')">       --}}
-                <a href="javascript:addTab('Retur ke TGZ', '{{url('po?flagz=PO&golz=RO')}}')">
+                <a href="javascript:addTab('Retur ke TGZ', '{{url('retur?flagz=RO')}}')">      
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Retur ke TGZ</h6>
