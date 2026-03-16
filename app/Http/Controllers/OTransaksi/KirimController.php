@@ -27,26 +27,14 @@ class KirimController extends Controller
 	 
     var $judul = '';
     var $FLAGZ = '';
-    var $GOLZ = '';
 	
     function setFlag(Request $request)
     {
-        if ( $request->flagz == 'KR' && $request->golz == 'KO' ) {
+        if ( $request->flagz == 'KO') {
             $this->judul = "Pelayanan Outlet";
-        } else if ( $request->flagz == 'RB' && $request->golz == 'B' ) {
-            $this->judul = "Retur Pemkiriman Bahan Baku";
-        } else if ( $request->flagz == 'BL' && $request->golz == 'J' ) {
-            $this->judul = "Pemkiriman Barang";
-        } else if ( $request->flagz == 'RB' && $request->golz == 'J' ) {
-            $this->judul = "Retur Pemkiriman Barang";
-        } else if ( $request->flagz == 'BL' && $request->golz == 'N' ) {
-            $this->judul = "Pemkiriman Non";
-        } else if ( $request->flagz == 'RB' && $request->golz == 'N' ) {
-            $this->judul = "Retur Pemkiriman Non";
         } 
 		
         $this->FLAGZ = $request->flagz;
-        $this->GOLZ = $request->golz;
         
 
 
@@ -58,7 +46,7 @@ class KirimController extends Controller
 
 	    $this->setFlag($request);
         // ganti 3
-        return view('otransaksi_kirim.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ , 'golz' => $this->GOLZ]);
+        return view('otransaksi_kirim.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
 	
 		
     }
@@ -78,7 +66,7 @@ class KirimController extends Controller
 		$PPN = Auth::user()->PPN;
 
         $kirim = DB::SELECT("SELECT distinct stocka.NO_BUKTI , stocka.KODES, stocka.NAMAS, 
-		                  stocka.ALAMAT, stocka.KOTA, stocka.PKP, stocka.NO_PO, stocka.GUDANG from stocka, stockad 
+		                  stocka.ALAMAT, stocka.KOTA, stocka.PKP, stocka.NO_PO, stocka.GUDANG from bstocka, stockad 
                           WHERE stocka.NO_BUKTI = stockad.NO_BUKTI AND stocka.FLAG='BL' 
                           AND stocka.GOL ='$golz'
                           AND stocka.CBG = '$CBG'
@@ -94,7 +82,7 @@ class KirimController extends Controller
         $kirimd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.SISA, 
                             a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, a.PPN, a.DPP, a.DISK,
                             a.QTY2 AS XQTY, a.KALI
-                        from stockad a, brg b 
+                        from bstockad a, brg b 
                         where a.NO_BUKTI='".$request->nobukti."' AND a.KD_BRG = b.KD_BRG");
 
 		return response()->json($kirimd);
@@ -116,13 +104,41 @@ class KirimController extends Controller
 		}
 		
 		$kirim = DB::SELECT("SELECT NO_BUKTI, TGL, KODES, 
-		            NAMAS, NETT as TOTAL, BAYAR, SISA from stocka  WHERE stocka.CBG = '$CBG' and SISA <> 0
+		            NAMAS, NETT as TOTAL, BAYAR, SISA from bstocka  WHERE stocka.CBG = '$CBG' and SISA <> 0
 		            $filterkodes 
                     ORDER BY NO_BUKTI ");
  
         return response()->json($kirim);
     }
-	
+
+    public function browse_brg(Request $request)
+    {   
+        // $KD_BRG = $request->KD_BRG;
+		$SUPP = $request->KODES;
+        $beli = DB::SELECT("SELECT CONCAT(SUB,KDBAR) AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN 
+                            FROM nwmasbar 
+                            WHERE SUPP = '$SUPP'");
+        return response()->json($beli);
+    }
+
+    public function browse_sup(Request $request)
+    {
+
+    	$kirim = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA 
+                            FROM nwmassup");
+		
+        return response()->json($kirim);
+    }
+
+
+    public function browse_cnt(Request $request)
+    {
+
+    	$kirim = DB::SELECT("SELECT CNT, NA_CNT AS NCNT 
+                            FROM cntbsn");
+		
+        return response()->json($kirim);
+    }
     // ganti 4
 
 
@@ -140,15 +156,16 @@ class KirimController extends Controller
 		$this->setFlag($request);	
         
 		$CBG = Auth::user()->CBG;
-		$PPN = Auth::user()->PPN;
+        $OUTLET = $request->OUTLET;
+        $FLAG = $this->FLAGZ;
 
-        $kirim = DB::SELECT("SELECT no_bukti, tgl, kodes, namas, no_po, total_qty, total, nett, usrnm, posted,outlet
+        $kirim = DB::SELECT("SELECT NO_BUKTI, TGL, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, OUTLET
                                     FROM BSTOCKA
-                                    where PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' and outlet= '$OUTLET' 
+                                    where PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' and OUTLET= '$OUTLET' 
                             union all 
-                            SELECT no_bukti, tgl, kodes, namas, no_po, total_qty, total, nett, usrnm, posted,outlet
+                            SELECT NO_BUKTI, TGL, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, OUTLET
                                     FROM BSTOCKAZ
-                                    where PER = PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' and outlet= '$OUTLET'
+                                    where PER = PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' and OUTLET= '$OUTLET'
                                     order by NO_BUKTI
                           ");
 
@@ -161,23 +178,23 @@ class KirimController extends Controller
                 if ( (Auth::user()->divisi=="programmer" ) || (Auth::user()->divisi=="gudang" ))
 				{
                     //CEK POSTED di index dan edit
-                    $url = "'".url("kirim/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG . "&golz=" . $row->GOL)."'";
+                    $url = "'".url("kirim/delete/" . $row->NO_ID . "/?flagz=" . $row->flag)."'";
 
-                    // $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="kirim/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';					
+                    // $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="kirim/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul .'"';					
                     if (Auth::user()->divisi == 'gudang') {
                         // khusus gudang, cek CETAK
                         $btnEdit = ($row->CETAK == 1)
                             ? ' onclick="alert(\'LPB ini sudah dicetak, tidak bisa edit.\')" href="#" '
-                            : ' href="kirim/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';
+                            : ' href="kirim/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
                     } else {
                         // user lain, tetap cek POSTED
                         $btnEdit = ($row->POSTED == 1)
                             ? ' onclick="alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" '
-                            : ' href="kirim/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';
+                            : ' href="kirim/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
                     }
                     
                     
-                    // $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="kirim/delete/' . $row->NO_ID . '/?flagz=' . $row->FLAG . '&golz=' . $row->GOL .'" ';
+                    // $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="kirim/delete/' . $row->NO_ID . '/?flagz=' . $row->flag . '" ';
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')"';
 
 
@@ -248,15 +265,6 @@ class KirimController extends Controller
 //////////////////////////////////////////////////////////////////////////////////
 
 
-			
-			
-			
-			
-///            ->rawColumns(['action'])
- //           ->make(true);
-//    }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -273,72 +281,38 @@ class KirimController extends Controller
             // GANTI 9
 
             [
- //               'NO_PO'       => 'required',
                 'TGL'      => 'required',
-                'KODES'       => 'required'
-
             ]
         );
-
         //////     nomer otomatis
-        
-        $kodesx = $request->KODES;
-        
-        $xxx= DB::table('sup')->select('PKP')->where('KODES', $kodesx)->get();
-
-        $PPN = $xxx[0]->PKP ;
-        
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
-        $GOLZ = $this->GOLZ;
-        $judul = $this->judul;
-		
+
         $CBG = Auth::user()->CBG;
- 
 
-        $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+        $CBG_KODE = DB::table('toko')
+            ->where('KODE', $CBG)
+            ->value('TYPE');
 
-        $bulan    = session()->get('periode')['bulan'];
-        $tahun    = substr(session()->get('periode')['tahun'], -2);
+        $periode = session()->get('periode')['bulan'].'/'.session()->get('periode')['tahun'];
 
-        $query = DB::table('stocka')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', $FLAGZ )->where('GOL', $GOLZ )->where('CBG', $CBG)
-                   ->orderByDesc('NO_BUKTI')->limit(1)->get();
+        $bulan = session()->get('periode')['bulan'];
+        $tahun = substr(session()->get('periode')['tahun'], -2);
 
-        if ($FLAGZ=='KR') {
+        $last = DB::table('bstocka')
+            ->where('PER', $periode)
+            ->where('FLAG', $FLAGZ)
+            ->where('CBG', $CBG)
+            ->orderByDesc('NO_BUKTI')
+            ->value('NO_BUKTI');
 
-            if( $GOLZ =='KO' ){
+        if ($last) {
+            $urut = str_pad(substr($last, -5, 4) + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $urut = '0001';
+        }
 
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = 'KO'  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = 'KO'  . $CBG . $tahun . $bulan . '-0001';
-                }
-
-            } elseif ( $GOLZ =='' ) {
-
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-0001';
-                }
-                
-            } elseif ( $GOLZ =='' ){
-
-                if ($query != '[]') {
-                    $query = substr($query[0]->NO_BUKTI, -4);
-                    $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-' . $query;
-                } else {
-                    $no_bukti = ''  . $CBG . $tahun . $bulan . '-0001';
-                }
-                
-            }
-
-        } 
+        $no_bukti = $FLAGZ.$tahun.$bulan.'-'.$urut.$CBG_KODE;
         
 
 		
@@ -352,8 +326,6 @@ class KirimController extends Controller
         $kirim = Kirim::create(
             [
                 'NO_BUKTI'         => $no_bukti,
-                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
                 'PER'              => $periode,
 				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
 				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
@@ -362,30 +334,29 @@ class KirimController extends Controller
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
                 'REF'              => ($request['REF'] == null) ? "" : $request['REF'],
-                'MARGIN'           => (float) str_replace(',', '', $request['MARGIN']),
+                'MARGIN'           => (float) str_replace(',', '', $request['HMARGIN']),
                 'ST_NOTA'          => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
                 'ST_CNT'           => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],
+                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'POT_PROM'         => (float) str_replace(',', '', $request['POT_PROM']),
                 'KK_STS'           => ($request['KK_STS'] == null) ? "" : $request['KK_STS'],
                 'BASIC'            => ($request['BASIC'] == null) ? "" : $request['BASIC'],
+                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
                 'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
                 'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
                 'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
-                'FLAG'             => $FLAGZ,					
-                'GOL'              => $GOLZ,					
+                'flag'             => $FLAGZ,				
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],				
                 'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
                 'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
                 'DPP'              => (float) str_replace(',', '', $request['TDPP']),
-                'PPN'              => (float) str_replace(',', '', $request['TPPN']),
-                'NETT'             => (float) str_replace(',', '', $request['TNETT']),
+                'ppn'              => (float) str_replace(',', '', $request['TPPN']),
+                'nett'             => (float) str_replace(',', '', $request['TNETT']),
 				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
-                'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
-				'created_by'       => Auth::user()->username,
-                // 'CBG'              => $CBG,
-                'CBG'            => ($request['CBG'] == null) ? "" : $request['CBG'],				
-            
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
+                'CBG'              => $CBG,
+                'OUTLET'           => ($request['OUTLET'] == null) ? "" : $request['OUTLET'],
                 ]
         );
 
@@ -410,30 +381,27 @@ class KirimController extends Controller
         if ($REC) {
             foreach ($REC as $key => $value) {
                 // Declare new data di Model
-                $detail    = new kirimdetail;
+                $detail    = new KirimDetail;
 
                 // Insert ke Database
-                $detail->NO_BUKTI    = $no_bukti;
-                $detail->REC         = $REC[$key];
-                $detail->PER         = $periode;
-                $detail->FLAG        = $FLAGZ;		
-                $detail->GOL         = $GOLZ;		
-                $detail->CBG         = $CBG;		
-               
+                $detail->no_bukti    = $no_bukti;
+                $detail->rec         = $REC[$key];
+                $detail->per         = $periode;
+                $detail->flag        = $FLAGZ;
                 $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
                 $detail->BARCODE      = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];			
                 $detail->JNS      = ($JNS[$key] == null) ? "" :  $JNS[$key];			
-                $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);			
-                $detail->HARGA         = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->qty         = (float) str_replace(',', '', $QTY[$key]);			
+                $detail->harga         = (float) str_replace(',', '', $HARGA[$key]);
                 $detail->MARGIN           = (float) str_replace(',', '', $MARGIN[$key]);			
                 $detail->DISKON1      = (float) str_replace(',', '', $DISKON1[$key]);
                 $detail->DISKON2       = (float) str_replace(',', '', $DISKON2[$key]);
-                $detail->DISKON3       = (float) str_replace(',', '', $DISKON3X[$key]);
+                $detail->DISKON3       = (float) str_replace(',', '', $DISKON3[$key]);
                 $detail->DISKON4       = (float) str_replace(',', '', $DISKON4[$key]);
-                $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]);
+                $detail->total       = (float) str_replace(',', '', $TOTAL[$key]);
                 $detail->HARGA_JL       = (float) str_replace(',', '', $HARGA_JL[$key]); 
-                $detail->BLT       = (float) str_replace(',', '', $BLT[$key]); 	
+                $detail->BLT       = (float) str_replace(',', '', $BLT[$key]);  	
                 $detail->save();
             }
         }	
@@ -447,23 +415,16 @@ class KirimController extends Controller
 		
 		$kirim = Kirim::where('NO_BUKTI', $no_buktix )->first();
 
-
-
-        DB::SELECT("UPDATE stocka, sup
-                    SET stocka.NAMAS = sup.NAMAS, stocka.ALAMAT = sup.ALAMAT, stocka.KOTA = sup.KOTA, stocka.PKP=sup.PKP  WHERE stocka.KODES = sup.KODES 
-                    AND stocka.NO_BUKTI='$no_buktix';");
-                    
-
-        DB::SELECT("UPDATE stocka,  stockad
-                            SET  stockad.ID = stocka.NO_ID  WHERE  stocka.NO_BUKTI =  stockad.NO_BUKTI 
-							AND  stocka.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE bstocka,  bstockad
+                            SET  bstockad.ID = bstocka.NO_ID  WHERE  bstocka.NO_BUKTI =  bstockad.NO_BUKTI 
+							AND  bstocka.NO_BUKTI='$no_buktix';");
 
 		
 
         $variablell = DB::select('call kirimins(?)', array($no_buktix));
        
         // return redirect('/kirim/edit/?idx=' . $kirim->NO_ID . '&tipx=edit&flagz=' . $FLAGZ . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '');
-        return redirect('/kirim?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
+        return redirect('/kirim?flagz='.$FLAGZ)->with(['status' => 'Data Berhasil Disimpan!', 'flagz' => $FLAGZ ]);
 
 					
     }
@@ -479,13 +440,13 @@ class KirimController extends Controller
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
 		
 				
-        $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
-        if ($cekperid[0]->POSTED==1)
-        {
-            return redirect('/kirim')
-			       ->with('status', 'Maaf Periode sudah ditutup!')
-                   ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ]);
-        }
+        // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
+        // if ($cekperid[0]->POSTED==1)
+        // {
+        //     return redirect('/kirim')
+		// 	       ->with('status', 'Maaf Periode sudah ditutup!')
+        //            ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ]);
+        // }
 		
 		$this->setFlag($request);
 		
@@ -509,12 +470,12 @@ class KirimController extends Controller
 		   	
     	   $buktix = $request->buktix;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from stocka
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bstocka
 		                 where PER ='$per' and FLAG ='$this->FLAGZ' 
-                         and GOL ='$this->GOLZ' 
+                          
 						 and NO_BUKTI = '$buktix'						 
 		                 and CBG = '$CBG' 
-                         and PKP = '$PPN'
+                         
                          ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
 			
@@ -533,11 +494,11 @@ class KirimController extends Controller
 		if ($tipx=='top') {
 			
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from stocka 
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bstocka 
 		                 where PER ='$per' 
-						 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'    
+						 and FLAG ='$this->FLAGZ'     
 		                 and CBG = '$CBG' 
-                         and PKP = '$PPN'
+                         
                          ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
 		
@@ -558,11 +519,11 @@ class KirimController extends Controller
 			
     	   $buktix = $request->buktix;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from stocka     
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bstocka     
 		             where PER ='$per' 
-					 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'  and NO_BUKTI < 
+					 and FLAG ='$this->FLAGZ'   and NO_BUKTI < 
 					'$buktix' and CBG = '$CBG'
-                    and PKP = '$PPN'
+                    
                     ORDER BY NO_BUKTI DESC LIMIT 1" );
 			
 
@@ -583,11 +544,11 @@ class KirimController extends Controller
 				
       	   $buktix = $request->buktix;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from stocka    
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bstocka    
 		             where PER ='$per'  
-					 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ' and NO_BUKTI > 
+					 and FLAG ='$this->FLAGZ'  and NO_BUKTI > 
 					 '$buktix' and CBG = '$CBG'
-                         and PKP = '$PPN'
+                         
                           ORDER BY NO_BUKTI ASC LIMIT 1" );
 					 
 			if(!empty($bingco)) 
@@ -604,11 +565,11 @@ class KirimController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from stocka
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bstocka
 						where PER ='$per'
-						and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'   
+						and FLAG ='$this->FLAGZ'    
 		                and CBG = '$CBG' 
-                         and PKP = '$PPN'
+                         
                          ORDER BY NO_BUKTI DESC  LIMIT 1" );
 					 
 			if(!empty($bingco)) 
@@ -647,7 +608,7 @@ class KirimController extends Controller
 		 }
 
         $no_bukti = $kirim->NO_BUKTI;
-        $kirimdetail = DB::table('stockad')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
+        $kirimdetail = DB::table('bstockad')->where('no_bukti', $no_bukti)->orderBy('rec')->get();
 		
 		$data = [
             'header'        => $kirim,
@@ -657,7 +618,7 @@ class KirimController extends Controller
  
          
          return view('otransaksi_kirim.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul, 'golz' => $this->GOLZ ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul]);
       
     }
 
@@ -681,10 +642,7 @@ class KirimController extends Controller
             [
 
                 // ganti 19
-
- //               'NO_PO'       => 'required',
-                'TGL'      => 'required',
-                'KODES'       => 'required'
+                'TGL'      => 'required'
 
 
             ]
@@ -708,7 +666,6 @@ class KirimController extends Controller
             [
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
-                'PER'              => $periode,
 				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
 				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
                 'POSTED'           => (float) str_replace(',', '', $request['POSTED']),
@@ -724,9 +681,7 @@ class KirimController extends Controller
                 'BASIC'            => ($request['BASIC'] == null) ? "" : $request['BASIC'],
                 'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
                 'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
-                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
-                'FLAG'             => $FLAGZ,					
-                'GOL'              => $GOLZ,					
+                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],					
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],				
                 'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
                 'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
@@ -734,11 +689,10 @@ class KirimController extends Controller
                 'PPN'              => (float) str_replace(',', '', $request['TPPN']),
                 'NETT'             => (float) str_replace(',', '', $request['TNETT']),
 				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
-                'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
-				'created_by'       => Auth::user()->username,
-                // 'CBG'              => $CBG,
-                'CBG'            => ($request['CBG'] == null) ? "" : $request['CBG'],				
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
+                'CBG'              => $CBG,
+                'OUTLET'           => ($request['OUTLET'] == null) ? "" : $request['OUTLET'],			
             ]
         );
 
@@ -774,58 +728,51 @@ class KirimController extends Controller
             if ($NO_ID[$i] == 'new') {
                 $insert = kirimdetail::create(
                     [
-                        'NO_BUKTI'   => $request->NO_BUKTI,
-                        'REC'        => $REC[$i],
-                        'PER'        => $periode,
-                        'FLAG'       => $this->FLAGZ,
-                        'GOL'        => $this->GOLZ,
-                        'CBG'        => $CBG,
+                        'no_bukti'   => $request->NO_BUKTI,
+                        'rec'        => $REC[$i],
+                        'per'        => $periode,
+                        'flag'       => $this->FLAGZ,
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
+                        'barcode'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],						
-                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
                         'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
                         'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
                         'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
                         'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
                         'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),			
-                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),				
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),				
                         'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
-                        'BLT'        => (float) str_replace(',', '', $BLT[$i]),
-						
+                        'BLT'        => (float) str_replace(',', '', $BLT[$i]),	
                     ]
                 );
             } else {
                 // Update jika NO_ID sudah ada
-                $upsert = kirimdetail::updateOrCreate(
+                $upsert = KirimDetail::updateOrCreate(
                     [
-                        'NO_BUKTI'  => $request->NO_BUKTI,
+                        'no_bukti'  => $request->NO_BUKTI,
                         'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
                     ],
 
                     [
-                        'REC'        => $REC[$i],
+                        'rec'        => $REC[$i],
 
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],						
-                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
                         'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
                         'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
                         'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
                         'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
                         'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),			
-                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),				
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),				
                         'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
-                        'BLT'        => (float) str_replace(',', '', $BLT[$i]),
-                        'FLAG'       => $this->FLAGZ,
-                        'GOL'        => $this->GOLZ,
-                        'CBG'        => $CBG,					
+                        'BLT'        => (float) str_replace(',', '', $BLT[$i]),				
                     ]
                 );
             }
@@ -838,20 +785,14 @@ class KirimController extends Controller
 
         $no_bukti = $kirim->NO_BUKTI;
 
-
-        DB::SELECT("UPDATE stocka, sup
-                    SET stocka.NAMAS = sup.NAMAS, stocka.ALAMAT = sup.ALAMAT, stocka.KOTA = sup.KOTA, stocka.PKP=sup.PKP  WHERE stocka.KODES = sup.KODES 
-                    AND stocka.NO_BUKTI='$no_buktix';");
-                    
-
-        DB::SELECT("UPDATE stocka,  stockad
-                    SET  stockad.ID =  stocka.NO_ID  WHERE  stocka.NO_BUKTI =  stockad.NO_BUKTI 
-                    AND  stocka.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE bstocka,  bstockad
+                    SET  bstockad.ID =  bstocka.NO_ID  WHERE  bstocka.NO_BUKTI =  bstockad.NO_BUKTI 
+                    AND  bstocka.NO_BUKTI='$no_bukti';");
 
         $variablell = DB::select('call kirimins(?)', array($kirim['NO_BUKTI']));
         
         // return redirect('/kirim/edit/?idx=' . $kirim->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul .  '&golz=' . $this->GOLZ . '');	
-        return redirect('/kirim?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
+        return redirect('/kirim?flagz='.$FLAGZ)->with(['status' => 'Data berhasil Di Update','flagz' => $FLAGZ ]);
 		
 	   
     }
@@ -870,17 +811,16 @@ class KirimController extends Controller
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
-        $GOLZ = $this->GOLZ;
         $judul = $this->judul;
 		
-		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
-        $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
-        if ($cekperid[0]->POSTED==1)
-        {
-            return redirect()->route('kirim')
-                ->with('status', 'Maaf Periode sudah ditutup!')
-                ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
-        }
+		// $per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
+        // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
+        // if ($cekperid[0]->POSTED==1)
+        // {
+        //     return redirect()->route('kirim')
+        //         ->with('status', 'Maaf Periode sudah ditutup!')
+        //         ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
+        // }
 		
 		
        $variablell = DB::select('call kirimdel(?)', array($kirim['NO_BUKTI']));//
@@ -896,7 +836,7 @@ class KirimController extends Controller
 
         // ganti 
 
-       return redirect('/kirim?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ ])->with('statusHapus', 'Data '.$kirim->NO_BUKTI.' berhasil dihapus');
+       return redirect('/kirim?flagz='.$FLAGZ)->with(['flagz' => $FLAGZ])->with('statusHapus', 'Data '.$kirim->NO_BUKTI.' berhasil dihapus');
 
 
     }

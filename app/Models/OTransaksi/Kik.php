@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 //ganti 1
-class Beli extends Model
+class Kik extends Model
 {
     use HasFactory;
 

@@ -9,13 +9,30 @@ class StockbDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'stockbd';
+    protected $table = 'lapbsnd';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
     protected $fillable =
     [
-        "REC", "NO_BUKTI", "ID", "KD_BRG", "NA_BRG", 
-        "AK", "RILL", "QTY", "HARGA", "TOTAL", "KET"
+        "id",
+        "rec",
+        "gol",
+        "no_bukti",
+        "kd_brg",
+        "itemsub",
+        "na_brg",
+        "ket_uk",
+        "ket_kem",
+        "kd",
+        "hj",
+        "lph",
+        "saldo",
+        "tgl_trm",
+        "qty_trm",
+        "tgl_lbk",
+        "tgl_at",
+        "flag",
+        "cbg",
     ];
 }

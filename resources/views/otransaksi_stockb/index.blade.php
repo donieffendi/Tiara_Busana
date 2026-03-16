@@ -213,22 +213,22 @@
 
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
 			          { data: 'action', name: 'action'},
-                {data: 'NO_BUKTI', name: 'NO_BUKTI',
+                {data: 'no_bukti', name: 'no_bukti',
                   render : function ( data, type, row, meta )
                   {
                     return ' <h5><span class="badge badge-pill badge-warning">' + data + '</span></h5>';
                   }
                 },
-                {data: 'TGL', name: 'TGL'},
+                {data: 'tgl', name: 'tgl'},
                 {
-                  data: 'TOTAL_QTY',
-                  name: 'TOTAL_QTY',
+                  data: 'total_qty',
+                  name: 'total_qty',
                   render: $.fn.dataTable.render.number( ',', '.', 0, '' )
 				        },								
-                {data: 'NOTES', name: 'NOTES'},
-                { data: 'POSTED', name: 'POSTED',
+                {data: 'notes', name: 'notes'},
+                { data: 'posted', name: 'posted',
                   render : function(data, type, row, meta) {
-                    if(row['POSTED']=="0"){
+                    if(row['posted']=="0"){
                         return '';
                     }else{
                         return '<input type="checkbox" checked style="pointer-events: none;">';

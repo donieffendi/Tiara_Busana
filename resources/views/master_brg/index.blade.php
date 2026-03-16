@@ -145,13 +145,24 @@
                             
                             <!-- batas filter -->
                                 <div class="form-group">
+                                    
                                     <div class="row mb-2">
-
+                                        <div class="col-md-1" align="right">
+                                            <label>Filter</label>
+                                        </div>
                                         <div class="col-md-2">
+                                            <select id="TYPE" class="form-control"  name="TYPE">
+                                            <option value="-" disable selected hidden>--Pilih Tipe--</option>
+                                                <option value="PerSub">Per Sub</option>
+                                                <option value="PerSupp">Per Supplier</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-2" id="filterSub" style="display:none;">
                                             <input type="text" id="sub" name="sub" class="form-control" placeholder="Sub">
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-3" id="filterSupp" style="display:none;">
                                             <input type="text" id="supp" name="supp" class="form-control" placeholder="Supplier">
                                         </div>
 
@@ -160,7 +171,6 @@
                                                 <i class="fas fa-print"></i> Print
                                             </button>
                                         </div>
-
                                     </div>
                                 </div>
                         
@@ -325,16 +335,14 @@
 				let sub = $('#sub').val();
                 let supp = $('#supp').val();
 
-				// if (!sub) {
-				// 	Swal.fire({
-				// 		icon: 'warning',
-				// 		title: 'Sub belum diisi!',
-				// 		text: 'Silakan isi Sub terlebih dahulu sebelum mencetak data.',
-				// 		confirmButtonText: 'OK',
-				// 		confirmButtonColor: '#3085d6'
-				// 	});
-				// 	return;
-				// }
+                if (sub == '' && supp == '') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Anda belum memilih Filter Sub atau Supp!',
+                    });
+                    return;
+                }
 
 				Swal.fire({
 					title: 'Cetak Data Barang?',
@@ -352,12 +360,25 @@
 					}
 				});
 			});
+
+            $('#TYPE').on('change', function(){
+
+                let type = $(this).val();
+
+                $('#sub').val('');
+                $('#supp').val('');
+
+                if(type == 'PerSub')
+                {
+                    $('#filterSub').show();
+                    $('#filterSupp').hide();
+                }
+                else if(type == 'PerSupp')
+                {
+                    $('#filterSub').hide();
+                    $('#filterSupp').show();
+                }
+            });
         });
-        // Open modal programmatically
-        // document.querySelector('.btn-primary').addEventListener('click', function(e) {
-        //     e.preventDefault(); // Optional, only if needed
-        //     var myModal = new bootstrap.Modal(document.getElementById('columnModal'));
-        //     myModal.show();
-        // });
     </script>
 @endsection

@@ -141,15 +141,19 @@
 								
                                 <div class="col-md-2">
                                     <input type="text" class="form-control NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI"
-                                    placeholder="Masukkan Bukti#" value="{{$header->NO_BUKTI}}" readonly>
+                                    placeholder="Masukkan Bukti#" value="{{$header->no_bukti}}" readonly>
                                 </div>
 
 								<div class="col-md-1" align="left">							
-                                    <label for="NOLAP" class="form-label">No So</label>
+                                    <label for="CNT" class="form-label">Counter</label>
                                 </div>
+                               	<div class="col-md-1">
+                                  <input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih Counter"value="{{$header->CNT}}" style="text-align: left" >
+                                </div>
+
                                	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NOLAP" id="NOLAP" name="NOLAP" placeholder="Pilih"value="{{$header->NOLAP}}" style="text-align: left" readonly >
-        						  <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button>
+                                  <input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""value="{{$header->NCNT}}" style="text-align: left" >
+        						  <button type="button" class="btn btn-primary" onclick="browseCounter()"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
 
@@ -160,9 +164,20 @@
                                     <label for="TGL" class="form-label">Tanggal</label>
                                 </div>
                                 <div class="col-md-2">
-								  <input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
+								  <input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->tgl))}}">
                                 </div>
 								
+								<div class="col-md-1" align="left">							
+                                    <label for="KODES" class="form-label">Supplier</label>
+                                </div>
+                               	<div class="col-md-1">
+                                  <input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Pilih Supplier"value="{{$header->KODES}}" style="text-align: left" >
+                                </div>
+
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control NAMAS" id="NAMAS" name="NAMAS" placeholder=""value="{{$header->NAMAS}}" style="text-align: left" >
+        						  <button type="button" class="btn btn-primary" onclick="browseSup()"><i class="fa fa-search"></i></button>
+                                </div>
                             </div>
 
 							<div class="form-group row">
@@ -170,10 +185,16 @@
 								<div class="col-md-5 form-group row special-input-label">
 
 									<input type="text" class="NOTES" id="NOTES" name="NOTES" 
-										value="{{$header->NOTES}}" placeholder=" " >
+										value="{{$header->notes}}" placeholder=" " >
 									<label for="NOTES">Notes</label>
 								</div>
 								<!-- tutupannya -->
+
+								<div class="col-md-1"></div>
+
+								<div class="col-md-2">
+									<button type="button" class="btn btn-primary" id="Allin" name="Allin" onclick="getBarangd()">All In</button>
+								</div>
         
                             </div>
 							
@@ -192,10 +213,6 @@
                                            <label for="KD_BRG" class="form-label">Kode Barang</label></th>
                                         <th style="text-align: center;">Nama Barang</th>
                                         <th style="text-align: center;">Stok</th>
-										<th style="text-align: center;">Riil</th>
-										<th style="text-align: center;">Qty</th>
-										<th style="text-align: center;">Harga</th>
-										<th style="text-align: center;">Total</th>
 										<th style="text-align: center;">Ket</th>
 
                                         <th></th>
@@ -203,7 +220,7 @@
                                     </tr>
                                 </thead>
         
-								<tbody>
+								<tbody id="detailStockb">
 								<?php $no=0 ?>
 								@foreach ($detail as $detail)		
                                     <tr>
@@ -211,27 +228,23 @@
                                             <input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
                                             class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
 											
-                                            <input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
+                                            <input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->rec}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
                                         </td>
 									
 
 										<td>
                                             <input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG " 
-											value="{{$detail->KD_BRG}}" onblur="browseBarang({{$no}})">
+											value="{{$detail->kd-brg}}" onblur="browseBarang({{$no}})">
                                         </td>
 
 										<td>
-                                            <input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}">
+                                            <input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->na_brg}}">
                                         </td>
 										
-										<td><input name="AK[]" onclick="select()" onkeyup="hitung()" value="{{$detail->AK}}" id="AK{{$no}}" type="text" style="text-align: right"  class="form-control AK text-primary"></td>                         
-										<td><input name="RIIL[]" onclick="select()" onkeyup="hitung()" value="{{$detail->RIIL}}" id="RIIL{{$no}}" type="text" style="text-align: right"  class="form-control RIIL text-primary"></td>
-										<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY text-primary" readonly></td>
-										<td><input name="HARGA[]" onclick="select()" onkeyup="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA text-primary" readonly></td>
-										<td><input name="TOTAL[]" onclick="select()" onkeyup="hitung()" value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL text-primary" readonly></td>
-                                        
+										<td><input name="SALDO[]" onclick="select()" onkeyup="hitung()" value="{{$detail->saldo}}" id="SALDO{{$no}}" type="text" style="text-align: right"  class="form-control SALDO text-primary"></td>                         
+						
 										<td>
-                                            <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->KET}}" required>
+                                            <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->ket}}" required>
                                         </td>
 				
 										<td>
@@ -251,9 +264,9 @@
                                     <td></td>
                                     <td></td> 
                                     <td></td>
-                                    <td><input class="form-control TTOTAL_QTY  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td>
+                                    {{-- <td><input class="form-control TTOTAL_QTY  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td> --}}
                                     <td></td>
-                                    <td><input class="form-control TTOTAL  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td>
+                                    {{-- <td><input class="form-control TTOTAL  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> --}}
                                     <td></td>
                                 </tfoot>
                             </table>
@@ -305,6 +318,65 @@
     </div>
 
 
+	<div class="modal fade" id="browseCounterModal" tabindex="-1" role="dialog" aria-labelledby="browseCounterModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseCounterModalLabel">Cari Counter</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bcounter">
+				<thead>
+					<tr>
+						<th>Counter</th>
+						<th>Nama Counter</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="browseSupModal" tabindex="-1" role="dialog" aria-labelledby="browseSupModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseSupModalLabel">Cari Pemkiriman</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bsup">
+				<thead>
+					<tr>
+						<th>Kode Supplier</th>
+						<th>Nama</th>
+						<th>Alamat</th>
+						<th>Kota</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+
 	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -320,8 +392,7 @@
 					<tr>
 						<th>Item#</th>
 						<th>Nama</th>
-						<th>Satuan</th>
-						
+
 					</tr>
 				</thead>
 				<tbody>
@@ -380,7 +451,7 @@
 				if (next.length) {
 					next.focus().select();
 				} else {
-					tambah();
+					// tambah();
 					var nomer = idrow-1;
 					console.log("KD_BRG"+nomor);
 					document.getElementById("KD_BRG"+nomor).focus();
@@ -398,7 +469,7 @@
         if ( $tipx == 'new' )
 		{
 			 baru();
-             tambah();				 
+            //  tambah();				 
 		}
 
         if ( $tipx != 'new' )
@@ -412,7 +483,7 @@
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#AK" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#SALDO" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#RIIL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
@@ -431,6 +502,114 @@
 		$('.date').datepicker({  
             dateFormat: 'dd-mm-yy'
 		});
+
+		//////////////////////////////////////////////////////
+
+		// CHOOSE Sup
+ 		var dTableBSup;
+		loadDataBSup = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: '{{url('stockb/browse_sup')}}',
+
+				beforeSend: function(){
+					$("#LOADX").show();
+				},
+
+				success: function( response )
+				{
+					$("#LOADX").hide();
+
+					resp = response;
+					if(dTableBSup){
+						dTableBSup.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBSup.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\')">'+resp[i].KODES+'</a>',
+							resp[i].KODES,
+							resp[i].NAMAS,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
+						]);
+					}
+					dTableBSup.draw();
+				}
+			});
+		}
+		
+		dTableBSup = $("#table-bsup").DataTable({
+			
+		});
+		
+		browseSup = function(){
+			loadDataBSup();
+			$("#browseSupModal").modal("show");
+
+		}
+		
+		chooseSup = function(KODES,NAMAS){
+
+			$("#KODES").val(KODES);
+			$("#NAMAS").val(NAMAS);		
+			$("#browseSupModal").modal("hide");
+			// getPod(NO_BUKTI);
+		}
+
+		//////////////////////////////////////////////////////
+
+		// CHOOSE Counter
+		var dTableBCounter;
+		loadDataBCounter = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: '{{url('stockb/browse_cnt')}}',
+
+				beforeSend: function(){
+					$("#LOADX").show();
+				},
+
+				success: function( response )
+				{
+					$("#LOADX").hide();
+
+					resp = response;
+					if(dTableBCounter){
+						dTableBCounter.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBCounter.row.add([
+							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
+							resp[i].NCNT
+						]);
+					}
+					dTableBCounter.draw();
+				}
+			});
+		}
+		
+		dTableBCounter = $("#table-bcounter").DataTable({
+			
+		});
+		
+		browseCounter = function(){
+			loadDataBCounter();
+			$("#browseCounterModal").modal("show");
+		}
+		
+		chooseCounter = function(CNT,NCNT){
+
+			$("#CNT").val(CNT);
+			$("#NCNT").val(NCNT);			
+			$("#browseCounterModal").modal("hide");
+			// getBelid(NO_BUKTI);
+		}
 		
 		
 
@@ -444,24 +623,14 @@
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('brg/browse_koreksi')}}",
-
-				beforeSend: function(){
-					$("#LOADX").show();
-				},
-
+				url: "{{url('stockb/browse_brg')}}",
 				async : false,
 				data: {
-						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
-					
+						'KODES': $("#KODES").val(),
 				},
-
 				success: function( response )
 
 				{
-
-					$("#LOADX").hide();
-
 					resp = response;
 					
 					
@@ -473,9 +642,8 @@
 							for(i=0; i<resp.length; i++){
 								
 								dTableBBarang.row.add([
-									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\' , \''+resp[i].SATUAN+'\' )">'+resp[i].KD_BRG+'</a>',
+									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\',)">'+resp[i].KD_BRG+'</a>',
 									resp[i].NA_BRG,
-									resp[i].SATUAN,
 								]);
 							}
 							dTableBBarang.draw();
@@ -485,7 +653,6 @@
 					{
 						$("#KD_BRG"+rowidBarang).val(resp[0].KD_BRG);
 						$("#NA_BRG"+rowidBarang).val(resp[0].NA_BRG);
-						$("#SATUAN"+rowidBarang).val(resp[0].SATUAN);
 					}
 				}
 			});
@@ -506,24 +673,67 @@
 			}	
 		}
 		
-		chooseBarang = function(KD_BRG,NA_BRG,SATUAN){
+		chooseBarang = function(KD_BRG,NA_BRG){
 			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
-			$("#SATUAN"+rowidBarang).val(SATUAN);
+			$("#NA_BRG"+rowidBarang).val(NA_BRG);
 			$("#browseBarangModal").modal("hide");
 		}
-		
-		
-		/* $("#RAK0").onblur(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseRak(0);
-			}
-		});  */
 
 		////////////////////////////////////////////////////
 	});
 
+	function getBarangd()
+	{
+		var mulai = (idrow==baris) ? idrow-1 : idrow;
+
+		$.ajax(
+			{
+				type: 'GET',    
+				url: "{{url('stockb/browse_brgd')}}",
+				data: {
+					KODES: $("#KODES").val(),
+				},
+				success: function( resp )
+				{
+					var html = '';
+					for(i=0; i<resp.length; i++){
+						html+=`<tr>
+                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].rec+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
+
+									<td >
+										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
+						            </td>
+
+						            <td >
+										<input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
+						            </td>
+									
+									<td>
+										<input name='SALDO[]' onclick='select()' onblur='hitung()' id='SALDO${i}' value="0" type='text' style='text-align: right' class='form-control SALDO text-primary'>
+									</td>
+
+									<td>
+										<input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'>
+									</td>
+                                    
+
+									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
+                                </tr>`;
+					}
+					$('#detailStockb').html(html);
+
+					$(".SALDO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".SALDO").autoNumeric('update');
+
+
+					idrow=resp.length;
+					baris=resp.length;
+
+					nomor();
+					hitung();
+				}
+			});
+	}
 
 
 ///////////////////////////////////////		
@@ -840,8 +1050,8 @@
 				
 		 $('#NO_BUKTI').val("+");	
 		 $('#NOTES').val("");	
-		 $('#TTOTAL_QTY').val("0.00");	
-		 $('#TTOTAL').val("0.00");	
+		//  $('#TTOTAL_QTY').val("0.00");	
+		//  $('#TTOTAL').val("0.00");	
 		 
 		var html = '';
 		$('#detailx').html(html);	
@@ -953,24 +1163,9 @@
                 </td>
 
 				<td>
-		            <input name='AK[]' onclick='select()' onblur='hitung()' value='0' id='AK${idrow}' type='text' style='text-align: right' class='form-control AK text-primary' required >
+		            <input name='SALDO[]' onclick='select()' onblur='hitung()' value='0' id='SALDO${idrow}' type='text' style='text-align: right' class='form-control SALDO text-primary' required >
                 </td>
-
-				<td>
-		            <input name='RIIL[]' onclick='select()' onblur='hitung()' value='0' id='RIIL${idrow}' type='text' style='text-align: right' class='form-control RIIL text-primary' required >
-                </td>
-
-				<td>
-		            <input name='QTY[]' onclick='select()' onblur='hitung()' value='0' id='QTY${idrow}' type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-                </td>
-
-				<td>
-					<input name='HARGA[]' onclick='select()' onblur='hitung()' value='0' id='HARGA${idrow}' type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-				</td>
-
-				<td>
-					<input name='TOTAL[]' onclick='select()' onblur='hitung()' value='0' id='TOTAL${idrow}' type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-				</td>		
+	
 					
                 <td>
 				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET' required>

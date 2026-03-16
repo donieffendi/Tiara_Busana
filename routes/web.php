@@ -305,6 +305,9 @@ Route::get('/kirim', 'App\Http\Controllers\OTransaksi\KirimController@index')->m
 Route::post('/kirim/store', 'App\Http\Controllers\OTransaksi\KirimController@store')->middleware(['auth'])->name('kirim/store');
 Route::get('/kirim/create', 'App\Http\Controllers\OTransaksi\KirimController@create')->middleware(['auth'])->name('kirim/create');
 Route::get('/get-kirim', 'App\Http\Controllers\OTransaksi\KirimController@getKirim')->middleware(['auth'])->name('get-kirim');
+Route::get('/kirim/browse_brg', 'App\Http\Controllers\OTransaksi\KirimController@browse_brg')->middleware(['auth'])->name('kirim/browse_brg');
+Route::get('/kirim/browse_sup', 'App\Http\Controllers\OTransaksi\KirimController@browse_sup')->middleware(['auth'])->name('kirim/browse_sup');
+Route::get('/kirim/browse_cnt', 'App\Http\Controllers\OTransaksi\KirimController@browse_cnt')->middleware(['auth'])->name('kirim/browse_cnt');
 Route::get('/rkirim', 'App\Http\Controllers\OReport\RKirimController@report')->middleware(['auth'])->name('rkirim');
 Route::get('/get-kirim-report', 'App\Http\Controllers\OReport\RKirimController@getKirimReport')->middleware(['auth'])->name('get-kirim-report');
 
@@ -478,6 +481,10 @@ Route::get('/rstockb', 'App\Http\Controllers\OReport\RStockbController@report')-
     Route::get('/stockb/browse', 'App\Http\Controllers\OTransaksi\StockbController@browse')->middleware(['auth'])->name('stockb/browse');
     Route::get('/stockb/browse_detail', 'App\Http\Controllers\OTransaksi\StockbController@browse_detail')->middleware(['auth'])->name('stockb/browse_detail');
     Route::get('/stockb/browseuang', 'App\Http\Controllers\OTransaksi\StockbController@browseuang')->middleware(['auth'])->name('stockb/browseuang');
+    Route::get('/stockb/browse_brg', 'App\Http\Controllers\OTransaksi\StockbController@browse_brg')->middleware(['auth'])->name('stockb/browse_brg');
+    Route::get('/stockb/browse_brgd', 'App\Http\Controllers\OTransaksi\StockbController@browse_brgd')->middleware(['auth'])->name('stockb/browse_brgd');
+    Route::get('/stockb/browse_sup', 'App\Http\Controllers\OTransaksi\StockbController@browse_sup')->middleware(['auth'])->name('stockb/browse_sup');
+    Route::get('/stockb/browse_cnt', 'App\Http\Controllers\OTransaksi\StockbController@browse_cnt')->middleware(['auth'])->name('stockb/browse_cnt');
    
     Route::get('/get-stockb', 'App\Http\Controllers\OTransaksi\StockbController@getStockb')->middleware(['auth'])->name('get-stockb');
 	
@@ -636,6 +643,9 @@ Route::get('/rbeli', 'App\Http\Controllers\OReport\RBeliController@report')->mid
 Route::get('/rbeli_gdg', 'App\Http\Controllers\OReport\RBeli_gdgController@report')->middleware(['auth'])->name('rbeli_gdg');
     // GET BELI
     Route::get('/beli/browse', 'App\Http\Controllers\OTransaksi\BeliController@browse')->middleware(['auth'])->name('beli/browse');
+    Route::get('/beli/browse_brg', 'App\Http\Controllers\OTransaksi\BeliController@browse_brg')->middleware(['auth'])->name('beli/browse_brg');
+    Route::get('/beli/browse_sup', 'App\Http\Controllers\OTransaksi\BeliController@browse_sup')->middleware(['auth'])->name('beli/browse_sup');
+    Route::get('/beli/browse_cnt', 'App\Http\Controllers\OTransaksi\BeliController@browse_cnt')->middleware(['auth'])->name('beli/browse_cnt');
     Route::get('/beli/browse_detail', 'App\Http\Controllers\OTransaksi\BeliController@browse_detail')->middleware(['auth'])->name('beli/browse_detail');
     Route::get('/beli/browse_detail2', 'App\Http\Controllers\OTransaksi\BeliController@browse_detail2')->middleware(['auth'])->name('beli/browse_detail2');
    

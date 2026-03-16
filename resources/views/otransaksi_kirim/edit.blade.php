@@ -1,5 +1,7 @@
 @extends('layouts.plain')
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <style>
     .card {
 
@@ -79,7 +81,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{($tipx=='new')? url('/kirim/store?flagz='.$flagz.'&golz='.$golz.'') : url('/kirim/update/'.$header->NO_ID.'&flagz='.$flagz.'&golz='.$golz.'' ) }}" method="POST" name ="entri" id="entri" >
+                    <form action="{{($tipx=='new')? url('/kirim/store?flagz='.$flagz.'') : url('/kirim/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
   
                         @csrf
                         <div class="tab-content mt-3">
@@ -94,7 +96,6 @@
 
 									<input name="tipx" class="form-control tipx" id="tipx" value="{{$tipx}}" hidden>
 									<input name="flagz" class="form-control flagz" id="flagz" value="{{$flagz}}" hidden>
-									<input name="golz" class="form-control golz" id="golz" value="{{$golz}}" hidden>
 
 								
 								
@@ -103,32 +104,30 @@
                                     placeholder="Masukkan Bukti#" value="{{$header->NO_BUKTI}}" readonly>
                                 </div>
 
-								<div class="col-md-1" align="left">	
-									<label for="CNT" class="form-label">Counter#</label>
-								</div>
-								
-								<div class="col-md-2" >
-									<select id="CNT" name="CNT" style="width: 100%" ></select>        							      
-									<input type="text" hidden class="form-control NCNT" id="NCNT" name="NCNT" value="{{$header->NCNT}}" placeholder="" >
-								</div>
+								<div class="col-md-1" align="left">							
+                                    <label for="CNT" class="form-label">Counter</label>
+                                </div>
+                               	<div class="col-md-1">
+                                  <input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih Counter"value="{{$header->CNT}}" style="text-align: left" >
+                                </div>
 
-								<div class="col-md-1" >
-									<label for="CBG" class="form-label">Cabang Tujuan</label>
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""value="{{$header->NCNT}}" style="text-align: left" >
+        						  <button type="button" class="btn btn-primary" onclick="browseCounter()"><i class="fa fa-search"></i></button>
+                                </div>
+
+								<div class="col-md-1" align="right">
+									<label for="OUTLET" class="form-label">Cabang Tujuan</label>
 								</div>
 								<div class="col-md-2">
-									<select id="CBG" class="form-control"  name="CBG">
-										<option value="TGZ" {{ ($header->CBG == 'TGZ') ? 'selected' : '' }}>TGZ</option>
-										<option value="TMM" {{ ($header->CBG == 'TMM') ? 'selected' : '' }}>TMM</option>
-									</select>
+										<!-- <input type="text" class="form-control BNK" id="BNK" name="BNK" placeholder="Masukkan Bnk"> -->
+										<select id="OUTLET" class="form-control"  name="OUTLET">
+											<option value="-" {{ ( $header->OUTLET== '-') ? 'selected' : '' }} disable selected hidden>--Pilih Tipe--</option>
+											<option value="TGZ" {{ ( $header->OUTLET== 'TGZ') ? 'selected' : '' }}>TGZ</option>
+											<option value="TMM" {{ ( $header->OUTLET== 'TMM') ? 'selected' : '' }}>TMM</option>
+											<option value="SOP" {{ ( $header->OUTLET== 'SOP') ? 'selected' : '' }}>SOP</option>
+										</select>
 								</div>
-
-
-								<!-- <div class="col-md-2" >
-									<input type="checkbox" class="form-check-input" id="POSTED" name="POSTED" readonly  value="{{$header->POSTED}}" {{ ($header->POSTED == 1) ? 'checked' : '' }}>
-									<label for="POSTED" class="form-label">Posted</label>
-									<input type="text" hidden class="form-control ZPOSTED" id="ZPOSTED" name="ZPOSTED" value="{{$header->POSTED}}" placeholder="" >
-
-								</div> -->
 
 								<div class="col-md-1">
 									<input type="checkbox" class="form-check-input" id="POSTED" name="POSTED" value="1" {{ ($header->POSTED == 1) ? 'checked' : '' }}>
@@ -141,40 +140,24 @@
 							<div class="form-group row">
 
 								<div class="col-md-1" align="left">							
-                                    <label for="NO_PO" class="form-label">No Beli</label>
+                                    <label for="NO_PO" class="form-label">No PO</label>
                                 </div>
                                	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" readonly >
-        						  <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button>
+                                  <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" >
+        						  {{-- <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button> --}}
                                 </div>
 								
 								<div class="col-md-1" align="left">							
-                                    <label  class="form-label">Supplier</label>
-                                </div>		
-								<div class="col-md-3" >
-									<select id="KODES" name="KODES" style="width: 100%" ></select>        							      
-									<input type="text" hidden class="form-control NAMAS" id="NAMAS" name="NAMAS" value="{{$header->NAMAS}}" placeholder="" >
-								</div>
-
-                            </div>
-
-							<div class="form-group row">
-
-
-                                <div class="col-md-1" align="left">
-                                    <label for="TGL" class="form-label">Tgl</label>
+                                    <label for="KODES" class="form-label">Supplier</label>
                                 </div>
-                                <div class="col-md-2">
-								  <input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
+                               	<div class="col-md-1">
+                                  <input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Pilih Supplier"value="{{$header->KODES}}" style="text-align: left" >
                                 </div>
 
-								<div class="col-md-1" align="left">
-                                    <label for="JTEMPO" class="form-label">Jatuh Tempo</label>
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control NAMAS" id="NAMAS" name="NAMAS" placeholder=""value="{{$header->NAMAS}}" style="text-align: left" >
+        						  <button type="button" class="btn btn-primary" onclick="browseSup()"><i class="fa fa-search"></i></button>
                                 </div>
-                                <div class="col-md-2">
-								  <input class="form-control date" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->JTEMPO))}}">
-                                </div>
-								
                             </div>
 
 
@@ -191,7 +174,7 @@
 									<label class="form-label">Margin</label>
 								</div>
 								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control MARGIN" id="MARGIN" name="MARGIN" placeholder="" value="{{$header->MARGIN}}" style="text-align: left" readonly >
+									<input type="text" class="form-control HMARGIN" id="HMARGIN" name="HMARGIN" placeholder="" value="{{$header->MARGIN}}" style="text-align: right" readonly >
 								</div>
 
 								<div class="col-md-1" align="left">								
@@ -222,7 +205,7 @@
 									<label class="form-label">Dis. Promosi</label>
 								</div>
 								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control POT_PROM" id="POT_PROM" name="POT_PROM" placeholder="" value="{{$header->POT_PROM}}" style="text-align: left" readonly >
+									<input type="text" class="form-control POT_PROM" id="POT_PROM" name="POT_PROM" placeholder="" value="{{$header->POT_PROM}}" style="text-align: right" readonly >
 								</div>
 
 								<div class="col-md-1" align="left">								
@@ -383,7 +366,7 @@
 												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
 												class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
 												
-												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
+												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->rec}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
 											</td>								
 
 											<td>
@@ -392,7 +375,7 @@
 											</td>
 
 											<td>
-												<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->BARCODE}}">
+												<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->barcode}}">
 											</td>
 
 											<td>
@@ -403,11 +386,11 @@
 												<input name="JNS[]" id="JNS{{$no}}" type="text" class="form-control JNS" value="{{$detail->JNS}}">
 											</td>										
 											<td>
-												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
+												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->qty}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
 											</td>
 																																	
 											<td >
-												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
+												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->harga}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
 											</td>
 		
 											<td >
@@ -426,7 +409,7 @@
 												<input name="DISKON4[]" onblur="hitung()"  value="{{$detail->DISKON4}}" id="DISKON4{{$no}}" type="text" style="text-align: right"  class="form-control DISKON4" readonly>
 											</td>
 											<td>
-												<input name="TOTAL[]" onblur="hitung()"  value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
+												<input name="TOTAL[]" onblur="hitung()"  value="{{$detail->total}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
 											</td>
 											<td>
 												<input name="HARGA_JL[]" onblur="hitung()"  value="{{$detail->HARGA_JL}}" id="HARGA_JL{{$no}}" type="text" style="text-align: right"  class="form-control HARGA_JL" readonly>
@@ -525,15 +508,15 @@
 						   
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
-								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/kirim/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-primary">Top</button>
-								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/kirim/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&golz='.$golz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
-								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/kirim/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&golz='.$golz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
-								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/kirim/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
+								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/kirim/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
+								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/kirim/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
+								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/kirim/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
+								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/kirim/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">
-								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/kirim/edit/?idx=0&tipx=new&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-warning">New</button>
+								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/kirim/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
 								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>                    
-								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/kirim/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-info">Undo</button>  
+								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/kirim/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
 								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
@@ -553,24 +536,21 @@
     </div>
 
 
- 	<div class="modal fade" id="browsePoModal" tabindex="-1" role="dialog" aria-labelledby="browsePoModalLabel" aria-hidden="true">
+ 	<div class="modal fade" id="browseCounterModal" tabindex="-1" role="dialog" aria-labelledby="browseCounterModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browsePoModalLabel">Cari Po</h5>
+			<h5 class="modal-title" id="browseCounterModalLabel">Cari Counter</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bpo">
+			<table class="table table-stripped table-bordered" id="table-bcounter">
 				<thead>
 					<tr>
-						<th>PO#</th>
-						<th>Suplier</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
+						<th>Counter</th>
+						<th>Nama Counter</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -584,21 +564,20 @@
 	  </div>
 	</div>
 
-	<div class="modal fade" id="browseBeliModal" tabindex="-1" role="dialog" aria-labelledby="browseBeliModalLabel" aria-hidden="true">
+	<div class="modal fade" id="browseSupModal" tabindex="-1" role="dialog" aria-labelledby="browseSupModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBeliModalLabel">Cari Pemkiriman</h5>
+			<h5 class="modal-title" id="browseSupModalLabel">Cari Pemkiriman</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bkirim">
+			<table class="table table-stripped table-bordered" id="table-bsup">
 				<thead>
 					<tr>
-						<th>No Beli</th>
-						<th>Suplier</th>
+						<th>Kode Supplier</th>
 						<th>Nama</th>
 						<th>Alamat</th>
 						<th>Kota</th>
@@ -617,7 +596,7 @@
 
 
 	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
+	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
 			<h5 class="modal-title" id="browseBarangModalLabel">Cari Item</h5>
@@ -631,47 +610,7 @@
 					<tr>
 						<th>Item#</th>
 						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
-							
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
 
-
-	<div class="modal fade" id="browseBahanModal" tabindex="-1" role="dialog" aria-labelledby="browseBahanModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBahanModalLabel">Cari Item</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbahan">
-				<thead>
-					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
-						
 					</tr>
 				</thead>
 				<tbody>
@@ -698,6 +637,8 @@
 <!-- tambahan untuk sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- tutupannya -->
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
 	var idrow = 1;
@@ -751,7 +692,7 @@
         if ( $tipx != 'new' )
 		{
 			 ganti();			
-		}    
+		} 
 		
 		$("#TTOTAL_QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#TTOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
@@ -759,6 +700,8 @@
 		$("#TPPN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#TDPP").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#NETT").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("HMARGIN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("#POT_PROM").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 
 
 
@@ -794,18 +737,14 @@
 		
  	
 		
-//		CHOOSE Po
- 		var dTableBPo;
-		loadDataBPo = function(){
+//		CHOOSE Sup
+ 		var dTableBSup;
+		loadDataBSup = function(){
 		
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: '{{url('po/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
-					// 'KODES' : $("#KODES").val(),
-				},
+				url: '{{url('kirim/browse_sup')}}',
 
 				beforeSend: function(){
 					$("#LOADX").show();
@@ -816,197 +755,160 @@
 					$("#LOADX").hide();
 
 					resp = response;
-					if(dTableBPo){
-						dTableBPo.clear();
+					if(dTableBSup){
+						dTableBSup.clear();
 					}
 					for(i=0; i<resp.length; i++){
 						
-						dTableBPo.row.add([
-							'<a href="javascript:void(0);" onclick="choosePo(\''+resp[i].NO_BUKTI+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\',  \''+resp[i].GUDANG+'\',  \''+resp[i].JTEMPO+'\',  \''+resp[i].NOTES+'\')">'+resp[i].NO_BUKTI+'</a>',
+						dTableBSup.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\')">'+resp[i].KODES+'</a>',
 							resp[i].KODES,
 							resp[i].NAMAS,
 							resp[i].ALAMAT,
 							resp[i].KOTA,
 						]);
 					}
-					dTableBPo.draw();
+					dTableBSup.draw();
 				}
 			});
 		}
 		
-		dTableBPo = $("#table-bpo").DataTable({
+		dTableBSup = $("#table-bsup").DataTable({
 			
 		});
 		
-		browsePo = function(){
-			loadDataBPo();
-			$("#browsePoModal").modal("show");
+		browseSup = function(){
+			loadDataBSup();
+			$("#browseSupModal").modal("show");
 
 		}
 		
-		choosePo = function( NO_BUKTI,KODES,NAMAS, ALAMAT, KOTA, PKP, GUDANG, JTEMPO, NOTES){
+		chooseSup = function(KODES,NAMAS){
 
-			$("#NO_PO").val(NO_BUKTI);
 			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
-			$("#GUDANG").val(GUDANG);			
-			$("#JTEMPO").val(JTEMPO);			
-			$("#NOTES").val(NOTES);			
-			
-			
-				if ( $("#PKP").val() == '1' )
-        		{
-
-                     document.getElementById("PKP").checked = true;
-                    	
-        		}
-        
-                else
-                {
-                     document.getElementById("PKP").checked = false;
-                    
-                }
-			
-			
-			
-			$("#browsePoModal").modal("hide");
-			
-			getPod(NO_BUKTI);
+			$("#NAMAS").val(NAMAS);		
+			$("#browseSupModal").modal("hide");
+			// getPod(NO_BUKTI);
 		}
-		
-		$("#NO_PO").keypress(function(e){
-
-			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browsePo();
-			}
-		}); 
 
 ////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////
 
-	function getPod(bukti)
-	{
+	// function getPod(bukti)
+	// {
 		
-		var mulai = (idrow==baris) ? idrow-1 : idrow;
+	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
 
-		$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_pod')}}",
-				data: {
-					nobukti: bukti,
-					'GOL': "{{$golz}}",
-				},
-				success: function( resp )
-				{
-					var html = '';
-					for(i=0; i<resp.length; i++){
-						html+=`<tr>
-                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
+	// 	$.ajax(
+	// 		{
+	// 			type: 'GET',    
+	// 			url: "{{url('po/browse_pod')}}",
+	// 			data: {
+	// 				nobukti: bukti,
+	// 			},
+	// 			success: function( resp )
+	// 			{
+	// 				var html = '';
+	// 				for(i=0; i<resp.length; i++){
+	// 					html+=`<tr>
+    //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
                                     
 
-									<td >
-										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-						            </td>
-						            <td >
-						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-						            </td>
+	// 								<td >
+	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
+	// 					            </td>
+	// 					            <td >
+	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
+	// 					            </td>
 									
-									<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-                                    <td>
-										<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
-									</td>
-									<td>
-										<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
-									</td>
-									<td>
-										<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
-										<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
-									</td>
-									<td>
-										<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
-									</td>
-                                    <td>
-										<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-									</td>
-									<td >
-										<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-									</td>
-									<td >
-										<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-									</td>
-									<td >
-										<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-									</td>
-									<td >
-										<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-									</td>
-									<td>
-										<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
-									</td>
-									<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
+	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
+    //                                 <td>
+	// 									<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
+	// 								</td>
+	// 								<td>
+	// 									<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
+	// 								</td>
+	// 								<td>
+	// 									<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
+	// 									<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
+	// 								</td>
+	// 								<td>
+	// 									<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
+	// 								</td>
+    //                                 <td>
+	// 									<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
+	// 								</td>
+	// 								<td>
+	// 									<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
+	// 								</td>
+	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
                                     
 
-									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-                                </tr>`;
-					}
-					$('#detailPod').html(html);
+	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
+    //                             </tr>`;
+	// 				}
+	// 				$('#detailPod').html(html);
 
-					$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".XQTY").autoNumeric('update');
+	// 				$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".XQTY").autoNumeric('update');
 					
-					$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY_PO").autoNumeric('update');
+	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".QTY_PO").autoNumeric('update');
 
-					$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY").autoNumeric('update');
+	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".QTY").autoNumeric('update');
 					
-					$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".HARGA").autoNumeric('update');
+	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".HARGA").autoNumeric('update');
 					
-					$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".KALI").autoNumeric('update');
+	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".KALI").autoNumeric('update');
 					
-					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".TOTAL").autoNumeric('update');
+	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".TOTAL").autoNumeric('update');
 					
-					$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".PPNX").autoNumeric('update');
+	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".PPNX").autoNumeric('update');
 					
-					$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DPP").autoNumeric('update');
+	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".DPP").autoNumeric('update');
 
-					$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DISK").autoNumeric('update');
+	// 				$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".DISK").autoNumeric('update');
 
 
-					idrow=resp.length;
-					baris=resp.length;
+	// 				idrow=resp.length;
+	// 				baris=resp.length;
 
-					nomor();
-					hitung();
-				}
-			});
-	}
+	// 				nomor();
+	// 				hitung();
+	// 			}
+	// 		});
+	// }
 
 //////////////////////////////////////////////////////////////////
 
-//		CHOOSE Beli
-		var dTableBBeli;
-		loadDataBBeli = function(){
+//		CHOOSE Counter
+		var dTableBCounter;
+		loadDataBCounter = function(){
 		
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: '{{url('kirim/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
-				},
+				url: '{{url('kirim/browse_cnt')}}',
 
 				beforeSend: function(){
 					$("#LOADX").show();
@@ -1017,211 +919,185 @@
 					$("#LOADX").hide();
 
 					resp = response;
-					if(dTableBBeli){
-						dTableBBeli.clear();
+					if(dTableBCounter){
+						dTableBCounter.clear();
 					}
 					for(i=0; i<resp.length; i++){
 						
-						dTableBBeli.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBeli(\''+resp[i].NO_BUKTI+'\', \''+resp[i].NO_PO+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\',  \''+resp[i].GUDANG+'\')">'+resp[i].NO_BUKTI+'</a>',
-							resp[i].KODES,
-							resp[i].NAMAS,
-							resp[i].ALAMAT,
-							resp[i].KOTA,
+						dTableBCounter.row.add([
+							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
+							resp[i].NCNT
 						]);
 					}
-					dTableBBeli.draw();
+					dTableBCounter.draw();
 				}
 			});
 		}
 		
-		dTableBBeli = $("#table-bkirim").DataTable({
+		dTableBCounter = $("#table-bcounter").DataTable({
 			
 		});
 		
-		browseBeli = function(){
-			loadDataBBeli();
-			$("#browseBeliModal").modal("show");
+		browseCounter = function(){
+			loadDataBCounter();
+			$("#browseCounterModal").modal("show");
 		}
 		
-		chooseBeli = function( NO_BUKTI, NO_PO , KODES,NAMAS, ALAMAT, KOTA, PKP, GUDANG){
+		chooseCounter = function(CNT,NCNT){
 
-			$("#NO_BELI").val(NO_BUKTI);
-			$("#NO_PO").val(NO_PO);
-			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
-			$("#GUDANG").val(GUDANG);			
-			$("#browseBeliModal").modal("hide");
-			
-			if ( $("#PKP").val() == '1' )
-			{
-
-				document.getElementById("PKP").checked = true;
-					
-			}
-	
-			else
-			{
-				document.getElementById("PKP").checked = false;
-				
-			}
-
-			getBelid(NO_BUKTI);
+			$("#CNT").val(CNT);
+			$("#NCNT").val(NCNT);			
+			$("#browseCounterModal").modal("hide");
+			// getBelid(NO_BUKTI);
 		}
-		
-		$("#NO_BELI").keypress(function(e){
-
-			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browseBeli();
-			}
-		}); 
-
 //////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////
 
-	function getBelid(bukti)
-	{
+	// function getBelid(bukti)
+	// {
 		
-		var mulai = (idrow==baris) ? idrow-1 : idrow;
+	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
 
-		$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('kirim/browse_kirimd')}}",
-				data: {
-					nobukti: bukti,
-				},
-				success: function( resp )
-				{
-					var html = '';
-					for(i=0; i<resp.length; i++){
-						html+=`<tr>
-                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
+	// 	$.ajax(
+	// 		{
+	// 			type: 'GET',    
+	// 			url: "{{url('kirim/browse_kirimd')}}",
+	// 			data: {
+	// 				nobukti: bukti,
+	// 			},
+	// 			success: function( resp )
+	// 			{
+	// 				var html = '';
+	// 				for(i=0; i<resp.length; i++){
+	// 					html+=`<tr>
+    //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
                                     
 
-									<td >
-										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-						            </td>
-						            <td >
-						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-						            </td>
+	// 								<td >
+	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
+	// 					            </td>
+	// 					            <td >
+	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
+	// 					            </td>
 									
-									<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-                                    <td>
-										<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
-									</td>
-									<td>
-										<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
-									</td>
-									<td>
-										<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
-										<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
-									</td>
-									<td>
-										<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
-									</td>
-                                    <td>
-										<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-									</td>
-									<td >
-										<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-									</td>
-									<td >
-										<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-									</td>
-									<td >
-										<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-									</td>
-									<td >
-										<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-									</td>
-									<td>
-										<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
-									</td>
-									<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
+	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
+    //                                 <td>
+	// 									<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
+	// 								</td>
+	// 								<td>
+	// 									<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
+	// 								</td>
+	// 								<td>
+	// 									<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
+	// 									<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
+	// 								</td>
+	// 								<td>
+	// 									<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
+	// 								</td>
+    //                                 <td>
+	// 									<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
+	// 								</td>
+	// 								<td >
+	// 									<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
+	// 								</td>
+	// 								<td>
+	// 									<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
+	// 								</td>
+	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
                                     
 
-									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-                                </tr>`;
-					}
-					$('#detailPod').html(html);
+	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
+    //                             </tr>`;
+	// 				}
+	// 				$('#detailPod').html(html);
 
-					$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".XQTY").autoNumeric('update');
+	// 				$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".XQTY").autoNumeric('update');
 					
-					$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY_PO").autoNumeric('update');
+	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".QTY_PO").autoNumeric('update');
 
-					$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY").autoNumeric('update');
+	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".QTY").autoNumeric('update');
 					
-					$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".HARGA").autoNumeric('update');
+	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".HARGA").autoNumeric('update');
 					
-					$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".KALI").autoNumeric('update');
+	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".KALI").autoNumeric('update');
 					
-					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".TOTAL").autoNumeric('update');
+	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".TOTAL").autoNumeric('update');
 					
-					$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".PPNX").autoNumeric('update');
+	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".PPNX").autoNumeric('update');
 					
-					$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DPP").autoNumeric('update');
+	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".DPP").autoNumeric('update');
 
-					$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DISK").autoNumeric('update');
+	// 				$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+	// 				$(".DISK").autoNumeric('update');
 
 
-					idrow=resp.length;
-					baris=resp.length;
+	// 				idrow=resp.length;
+	// 				baris=resp.length;
 
-					nomor();
-					hitung();
-				}
-			});
-	}
+	// 				nomor();
+	// 				hitung();
+	// 			}
+	// 		});
+	// }
 
 //////////////////////////////////////////////////////////////////
 
 		var dTableBBarang;
 		var rowidBarang;
 		loadDataBBarang = function(){
+		
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('po/browse_detail2')}}",
-				data: 
-				{
-                    KD_BRG : $("#KD_BRG"+rowidBarang).val(),
-                    NO_PO : $("#NO_PO").val(), 					
-				},				
-				
+				url: "{{url('kirim/browse_brg')}}",
+				async : false,
+				data: {
+						'KODES': $("#KODES").val(),
+				},
 				success: function( response )
+
 				{
 					resp = response;
-					if(dTableBBarang){
-						dTableBBarang.clear();
+					
+					
+					if ( resp.length > 1 )
+					{	
+							if(dTableBBarang){
+								dTableBBarang.clear();
+							}
+							for(i=0; i<resp.length; i++){
+								
+								dTableBBarang.row.add([
+									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\',\''+resp[i].BARCODE+'\',\''+resp[i].HARGA_JL+'\',\''+resp[i].HARGA+'\',\''+resp[i].JNS+'\',\''+resp[i].MARGIN+'\')">'+resp[i].KD_BRG+'</a>',
+									resp[i].NA_BRG,
+								]);
+							}
+							dTableBBarang.draw();
+					
 					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBarang.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\',\''+resp[i].NA_BRG+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\' , \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\', \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\'  )">'+resp[i].KD_BRG+'</a>',
-							resp[i].NA_BRG,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,							
-						]);
+					else
+					{
+						$("#KD_BRG"+rowidBarang).val(resp[0].KD_BRG);
+						$("#NA_BRG"+rowidBarang).val(resp[0].NA_BRG);
 					}
-					dTableBBarang.draw();
 				}
 			});
 		}
@@ -1229,33 +1105,28 @@
 		dTableBBarang = $("#table-bbarang").DataTable({
 			
 		});
-		
+
 		browseBarang = function(rid){
 			rowidBarang = rid;
+			$("#NA_BRG"+rowidBarang).val("");			
 			loadDataBBarang();
-			$("#browseBarangModal").modal("show");
+	
+			
+			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {				
+					$("#browseBarangModal").modal("show");
+			}	
 		}
 		
-		chooseBarang = function(KD_BRG, NA_BRG, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
+		chooseBarang = function(KD_BRG,NA_BRG,BARCODE,HARGA_JL,HARGA,JNS,MARGIN){
 			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);
-			$("#SATUAN_PO"+rowidBarang).val(SATUAN_PO);
-			$("#QTY_PO"+rowidBarang).val(SISA);
+			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
+			$("#BARCODE"+rowidBarang).val(BARCODE);
+			$("#HARGA_JL"+rowidBarang).val(HARGA_JL);
 			$("#HARGA"+rowidBarang).val(HARGA);
-			$("#SATUAN"+rowidBarang).val(SATUAN);			
-			$("#QTY"+rowidBarang).val(QTY);			
-			$("#KALI"+rowidBarang).val(KALI);			
+			$("#JNS"+rowidBarang).val(JNS);
+			$("#MARGIN"+rowidBarang).val(MARGIN);
 			$("#browseBarangModal").modal("hide");
-			hitung();
-		}
-		
-		
-		$("#KD_BRG0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBarang(0);
-			}
-		}); 
+		} 
 
 	});
 
@@ -1269,23 +1140,12 @@
 			
 			let z = $(this).closest('tr');
 			var KD_BRGX = z.find('.KD_BRG').val();
-			var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
-			var SISAX = parseFloat(z.find('.SISA').val().replace(/,/g, ''));
-
-			// alert(QTYX);
-			// alert(SEDIAX);
 			
 			if( KD_BRGX =="" )
 			{
 					cekBarang = '1';
 					
-			}	
-
-			if( QTY_POX > SISAX )
-			{
-					cekBarang = '1';
-					
-			}	
+			}
 		});
 		
 		return cekBarang;
@@ -1308,7 +1168,7 @@
     			Swal.fire({
     				icon: 'warning',
     				title: 'Warning',
-    				text: '#Periksa Barang dan QTY PO, QTY PO tidak boleh melebihi SISA PO'
+    				text: '#Periksa Barang yang belum diisi.'
     			});
     			return;
     		}
@@ -1326,34 +1186,6 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-		$tipx = $('#tipx').val();
-		
-        if ( $tipx != 'new' )
-		{
-		    
-		    $pkp00 = $('#PKP').val();
-		    $pkp11 = $('#ZPKP').val();
-		    
-		    
-		    
-			if ( $pkp00 != $pkp11   ) 
-            {
-               
-                check = '1';
-				Swal.fire({
-					icon: 'warning',
-					title: 'Warning',
-					text: 'Type PKP beda dengan Type PKP awal.'
-				});
-				return;
-                
-            }			 
-		}
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
 
 			if ( tgl.substring(3,5) != bulanPer ) 
 			{
@@ -1608,9 +1440,9 @@
 			
 			$("#NOTES").attr("readonly", false);
 	        $("#PKP").attr("disabled", true);
-	        $("#CNT").attr("disabled", false);
+	        $("#CNT").attr("readonly", true);
 	        $("#NCNT").attr("readonly", true);
-	        $("#NO_PO").attr("readonly", true);
+	        $("#NO_PO").attr("readonly", false);
 
 			$("#TDPP").attr("readonly", true);			
 			$("#TPPN").attr("readonly", true);
@@ -1620,7 +1452,7 @@
 
 
 			$("#REF").attr("readonly", false);	
-			$("#MARGIN").attr("readonly", false);	
+			$("#HMARGIN").attr("readonly", false);	
 			$("#ST_NOTA").attr("readonly", false);	
 			$("#ST_CNT").attr("readonly", false);	
 			$("#POT_PROM").attr("readonly", false);	
@@ -1631,7 +1463,6 @@
 			$("#NOTA_KHS").attr("readonly", false);	
 			$("#BAYAR").attr("disabled", false);	
 			$("#POSTED").attr("disabled", true);	
-			$("#CBG").attr("disabled", false);	
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -1699,7 +1530,7 @@
 			
 			$("#NOTES").attr("readonly", true);
 	        $("#PKP").attr("disabled", true);
-	        $("#CNT").attr("disabled", true);
+	        $("#CNT").attr("readonly", true);
 	        $("#NCNT").attr("readonly", true);
 	        $("#NO_PO").attr("readonly", true);
 
@@ -1711,7 +1542,7 @@
 
 
 			$("#REF").attr("readonly", true);	
-			$("#MARGIN").attr("readonly", true);	
+			$("#HMARGIN").attr("readonly", true);	
 			$("#ST_NOTA").attr("readonly", true);	
 			$("#ST_CNT").attr("readonly", true);	
 			$("#POT_PROM").attr("readonly", true);	
@@ -1764,6 +1595,8 @@
 		 $('#TDPP').val("0.00");
 		 $('#TNETT').val("0.00");		 
 		 $('#TPPN').val("0.00");	 
+		 $('#HMARGIN').val("0.00");	 
+		 $('#POT_PROM').val("0.00");	 
 		 
 		 
 		var html = '';
@@ -1775,7 +1608,7 @@
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
 		if (confirm(text) == true) 
 		{
-			window.location ="{{url('/kirim/delete/'.$header->NO_ID .'/?flagz='.$flagz.'&golz=' .$golz.'' )}}";
+			window.location ="{{url('/kirim/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
 			//return true;
 		} 
 		return false;
@@ -1788,7 +1621,6 @@
 
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		var golz = "{{ $golz }}";
 		
 		Swal.fire({
 			title: 'Are you sure?',
@@ -1809,8 +1641,7 @@
 					confirmButtonText: 'OK'
 				}).then(() => {
 					// Redirect to delete the data after user confirms the success message
-	            	loc = "{{ url('/kirim/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz) + 
-						  '&golz=' + encodeURIComponent(golz) ;
+	            	loc = "{{ url('/kirim/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz);
 
 		            // alert(loc);
 	            	window.location = loc;
@@ -1823,7 +1654,6 @@
 	function closeTrans() {
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		var golz = "{{ $golz }}";
 		
 		Swal.fire({
 			title: 'Are you sure?',
@@ -1834,7 +1664,7 @@
 			cancelButtonText: 'No, stay here'
 		}).then((result) => {
 			if (result.isConfirmed) {
-	        	loc = "{{ url('/kirim/') }}" + '?flagz=' + encodeURIComponent(flagz) + '&golz=' + encodeURIComponent(golz) ;
+	        	loc = "{{ url('/kirim/') }}" + '?flagz=' + encodeURIComponent(flagz);
 				window.location = loc ;
 			} else {
 				Swal.fire({
@@ -1852,9 +1682,8 @@
 	function CariBukti() {
 		
 		var flagz = "{{ $flagz }}";
-		var golz = "{{ $golz }}";
 		var cari = $("#CARI").val();
-		var loc = "{{ url('/kirim/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&golz=' + encodeURIComponent(golz) + '&buktix=' +encodeURIComponent(cari);
+		var loc = "{{ url('/kirim/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
 		window.location = loc;
 		
 	}

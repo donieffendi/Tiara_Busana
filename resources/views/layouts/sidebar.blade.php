@@ -378,8 +378,7 @@
         </div>
 		    <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-                {{-- <a href="javascript:addTab('Pembelian', '{{url('beli?flagz=BL&golz=BS')}}')"> --}}
-                <a href="javascript:addTab('Pembelian', '{{url('po?flagz=PO&golz=BS')}}')">
+                <a href="javascript:addTab('Pembelian', '{{url('beli?flagz=BS')}}')">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-15px;font-size: 40px;" class="nav-icon fas fa-store icon-purple"></i>
                   <h6>Pembelian</h6>
@@ -388,8 +387,7 @@
         </div>
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-              {{-- <a href="javascript:addTab('Pelayanan Outlet', '{{url('kirim?flagz=KR&golz=KO')}}')"> --}}
-              <a href="javascript:addTab('Pelayanan Outlet', '{{url('po?flagz=PO&golz=KO')}}')">
+              <a href="javascript:addTab('Pelayanan Outlet', '{{url('kirim?flagz=KO')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-15px;font-size: 40px;" class="nav-icon fas fa-money-bill icon-purple"></i>
                 <h6>Pelayanan Outlet</h6>
@@ -401,8 +399,7 @@
 	    <div class="row">
 		    <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-              {{-- <a href="javascript:addTab('Stock Opname', '{{url('stockb?flagz=KB')}}')"> --}}
-              <a href="javascript:addTab('Stock Opname', '{{url('po?flagz=PO&golz=KB')}}')">
+              <a href="javascript:addTab('Stock Opname', '{{url('stockb?flagz=KB')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-hand-holding-heart icon-purple"></i>
                 <h6>Stock Opname</h6>
@@ -411,8 +408,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-              {{-- <a href="javascript:addTab('Terima Barang TGZ', '{{url('beli?flagz=BL&golz=BO')}}')"> --}}
-              <a href="javascript:addTab('Terima Barang TGZ', '{{url('po?flagz=PO&golz=BO')}}')">
+              <a href="javascript:addTab('Terima Barang TGZ', '{{url('beli?flagz=BO')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cash-register icon-purple"></i>
                 <h6>Terima Barang TGZ</h6>

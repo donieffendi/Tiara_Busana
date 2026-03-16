@@ -12,15 +12,27 @@ class Stockb extends Model
     use HasFactory;
 
 // ganti 2
-    protected $table = 'stockb';
+    protected $table = 'lapbsn';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
 //ganti 3
     protected $fillable = 
     [
-        "NO_BUKTI", "TGL", "PER", "FLAG", "NOTES",
-        "TOTAL_QTY", "TOTAL",
-		"USRNM", "TG_SMP", "CBG", "NOLAP"
+        "no_bukti",
+        "tgl",
+        "sub",
+        "tg_smp",
+        "usrnm",
+        "cbg",
+        "gol",
+        "posted",
+        "flag",
+        "sls",
+        "hps",
+        "cnt",
+        "ncnt",
+        "kodes",
+        "namas",
     ];
 }
