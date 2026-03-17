@@ -152,18 +152,32 @@
                                         </div>
                                         <div class="col-md-2">
                                             <select id="TYPE" class="form-control"  name="TYPE">
-                                            <option value="-" disable selected hidden>--Pilih Tipe--</option>
+                                            <option value="" disabled selected hidden>--Pilih Tipe--</option>
                                                 <option value="PerSub">Per Sub</option>
                                                 <option value="PerSupp">Per Supplier</option>
                                             </select>
                                         </div>
 
-                                        <div class="col-md-2" id="filterSub" style="display:none;">
-                                            <input type="text" id="sub" name="sub" class="form-control" placeholder="Masukkan Sub">
+                                        <div class="col-md-4" id="filterSub" style="display:none;">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="text" id="sub1" class="form-control" placeholder="Sub Awal">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="sub2" class="form-control" placeholder="Sub Akhir">
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div class="col-md-3" id="filterSupp" style="display:none;">
-                                            <input type="text" id="supp" name="supp" class="form-control" placeholder="Masukkan Kode Supplier">
+                                        <div class="col-md-4" id="filterSupp" style="display:none;">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="text" id="supp1" class="form-control" placeholder="Supplier Awal">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="supp2" class="form-control" placeholder="Supplier Akhir">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col-md-2">
@@ -234,6 +248,10 @@
         // batas filter
 
         $(document).ready(function() {
+
+            $('#filterSub').hide();
+            $('#filterSupp').hide();
+
             var dataTable = $('.datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -332,14 +350,16 @@
             );
 
             $('#btnPrint').on('click', function() {
-				let sub = $('#sub').val();
-                let supp = $('#supp').val();
+				let sub1 = $('#sub1').val();
+                let sub2 = $('#sub2').val();
+                let supp1 = $('#supp1').val();
+                let supp2 = $('#supp2').val();
 
-                if (sub == '' && supp == '') {
+                if (sub1 == '' && sub2 == '' && supp1 == '' && supp2 == '') {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
-                        text: 'Anda belum memilih Filter Sub atau Supp!',
+                        text: 'Anda belum mengisi filter!',
                     });
                     return;
                 }
@@ -356,7 +376,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						// buka jasper report di tab baru
-						window.open(`{{ url('brg/print') }}?sub=${sub}&supp=${supp}`, '_blank');
+						window.open(`{{ url('brg/print') }}?sub1=${sub1}&sub2=${sub2}&supp1=${supp1}&supp2=${supp2}`, '_blank');
 					}
 				});
 			});
@@ -365,20 +385,26 @@
 
                 let type = $(this).val();
 
-                $('#sub').val('');
-                $('#supp').val('');
+                // reset input
+                $('#sub1').val('');
+                $('#sub2').val('');
+                $('#supp1').val('');
+                $('#supp2').val('');
 
-                if(type == 'PerSub')
-                {
+                // hide semua dulu
+                $('#filterSub').hide();
+                $('#filterSupp').hide();
+
+                if(type === 'PerSub'){
                     $('#filterSub').show();
-                    $('#filterSupp').hide();
                 }
-                else if(type == 'PerSupp')
-                {
-                    $('#filterSub').hide();
+                else if(type === 'PerSupp'){
                     $('#filterSupp').show();
                 }
+
             });
+
+            // $('#TYPE').trigger('change');
         });
     </script>
 @endsection

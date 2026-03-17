@@ -419,9 +419,11 @@ class BrgController extends Controller
 
     public function Print(Request $request)
     {
-        // Ambil filter dari request (misalnya dikirim via tombol print)
-        $sub = $request->input('sub');
-        $sup = $request->input('supp');
+        // Ambil filter range
+        $sub1  = $request->input('sub1');
+        $sub2  = $request->input('sub2');
+        $supp1 = $request->input('supp1');
+        $supp2 = $request->input('supp2');
 
         // Nama file laporan Jasper
         $file = 'Daftar_Barang'; // ubah sesuai nama file .jrxml kamu, misalnya 'brg_list.jrxml'
@@ -443,16 +445,17 @@ class BrgController extends Controller
                 'a.BARCODE'
             );
 
-        // Filter sesuai input user
-        if (!empty($sub)) {
-            $query->whereRaw("a.SUB = ?", [$sub]);
+        // Filter SUB BETWEEN
+        if (!empty($sub1) && !empty($sub2)) {
+            $query->whereBetween('a.SUB', [$sub1, $sub2]);
         }
 
-        if (!empty($sup)) {
-            $query->whereRaw("a.SUPP = ?", [$sup]);
+        // Filter SUPP BETWEEN
+        if (!empty($supp1) && !empty($supp2)) {
+            $query->whereBetween('a.SUPP', [$supp1, $supp2]);
         }
 
-        $result = $query->orderBy('a.KDBAR')->get();
+        $result = $query->orderBy('a.SUB')->orderBy('a.KDBAR')->get();
 
         // === Konversi hasil ke array untuk Jasper ===
         $data = [];

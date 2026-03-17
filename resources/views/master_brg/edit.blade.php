@@ -118,6 +118,7 @@
 											<option value="NF" {{ ($header->RAK == 'NF') ? 'selected' : '' }}>NF</option>
 											<option value="ST" {{ ($header->RAK == 'ST') ? 'selected' : '' }}>ST</option>
 											<option value="FO" {{ ($header->RAK == 'FO') ? 'selected' : '' }}>FO</option>
+											<option value="PB" {{ ($header->RAK == 'PB') ? 'selected' : '' }}>PB</option>
 										</select>
 									</div>
 
