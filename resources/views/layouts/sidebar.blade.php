@@ -87,6 +87,14 @@
       top:120;
     }
 
+    #z {
+      top:100;
+    }
+
+    #x {
+      top:100;
+    }
+
     /* Display mega menu on hover */
     .vertical-menu a:hover + .mega-menu,
     .mega-menu:hover {
@@ -333,7 +341,7 @@
 
           <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase") || (Auth::user()->divisi=="gudang"))
-			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Transaksi A" >
+			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Transaksi" >
               <i class="nav-icon fas fa-hand-holding-heart icon-pink"></i>
               <p>
               </p>
@@ -347,7 +355,7 @@
       <!-- penambahan judul di menu -->
           <div class="row">
             <div class="col-md-12">
-              <h3>TRANSAKSI A</h3>
+              <h3>TRANSAKSI</h3>
               <hr style=" height: 5px;
                 background-color: #333; 
                 border: none; 
@@ -457,8 +465,113 @@
                 </a>
             </div>
         </div>
-
       </div>
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+              {{-- <a href="javascript:addTab('Label Budget', '{{url('budget?flagz=LB')}}')"> --}}
+              <a href="javascript:addTab('Label Budget', '{{url('retur?flagz=LB')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
+                <h6>Label Budget</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+              {{-- <a href="javascript:addTab('Label Non Data', '{{url('budget?flagz=ND')}}')"> --}}
+              <a href="javascript:addTab('Label Non Data', '{{url('retur?flagz=ND')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
+                <h6>Label Non Data</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+              {{-- <a href="javascript:addTab('Buat Data Label', '{{url('budget?flagz=DL')}}')"> --}}
+              <a href="javascript:addTab('Buat Data Label', '{{url('retur?flagz=DL')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
+                <h6>Buat Data Label</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+              {{-- <a href="javascript:addTab('Label Budget Dari File', '{{url('budget?flagz=DF')}}')"> --}}
+              <a href="javascript:addTab('Label Budget Dari File', '{{url('retur?flagz=DF')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
+                <h6>Label Budget Dari File</h6>
+              </a>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffd36d;">
+              <a href="javascript:addTab('Lap. Ubah Margin', '{{url('rubahmargin')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-10px;font-size: 40px;" class="nav-icon fas fa-pen icon-brown"></i>
+                <h6>Laporan Perubahan Margin</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffd36d;">
+              <a href="javascript:addTab('Entry Factor S. Ideal', '{{url('faktor?flagz=EN')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-brown"></i>
+                <h6>Entry Factor S. Ideal</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffd36d;">
+              <a href="javascript:addTab('Daftar Factor S. Ideal', '{{url('faktor?flagz=DF')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-brown"></i>
+                <h6>Daftar Factor S. Ideal</h6>
+              </a>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+<!----- batas ----->
+			
+           @endif			 		
+          </li>
+
+<!----- batas ----->
+          
+          <li class="nav-item">
+          @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase") || (Auth::user()->divisi=="gudang"))
+			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Transaksi Supplier" >
+              <i class="nav-icon fas fa-chart-line icon-aqua"></i>
+              <p>
+              </p>
+            </a>
+
+<!------- penambahan tampilan baru ------->
+
+
+    <div class="mega-menu" id="b">
+
+      <!-- penambahan judul di menu -->
+          <div class="row">
+            <div class="col-md-12">
+              <h3>TRANSAKSI SUPPLIER</h3>
+              <hr style=" height: 5px;
+                background-color: #333; 
+                border: none; 
+                margin: 20px 0; "/>
+            </div>
+          </div>
+
+      <!-- batas -->
 
       <div class="row">
         <div class="col-md-3">
@@ -570,6 +683,45 @@
                 </a>
             </div>
         </div>
+      </div>
+
+	    
+    </div>
+
+<!----- batas ----->
+			
+           @endif			 		
+          </li>
+
+<!----- batas ----->
+          
+          <li class="nav-item">
+          @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase") || (Auth::user()->divisi=="gudang"))
+			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Transaksi Persediaan" >
+              <i class="nav-icon fas fa-stamp icon-purple"></i>
+              <p>
+              </p>
+            </a>
+
+<!------- penambahan tampilan baru ------->
+
+
+    <div class="mega-menu" id="z">
+
+      <!-- penambahan judul di menu -->
+          <div class="row">
+            <div class="col-md-12">
+              <h3>TRANSAKSI PERSEDIAAN</h3>
+              <hr style=" height: 5px;
+                background-color: #333; 
+                border: none; 
+                margin: 20px 0; "/>
+            </div>
+          </div>
+
+      <!-- batas -->
+
+      <div class="row">
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
                 {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
@@ -590,9 +742,6 @@
                 </a>
             </div>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
                 {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
@@ -614,12 +763,201 @@
             </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+              <a href="javascript:addTab('Update Rencana Hapus', '{{url('rencanahps?flagz=RC')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
+                <h6>Update Rencana Hapus</h6>
+              </a>
+            </div>
+        </div>
+      </div>
     </div>
 
 <!----- batas ----->
 			
            @endif			 		
-          </li>  
+          </li>
+
+<!----- batas ----->
+
+          <li class="nav-item">
+          @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase") || (Auth::user()->divisi=="gudang"))
+			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Transaksi Budget" >
+              <i class="nav-icon fas fa-receipt icon-green"></i>
+              <p>
+              </p>
+            </a>
+
+<!------- penambahan tampilan baru ------->
+
+
+    <div class="mega-menu" id="x">
+
+      <!-- penambahan judul di menu -->
+          <div class="row">
+            <div class="col-md-12">
+              <h3>TRANSAKSI BUDGET</h3>
+              <hr style=" height: 5px;
+                background-color: #333; 
+                border: none; 
+                margin: 20px 0; "/>
+            </div>
+          </div>
+
+      <!-- batas -->
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=SS')}}')"> --}}
+                <a href="javascript:addTab('Sup. yang memiliki sisa budget', '{{url('terima?flagz=SS')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Suplier yang memiliki sisa budget</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BO')}}')"> --}}
+                <a href="javascript:addTab('Melihat Budget & Order lebih', '{{url('terima?flagz=BO')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Melihat Budget & Order lebih</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
+                <a href="javascript:addTab('Laporan Suplier Tidak Ada Budget', '{{url('rsupnol')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Laporan Suplier Tidak Ada Budget</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=NM')}}')"> --}}
+                <a href="javascript:addTab('Perubahan Min. Nilai Budget', '{{url('terima?flagz=NM')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Perubahan Min. Nilai Budget</h6>
+                </a>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+              <a href="javascript:addTab('Laporan Budget Minus', '{{url('rminus')}}')">
+                <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                  <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
+                <h6>Laporan Budget Minus</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BP')}}')"> --}}
+                <a href="javascript:addTab('Suplier Yang Punya Budget Pokok', '{{url('terima?flagz=BP')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-blue"></i>
+                  <h6>Suplier Yang Punya Budget Pokok</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=PB')}}')"> --}}
+                <a href="javascript:addTab('Proses Budget Repeat', '{{url('terima?flagz=PB')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-blue"></i>
+                  <h6>Proses Budget Repeat</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BR')}}')"> --}}
+                <a href="javascript:addTab('Suplier yang Punya Budget Repeat', '{{url('terima?flagz=BR')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-blue"></i>
+                  <h6>Suplier yang Punya Budget Repeat</h6>
+                </a>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<!----- batas ----->
+			
+           @endif			 		
+          </li>
+
+<!----- batas ----->
+
+
+<li class="nav-item">
+          @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase") || (Auth::user()->divisi=="gudang"))
+			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Penghapusan Data Barang Budget" >
+              <i class="nav-icon fas fa-receipt icon-green"></i>
+              <p>
+              </p>
+            </a>
+
+<!------- penambahan tampilan baru ------->
+
+
+    <div class="mega-menu" id="x">
+
+      <!-- penambahan judul di menu -->
+          <div class="row">
+            <div class="col-md-12">
+              <h3>PENGHAPUSAN DATA BARANG BUDGET</h3>
+              <hr style=" height: 5px;
+                background-color: #333; 
+                border: none; 
+                margin: 20px 0; "/>
+            </div>
+          </div>
+
+      <!-- batas -->
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BO')}}')"> --}}
+                <a href="javascript:addTab('Usulan Penghapusan Barang', '{{url('ubsup?flagz=HB&golz=1')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Usulan Penghapusan Barang</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
+                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=SS')}}')"> --}}
+                <a href="javascript:addTab('Usulan tanda PPN barang Budget', '{{url('uppn?flagz=PN&golz=1')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                  <h6>Usulan tanda PPN barang Budget</h6>
+                </a>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<!----- batas ----->
+			
+           @endif			 		
+          </li>
+
+<!----- batas ----->
 
           <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales") || (Auth::user()->divisi=="gudang"))

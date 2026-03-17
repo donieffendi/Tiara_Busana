@@ -357,6 +357,42 @@ Route::get('/retur/delete/{retur}', 'App\Http\Controllers\OTransaksi\ReturContro
 Route::post('/jasper-retur-report', 'App\Http\Controllers\OReport\RReturController@jasperReturReport')->middleware(['auth']);
 Route::get('/jsreturc/{retur:NO_ID}', 'App\Http\Controllers\OTransaksi\ReturController@jsreturc')->middleware(['auth']);
 
+// Operational Faktor
+Route::get('/faktor', 'App\Http\Controllers\OTransaksi\FaktorController@index')->middleware(['auth'])->name('faktor');
+Route::post('/faktor/store', 'App\Http\Controllers\OTransaksi\FaktorController@store')->middleware(['auth'])->name('faktor/store');
+Route::get('/faktor/create', 'App\Http\Controllers\OTransaksi\FaktorController@create')->middleware(['auth'])->name('faktor/create');
+Route::get('/get-faktor', 'App\Http\Controllers\OTransaksi\FaktorController@getFaktor')->middleware(['auth'])->name('get-faktor');
+Route::get('/faktor/browse_cnt', 'App\Http\Controllers\OTransaksi\FaktorController@browse_cnt')->middleware(['auth'])->name('faktor/browse_cnt');
+Route::get('/faktor/browse_brg', 'App\Http\Controllers\OTransaksi\FaktorController@browse_brg')->middleware(['auth'])->name('faktor/browse_brg');
+Route::get('/rfaktor', 'App\Http\Controllers\OReport\RFaktorController@report')->middleware(['auth'])->name('rfaktor');
+Route::get('/get-faktor-report', 'App\Http\Controllers\OReport\RFaktorController@getFaktorReport')->middleware(['auth'])->name('get-faktor-report');
+
+Route::get('/faktor/show/{faktor}', 'App\Http\Controllers\OTransaksi\FaktorController@show')->name('faktorid');
+Route::get('/faktor/edit', 'App\Http\Controllers\OTransaksi\FaktorController@edit')->name('faktor.edit');
+Route::post('/faktor/update/{faktor}', 'App\Http\Controllers\OTransaksi\FaktorController@update')->name('faktor.update');
+Route::get('/faktor/delete/{faktor}', 'App\Http\Controllers\OTransaksi\FaktorController@destroy')->name('faktor.delete');
+
+Route::post('/jasper-faktor-report', 'App\Http\Controllers\OReport\RFaktorController@jasperFaktorReport')->middleware(['auth']);
+Route::get('/jsfaktorc/{faktor:NO_ID}', 'App\Http\Controllers\OTransaksi\FaktorController@jsfaktorc')->middleware(['auth']);
+
+// Operational Update Rencana Hapus
+Route::get('/rencanahps', 'App\Http\Controllers\OTransaksi\RencanahpsController@index')->middleware(['auth'])->name('rencanahps');
+Route::post('/rencanahps/store', 'App\Http\Controllers\OTransaksi\RencanahpsController@store')->middleware(['auth'])->name('rencanahps/store');
+Route::get('/rencanahps/create', 'App\Http\Controllers\OTransaksi\RencanahpsController@create')->middleware(['auth'])->name('rencanahps/create');
+Route::get('/get-rencanahps', 'App\Http\Controllers\OTransaksi\RencanahpsController@getRencanahps')->middleware(['auth'])->name('get-rencanahps');
+Route::get('/rencanahps/browse_cnt', 'App\Http\Controllers\OTransaksi\RencanahpsController@browse_cnt')->middleware(['auth'])->name('rencanahps/browse_cnt');
+Route::get('/rencanahps/browse_brg', 'App\Http\Controllers\OTransaksi\RencanahpsController@browse_brg')->middleware(['auth'])->name('rencanahps/browse_brg');
+Route::get('/rrencanahps', 'App\Http\Controllers\OReport\RRencanahpsController@report')->middleware(['auth'])->name('rrencanahps');
+Route::get('/get-rencanahps-report', 'App\Http\Controllers\OReport\RRencanahpsController@getRencanahpsReport')->middleware(['auth'])->name('get-rencanahps-report');
+
+Route::get('/rencanahps/show/{rencanahps}', 'App\Http\Controllers\OTransaksi\RencanahpsController@show')->name('rencanahpsid');
+Route::get('/rencanahps/edit', 'App\Http\Controllers\OTransaksi\RencanahpsController@edit')->name('rencanahps.edit');
+Route::post('/rencanahps/update/{rencanahps}', 'App\Http\Controllers\OTransaksi\RencanahpsController@update')->name('rencanahps.update');
+Route::get('/rencanahps/delete/{rencanahps}', 'App\Http\Controllers\OTransaksi\RencanahpsController@destroy')->name('rencanahps.delete');
+
+Route::post('/jasper-rencanahps-report', 'App\Http\Controllers\OReport\RRencanahpsController@jasperRencanahpsReport')->middleware(['auth']);
+Route::get('/jsrencanahpsc/{rencanahps:NO_ID}', 'App\Http\Controllers\OTransaksi\RencanahpsController@jsrencanahpsc')->middleware(['auth']);
+
 
 // Operational Transaksi Diskon
 Route::get('/diskon', 'App\Http\Controllers\OTransaksi\DiskonController@index')->middleware(['auth'])->name('diskon');
@@ -412,6 +448,108 @@ Route::get('/jshargac/{harga:NO_ID}', 'App\Http\Controllers\OTransaksi\HargaCont
 Route::get('/rusulanth', 'App\Http\Controllers\OReport\RUsulanthController@report')->middleware(['auth'])->name('rusulanth');
 Route::get('/get-usulanth-report', 'App\Http\Controllers\OReport\RUsulanthController@getUsulanthReport')->middleware(['auth'])->name('get-usulanth-report');
 Route::post('jasper-usulanth-report', 'App\Http\Controllers\OReport\RUsulanthController@jasperUsulanthReport')->middleware(['auth']);
+
+// Operational Perubahan Margin
+
+Route::get('/rubahmargin', 'App\Http\Controllers\OReport\RUbahmarginController@report')->middleware(['auth'])->name('rubahmargin');
+Route::get('/get-ubahmargin-report', 'App\Http\Controllers\OReport\RUbahmarginController@getUbahmarginReport')->middleware(['auth'])->name('get-ubahmargin-report');
+Route::post('jasper-ubahmargin-report', 'App\Http\Controllers\OReport\RUbahmarginController@jasperUbahmarginReport')->middleware(['auth']);
+
+// Operational Suplier Tidak Ada Budget
+
+Route::get('/rsupnol', 'App\Http\Controllers\OReport\RSupnolController@report')->middleware(['auth'])->name('rsupnol');
+Route::get('/get-supnol-report', 'App\Http\Controllers\OReport\RSupnolController@getSupnolReport')->middleware(['auth'])->name('get-supnol-report');
+Route::post('jasper-supnol-report', 'App\Http\Controllers\OReport\RSupnolController@jasperSupnolReport')->middleware(['auth']);
+
+
+// Operational Budget Minus
+
+Route::get('/rminus', 'App\Http\Controllers\OReport\RMinusController@report')->middleware(['auth'])->name('rminus');
+Route::get('/get-minus-report', 'App\Http\Controllers\OReport\RMinusController@getMinusReport')->middleware(['auth'])->name('get-minus-report');
+Route::post('jasper-minus-report', 'App\Http\Controllers\OReport\RMinusController@jasperMinusReport')->middleware(['auth']);
+
+
+// Opertational Usulan Penghapusan Barang
+Route::get('/ubsup', 'App\Http\Controllers\OTransaksi\UbsupController@index')->middleware(['auth'])->name('ubsup');
+Route::get('/ubsuppost', 'App\Http\Controllers\OTransaksi\UbsupController@index_post')->middleware(['auth'])->name('ubsuppost');
+Route::get('/ubsuppost1', 'App\Http\Controllers\OTransaksi\UbsupController@post')->middleware(['auth'])->name('ubsuppost1');
+Route::post('/ubsuppost2', 'App\Http\Controllers\OTransaksi\UbsupController@post')->middleware(['auth'])->name('ubsuppost2');
+// Route::get('/ubsuppost2', 'App\Http\Controllers\OTransaksi\UbsupController@post')->middleware(['auth'])->name('ubsuppost2');
+Route::post('/ubsup/store', 'App\Http\Controllers\OTransaksi\UbsupController@store')->middleware(['auth'])->name('bsup/store');
+Route::get('/rubsup', 'App\Http\Controllers\OReport\RUbsupController@report')->middleware(['auth'])->name('rubsup');
+
+// GET Usulan Rubah Email
+Route::get('/ubsup/browse', 'App\Http\Controllers\OTransaksi\UbsupController@browse')->middleware(['auth'])->name('ubsup/browse');
+Route::get('/ubsup/browse_brg', 'App\Http\Controllers\OTransaksi\UbsupController@browse_brg')->middleware(['auth'])->name('ubsup/browse_brg');
+Route::get('/ubsup/browse_detail', 'App\Http\Controllers\OTransaksi\UbsupController@browse_detail')->middleware(['auth'])->name('ubsup/browse_detail');
+Route::get('/ubsup/browse_detail2', 'App\Http\Controllers\OTransaksi\UbsupController@browse_detail2')->middleware(['auth'])->name('ubsup/browse_detail2');
+Route::get('/ubsup/browse_ppd', 'App\Http\Controllers\OTransaksi\UbsupController@browse_ubsupd')->middleware(['auth'])->name('ubsup/browse_ubsupd');
+Route::get('/ubsup/browseuang', 'App\Http\Controllers\OTransaksi\UbsupController@browseuang')->middleware(['auth'])->name('ubsup/browseuang');
+
+Route::get('/get-ubsup', 'App\Http\Controllers\OTransaksi\UbsupController@getUbsup')->middleware(['auth'])->name('get-ubsup');
+Route::get('/get-ubsup-post', 'App\Http\Controllers\OTransaksi\UbsupController@getUbsup_posting')->middleware(['auth'])->name('get-ubsup-post');
+Route::get('/get-ubsup-report', 'App\Http\Controllers\OReport\UbsupController@getPpReport')->middleware(['auth'])->name('get-ubsup-report');
+// Route::get('/cetak/{ubsup:NO_ID}', 'App\Http\Controllers\OTransaksi\UbsupController@cetak')->middleware(['auth']);
+Route::get('/ubsup/cetak/{ubsup:NO_ID}', 'App\Http\Controllers\OTransaksi\UbsupController@cetak')->middleware(['auth']);
+Route::post('jasper-ubsup-report', 'App\Http\Controllers\OReport\RUbsupController@jasperPpReport')->middleware(['auth']);
+
+Route::get('/ubsup/browse_pod', 'App\Http\Controllers\OTransaksi\UbsupController@browse_pod')->middleware(['auth'])->name('ubsup/browse_pod');
+Route::get('/ubsup/jtempo', 'App\Http\Controllers\OTransaksi\UbsupController@jtempo')->middleware(['auth'])->name('ubsup/jtempo');
+
+// Dynamic Usulan Rubah Email
+Route::get('/ubsup/edit', 'App\Http\Controllers\OTransaksi\UbsupController@edit')->middleware(['auth'])->name('ubsup.edit');
+Route::get('/ubsup/process', 'App\Http\Controllers\OTransaksi\UbsupController@process')->middleware(['auth'])->name('ubsup.process');
+Route::post('/ubsup/update/{ubsup}', 'App\Http\Controllers\OTransaksi\UbsupController@update')->middleware(['auth'])->name('ubsup.update');
+Route::get('/ubsup/delete/{ubsup}', 'App\Http\Controllers\OTransaksi\UbsupController@destroy')->middleware(['auth'])->name('ubsup.delete');
+Route::get('/ubsup/repost/{ubsup}', 'App\Http\Controllers\OTransaksi\UbsupController@repost')->middleware(['auth'])->name('ubsup.repost');
+
+Route::post('ubsup/posting', 'App\Http\Controllers\OTransaksi\UbsupController@posting')->middleware(['auth']);
+Route::get('ubsup/index-posting', 'App\Http\Controllers\OTransaksi\UbsupController@index_posting')->middleware(['auth']);
+Route::get('/get-detail-ubsup', 'App\Http\Controllers\OTransaksi\UbsupController@getDetailUbsup')->middleware(['auth'])->name('get-detail-ubsup');
+Route::post('ubsup/posting', 'App\Http\Controllers\OTransaksi\UbsupController@posting')->middleware(['auth']);
+Route::get('ubsup/index-posting', 'App\Http\Controllers\OTransaksi\UbsupController@index_posting')->middleware(['auth']);
+
+
+// Opertational Usulan Rubah Tanda PPN
+Route::get('/uppn', 'App\Http\Controllers\OTransaksi\UppnController@index')->middleware(['auth'])->name('uppn');
+Route::get('/uppnpost', 'App\Http\Controllers\OTransaksi\UppnController@index_post')->middleware(['auth'])->name('uppnpost');
+Route::get('/uppnpost1', 'App\Http\Controllers\OTransaksi\UppnController@post')->middleware(['auth'])->name('uppnpost1');
+Route::post('/uppnpost2', 'App\Http\Controllers\OTransaksi\UppnController@post')->middleware(['auth'])->name('uppnpost2');
+// Route::get('/uppnpost2', 'App\Http\Controllers\OTransaksi\UppnController@post')->middleware(['auth'])->name('uppnpost2');
+Route::post('/uppn/store', 'App\Http\Controllers\OTransaksi\UppnController@store')->middleware(['auth'])->name('bsup/store');
+Route::get('/ruppn', 'App\Http\Controllers\OReport\RUppnController@report')->middleware(['auth'])->name('ruppn');
+
+// GET Usulan Rubah Tanda PPN
+Route::get('/uppn/browse', 'App\Http\Controllers\OTransaksi\UppnController@browse')->middleware(['auth'])->name('uppn/browse');
+Route::get('/uppn/browse_brg', 'App\Http\Controllers\OTransaksi\UppnController@browse_brg')->middleware(['auth'])->name('uppn/browse_brg');
+Route::get('/uppn/browse_detail', 'App\Http\Controllers\OTransaksi\UppnController@browse_detail')->middleware(['auth'])->name('uppn/browse_detail');
+Route::get('/uppn/browse_detail2', 'App\Http\Controllers\OTransaksi\UppnController@browse_detail2')->middleware(['auth'])->name('uppn/browse_detail2');
+Route::get('/uppn/browse_ppd', 'App\Http\Controllers\OTransaksi\UppnController@browse_uppnd')->middleware(['auth'])->name('uppn/browse_uppnd');
+Route::get('/uppn/browseuang', 'App\Http\Controllers\OTransaksi\UppnController@browseuang')->middleware(['auth'])->name('uppn/browseuang');
+
+Route::get('/get-uppn', 'App\Http\Controllers\OTransaksi\UppnController@getUppn')->middleware(['auth'])->name('get-uppn');
+Route::get('/get-uppn-post', 'App\Http\Controllers\OTransaksi\UppnController@getUppn_posting')->middleware(['auth'])->name('get-uppn-post');
+Route::get('/get-uppn-report', 'App\Http\Controllers\OReport\UppnController@getPpReport')->middleware(['auth'])->name('get-uppn-report');
+// Route::get('/cetak/{uppn:NO_ID}', 'App\Http\Controllers\OTransaksi\UppnController@cetak')->middleware(['auth']);
+Route::get('/uppn/cetak/{uppn:NO_ID}', 'App\Http\Controllers\OTransaksi\UppnController@cetak')->middleware(['auth']);
+Route::post('jasper-uppn-report', 'App\Http\Controllers\OReport\RUppnController@jasperPpReport')->middleware(['auth']);
+
+Route::get('/uppn/browse_pod', 'App\Http\Controllers\OTransaksi\UppnController@browse_pod')->middleware(['auth'])->name('uppn/browse_pod');
+Route::get('/uppn/jtempo', 'App\Http\Controllers\OTransaksi\UppnController@jtempo')->middleware(['auth'])->name('uppn/jtempo');
+
+// Dynamic Usulan Rubah Email
+Route::get('/uppn/edit', 'App\Http\Controllers\OTransaksi\UppnController@edit')->middleware(['auth'])->name('uppn.edit');
+Route::get('/uppn/process', 'App\Http\Controllers\OTransaksi\UppnController@process')->middleware(['auth'])->name('uppn.process');
+Route::post('/uppn/update/{uppn}', 'App\Http\Controllers\OTransaksi\UppnController@update')->middleware(['auth'])->name('uppn.update');
+Route::get('/uppn/delete/{uppn}', 'App\Http\Controllers\OTransaksi\UppnController@destroy')->middleware(['auth'])->name('uppn.delete');
+Route::get('/uppn/repost/{uppn}', 'App\Http\Controllers\OTransaksi\UppnController@repost')->middleware(['auth'])->name('uppn.repost');
+
+Route::post('uppn/posting', 'App\Http\Controllers\OTransaksi\UppnController@posting')->middleware(['auth']);
+Route::get('uppn/index-posting', 'App\Http\Controllers\OTransaksi\UppnController@index_posting')->middleware(['auth']);
+Route::get('/get-detail-uppn', 'App\Http\Controllers\OTransaksi\UppnController@getDetailUppn')->middleware(['auth'])->name('get-detail-uppn');
+Route::post('uppn/posting', 'App\Http\Controllers\OTransaksi\UppnController@posting')->middleware(['auth']);
+Route::get('uppn/index-posting', 'App\Http\Controllers\OTransaksi\UppnController@index_posting')->middleware(['auth']);
+
 
 // Operational Lain
 Route::get('/lain', 'App\Http\Controllers\OTransaksi\LainController@index')->middleware(['auth'])->name('lain');
