@@ -573,7 +573,7 @@
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
 
-                                        <input type="text" onclick="select()" class="form-control PPN" id="PPN" name="PPN" placeholder="Masukkan PPN" value="{{ number_format( $header->PPN, 0, '.', ',') }}" style="text-align: right" >
+                                        <input type="text" class="form-control PPN" id="PPN" name="PPN" placeholder="Masukkan PPN" value="{{ $header->PPN }}" style="text-align: left" >
                                         <label for="PPN">PPN</label>
 
 									</div>
@@ -586,7 +586,7 @@
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
 
-                                        <input type="text" onclick="select()" class="form-control BEBAN" id="BEBAN" name="BEBAN" placeholder="Masukkan BEBAN" value="{{ number_format( $header->BEBAN, 0, '.', ',') }}" style="text-align: right" >
+                                        <input type="text" onclick="select()" class="form-control BEBAN" id="BEBAN" name="BEBAN" placeholder="Masukkan BEBAN" value="{{ $header->BEBAN }}" style="text-align: left" >
                                         <label for="BEBAN">OK Bbn Sup</label>
 
 									</div>

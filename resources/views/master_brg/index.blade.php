@@ -281,8 +281,8 @@
                         name: 'SUB'
                     },
                     {
-                        data: 'PLU',
-                        name: 'PLU'
+                        data: 'KDBAR',
+                        name: 'KDBAR'
                     },
                     {
                         data: 'NMBAR',
