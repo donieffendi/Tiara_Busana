@@ -573,9 +573,9 @@
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
 
-                                        <input type="text" onclick="select()" class="form-control PPN" id="PPN" name="PPN" placeholder="Masukkan PPN" value="{{ number_format( $header->PPN, 0, '.', ',') }}" style="text-align: right" >
-                                        <label for="PPN">PPN</label>
-
+										<input type="text" class="PPN" id="PPN" name="PPN"
+											value="{{$header->PPN}}" placeholder=" " >
+										<label for="PPN">PPN</label>
 									</div>
 									<!-- tutupannya -->
 								</div>
@@ -584,11 +584,12 @@
 
 								<div class="form-group row">
 									<!-- code text box baru -->
-									<div class="col-md-3 form-group row special-input-label">
 
-                                        <input type="text" onclick="select()" class="form-control BEBAN" id="BEBAN" name="BEBAN" placeholder="Masukkan BEBAN" value="{{ number_format( $header->BEBAN, 0, '.', ',') }}" style="text-align: right" >
-                                        <label for="BEBAN">OK Bbn Sup</label>
+                                    <div class="col-md-3 form-group row special-input-label">
 
+										<input type="text" class="BEBAN" id="BEBAN" name="BEBAN"
+											value="{{$header->BEBAN}}" placeholder=" " >
+										<label for="BEBAN">OK Bbn Sup</label>
 									</div>
 									<!-- tutupannya -->
 								</div>

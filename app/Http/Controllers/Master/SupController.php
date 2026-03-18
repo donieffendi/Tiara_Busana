@@ -175,8 +175,8 @@ class SupController extends Controller
                 'DIS_A'       => (float) str_replace(',', '', $request['DIS_A']),
                 'DIS_B'       => (float) str_replace(',', '', $request['DIS_B']),
                 'DIS_C'       => (float) str_replace(',', '', $request['DIS_C']),
-                'PPN'       => (float) str_replace(',', '', $request['PPN']),
-                'BEBAN'       => (float) str_replace(',', '', $request['BEBAN']),
+                'PPN'     => ($request['PPN'] == null) ? "" : $request['PPN'],
+                'BEBAN'     => ($request['BEBAN'] == null) ? "" : $request['BEBAN'],
                 'ACC'     => ($request['ACC'] == null) ? "" : $request['ACC'],
                 // 'TGL_M'     => date('Y-m-d', strtotime($request['TGL_M'])),
 
@@ -398,8 +398,8 @@ class SupController extends Controller
                 'DIS_A'       => (float) str_replace(',', '', $request['DIS_A']),
                 'DIS_B'       => (float) str_replace(',', '', $request['DIS_B']),
                 'DIS_C'       => (float) str_replace(',', '', $request['DIS_C']),
-                'PPN'       => (float) str_replace(',', '', $request['PPN']),
-                'BEBAN'       => (float) str_replace(',', '', $request['BEBAN']),
+                'PPN'     => ($request['PPN'] == null) ? "" : $request['PPN'],
+                'BEBAN'     => ($request['BEBAN'] == null) ? "" : $request['BEBAN'],
                 'ACC'     => ($request['ACC'] == null) ? "" : $request['ACC'],
 
                 // 'USRNM'     => Auth::user()->username,
