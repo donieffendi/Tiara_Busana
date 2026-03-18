@@ -165,12 +165,12 @@
 									</div>
 
 									<!-- code text box baru -->
-									<div class="col-md-3 form-group row special-input-label">
+									{{-- <div class="col-md-3 form-group row special-input-label">
 
 										<input type="text" class="P_TLP" id="P_TLP" name="P_TLP"
 											value="{{$header->P_TLP}}" placeholder=" " >
 										<label for="P_TLP">Telp</label>
-									</div>
+									</div> --}}
 									<!-- tutupannya -->
 
 									<div class="col-md-1">
@@ -573,7 +573,7 @@
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
 
-                                        <input type="text" class="form-control PPN" id="PPN" name="PPN" placeholder="Masukkan PPN" value="{{ $header->PPN }}" style="text-align: left" >
+                                        <input type="text" onclick="select()" class="form-control PPN" id="PPN" name="PPN" placeholder="Masukkan PPN" value="{{ number_format( $header->PPN, 0, '.', ',') }}" style="text-align: right" >
                                         <label for="PPN">PPN</label>
 
 									</div>
@@ -584,9 +584,10 @@
 
 								<div class="form-group row">
 									<!-- code text box baru -->
-									<div class="col-md-3 form-group row special-input-label">
 
-                                        <input type="text" onclick="select()" class="form-control BEBAN" id="BEBAN" name="BEBAN" placeholder="Masukkan BEBAN" value="{{ $header->BEBAN }}" style="text-align: left" >
+                                    <div class="col-md-3 form-group row special-input-label">
+
+                                        <input type="text" onclick="select()" class="form-control BEBAN" id="BEBAN" name="BEBAN" placeholder="Masukkan BEBAN" value="{{ number_format( $header->BEBAN, 0, '.', ',') }}" style="text-align: right" >
                                         <label for="BEBAN">OK Bbn Sup</label>
 
 									</div>
