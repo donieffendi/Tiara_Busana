@@ -33,6 +33,20 @@ class BrgController extends Controller
         return response()->json($brg);
     }
 
+    public function browse_sub(Request $request)
+    {
+        $brg = DB::SELECT("SELECT SUB, KELOMPOK, DEPT FROM nwaotprice ORDER BY SUB ");
+		
+        return response()->json($brg);
+    }
+
+    public function browse_event(Request $request)
+    {
+        $brg = DB::SELECT("SELECT KODE, NAMA FROM hraya ORDER BY KODE ");
+		
+        return response()->json($brg);
+    }
+
     
     public function getBrg( Request $request )
     {
@@ -150,7 +164,6 @@ class BrgController extends Controller
                 'QTY_BELI1' => (float) str_replace(',', '', $request['QTY_BELI1']),
                 'KD_EVENT'  => ($request['KD_EVENT'] == null) ? "" : $request['KD_EVENT'],
                 'HB'        => (float) str_replace(',', '', $request['HB']),
-                'HADIAH_1'  => ($request['HADIAH_1'] == null) ? "" : $request['HADIAH_1'],
                 'DIS_A'     => (float) str_replace(',', '', $request['DIS_A']),
                 'ITEM_SUP'  => ($request['ITEM_SUP'] == null) ? "" : $request['ITEM_SUP'],
                 'DIS_B'     => (float) str_replace(',', '', $request['DIS_B']),
@@ -304,10 +317,15 @@ class BrgController extends Controller
 		{
 			// $brg = Brg::where('NO_ID', $idx )->first();
             $brg = DB::table('nwmasbar')
-                        ->leftJoin('nwmassup','nwmasbar.SUPP','=','nwmassup.NO_SUPL')
-                        ->select('nwmasbar.*','nwmassup.NAMA')
-                        ->where('nwmasbar.NO_ID',$idx)
-                        ->first();	
+                ->leftJoin('nwmassup', 'nwmasbar.SUPP', '=', 'nwmassup.NO_SUPL')
+                ->leftJoin('hraya', 'nwmasbar.KD_EVENT', '=', 'hraya.KODE')
+                ->select(
+                    'nwmasbar.*',
+                    'nwmassup.NAMA',
+                    'hraya.NAMA as NM_EVENT'
+                )
+                ->where('nwmasbar.NO_ID', $idx)
+                ->first();	
 	     }
 		 else
 		 {
@@ -350,7 +368,6 @@ class BrgController extends Controller
                 'QTY_BELI1' => (float) str_replace(',', '', $request['QTY_BELI1']),
                 'KD_EVENT'  => ($request['KD_EVENT'] == null) ? "" : $request['KD_EVENT'],
                 'HB'        => (float) str_replace(',', '', $request['HB']),
-                'HADIAH_1'  => ($request['HADIAH_1'] == null) ? "" : $request['HADIAH_1'],
                 'DIS_A'     => (float) str_replace(',', '', $request['DIS_A']),
                 'ITEM_SUP'  => ($request['ITEM_SUP'] == null) ? "" : $request['ITEM_SUP'],
                 'DIS_B'     => (float) str_replace(',', '', $request['DIS_B']),
