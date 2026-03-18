@@ -103,9 +103,9 @@
 															<button class="btn btn-danger mr-1" type="button" onclick="resetFilter('detail')">
 																<i class="fas fa-redo mr-1"></i>Reset
 															</button>
-															{{-- <button class="btn btn-warning mr-1" type="button" onclick="cetakDetail()">
+															<button class="btn btn-warning mr-1" type="button" onclick="cetakDetail()">
 																<i class="fas fa-print mr-1"></i>Cetak
-															</button> --}}
+															</button>
 														</div>
 													</div>
 
@@ -179,35 +179,19 @@
 																<table id="tabelSummary" class="table table-striped table-bordered nowrap" style="width:100%">
 																	<thead>
 																		<tr>
-																			<th>CNT</th>
-																			<th>Nama Counter</th>
-																			<th>S. Pajak</th>
-																			<th>Tanggal</th>
-																			<th>Laku</th>
-																			<th>Laku Kredit</th>
-																			<th>T Laku</th>
-																			<th>Nilai Laku</th>
-																			<th>Nilai Kredit</th>
-																			<th>Jumlah Nilai</th>
-																			<th>Qty Refund</th>
-																			<th>Total Refund</th>
+																			<th>Sub</th>
+																			<th>Kelompok</th>
+																			<th>Bruto</th>
+																			<th>Prom</th>
 																		</tr>
 																	</thead>
 																	<tbody>
 																		@foreach ($hasilPembelian as $item)
 																			<tr>
 																				<td>{{ $item->cnt ?? '' }}</td>
-																				<td>{{ $item->na_cnt ?? '' }}</td>
-																				<td>{{ $item->st_pjk ?? '' }}</td>
-																				<td>{{ isset($item->tgl_jual) ? date('d/m/Y', strtotime($item->tgl_jual)) : '' }}</td>
-																				<td class="text-right">{{ number_format($item->qcash ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->qkred ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->qjml ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->cash ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->kred ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->jml ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->qtyrf ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->totalrf ?? 0, 0, ',', '.') }}</td>
+																				<td>{{ $item->NA_CNT ?? '' }}</td>
+																				<td class="text-right">{{ number_format($item->bruto ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->prom ?? 0, 0, ',', '.') }}</td>
 																			</tr>
 																		@endforeach
 																	</tbody>
@@ -231,7 +215,7 @@
 													<div class="row align-items-end mb-3">
 														<div class="col-8">
 															<button class="btn btn-primary mr-1" type="button" id="btnFilterKasir" onclick="filterPembelian('kasir')">
-																<i class="fas fa-search mr-1"></i>Filter
+																<i class="fas fa-search mr-1"></i>Proses
 															</button>
 															<button class="btn btn-danger mr-1" type="button" onclick="resetFilter('kasir')">
 																<i class="fas fa-redo mr-1"></i>Reset
@@ -248,43 +232,29 @@
 																<table id="tabelKasir" class="table table-striped table-bordered nowrap" style="width:100%">
 																	<thead>
 																		<tr>
+																			<th>No. Bukti</th>
 																			<th>Tanggal</th>
-																			<th>Counter</th>
-																			<th>Nama Counter</th>
-																			<th>Kodes</th>
-																			<th>Qty</th>
+																			<th>Ref</th>
+																			<th>Supplier</th>
+																			<th>Nama</th>
 																			<th>Bruto</th>
-																			<th>Dis</th>
-																			<th>Par</th>
-																			<th>Dis Tiara</th>
-																			<th>Dis Supp</th>
-																			<th>Margin</th>
-																			<th>Harga Jual</th>
-																			<th>Nilai Margin</th>
-																			<th>Nilai Nota</th>
+																			<th>Dis Promosi</th>
+																			<th>DPP</th>
 																			<th>PPN</th>
-																			<th>NETT</th>
 																		</tr>
 																	</thead>
 																	<tbody>
 																		@foreach ($hasilPembelian as $item)
 																			<tr>
-																				<td>{{ isset($item->tgl_jual) ? date('d/m/Y', strtotime($item->tgl_jual)) : '' }}</td>
-																				<td>{{ $item->cnt ?? '' }}</td>
-																				<td>{{ $item->na_cnt ?? '' }}</td>
+																				<td>{{ $item->NO_BUKTI ?? '' }}</td>
+																				<td>{{ isset($item->TGL) ? date('d/m/Y', strtotime($item->TGL)) : '' }}</td>
+																				<td>{{ $item->REF ?? '' }}</td>
 																				<td>{{ $item->kodes ?? '' }}</td>
-																				<td class="text-right">{{ number_format($item->qty ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->tharga ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->dis ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->par ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->ptiara ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->psup ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->margin ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->nilai_jual ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->nilai_margin ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->nilai_nota ?? 0, 0, ',', '.') }}</td>
+																				<td>{{ $item->namas ?? '' }}</td>
+																				<td class="text-right">{{ number_format($item->total ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->PROM ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->dpp ?? 0, 0, ',', '.') }}</td>
 																				<td class="text-right">{{ number_format($item->ppn ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->nett ?? 0, 0, ',', '.') }}</td>
 																			</tr>
 																		@endforeach
 																	</tbody>
@@ -325,37 +295,19 @@
 																<table id="tabelKasir" class="table table-striped table-bordered nowrap" style="width:100%">
 																	<thead>
 																		<tr>
-																			<th>Tanggal</th>
-																			<th>Counter</th>
-																			<th>Nama Counter</th>
-																			<th>Kodes</th>
-																			<th>Qty</th>
+																			<th>Sub</th>
+																			<th>Kelompok</th>
 																			<th>Bruto</th>
-																			<th>Dis</th>
-																			<th>Par</th>
-																			<th>Dis Tiara</th>
-																			<th>Dis Supp</th>
-																			<th>Nilai jual</th>
-																			<th>DPP</th>
-																			<th>PPN</th>
+																			<th>Prom</th>
 																		</tr>
 																	</thead>
 																	<tbody>
 																		@foreach ($hasilPembelian as $item)
 																			<tr>
-																				<td>{{ isset($item->tgl_jual) ? date('d/m/Y', strtotime($item->tgl_jual)) : '' }}</td>
-																				<td>{{ $item->cnt ?? '' }}</td>
-																				<td>{{ $item->na_cnt ?? '' }}</td>
-																				<td>{{ $item->kodes ?? '' }}</td>
-																				<td class="text-right">{{ number_format($item->qty ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->tharga ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->dis ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->par ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->ptiara ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->psup ?? 0, 0, ',', '.') }}</td>\
-																				<td class="text-right">{{ number_format($item->nilai_jual ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->nilai_nota ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->ppn ?? 0, 0, ',', '.') }}</td>
+																				<td>{{ $item->sub ?? '' }}</td>
+																				<td>{{ $item->kelompok ?? '' }}</td>
+																				<td class="text-right">{{ number_format($item->bruto ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->prom ?? 0, 0, ',', '.') }}</td>
 																			</tr>
 																		@endforeach
 																	</tbody>
@@ -396,44 +348,23 @@
 																<table id="tabelKasir" class="table table-striped table-bordered nowrap" style="width:100%">
 																	<thead>
 																		<tr>
-																			<th>Counter</th>
-																			<th>Nama Counter</th>
-																			<th>Yer</th>
-																			<th>01</th>
-																			<th>02</th>
-																			<th>03</th>
-																			<th>04</th>
-																			<th>05</th>
-																			<th>06</th>
-																			<th>07</th>
-																			<th>08</th>
-																			<th>09</th>
-																			<th>10</th>
-																			<th>11</th>
-																			<th>12</th>
-																			<th>Jumlah</th>
+																			<th>Sub</th>
+																			<th>Kelompok</th>
+																			<th>Total</th>
+																			<th>Ppn</th>
+																			<th>Nett</th>
+																			<th>Prom</th>
 																		</tr>
 																	</thead>
 																	<tbody>
 																		@foreach ($hasilPembelian as $item)
 																			<tr>
-																				{{-- <td>{{ isset($item->tgl_jual) ? date('d/m/Y', strtotime($item->tgl_jual)) : '' }}</td> --}}
-																				<td>{{ $item->CNT ?? '' }}</td>
-																				<td>{{ $item->NA_CNT ?? '' }}</td>
-																				<td>{{ $item->YER ?? '' }}</td>
-																				<td class="text-right">{{ number_format($item->B01 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B02 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B03 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B04 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B05 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B06 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B07 ?? 0, 0, ',', '.') }}</td>	
-																				<td class="text-right">{{ number_format($item->B08 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B09 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B10 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B11 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->B12 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->JUMB ?? 0, 0, ',', '.') }}</td>
+																				<td>{{ $item->sub ?? '' }}</td>
+																				<td>{{ $item->kelompok ?? '' }}</td>
+																				<td class="text-right">{{ number_format($item->total ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->ppn ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->nett ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->prom ?? 0, 0, ',', '.') }}</td>
 																			</tr>
 																		@endforeach
 																	</tbody>
@@ -474,88 +405,25 @@
 																<table id="tabelKasir" class="table table-striped table-bordered nowrap" style="width:100%">
 																	<thead>
 																		<tr>
-																			<th>Cabang</th>
-																			<th>Cnt</th>
-																			<th>Counter</th>
-																			<th>Kode</th>
-																			<th>Nama</th>
-																			<th>01</th>
-																			<th>02</th>
-																			<th>03</th>
-																			<th>04</th>
-																			<th>05</th>
-																			<th>06</th>
-																			<th>07</th>
-																			<th>08</th>
-																			<th>09</th>
-																			<th>10</th>
-																			<th>11</th>
-																			<th>12</th>
-																			<th>13</th>
-																			<th>14</th>
-																			<th>15</th>
-																			<th>16</th>
-																			<th>17</th>
-																			<th>18</th>
-																			<th>19</th>
-																			<th>20</th>
-																			<th>21</th>
-																			<th>22</th>
-																			<th>23</th>
-																			<th>24</th>
-																			<th>25</th>
-																			<th>26</th>
-																			<th>27</th>
-																			<th>28</th>
-																			<th>29</th>
-																			<th>30</th>
-																			<th>31</th>
-																			<th>Harga</th>
-																			<th>Total</th>
+																			<th>No. Bukti</th>
+																			<th>Tanggal</th>
+																			<th>Perkiraan</th>
+																			<th>Supp</th>
+																			<th>Keterangan</th>
+																			<th>Debet</th>
+																			<th>Kredit</th>
 																		</tr>
 																	</thead>
 																	<tbody>
 																		@foreach ($hasilPembelian as $item)
 																			<tr>
-																				{{-- <td>{{ isset($item->tgl_jual) ? date('d/m/Y', strtotime($item->tgl_jual)) : '' }}</td> --}}
-																				<td>{{ $item->cbg ?? '' }}</td>
-																				<td>{{ $item->cnt ?? '' }}</td>
-																				<td>{{ $item->na_cnt ?? '' }}</td>
-																				<td>{{ $item->kd_brg ?? '' }}</td>
-																				<td>{{ $item->na_brg ?? '' }}</td>
-																				<td class="text-right">{{ number_format($item->b01 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b02 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b03 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b04 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b05 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b06 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b07 ?? 0, 0, ',', '.') }}</td>	
-																				<td class="text-right">{{ number_format($item->b08 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b09 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b10 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b11 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b12 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b13 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b14 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b15 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b16 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b17 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b18 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b19 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b20 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b21 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b22 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b23 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b24 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b25 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b26 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b27 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b28 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b29 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b30 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->b31 ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->hjual ?? 0, 0, ',', '.') }}</td>
-																				<td class="text-right">{{ number_format($item->total ?? 0, 0, ',', '.') }}</td>
+																				<td>{{ $item->NO_BUKTI ?? '' }}</td>
+																				<td>{{ isset($item->TGL) ? date('d/m/Y', strtotime($item->TGL)) : '' }}</td>
+																				<td>{{ $item->ACNO ?? '' }}</td>
+																				<td>{{ $item->KODES ?? '' }}</td>
+																				<td>{{ $item->KET ?? '' }}</td>
+																				<td class="text-right">{{ number_format($item->DEBET ?? 0, 0, ',', '.') }}</td>
+																				<td class="text-right">{{ number_format($item->KREDIT ?? 0, 0, ',', '.') }}</td>
 																			</tr>
 																		@endforeach
 																	</tbody>
@@ -927,15 +795,15 @@ function displayTabData(tabType, data){
         if(tabType==='detail'){
             html += '<th>No. Bukti</th><th>Tanggal</th><th>Ref</th><th>Supplier</th><th>Nama</th><th>Bruto</th><th>Dis Prom</th><th>DPP</th><th>PPN</th>';
         } else if(tabType==='summary'){
-            html += '<th>CNT</th><th>Nama Counter</th><th>S. Pajak</th><th>Tanggal</th><th>Laku</th><th>Laku Kredit</th><th>T Laku</th><th>Nilai Laku</th><th>Nilai Kredit</th><th>Jumlah Nilai</th><th>Qty Refund</th><th>Total Refund</th>';
+            html += '<th>Sub</th><th>Kelompok</th><th>Bruto</th><th>Prom</th>';
         } else if(tabType==='kasir'){
-            html += '<th>Tanggal</th><th>Conter</th><th>Nama</th><th>Kodes</th><th>Qty</th><th>Bruto</th><th>Dis</th><th>Par</th><th>Dis Tiara</th><th>Dis Supp</th><th>Margin</th><th>Harga Jual</th><th>Nilai Margin</th><th>Nilai Nota</th><th>PPN</th><th>NETT</th>';
+            html += '<th>No. Bukti</th><th>Tanggal</th><th>Ref</th><th>Supplier</th><th>Nama</th><th>Bruto</th><th>Dis Prom</th><th>DPP</th><th>PPN</th>';
 		} else if(tabType==='rconter'){
-			html += '<th>Tanggal</th><th>Conter</th><th>Nama</th><th>Kodes</th><th>Qty</th><th>Bruto</th><th>Dis</th><th>Par</th><th>Dis Tiara</th><th>Dis Supp</th><th>Nilai jual</th><th>DPP</th><th>PPN</th>';
+			html += '<th>Sub</th><th>Kelompok</th><th>Bruto</th><th>Prom</th>';
 		} else if(tabType==='rjual'){
-			html += '<th>Conter</th><th>Nama</th><th>YER</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>Total</th>';
+			html += '<th>Sub</th><th>Kelompok</th><th>Total</th><th>Ppn</th><th>Nett</th><th>Prom</th>';
 		} else if(tabType==='rhari'){
-			html += '<th>Cabang</th><th>Cnt</th><th>Counter</th><th>Kode</th><th>Nama</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th><th>31</th><th>Harga</th><th>Total</th>';
+			html += '<th>No. Bukti</th><th>Tanggal</th><th>Perkiraan</th><th>Supp</th><th>Keterangan</th><th>Debet</th><th>Kredit</th>';
 		}
         html += '</tr></thead><tbody>';
 
@@ -944,15 +812,15 @@ function displayTabData(tabType, data){
             if(tabType==='detail'){
                 html += '<td>'+item.NO_BUKTI+'</td><td>'+formatDate(item.TGL)+'</td><td>'+item.REF+'</td><td>'+item.kodes+'</td><td>'+item.namas+'</td><td class="text-right">'+formatNumber(item.total)+'</td><td class="text-right">'+formatNumber(item.PROM)+'</td><td class="text-right">'+formatNumber(item.dpp)+'</td><td class="text-right">'+formatNumber(item.ppn)+'</td>';
             } else if(tabType==='summary'){
-                html += '<td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.st_pjk+'</td><td>'+formatDate(item.tgl_jual)+'</td><td class="text-right">'+formatNumber(item.qcash)+'</td><td class="text-right">'+formatNumber(item.qkred)+'</td><td class="text-right">'+formatNumber(item.qjml)+'</td><td class="text-right">'+formatNumber(item.cash)+'</td><td class="text-right">'+formatNumber(item.kred)+'</td><td class="text-right">'+formatNumber(item.jml)+'</td><td class="text-right">'+formatNumber(item.qtyrf)+'</td><td class="text-right">'+formatNumber(item.totalrf)+'</td>';
+                html += '<td>'+item.cnt+'</td><td>'+item.NA_CNT+'</td><td class="text-right">'+formatNumber(item.bruto)+'</td><td class="text-right">'+formatNumber(item.prom)+'</td>';
             } else if(tabType==='kasir'){
-                html += '<td>'+formatDate(item.tgl_jual)+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kodes+'</td><td class="text-right">'+formatNumber(item.qty)+'</td><td class="text-right">'+formatNumber(item.tharga)+'</td><td class="text-right">'+formatNumber(item.dis)+'</td><td class="text-right">'+formatNumber(item.par)+'</td><td class="text-right">'+formatNumber(item.ptiara)+'</td><td class="text-right">'+formatNumber(item.psup)+'</td><td class="text-right">'+formatNumber(item.margin)+'</td><td class="text-right">'+formatNumber(item.nilai_jual)+'</td><td class="text-right">'+formatNumber(item.nilai_margin)+'</td><td class="text-right">'+formatNumber(item.nilai_nota)+'</td><td class="text-right">'+formatNumber(item.ppn)+'</td><td class="text-right">'+formatNumber(item.nett)+'</td>';
+                html += '<td>'+item.NO_BUKTI+'</td><td>'+formatDate(item.TGL)+'</td><td>'+item.REF+'</td><td>'+item.kodes+'</td><td>'+item.namas+'</td><td class="text-right">'+formatNumber(item.total)+'</td><td class="text-right">'+formatNumber(item.PROM)+'</td><td class="text-right">'+formatNumber(item.dpp)+'</td><td class="text-right">'+formatNumber(item.ppn)+'</td>';
 			} else if(tabType==='rconter'){
-				html += '<td>'+formatDate(item.tgl_jual)+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kodes+'</td><td class="text-right">'+formatNumber(item.qty)+'</td><td class="text-right">'+formatNumber(item.tharga)+'</td><td class="text-right">'+formatNumber(item.dis)+'</td><td class="text-right">'+formatNumber(item.par)+'</td><td class="text-right">'+formatNumber(item.ptiara)+'</td><td class="text-right">'+formatNumber(item.psup)+'</td><td class="text-right">'+formatNumber(item.nilai_jual)+'</td><td class="text-right">'+formatNumber(item.DPP)+'</td><td class="text-right">'+formatNumber(item.PPN)+'</td>';
+				html += '<td>'+item.sub+'</td><td>'+item.kelompok+'</td><td class="text-right">'+formatNumber(item.bruto)+'</td><td class="text-right">'+formatNumber(item.prom)+'</td>';
 			} else if(tabType==='rjual'){
-				html += '<td>'+item.CNT+'</td><td>'+item.NA_CNT+'</td><td>'+item.YER+'</td><td class="text-right">'+formatNumber(item.B01)+'</td><td class="text-right">'+formatNumber(item.B02)+'</td><td class="text-right">'+formatNumber(item.B03)+'</td><td class="text-right">'+formatNumber(item.B04)+'</td><td class="text-right">'+formatNumber(item.B05)+'</td><td class="text-right">'+formatNumber(item.B06)+'</td><td class="text-right">'+formatNumber(item.B07)+'</td><td class="text-right">'+formatNumber(item.B08)+'</td><td class="text-right">'+formatNumber(item.B09)+'</td><td class="text-right">'+formatNumber(item.B10)+'</td><td class="text-right">'+formatNumber(item.B11)+'</td><td class="text-right">'+formatNumber(item.B12)+'</td><td class="text-right">'+formatNumber(item.JUMB)+'</td>';
+				html += '<td>'+item.sub+'</td><td>'+item.kelompok+'</td><td class="text-right">'+formatNumber(item.total)+'</td><td class="text-right">'+formatNumber(item.ppn)+'</td><td class="text-right">'+formatNumber(item.nett)+'</td><td class="text-right">'+formatNumber(item.prom)+'</td>';
 			} else if(tabType==='rhari'){
-				html += '<td>'+item.cbg+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kd_brg+'</td><td>'+item.na_brg+'</td><td class="text-right">'+formatNumber(item.b01)+'</td><td class="text-right">'+formatNumber(item.b02)+'</td><td class="text-right">'+formatNumber(item.b03)+'</td><td class="text-right">'+formatNumber(item.b04)+'</td><td class="text-right">'+formatNumber(item.b05)+'</td><td class="text-right">'+formatNumber(item.b06)+'</td><td class="text-right">'+formatNumber(item.b07)+'</td><td class="text-right">'+formatNumber(item.b08)+'</td><td class="text-right">'+formatNumber(item.b09)+'</td><td class="text-right">'+formatNumber(item.b10)+'</td><td class="text-right">'+formatNumber(item.b11)+'</td><td class="text-right">'+formatNumber(item.b12)+'</td><td class="text-right">'+formatNumber(item.b13)+'</td><td class="text-right">'+formatNumber(item.b14)+'</td><td class="text-right">'+formatNumber(item.b15)+'</td><td class="text-right">'+formatNumber(item.b16)+'</td><td class="text-right">'+formatNumber(item.b17)+'</td><td class="text-right">'+formatNumber(item.b18)+'</td><td class="text-right">'+formatNumber(item.b19)+'</td><td class="text-right">'+formatNumber(item.b20)+'</td><td class="text-right">'+formatNumber(item.b21)+'</td><td class="text-right">'+formatNumber(item.b22)+'</td><td class="text-right">'+formatNumber(item.b23)+'</td><td class="text-right">'+formatNumber(item.b24)+'</td><td class="text-right">'+formatNumber(item.b25)+'</td><td class="text-right">'+formatNumber(item.b26)+'</td><td class="text-right">'+formatNumber(item.b27)+'</td><td class="text-right">'+formatNumber(item.b28)+'</td><td class="text-right">'+formatNumber(item.b29)+'</td><td class="text-right">'+formatNumber(item.b30)+'</td><td class="text-right">'+formatNumber(item.b31)+'</td><td class="text-right">'+formatNumber(item.hjual)+'</td><td class="text-right">'+formatNumber(item.total)+'</td>';
+				html += '<td>'+item.NO_BUKTI+'</td><td>'+formatDate(item.TGL)+'</td><td>'+item.ACNO+'</td><td>'+item.KODES+'</td><td>'+item.KET+'</td><td class="text-right">'+formatNumber(item.DEBET)+'</td><td class="text-right">'+formatNumber(item.KREDIT)+'</td>';
 			}
             html += '</tr>';
         });
