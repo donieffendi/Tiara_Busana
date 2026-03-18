@@ -8,7 +8,7 @@
       background-color: #343a40;
       position: relative;
     }
-	
+
 	.content-box {
 	  flex-grow: 1; /* This makes the child content fill the height */
 	  background-color: lightgray; /* Just for demonstration */
@@ -35,7 +35,7 @@
       /* top: 50; */
       left: 100px;
       width: 900px;
-     
+
       background-color: white;
       display: none;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -127,9 +127,9 @@
     }
 
     .menu-card {
-	
+
       text-align: center;
-      padding: 5px;	 
+      padding: 5px;
       border-radius: 5px;
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s ease;
@@ -142,7 +142,7 @@
     .menu-card h6 {
       margin-top: 8px;
 	    color:black;
-	  
+
     }
 
     .menu-card i {
@@ -270,7 +270,7 @@
           </li>
 
 
-          
+
           <li class="nav-header"></li>
           <li class="nav-item">
             <a href="#" class="nav-link"   data-bs-toggle="tooltip" title="Master" >
@@ -289,8 +289,8 @@
         <div class="col-md-12">
           <h3>MASTER</h3>
           <hr style=" height: 5px;
-            background-color: #333; 
-            border: none; 
+            background-color: #333;
+            border: none;
             margin: 20px 0; "/>
         </div>
       </div>
@@ -332,9 +332,9 @@
 
     </div>
 
-	  
-      
-      
+
+
+
   </li>
 <!-----------------batas ------------------------>
 
@@ -357,8 +357,8 @@
             <div class="col-md-12">
               <h3>TRANSAKSI</h3>
               <hr style=" height: 5px;
-                background-color: #333; 
-                border: none; 
+                background-color: #333;
+                border: none;
                 margin: 20px 0; "/>
             </div>
           </div>
@@ -445,10 +445,10 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                <a href="javascript:addTab('Retur ke TGZ', '{{url('retur?flagz=RO')}}')">      
+                <a href="javascript:addTab('Retur ke TGZ', '{{url('retur?flagz=RO')}}')">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Retur ke TGZ</h6>
@@ -541,12 +541,12 @@
     </div>
 
 <!----- batas ----->
-			
-           @endif			 		
+
+           @endif
           </li>
 
 <!----- batas ----->
-          
+
           <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase") || (Auth::user()->divisi=="gudang"))
 			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Transaksi Supplier" >
@@ -565,8 +565,8 @@
             <div class="col-md-12">
               <h3>TRANSAKSI SUPPLIER</h3>
               <hr style=" height: 5px;
-                background-color: #333; 
-                border: none; 
+                background-color: #333;
+                border: none;
                 margin: 20px 0; "/>
             </div>
           </div>
@@ -685,16 +685,16 @@
         </div>
       </div>
 
-	    
+
     </div>
 
 <!----- batas ----->
-			
-           @endif			 		
+
+           @endif
           </li>
 
 <!----- batas ----->
-          
+
           <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase") || (Auth::user()->divisi=="gudang"))
 			      <a href="#" class="nav-link"  data-bs-toggle="tooltip" title="Transaksi Persediaan" >
@@ -713,8 +713,8 @@
             <div class="col-md-12">
               <h3>TRANSAKSI PERSEDIAAN</h3>
               <hr style=" height: 5px;
-                background-color: #333; 
-                border: none; 
+                background-color: #333;
+                border: none;
                 margin: 20px 0; "/>
             </div>
           </div>
@@ -777,8 +777,8 @@
     </div>
 
 <!----- batas ----->
-			
-           @endif			 		
+
+           @endif
           </li>
 
 <!----- batas ----->
@@ -801,8 +801,8 @@
             <div class="col-md-12">
               <h3>TRANSAKSI BUDGET</h3>
               <hr style=" height: 5px;
-                background-color: #333; 
-                border: none; 
+                background-color: #333;
+                border: none;
                 margin: 20px 0; "/>
             </div>
           </div>
@@ -895,8 +895,8 @@
     </div>
 
 <!----- batas ----->
-			
-           @endif			 		
+
+           @endif
           </li>
 
 <!----- batas ----->
@@ -920,8 +920,8 @@
             <div class="col-md-12">
               <h3>PENGHAPUSAN DATA BARANG BUDGET</h3>
               <hr style=" height: 5px;
-                background-color: #333; 
-                border: none; 
+                background-color: #333;
+                border: none;
                 margin: 20px 0; "/>
             </div>
           </div>
@@ -953,8 +953,8 @@
     </div>
 
 <!----- batas ----->
-			
-           @endif			 		
+
+           @endif
           </li>
 
 <!----- batas ----->
@@ -967,7 +967,7 @@
               <p>
               </p>
             </a>
-			
+
 <!------- penambahan tampilan baru ------->
 
 
@@ -978,15 +978,15 @@
             <div class="col-md-12">
               <h3>TRANSAKSI B</h3>
               <hr style=" height: 5px;
-                background-color: #333; 
-                border: none; 
+                background-color: #333;
+                border: none;
                 margin: 20px 0; "/>
             </div>
           </div>
 
       <!-- batas -->
 
-      
+
 
       <div class="row">
 
@@ -1089,9 +1089,9 @@
         </div>
 
       </div>
-	
-      @endif			 		
-      </li> 
+
+      @endif
+      </li>
 
 <!----------------------------------------->
 
@@ -1113,8 +1113,8 @@
             <div class="col-md-12">
               <h3>TRANSAKSI C</h3>
               <hr style=" height: 5px;
-                background-color: #333; 
-                border: none; 
+                background-color: #333;
+                border: none;
                 margin: 20px 0; "/>
             </div>
           </div>
@@ -1122,7 +1122,7 @@
       <!-- batas -->
 
       <div class="row d-flex">
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               {{-- <a href="javascript:addTab('Diskon Penjualan', '{{url('diskon?flagz=DS')}}')" > --}}
@@ -1147,7 +1147,7 @@
 			      </div>
         </div>
 
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               {{-- <a href="javascript:addTab('Pengajuan Harga Jual', '{{url('harga?flagz=HG&golz=BS')}}')" > --}}
@@ -1159,7 +1159,7 @@
               </a>
 			      </div>
         </div>
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               <a href="javascript:addTab('Usulan Barang Busana Turun Harga', '{{url('rusulanth')}}')" >
@@ -1173,7 +1173,7 @@
       </div>
 
       <div class="row d-flex">
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               {{-- <a href="javascript:addTab('Pencetakan Label Harga', '{{url('harga?flagz=HG&golz=LB')}}')" > --}}
@@ -1196,7 +1196,7 @@
 			      </div>
         </div>
 
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               {{-- <a href="javascript:addTab('Budget Order Lebih', '{{url('budget?flagz=BO')}}')" > --}}
@@ -1207,7 +1207,7 @@
               </a>
 			      </div>
         </div>
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               {{-- <a href="javascript:addTab('Conter Pembelian', '{{url('counter?flagz=CT')}}')" > --}}
@@ -1221,7 +1221,7 @@
       </div>
 
       <div class="row d-flex">
-        
+
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               <a href="javascript:addTab('Buat Pajak Retur', '{{url('rfakturpj')}}')" >
@@ -1232,17 +1232,17 @@
 			      </div>
         </div>
 
-        
+
       </div>
 
     </div>
 
-      @endif			 		
-      </li> 
+      @endif
+      </li>
 
-     
 
-          <li class="nav-item">          
+
+          <li class="nav-item">
             <a href="#" class="nav-link" data-bs-toggle="tooltip" title="Lain-Lain">
               <i class="nav-icon fas fa-book icon-yellow"></i>
               <p>
@@ -1259,8 +1259,8 @@
                   <div class="col-md-12">
                     <h3>Lain-Lain</h3>
                     <hr style=" height: 5px;
-                      background-color: #333; 
-                      border: none; 
+                      background-color: #333;
+                      border: none;
                       margin: 20px 0; "/>
                   </div>
                 </div>
@@ -1279,23 +1279,23 @@
               </div>
             </div>
 
-          
+
           </div>
 
 <!----- batas ----->
 
-          </li> 
+          </li>
 
-<!--------------Laporan Pembelian---------------->          
+<!--------------Laporan Pembelian---------------->
 
 
-          <li class="nav-item">          
+          <li class="nav-item">
             <a href="#" class="nav-link" data-bs-toggle="tooltip" title="Tools">
               <i class="nav-icon fas fa-plus icon-yellow"></i>
               <p>
               </p>
             </a>
-			
+
 <!------- penambahan tampilan baru ------->
 
 
@@ -1306,8 +1306,8 @@
                   <div class="col-md-12">
                     <h3>Tools</h3>
                     <hr style=" height: 5px;
-                      background-color: #333; 
-                      border: none; 
+                      background-color: #333;
+                      border: none;
                       margin: 20px 0; "/>
                   </div>
                 </div>
@@ -1361,17 +1361,17 @@
                 </div>
               </div>
             </div>
-            
-          
+
+
           </div>
 
 <!----- batas ----->
 
-          </li> 
+          </li>
 
 <!--------------Laporan Penjualan---------------->
 
-          <li class="nav-item">          
+          <li class="nav-item">
             <a href="#" class="nav-link" data-bs-toggle="tooltip" title="Reports">
               <i class="nav-icon fas fa-book icon-yellow"></i>
               <p>
@@ -1388,8 +1388,8 @@
                     <div class="col-md-12">
                       <h3>Reports</h3>
                       <hr style=" height: 5px;
-                        background-color: #333; 
-                        border: none; 
+                        background-color: #333;
+                        border: none;
                         margin: 20px 0; "/>
                     </div>
                   </div>
@@ -1434,7 +1434,7 @@
                     </div>
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
@@ -1473,7 +1473,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
@@ -1516,10 +1516,11 @@
               <div class="row">
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
-                      <a href="javascript:addTab('Lap. Brg. Tidak Laku', '{{url('rpo')}}')" >
+                      <a href="javascript:addTab('Lap. Brg. Tidak Laku', '{{url('rbrg_tidak_laku_bintang')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
-                        <h6>Laporan Barang tidak Laku Td. Bintang</h6>
+                        <h6>Laporan Barang Tidak Laku</h6>
+                        <h6>Bertanda Bintang</h6>
                       </a>
                     </div>
                 </div>
@@ -1528,7 +1529,8 @@
                       <a href="javascript:addTab('Jadwal Pemantauan barang Tidak Laku', '{{url('rhut')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
-                        <h6>Jadwal Pemantauan barang Tidak Laku</h6>
+                        <h6>Jadwal Pemantauan Barang</h6>
+                        <h6>Tidak Laku</h6>
                       </a>
                     </div>
                 </div>
@@ -1537,7 +1539,8 @@
                       <a href="javascript:addTab('Laporan Barang TL & Tidak ada T.J', '{{url('rso')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
-                        <h6>Laporan Barang TL & Tidak ada T.J</h6>
+                        <h6>Laporan Barang TL</h6>
+                        <h6>& Tidak ada T.J</h6>
                       </a>
                     </div>
                 </div>
@@ -1546,7 +1549,8 @@
                       <a href="javascript:addTab('Laporan Barang Belum Dilayani', '{{url('rodcbelum')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
-                        <h6>Laporan Barang Belum Dilayani</h6>
+                        <h6>Laporan Barang</h6>
+                        <h6>Belum Dilayani</h6>
                       </a>
                     </div>
                 </div>
@@ -1558,7 +1562,8 @@
                       <a href="javascript:addTab('Lap. Brg. yang Diorder', '{{url('rrcnorder9')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
-                        <h6>Laporan Barang yang Diorder (K.9)</h6>
+                        <h6>Laporan Barang</h6>
+                        <h6>yang Diorder (K.9)</h6>
                       </a>
                     </div>
                 </div>
@@ -1567,7 +1572,8 @@
                       <a href="javascript:addTab('Lap. Brg. Datang', '{{url('rfakturpj')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
-                        <h6>Laporan Barang Datang</h6>
+                        <h6>Laporan Barang</h6>
+                        <h6>Datang</h6>
                       </a>
                     </div>
                 </div>
@@ -1576,20 +1582,21 @@
                       <a href="javascript:addTab('Lap. Brg. Datang', '{{url('rjual')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
-                        <h6>Laporan SP per PLU</h6>
+                        <h6>Laporan SP</h6>
+                        <h6>per PLU</h6>
                       </a>
                     </div>
                 </div>
               </div>
-            
+
             </div>
 
-<!----- batas ----->	
+<!----- batas ----->
 
           </li>
 
 
-          
+
 
 
           @if (Auth::user()->hasRole('superadmin') || (Auth::user()->divisi=="gudang"))

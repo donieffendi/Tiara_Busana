@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kasc" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="98"/>
@@ -300,7 +300,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="StretchHeight">
+				<textField>
 					<reportElement stretchType="RelativeToTallestObject" x="414" y="0" width="59" height="20" uuid="a6eb624f-2b44-43be-86d6-2762802aa27a"/>
 					<box>
 						<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -310,7 +310,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{dpp}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="StretchHeight">
+				<textField>
 					<reportElement stretchType="RelativeToTallestObject" x="353" y="0" width="61" height="20" uuid="f5a207d5-6a84-48ae-8c97-e8fe89136c2c"/>
 					<box>
 						<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -330,7 +330,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{qty}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="StretchHeight">
+				<textField>
 					<reportElement stretchType="RelativeToTallestObject" x="473" y="0" width="59" height="20" uuid="83b427ed-ee56-4e3e-b5f4-04571f6a0520"/>
 					<box>
 						<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -412,7 +412,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="false" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Laporan Penjualan"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[''Laporan Barang Tidak Laku Bertanda Bintang'']]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="64" y="63" width="166" height="18" uuid="409cbeab-7e6c-4d10-84be-8b7b3eff433d"/>
@@ -571,7 +571,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{kd_brg}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="353" y="0" width="61" height="20" uuid="1909e532-11b3-456e-9152-7ed24f3e66c5"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -602,7 +602,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="414" y="0" width="59" height="20" uuid="cf725109-1002-47ec-9ca8-a0cef6f37e53"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -612,7 +612,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dpp}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="473" y="0" width="59" height="20" uuid="cd539706-c296-454c-8c92-04e080bdbc41"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -646,7 +646,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="414" y="0" width="59" height="20" uuid="f30accd2-283f-4e14-b45d-553449e738a8"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -656,7 +656,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{dpp}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="353" y="0" width="61" height="20" uuid="a2b5fed4-e413-45d2-b78b-19a2923202c4"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
@@ -666,7 +666,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{nppn}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="473" y="0" width="59" height="20" uuid="e45f01fd-c7e2-4f3e-ba80-71a21afb889f"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
