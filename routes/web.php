@@ -1134,8 +1134,8 @@ Route::get('/beli/delete/{beli}', 'App\Http\Controllers\OTransaksi\BeliControlle
 Route::get('/rthut', 'App\Http\Controllers\OReport\RThutController@report')->middleware(['auth'])->name('rthut');
 Route::post('jasper-thut-report', 'App\Http\Controllers\OReport\RThutController@jasperThutReport')->middleware(['auth']);
 
-Route::get('/rtpiu', 'App\Http\Controllers\OReport\RTpiuController@report')->middleware(['auth'])->name('rtpiu');
-Route::post('jasper-tpiu-report', 'App\Http\Controllers\OReport\RTpiuController@jasperTpiuReport')->middleware(['auth']);
+Route::get('/rkonsinyasi', 'App\Http\Controllers\OReport\RKonsinyasiController@report')->middleware(['auth'])->name('rkonsinyasi');
+Route::post('jasper-konsinyasi-report', 'App\Http\Controllers\OReport\RKonsinyasiController@jasperKonsinyasiReport')->middleware(['auth']);
 
 Route::get('/rum', 'App\Http\Controllers\OReport\RUmController@report')->middleware(['auth'])->name('rum');
 Route::post('jasper-um-report', 'App\Http\Controllers\OReport\RUmController@jasperUmReport')->middleware(['auth']);

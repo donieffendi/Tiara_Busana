@@ -23,52 +23,39 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-tpiu-report')}}">
+					<form method="POST" action="{{url('jasper-konsinyasi-report')}}">
 					@csrf
 					<div class="form-group row">
-						<div class="col-md-1">
-							<label><strong>Gol :</strong></label>
-							
-							<select name="gol" id="gol" class="form-control gol">
-								<option value="B" {{ session()->get('filter_gol')=='B' ? 'selected': ''}}>B</option>
-								<option value="J" {{ session()->get('filter_gol')=='J' ? 'selected': ''}}>J</option>
-							</select>
-						</div>
 						<div class="col-md-2">						
-							<label class="form-label">Customer</label>
-							<input type="text" class="form-control kodec" id="kodec" name="kodec" placeholder="Pilih Customer" value="{{ session()->get('filter_kodec1') }}" readonly>
+							<label class="form-label">Counter</label>
+							<input type="text" class="form-control cnt" id="cnt" name="cnt" placeholder="Pilih Counter" value="{{ session()->get('filter_cnt') }}" readonly>
 						</div>  
 						<div class="col-md-3">
 							<label class="form-label">Nama</label>
-							<input type="text" class="form-control NAMAC" id="NAMAC" name="NAMAC" placeholder="Nama" value="{{ session()->get('filter_namac1') }}" readonly>
+							<input type="text" class="form-control ncnt" id="ncnt" name="ncnt" placeholder="Nama" value="{{ session()->get('filter_ncnt') }}" readonly>
 						</div>
 					</div>
 					
 					<div class="form-group row">
-                        <div class="col-md-1" align="right"><strong>Tujuan :</strong></div> 
-						<div class="col-md-2">						
-							<input type="text" class="form-control kodet" id="kodet" name="kodet" placeholder="Pilih Tujuan" value="{{ session()->get('filter_kodet1') }}" readonly>
-						</div>  
-						<div class="col-md-3">
-							<input type="text" class="form-control NAMAT" id="NAMAT" name="NAMAT" placeholder="Nama" value="{{ session()->get('filter_namat1') }}" readonly>
+						<div class="col-md-2">
+							<label><strong>Periode :</strong></label>
+							<select name="per" id="per" class="form-control per" style="width: 200px">
+								<option value="">--Pilih Periode--</option>
+								@foreach($per as $perD)
+									<option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
+								@endforeach
+							</select>
 						</div>
-					</div>
 
-					<!-- Filter Tanggal -->
-					<div class="form-group row">
-						<div class="col-md-3">
-							<input class="form-control date tglDr" id="tglDr" name="tglDr"
-							type="text" autocomplete="off" value="{{ session()->get('filter_tglDari') }}"> 
-						</div>
-						<div>s.d.</div> 
-						<div class="col-md-3">
-							<input class="form-control date tglSmp" id="tglSmp" name="tglSmp"
-							type="text" autocomplete="off" value="{{ session()->get('filter_tglSampai') }}">
+						<div class="col-md-1">
+							<input type="hidden" name="rekap" value="0">
+							<input type="checkbox" class="form-check-input" id="rekap" name="rekap" value="1" {{ session()->get('filter_rekap',1) == 1 ? 'checked' : '' }}>
+							<label class="form-check-label" id="label_rekap" for="rekap"><strong>Rekap Konsesi</strong></label>
 						</div>
 					</div>
 						
                     <button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
-                    <button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rtpiu")}}'">Reset</button>
+                    <button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rkonsinyasi")}}'">Reset</button>
 					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>
@@ -107,27 +94,17 @@
                                 "showFooter" => true,
                                 "showFooter" => "bottom",
                                 "columns" => array(
-                                    "NO_BUKTI" => array(
-                                        "label" => "Bukti#",
+                                    "cnt" => array(
+                                        "label" => "cnt#",
                                     ),
-                                    "TGL" => array(
-                                        "label" => "Tanggal",
+                                    "conter" => array(
+                                        "label" => "Counter",
                                     ),
-                                    "NO_SO" => array(
-                                        "label" => "SO#",
+                                    "per" => array(
+                                        "label" => "Periode",
                                     ),
-                                    "KODEC" => array(
-                                        "label" => "Customer#",
-                                    ),
-                                    "NAMAC" => array(
-                                        "label" => "-",
-                                    ),
-                                    "NAMAT" => array(
-                                        "label" => "Tujuan",
-                                        "footerText" => "<b>Grand Total :</b>",
-                                    ),
-                                    "TOTAL" => array(
-                                        "label" => "Total",
+                                    "nett" => array(
+                                        "label" => "Nett",
                                         "type" => "number",
                                         "decimals" => 2,
                                         "decimalPoint" => ".",
@@ -135,9 +112,18 @@
                                         "footer" => "sum",
                                         "footerText" => "<b>@value</b>",
                                     ),
-                                    "NOTES" => array(
-                                        "label" => "Notes",
+                                    "tgl_min" => array(
+                                        "label" => "Tanggal Min",
+										"type" => "date",
+										"format" => "Y-m-d",
+										"displayFormat" => "d-m-Y",
                                     ),
+									"tgl_max" => array(
+										"label" => "Tanggal Max",
+										"type" => "date",
+										"format" => "Y-m-d",
+										"displayFormat" => "d-m-Y",
+									),
                                 ),
                                 "cssClass" => array(
                                     "table" => "table table-hover table-striped table-bordered compact",
@@ -149,7 +135,7 @@
                                     "columnDefs"=>array(
                                         array(
                                             "className" => "dt-right", 
-                                            "targets" => [5],
+                                            "targets" => [3],
                                         ),
                                     ),
                                     "order" => [],
@@ -188,23 +174,21 @@
 	</div>
 </div>
 
-<div class="modal fade" id="browseCustModal" tabindex="-1" role="dialog" aria-labelledby="browseCustModalLabel" aria-hidden="true">
+<div class="modal fade" id="browseCounterModal" tabindex="-1" role="dialog" aria-labelledby="browseCounterModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 		<div class="modal-header">
-			<h5 class="modal-title" id="browseCustModalLabel">Cari Customer</h5>
+			<h5 class="modal-title" id="browseCounterModalLabel">Cari Counteromer</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-cust">
+			<table class="table table-stripped table-bordered" id="table-counter">
 				<thead>
 					<tr>
-						<th>Customer</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
+						<th>Counter</th>
+						<th>Nama Counter</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -217,36 +201,6 @@
 		</div>
 	</div>
 </div>
-
-<div class="modal fade" id="browseTujuanModal" tabindex="-1" role="dialog" aria-labelledby="browseTujanModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-	<div class="modal-content">
-		<div class="modal-header">
-		<h5 class="modal-title" id="browseSuplierModalLabel">Cari Tujuan</h5>
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		</div>
-		<div class="modal-body">
-		<table class="table table-stripped table-bordered" id="table-btujuan">
-			<thead>
-				<tr>
-					<th>Tujuan</th>
-					<th>-</th>
-					<th>Alamat</th>
-					<th>Kota</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		</div>
-		<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		</div>
-	</div>
-	</div>
-</div>
 @endsection
 
 @section('javascripts')
@@ -257,114 +211,74 @@
 		
 		$('.date').datepicker({  
 			dateFormat: 'dd-mm-yy'
-		}); 
+		});
 		
+		var dTableCounter;
+		loadDataCounter = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: "{{url('kirim/browse_cnt')}}",
 
-	});
-	
-	var dTableCust;
-	loadDataCust = function(){
-	
-		$.ajax(
-		{
-			type: 'GET', 		
-			url: "{{url('cust/browse')}}",
-			data: {
-				'GOL': $('#gol').val(),
-			},
-			success: function( response )
-			{
-				resp = response;
-				if(dTableCust){
-					dTableCust.clear();
+				success: function( response )
+
+				{
+					resp = response;
+					if(dTableCounter){
+						dTableCounter.clear();
+					}
+					for(i=0; i<resp.length; i++){
+							
+						dTableCounter.row.add([
+							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
+							resp[i].NCNT
+						]);
+					}
+					dTableCounter.draw();
 				}
-				for(i=0; i<resp.length; i++){
-					
-					dTableCust.row.add([
-						'<a href="javascript:void(0);" onclick="chooseCust(\''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\')">'+resp[i].KODEC+'</a>',
-						resp[i].NAMAC,
-						resp[i].ALAMAT,
-						resp[i].KOTA,
-					]);
-				}
-				dTableCust.draw();
+			});
+		}
+		
+		dTableCounter = $("#table-counter").DataTable({
+			
+		});
+		
+		browseCounter = function(){
+			loadDataCounter();
+			$("#browseCounterModal").modal("show");
+		}
+		
+		chooseCounter = function(CNT, NCNT){
+			$("#cnt").val(CNT);
+			$("#ncnt").val(NCNT);	
+			$("#browseCounterModal").modal("hide");
+		}
+		
+		$("#cnt").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseCounter();
 			}
 		});
-	}
-	
-	dTableCust = $("#table-cust").DataTable({
-		
 	});
-	
-	browseCust = function(){
-		loadDataCust();
-		$("#browseCustModal").modal("show");
-	}
-	
-	chooseCust = function(KODEC, NAMAC, ALAMAT, KOTA){
-		$("#kodec").val(KODEC);
-		$("#NAMAC").val(NAMAC);	
-		$("#browseCustModal").modal("hide");
-	}
-	
-	$("#kodec").keypress(function(e){
-		if(e.keyCode == 46){
-			e.preventDefault();
-			browseCust();
+
+	function updateLabelRekap(){
+		if($("#rekap").is(":checked")){
+			$("#label_rekap").html("<strong>Rekap Konsesi</strong>");
+		}else{
+			$("#label_rekap").html("<strong>Kwitansi</strong>");
 		}
+	}
+
+	$("#rekap").change(function(){
+		updateLabelRekap();
 	});
+
+	// jalankan saat halaman dibuka
+	updateLabelRekap();
 	
 	
-	var dTableBTujuan;
-	var rowidTujuan;
-	loadDataBTujuan = function(){
-		$.ajax(
-		{
-			type: 'GET',    
-			url: "{{url('tujuan/browse')}}",
-			data: {
-				'GOL': 'Z',
-			},
-			success: function(resp)
-			{
-				if(dTableBTujuan){
-					dTableBTujuan.clear();
-				}
-				for(i=0; i<resp.length; i++){
-					
-					dTableBTujuan.row.add([
-						'<a href="javascript:void(0);" onclick="chooseTujuan(\''+resp[i].KODET+'\',  \''+resp[i].NAMAT+'\',   \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\' )">'+resp[i].KODET+'</a>',
-						resp[i].NAMAT,
-						resp[i].ALAMAT,
-						resp[i].KOTA,
-						
-					]);
-				}
-				dTableBTujuan.draw();
-			}
-		});
-	}
-	
-	dTableBTujuan = $("#table-btujuan").DataTable({
-		
-	});
-	
-	browseTujuan = function(){
-		loadDataBTujuan();
-		$("#browseTujuanModal").modal("show");
-	}
-	
-	chooseTujuan = function(KODET,NAMAT,ALAMAT,KOTA){
-		$("#kodet").val(KODET);
-		$("#NAMAT").val(NAMAT);			
-		$("#browseTujuanModal").modal("hide");
-	}
-	
-	$("#kodet").keypress(function(e){
-		if(e.keyCode == 46){
-			e.preventDefault();
-			browseTujuan();
-		}
-	}); 
+
 </script>
 @endsection
