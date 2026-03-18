@@ -1319,5 +1319,15 @@ Route::get('/get-brg_tidak_laku_bintang-post', 'App\Http\Controllers\OTransaksi\
 Route::get('/rbrg_tidak_laku_bintang', 'App\Http\Controllers\OReport\RBrg_tidak_laku_bintangController@report')->middleware(['auth'])->name('rbrg_tidak_laku_bintang');
 Route::post('jasper-brg_tidak_laku_bintang-report', 'App\Http\Controllers\OReport\RBrg_tidak_laku_bintangController@jasperBrg_tidak_laku_bintangReport')->middleware(['auth']);
 
+// Report Jadwal Pemantauan Barang
+Route::get('/get-jadwal_pemantauan-post', 'App\Http\Controllers\OTransaksi\Jadwal_pemantauanController@getJadwal_pemantauan_posting')->middleware(['auth'])->name('get-jadwal_pemantauan-post');
+Route::get('/rjadwal_pemantauan', 'App\Http\Controllers\OReport\RJadwal_pemantauanController@report')->middleware(['auth'])->name('rjadwal_pemantauan');
+Route::post('jasper-jadwal_pemantauan-report', 'App\Http\Controllers\OReport\RJadwal_pemantauanController@jasperJadwal_pemantauanReport')->middleware(['auth']);
+
+// Report Jadwal Pemantauan Barang
+Route::get('/get-brg_tidak_laku_jual-post', 'App\Http\Controllers\OTransaksi\Brg_tidak_laku_jualController@getBrg_tidak_laku_jual_posting')->middleware(['auth'])->name('get-brg_tidak_laku_jual-post');
+Route::get('/rbrg_tidak_laku_jual', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@report')->middleware(['auth'])->name('rbrg_tidak_laku_jual');
+Route::post('jasper-brg_tidak_laku_jual-report', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@jasperBrg_tidak_laku_jualReport')->middleware(['auth']);
+
 
 require __DIR__.'/auth.php';
