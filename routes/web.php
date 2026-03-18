@@ -55,8 +55,8 @@ Route::get('/raccount', 'App\Http\Controllers\FReport\RAccountController@report'
     Route::get('/get-account', 'App\Http\Controllers\FMaster\AccountController@getAccount')->middleware(['auth'])->name('get-account');
     Route::get('/account/browse', 'App\Http\Controllers\FMaster\AccountController@browse')->middleware(['auth'])->name('accoumt/browse');
     Route::get('/account/browse_nacno', 'App\Http\Controllers\FMaster\AccountController@browse_nacno')->middleware(['auth'])->name('accoumt/browse_nacno');
-    
-    
+
+
     Route::get('/account/browsecash', 'App\Http\Controllers\FMaster\AccountController@browsecash')->middleware(['auth'])->name('accoumt/browsecash');
     Route::get('/account/browsebank', 'App\Http\Controllers\FMaster\AccountController@browsebank')->middleware(['auth'])->name('accoumt/browsebank');
     Route::get('/account/browsecashbank', 'App\Http\Controllers\FMaster\AccountController@browsecashbank')->middleware(['auth'])->name('accoumt/browsecashbank');
@@ -80,7 +80,7 @@ Route::post('/jasper-nera-report', 'App\Http\Controllers\FReport\RNeraController
 
 
 
-// Master Jenis 
+// Master Jenis
 Route::get('/jenis', 'App\Http\Controllers\Master\JenisController@index')->middleware(['auth'])->name('jenis');
 Route::post('/jenis/store', 'App\Http\Controllers\Master\JenisController@store')->middleware(['auth'])->name('jenis/store');
 
@@ -96,7 +96,7 @@ Route::get('/jenis/delete/{jenis}', 'App\Http\Controllers\Master\JenisController
 //////////////////////
 
 
-// Master Merk 
+// Master Merk
 Route::get('/merk', 'App\Http\Controllers\Master\MerkController@index')->middleware(['auth'])->name('merk');
 Route::post('/merk/store', 'App\Http\Controllers\Master\MerkController@store')->middleware(['auth'])->name('merk/store');
 
@@ -112,7 +112,7 @@ Route::get('/merk/delete/{merk}', 'App\Http\Controllers\Master\MerkController@de
 //////////////////////
 
 
-// Master Suplier 
+// Master Suplier
 Route::get('/sup', 'App\Http\Controllers\Master\SupController@index')->middleware(['auth'])->name('sup');
 Route::post('/sup/store', 'App\Http\Controllers\Master\SupController@store')->middleware(['auth'])->name('sup/store');
 Route::get('/rsup', 'App\Http\Controllers\OReport\RSupController@report')->middleware(['auth'])->name('rsup');
@@ -122,7 +122,7 @@ Route::get('/rsup', 'App\Http\Controllers\OReport\RSupController@report')->middl
     Route::get('/sup/browse_hari', 'App\Http\Controllers\Master\SupController@browse_hari')->middleware(['auth'])->name('sup/browse_hari');
     Route::get('/sup/browse_amplop', 'App\Http\Controllers\Master\SupController@browse_amplop')->middleware(['auth'])->name('sup/browse_amplop');
     Route::get('/sup/browsesupz', 'App\Http\Controllers\Master\SupController@browsesupz')->middleware(['auth'])->name('sup/browsesupz');
-    
+
     Route::get('/get-sup-report', 'App\Http\Controllers\OReport\RSupController@getSupReport')->middleware(['auth'])->name('get-sup-report');
     Route::post('/jasper-sup-report', 'App\Http\Controllers\OReport\RSupController@jasperSupReport')->middleware(['auth'])->name('jasper-sup-report');
     Route::get('sup/ceksup', 'App\Http\Controllers\Master\SupController@ceksup')->middleware(['auth']);
@@ -135,7 +135,7 @@ Route::get('/sup/delete/{sup}', 'App\Http\Controllers\Master\SupController@destr
 
 //////////////////////
 
-// Master Counter 
+// Master Counter
 Route::get('/counter', 'App\Http\Controllers\Master\CounterController@index')->middleware(['auth'])->name('counter');
 Route::post('/counter/store', 'App\Http\Controllers\Master\CounterController@store')->middleware(['auth'])->name('counter/store');
 Route::get('/rcounter', 'App\Http\Controllers\OReport\RCounterController@report')->middleware(['auth'])->name('rcounter');
@@ -148,7 +148,7 @@ Route::get('/rcounter', 'App\Http\Controllers\OReport\RCounterController@report'
 
     Route::get('/counter/browse', 'App\Http\Controllers\Master\CounterController@browse')->middleware(['auth'])->name('counter/browse');
     Route::get('/counter/browsecounterz', 'App\Http\Controllers\Master\CounterController@browsecounterz')->middleware(['auth'])->name('counter/browsecounterz');
-  
+
 
     Route::get('/get-counter-report', 'App\Http\Controllers\OReport\RCounterController@getCounterReport')->middleware(['auth'])->name('get-counter-report');
     Route::post('/jasper-counter-report', 'App\Http\Controllers\OReport\RCounterController@jasperCounterReport')->middleware(['auth'])->name('jasper-counter-report');
@@ -162,7 +162,7 @@ Route::get('/counter/delete/{counter}', 'App\Http\Controllers\Master\CounterCont
 
 
 ///////////////////////
-// Master Brg 
+// Master Brg
 Route::get('/brg', 'App\Http\Controllers\Master\BrgController@index')->middleware(['auth'])->name('brg');
 Route::post('/brg/store', 'App\Http\Controllers\Master\BrgController@store')->middleware(['auth'])->name('brg/store');
 Route::get('/rbrg', 'App\Http\Controllers\OReport\RBrgController@report')->middleware(['auth'])->name('rbrg');
@@ -201,7 +201,7 @@ Route::get('/rcust', 'App\Http\Controllers\OReport\RCustController@report')->mid
     Route::get('/get-cust', 'App\Http\Controllers\Master\CustController@getcust')->middleware(['auth'])->name('get-cust');
     Route::get('/cust/browse', 'App\Http\Controllers\Master\CustController@browse')->middleware(['auth'])->name('cust/browse');
     Route::get('/cust/browse_hari', 'App\Http\Controllers\Master\CustController@browse_hari')->middleware(['auth'])->name('cust/browse_hari');
-    
+
     Route::get('/get-cust-report', 'App\Http\Controllers\OReport\RcustController@getcustReport')->middleware(['auth'])->name('get-cust-report');
     Route::post('/jasper-cust-report', 'App\Http\Controllers\OReport\RCustController@jaspercustReport')->middleware(['auth'])->name('jasper-cust-report');
     Route::get('cust/cekcust', 'App\Http\Controllers\Master\CustController@cekcust')->middleware(['auth']);
@@ -223,7 +223,6 @@ Route::post('/user/add', 'App\Http\Controllers\UserController@store')->middlewar
 
 Route::get('/po', 'App\Http\Controllers\OTransaksi\PoController@index')->middleware(['auth'])->name('po');
 Route::post('/po/store', 'App\Http\Controllers\OTransaksi\PoController@store')->middleware(['auth'])->name('po/store');
-Route::get('/rpo', 'App\Http\Controllers\OReport\RPoController@report')->middleware(['auth'])->name('rpo');
     // GET BELI
     Route::get('/po/browse', 'App\Http\Controllers\OTransaksi\PoController@browse')->middleware(['auth'])->name('po/browse');
     Route::get('/po/browse_brg', 'App\Http\Controllers\OTransaksi\PoController@browse_brg')->middleware(['auth'])->name('po/browse_brg');
@@ -232,20 +231,21 @@ Route::get('/rpo', 'App\Http\Controllers\OReport\RPoController@report')->middlew
     Route::get('/po/browse_detail2', 'App\Http\Controllers\OTransaksi\PoController@browse_detail2')->middleware(['auth'])->name('po/browse_detail2');
     Route::get('/po/browse_pod', 'App\Http\Controllers\OTransaksi\PoController@browse_pod')->middleware(['auth'])->name('po/browse_pod');
     Route::get('/po/browseuang', 'App\Http\Controllers\OTransaksi\PoController@browseuang')->middleware(['auth'])->name('po/browseuang');
-   
+
     Route::get('/get-po', 'App\Http\Controllers\OTransaksi\PoController@getPo')->middleware(['auth'])->name('get-po');
-	
+
     Route::get('/get-po-post', 'App\Http\Controllers\OTransaksi\PoController@getPo_posting')->middleware(['auth'])->name('get-po-post');
-	
+    Route::get('/rpo', 'App\Http\Controllers\OReport\RPoController@report')->middleware(['auth'])->name('rpo');
+    Route::post('jasper-po-report', 'App\Http\Controllers\OReport\RPoController@jasperPoReport')->middleware(['auth']);
+
     Route::get('/get-po-report', 'App\Http\Controllers\OReport\RPoController@getPoReport')->middleware(['auth'])->name('get-po-report');
     // Route::get('/cetak/{po:NO_ID}', 'App\Http\Controllers\OTransaksi\PoController@cetak')->middleware(['auth']);
 	Route::get('/po/cetak/{po:NO_ID}','App\Http\Controllers\OTransaksi\PoController@cetak')->middleware(['auth']);
-    
-    Route::post('jasper-po-report', 'App\Http\Controllers\OReport\RPoController@jasperPoReport')->middleware(['auth']);
+
 
     Route::get('/po/browse_pod', 'App\Http\Controllers\OTransaksi\PoController@browse_pod')->middleware(['auth'])->name('po/browse_pod');
 	Route::get('/po/jtempo', 'App\Http\Controllers\OTransaksi\PoController@jtempo')->middleware(['auth'])->name('po/jtempo');
-	
+
 // Dynamic Po
 Route::get('/po/edit', 'App\Http\Controllers\OTransaksi\PoController@edit')->middleware(['auth'])->name('po.edit');
 Route::post('/po/update/{po}', 'App\Http\Controllers\OTransaksi\PoController@update')->middleware(['auth'])->name('po.update');
@@ -621,7 +621,7 @@ Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')
 Route::get('/stockb', 'App\Http\Controllers\OTransaksi\StockbController@index')->middleware(['auth'])->name('stockb');
 Route::post('/stockb/store', 'App\Http\Controllers\OTransaksi\StockbController@store')->middleware(['auth'])->name('stockb/store');
 Route::get('/rstockb', 'App\Http\Controllers\OReport\RStockbController@report')->middleware(['auth'])->name('rstockb');
-    
+
 // GET Stockb
     Route::get('/stockb/browse', 'App\Http\Controllers\OTransaksi\StockbController@browse')->middleware(['auth'])->name('stockb/browse');
     Route::get('/stockb/browse_detail', 'App\Http\Controllers\OTransaksi\StockbController@browse_detail')->middleware(['auth'])->name('stockb/browse_detail');
@@ -630,17 +630,17 @@ Route::get('/rstockb', 'App\Http\Controllers\OReport\RStockbController@report')-
     Route::get('/stockb/browse_brgd', 'App\Http\Controllers\OTransaksi\StockbController@browse_brgd')->middleware(['auth'])->name('stockb/browse_brgd');
     Route::get('/stockb/browse_sup', 'App\Http\Controllers\OTransaksi\StockbController@browse_sup')->middleware(['auth'])->name('stockb/browse_sup');
     Route::get('/stockb/browse_cnt', 'App\Http\Controllers\OTransaksi\StockbController@browse_cnt')->middleware(['auth'])->name('stockb/browse_cnt');
-   
+
     Route::get('/get-stockb', 'App\Http\Controllers\OTransaksi\StockbController@getStockb')->middleware(['auth'])->name('get-stockb');
-	
+
     Route::get('/get-stockb-post', 'App\Http\Controllers\OTransaksi\StockbController@getStockb_posting')->middleware(['auth'])->name('get-stockb-post');
-	
+
     Route::get('/get-stockb-report', 'App\Http\Controllers\OReport\RStockbController@getStockbReport')->middleware(['auth'])->name('get-stockb-report');
     Route::get('/jspoc/{stockb:NO_ID}', 'App\Http\Controllers\OTransaksi\StockbController@jspoc')->middleware(['auth']);
     Route::post('jasper-stockb-report', 'App\Http\Controllers\OReport\RStockbController@jasperStockbReport')->middleware(['auth']);
 
     Route::get('/stockb/browse_pod', 'App\Http\Controllers\OTransaksi\StockbController@browse_stockbd')->middleware(['auth'])->name('stockb/browse_stockbd');
-	
+
 // Dynamic Stockb
 Route::get('/stockb/edit', 'App\Http\Controllers\OTransaksi\StockbController@edit')->middleware(['auth'])->name('stockb.edit');
 Route::post('/stockb/update/{stockb}', 'App\Http\Controllers\OTransaksi\StockbController@update')->middleware(['auth'])->name('stockb.update');
@@ -788,7 +788,7 @@ Route::get('/get-kasirbantu-report-ajax', 'App\Http\Controllers\OReport\RKasirBa
 Route::get('/get-kasir-list/{cbg}', 'App\Http\Controllers\OReport\RKasirBantuController@getKasirList')->middleware(['auth']);
 Route::get('/get-periode-list/{cbg}', 'App\Http\Controllers\OReport\RKasirBantuController@getPeriodeList')->middleware(['auth']);
 Route::get('/search-kasirbantu', 'App\Http\Controllers\OReport\RKasirBantuController@searchKasirBantu')->middleware(['auth']);
-    
+
 // Operational Beli
 Route::get('/beli', 'App\Http\Controllers\OTransaksi\BeliController@index')->middleware(['auth'])->name('beli');
 Route::post('/beli/store', 'App\Http\Controllers\OTransaksi\BeliController@store')->middleware(['auth'])->name('beli/store');
@@ -801,12 +801,12 @@ Route::get('/rbeli_gdg', 'App\Http\Controllers\OReport\RBeli_gdgController@repor
     Route::get('/beli/browse_cnt', 'App\Http\Controllers\OTransaksi\BeliController@browse_cnt')->middleware(['auth'])->name('beli/browse_cnt');
     Route::get('/beli/browse_detail', 'App\Http\Controllers\OTransaksi\BeliController@browse_detail')->middleware(['auth'])->name('beli/browse_detail');
     Route::get('/beli/browse_detail2', 'App\Http\Controllers\OTransaksi\BeliController@browse_detail2')->middleware(['auth'])->name('beli/browse_detail2');
-   
+
     Route::get('/beli/browseuang', 'App\Http\Controllers\OTransaksi\BeliController@browseuang')->middleware(['auth'])->name('beli/browseuang');
     Route::get('/get-beli', 'App\Http\Controllers\OTransaksi\BeliController@getBeli')->middleware(['auth'])->name('get-beli');
-	
+
     Route::get('/get-beli-post', 'App\Http\Controllers\OTransaksi\BeliController@getBeli_posting')->middleware(['auth'])->name('get-beli-post');
-	
+
     Route::get('/get-beli-report', 'App\Http\Controllers\OReport\RBeliController@getBeliReport')->middleware(['auth'])->name('get-beli-report');
     Route::get('/get-beli_gdg-report', 'App\Http\Controllers\OReport\RBeli_gdgController@getBeli_gdgReport')->middleware(['auth'])->name('get-beli_gdg-report');
 	Route::get('/beli/cetak/{beli:NO_ID}','App\Http\Controllers\OTransaksi\BeliController@cetak')->middleware(['auth']);
@@ -815,7 +815,7 @@ Route::get('/rbeli_gdg', 'App\Http\Controllers\OReport\RBeli_gdgController@repor
     Route::post('jasper-beli_gdg-report', 'App\Http\Controllers\OReport\RBeli_gdgController@jasperBeli_gdgReport')->middleware(['auth']);
 
     Route::get('/beli/browse_belid', 'App\Http\Controllers\OTransaksi\BeliController@browse_belid')->middleware(['auth'])->name('beli/browse_belid');
-	
+
 // Dynamic Beli
 Route::get('/beli/edit', 'App\Http\Controllers\OTransaksi\BeliController@edit')->middleware(['auth'])->name('beli.edit');
 Route::post('/beli/update/{beli}', 'App\Http\Controllers\OTransaksi\BeliController@update')->middleware(['auth'])->name('beli.update');
@@ -851,23 +851,23 @@ Route::get('/get-detail-harga', 'App\Http\Controllers\OTransaksi\HargaController
 Route::get('/pp', 'App\Http\Controllers\OTransaksi\PpController@index')->middleware(['auth'])->name('pp');
 Route::post('/pp/store', 'App\Http\Controllers\OTransaksi\PpController@store')->middleware(['auth'])->name('pp/store');
 Route::get('/rpp', 'App\Http\Controllers\OReport\RPpController@report')->middleware(['auth'])->name('rpp');
-    
+
 // GET PP
     Route::get('/pp/browse', 'App\Http\Controllers\OTransaksi\PpController@browse')->middleware(['auth'])->name('pp/browse');
     Route::get('/pp/browse_detail', 'App\Http\Controllers\OTransaksi\PpController@browse_detail')->middleware(['auth'])->name('pp/browse_detail');
     Route::get('/pp/browse_detail2', 'App\Http\Controllers\OTransaksi\PpController@browse_detail2')->middleware(['auth'])->name('pp/browse_detail2');
-   
+
     Route::get('/pp/browseuang', 'App\Http\Controllers\OTransaksi\PpController@browseuang')->middleware(['auth'])->name('pp/browseuang');
     Route::get('/get-pp', 'App\Http\Controllers\OTransaksi\PpController@getPp')->middleware(['auth'])->name('get-pp');
-	
+
     Route::get('/get-pp-post', 'App\Http\Controllers\OTransaksi\PpController@getPp_posting')->middleware(['auth'])->name('get-pp-post');
-	
+
     Route::get('/get-pp-report', 'App\Http\Controllers\OReport\RPpController@getPpReport')->middleware(['auth'])->name('get-pp-report');
 	Route::get('/pp/cetak/{pp:NO_ID}','App\Http\Controllers\OTransaksi\PpController@cetak')->middleware(['auth']);
     Route::post('jasper-pp-report', 'App\Http\Controllers\OReport\RPpController@jasperPpReport')->middleware(['auth']);
 
     Route::get('/pp/browse_ppd', 'App\Http\Controllers\OTransaksi\PpController@browse_ppd')->middleware(['auth'])->name('pp/browse_ppd');
-	
+
 // Dynamic PP
 Route::get('/pp/edit', 'App\Http\Controllers\OTransaksi\PpController@edit')->middleware(['auth'])->name('pp.edit');
 Route::post('/pp/update/{pp}', 'App\Http\Controllers\OTransaksi\PpController@update')->middleware(['auth'])->name('pp.update');
@@ -899,7 +899,7 @@ Route::post('/utbeli/update/{utbeli}', 'App\Http\Controllers\OTransaksi\UtbeliCo
 Route::get('/utbeli/delete/{utbeli}', 'App\Http\Controllers\OTransaksi\UtbeliController@destroy')->middleware(['auth'])->name('utbeli.delete');
 Route::get('/utbeli/repost/{utbeli}', 'App\Http\Controllers\OTransaksi\UtbeliController@repost')->middleware(['auth'])->name('utbeli.repost');
 Route::get('/jsutbelic/{utbeli:NO_ID}', 'App\Http\Controllers\OTransaksi\UtbeliController@jsutbelic')->middleware(['auth']);
-    
+
 
 Route::get('/rum', 'App\Http\Controllers\OReport\RUmController@report')->middleware(['auth'])->name('rum');
 Route::post('jasper-um-report', 'App\Http\Controllers\OReport\RUmController@jasperUmReport')->middleware(['auth']);
@@ -928,15 +928,15 @@ Route::get('/rjual', 'App\Http\Controllers\OReport\RJualController@report')->mid
     Route::get('/jual/browse', 'App\Http\Controllers\OTransaksi\JualController@browse')->middleware(['auth'])->name('jual/browse');
     Route::get('/jual/browseuang', 'App\Http\Controllers\OTransaksi\JualController@browseuang')->middleware(['auth'])->name('jual/browseuang');
     Route::get('/get-jual', 'App\Http\Controllers\OTransaksi\JualController@getJual')->middleware(['auth'])->name('get-jual');
-	
+
     Route::get('/get-jual-post', 'App\Http\Controllers\OTransaksi\JualController@getJual_posting')->middleware(['auth'])->name('get-jual-post');
-	
+
     Route::get('/get-jual-report', 'App\Http\Controllers\OReport\RJualController@getJualReport')->middleware(['auth'])->name('get-jual-report');
     Route::get('/jsjualc/{jual:NO_ID}', 'App\Http\Controllers\OTransaksi\JualController@jsjualc')->middleware(['auth']);
     Route::post('jasper-jual-report', 'App\Http\Controllers\OReport\RJualController@jasperJualReport')->middleware(['auth']);
 
     Route::get('/jual/browse_juald', 'App\Http\Controllers\OTransaksi\JualController@browse_juald')->middleware(['auth'])->name('jual/browse_juald');
-	
+
 // Dynamic Jual
 Route::get('/jual/edit', 'App\Http\Controllers\OTransaksi\JualController@edit')->middleware(['auth'])->name('jual.edit');
 Route::post('/jual/update/{jual}', 'App\Http\Controllers\OTransaksi\JualController@update')->middleware(['auth'])->name('jual.update');
@@ -966,7 +966,7 @@ Route::post('/utjual/update/{utjual}', 'App\Http\Controllers\OTransaksi\UtjualCo
 Route::get('/utjual/delete/{utjual}', 'App\Http\Controllers\OTransaksi\UtjualController@destroy')->middleware(['auth'])->name('utjual.delete');
 Route::get('/utjual/repost/{utjual}', 'App\Http\Controllers\OTransaksi\UtjualController@repost')->middleware(['auth'])->name('utjual.repost');
 Route::get('/jsutjualc/{utjual:NO_ID}', 'App\Http\Controllers\OTransaksi\UtjualController@jsutjualc')->middleware(['auth']);
-    
+
 
 
 /// HUT
@@ -977,9 +977,9 @@ Route::post('/hut/store', 'App\Http\Controllers\OTransaksi\HutController@store')
 Route::get('/rhut', 'App\Http\Controllers\OReport\RHutController@report')->middleware(['auth'])->name('rhut');
     // GET HUT
     Route::get('/get-hut', 'App\Http\Controllers\OTransaksi\HutController@getHut')->middleware(['auth'])->name('get-hut');
-		
+
     Route::get('/get-hut-post', 'App\Http\Controllers\OTransaksi\HutController@getHut_posting')->middleware(['auth'])->name('get-hut-post');
-		
+
     Route::get('/hut/print/{hut:NO_ID}', 'App\Http\Controllers\OTransaksi\HutController@cetak')->middleware(['auth']);
     Route::get('/get-hut-report', 'App\Http\Controllers\OReport\RHutController@getHutReport')->middleware(['auth'])->name('get-hut-report');
     Route::post('/jasper-hut-report', 'App\Http\Controllers\OReport\RHutController@jasperHutReport')->middleware(['auth']);
@@ -1004,9 +1004,9 @@ Route::post('/piu/store', 'App\Http\Controllers\OTransaksi\PiuController@store')
 Route::get('/rpiu', 'App\Http\Controllers\OReport\RPiuController@report')->middleware(['auth'])->name('rpiu');
     // GET HUT
     Route::get('/get-piu', 'App\Http\Controllers\OTransaksi\PiuController@getPiu')->middleware(['auth'])->name('get-piu');
-		
+
     Route::get('/get-piu-post', 'App\Http\Controllers\OTransaksi\PiuController@getHut_posting')->middleware(['auth'])->name('get-piu-post');
-		
+
     Route::get('/hut/print/{hut:NO_ID}', 'App\Http\Controllers\OTransaksi\PiuController@cetak')->middleware(['auth']);
     Route::get('/get-piu-report', 'App\Http\Controllers\OReport\RPiuController@getPiuReport')->middleware(['auth'])->name('get-piu-report');
     Route::post('/jasper-piu-report', 'App\Http\Controllers\OReport\RPiuController@jasperPiuReport')->middleware(['auth']);
@@ -1220,7 +1220,7 @@ Route::post('/memo/update/{memo}', 'App\Http\Controllers\FTransaksi\MemoControll
 Route::get('/memo/delete/{memo}', 'App\Http\Controllers\FTransaksi\MemoController@destroy')->middleware(['auth'])->name('memo.delete');
 Route::get('/memo/cetak/{memo:NO_ID}','App\Http\Controllers\FTransaksi\MemoController@cetak')->middleware(['auth']);
 Route::get('/get-detail-memo', 'App\Http\Controllers\FTransaksi\MemoController@getDetailMemo')->middleware(['auth'])->name('get-detail-memo');
-    
+
 //Report
 Route::post('/rmemo/cetak', 'App\Http\Controllers\FReport\RMemoController@cetak')->middleware(['auth'])->name('rmemo.cetak');
 
@@ -1231,7 +1231,7 @@ Route::get('/kas_validasi', 'App\Http\Controllers\FTransaksi\KasController@creat
 
 
 Route::get('/kas/browse_bukti', 'App\Http\Controllers\FTransaksi\KasController@browse_bukti')->middleware(['auth'])->name('kas/browse_bukti');
- 
+
 Route::get('/rkas', 'App\Http\Controllers\FReport\RKasController@report')->middleware(['auth'])->name('rkas');
     // GET KAS
     Route::get('/get-kas', 'App\Http\Controllers\FTransaksi\KasController@getKas')->middleware(['auth'])->name('get-kas');
@@ -1314,6 +1314,10 @@ Route::get('/rimportbrg', 'App\Http\Controllers\OReport\RImportBrgController@imp
 Route::get('/rbgroup', 'App\Http\Controllers\OReport\RBgroupController@report')->middleware(['auth'])->name('rbgroup');
 Route::post('/jasper-bgroup-report', 'App\Http\Controllers\OReport\RBgroupController@jasperBgroupReport')->middleware(['auth'])->name('jasper-bgroup-report');
 
+// Report Barang Tidak Laku Bertanda Bintang
+Route::get('/get-brg_tidak_laku_bintang-post', 'App\Http\Controllers\OTransaksi\Brg_tidak_laku_bintangController@getBrg_tidak_laku_bintang_posting')->middleware(['auth'])->name('get-brg_tidak_laku_bintang-post');
+Route::get('/rbrg_tidak_laku_bintang', 'App\Http\Controllers\OReport\RBrg_tidak_laku_bintangController@report')->middleware(['auth'])->name('rbrg_tidak_laku_bintang');
+Route::post('jasper-brg_tidak_laku_bintang-report', 'App\Http\Controllers\OReport\RBrg_tidak_laku_bintangController@jasperBrg_tidak_laku_bintangReport')->middleware(['auth']);
 
 
 require __DIR__.'/auth.php';
