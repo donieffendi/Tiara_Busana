@@ -165,12 +165,12 @@
 									</div>
 
 									<!-- code text box baru -->
-									<div class="col-md-3 form-group row special-input-label">
+									{{-- <div class="col-md-3 form-group row special-input-label">
 
 										<input type="text" class="P_TLP" id="P_TLP" name="P_TLP"
 											value="{{$header->P_TLP}}" placeholder=" " >
 										<label for="P_TLP">Telp</label>
-									</div>
+									</div> --}}
 									<!-- tutupannya -->
 
 									<div class="col-md-1">

@@ -147,7 +147,7 @@ class SupController extends Controller
                 'NO_SUPL'     => ($request['NO_SUPL'] == null) ? "" : $request['NO_SUPL'],
                 'NAMA'     => ($request['NAMA'] == null) ? "" : $request['NAMA'],
                 'ALMT_K'      => ($request['ALMT_K'] == null) ? "" : $request['ALMT_K'],
-                'P_TLP'    => ($request['P_TLP'] == null) ? "" : $request['P_TLP'],
+                // 'P_TLP'    => ($request['P_TLP'] == null) ? "" : $request['P_TLP'],
                 'TLP_K'     => ($request['TLP_K'] == null) ? "" : $request['TLP_K'],
                 'NO_FAX'    => ($request['NO_FAX'] == null) ? "" : $request['NO_FAX'],
                 'NO_TELEX'    => ($request['NO_TELEX'] == null) ? "" : $request['NO_TELEX'],
@@ -370,7 +370,7 @@ class SupController extends Controller
 
                 'NAMA'     => ($request['NAMA'] == null) ? "" : $request['NAMA'],
                 'ALMT_K'      => ($request['ALMT_K'] == null) ? "" : $request['ALMT_K'],
-                'P_TLP'    => ($request['P_TLP'] == null) ? "" : $request['P_TLP'],
+                // 'P_TLP'    => ($request['P_TLP'] == null) ? "" : $request['P_TLP'],
                 'TLP_K'     => ($request['TLP_K'] == null) ? "" : $request['TLP_K'],
                 'NO_FAX'    => ($request['NO_FAX'] == null) ? "" : $request['NO_FAX'],
                 'NO_TELEX'    => ($request['NO_TELEX'] == null) ? "" : $request['NO_TELEX'],
