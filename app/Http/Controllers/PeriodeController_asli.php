@@ -15,16 +15,14 @@ class PeriodeController extends Controller
      */
     public function index(Request $request)
     {
-        $periodeLama = $request->session()->get('periode', []);
+        $request->session()->put('periode', $request->input());
 
-        $periodeBaru = array_merge($periodeLama, $request->input());
-
-        // default kalau belum ada
-        $periodeBaru['dept'] = $periodeBaru['dept'] ?? 'NF';
-
-        $request->session()->put('periode', $periodeBaru);
-
+        // $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
         return back();
+        
+        //  return $request->session()->get('periode');
+        // return view('dashboard');
+        // return $request;
     }
 
     /**

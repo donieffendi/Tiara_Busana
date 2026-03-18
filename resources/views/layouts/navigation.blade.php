@@ -10,8 +10,14 @@
 
 	  
 	  <li class="nav-item d-none d-sm-inline-block">
-		<a href="javascript:void(0)" data-toggle="modal" data-target="#periodeModal" id="periode" class="nav-link"><b>Periode {{session()->get('periode')['bulan']}}/{{session()->get('periode')['tahun']}}</b></a>
+		  <a href="javascript:void(0)" data-toggle="modal" data-target="#periodeModal" id="periode" class="nav-link"><b>Periode {{session()->get('periode')['bulan']}}/{{session()->get('periode')['tahun']}}</b></a>
 	  </li>
+
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="javascript:void(0)" data-toggle="modal" data-target="#deptModal" class="nav-link">
+          <b>Departement : {{ session('periode.dept','NF') }}</b>
+      </a>
+    </li>
 
     </ul>
 
@@ -48,51 +54,90 @@
   <!-- /.navbar -->
   
   <div class="modal fade" id="periodeModal" tabindex="-1" role="dialog" aria-labelledby="periodeLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document" style="max-width: 250px">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="periodeLabel"> <i class="fas fa-cogs"></i> Ganti Periode</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 250px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="periodeLabel"> <i class="fas fa-cogs"></i> Ganti Periode</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" id="gantiPer" action="{{url('periode')}}" class="user">
+            @csrf
+            <div class="form-group">
+              <select class="form-control form-control-user" id="bulanPeriode" placeholder="Pilih Bulan..." name="bulan">
+                      <option value='01'>01</option>
+                      <option value='02'>02</option>
+                      <option value='03'>03</option>
+                      <option value='04'>04</option>
+                      <option value='05'>05</option>
+                      <option value='06'>06</option>
+                      <option value='07'>07</option>
+                      <option value='08'>08</option>
+                      <option value='09'>09</option>
+                      <option value='10'>10</option>
+                      <option value='11'>11</option>
+                      <option value='12'>12</option>
+              </select>
+              <!-- </datalist> -->
+            </div>
+            <div class="form-group">
+              <input type="text" value="{{session('periode')['tahun']}}" class="form-control form-control-user" id="tahunPeriode" placeholder="Tahun..." name="tahun">
+            </div>
+            
+            <button type="button" class="btn btn-primary btn-user btn-block" onclick="cekFormatPeriode()">Ubah Periode</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </form>
       </div>
-      <div class="modal-body">
-        <form method="post" id="gantiPer" action="{{url('periode')}}" class="user">
-          @csrf
-          <div class="form-group">
-		  <!--
-            <input type="text" value="{{session('periode')['bulan']}}" class="form-control form-control-user" list="month" id="bulanPeriode" placeholder="Pilih Bulan..." name="bulan">
-          --> 		  
-			<!-- <datalist id="month"> -->
-			<select class="form-control form-control-user" id="bulanPeriode" placeholder="Pilih Bulan..." name="bulan">
-              <option value='01'>01</option>
-              <option value='02'>02</option>
-              <option value='03'>03</option>
-              <option value='04'>04</option>
-              <option value='05'>05</option>
-              <option value='06'>06</option>
-              <option value='07'>07</option>
-              <option value='08'>08</option>
-              <option value='09'>09</option>
-              <option value='10'>10</option>
-              <option value='11'>11</option>
-              <option value='12'>12</option>
-			 </select>
-            <!-- </datalist> -->
-          </div>
-          <div class="form-group">
-            <input type="text" value="{{session('periode')['tahun']}}" class="form-control form-control-user" id="tahunPeriode" placeholder="Tahun..." name="tahun">
-          </div>
-
-          <button type="button" class="btn btn-primary btn-user btn-block" onclick="cekFormatPeriode()">Ubah Periode</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-      </form>
     </div>
   </div>
-</div>
+
+  <div class="modal fade" id="deptModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="max-width: 250px">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-cogs"></i> Ganti Dept
+          </h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form method="post" action="{{ url('periode') }}">
+            @csrf
+
+            <div class="form-group">
+              <select class="form-control form-control-user" name="dept">
+                <option value='NF' {{ session('periode.dept')=='NF'?'selected':'' }}>NF</option>
+                <option value='FF' {{ session('periode.dept')=='FF'?'selected':'' }}>FF</option>
+                <option value='FO' {{ session('periode.dept')=='FO'?'selected':'' }}>FO</option>
+                <option value='PB' {{ session('periode.dept')=='PB'?'selected':'' }}>PB</option>
+                <option value='ST' {{ session('periode.dept')=='ST'?'selected':'' }}>ST</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              Ubah Dept
+            </button>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 @section('footer-scripts')
   <script>
