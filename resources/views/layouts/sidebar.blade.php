@@ -1447,7 +1447,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
-                      <a href="javascript:addTab('Report Pembelian', '{{url('rpiu')}}')">
+                      <a href="javascript:addTab('Report Pembelian', '{{url('rpembelian')}}')">
                         <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-money-bill icon-green"></i>
                         <h6>Report Pembelian</h6>

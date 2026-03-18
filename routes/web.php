@@ -769,6 +769,14 @@ Route::post('/jasper-penjualansummary-report', 'App\Http\Controllers\OReport\RPe
 Route::post('/jasper-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanReport')->middleware(['auth'])->name('jasper-penjualan-report');
 Route::get('/get-penjualan-report-ajax', 'App\Http\Controllers\OReport\RPenjualanController@getPenjualanReportAjax')->name('get-penjualan-report-ajax');
 
+// Report Pembelian
+Route::get('/rpembelian', 'App\Http\Controllers\OReport\RPembelianController@report')->middleware(['auth'])->name('rpembelian');
+Route::get('/get-pembelian-report', 'App\Http\Controllers\OReport\RPembelianController@getPembelianReport')->middleware(['auth'])->name('get-pembelian-report');
+Route::post('/jasper-pembeliandetail-report', 'App\Http\Controllers\OReport\RPembelianController@jasperPembelianDetailReport')->middleware(['auth'])->name('jasper-pembeliandetail-report');
+Route::post('/jasper-pembeliansummary-report', 'App\Http\Controllers\OReport\RPembelianController@jasperPembelianSummaryReport')->middleware(['auth'])->name('jasper-pembeliansummary-report');
+Route::post('/jasper-pembelian-report', 'App\Http\Controllers\OReport\RPembelianController@jasperPembelianReport')->middleware(['auth'])->name('jasper-pembelian-report');
+Route::get('/get-pembelian-report-ajax', 'App\Http\Controllers\OReport\RPembelianController@getPembelianReportAjax')->name('get-pembelian-report-ajax');
+
 // RKasirBantu
 Route::get('/rkasirbantu', 'App\Http\Controllers\OReport\RKasirBantuController@report')->middleware(['auth'])->name('rkasirbantu');
 Route::get('/get-kasirbantu-report', 'App\Http\Controllers\OReport\RKasirBantuController@getKasirBantuReport')->middleware(['auth'])->name('get-kasirbantu-report');
