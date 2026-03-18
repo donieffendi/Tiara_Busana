@@ -155,9 +155,9 @@
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
 
-										<input type="text" class="P_ALMT" id="P_ALMT" name="P_ALMT"
-											value="{{$header->P_ALMT}}" placeholder=" " >
-										<label for="P_ALMT">Alamat Kantor</label>
+										<input type="text" class="ALMT_K" id="ALMT_K" name="ALMT_K"
+											value="{{$header->ALMT_K}}" placeholder=" " >
+										<label for="ALMT_K">Alamat Kantor</label>
 									</div>
 									<!-- tutupannya -->
 
