@@ -157,32 +157,19 @@
                                         </div>
                                     </div>
                                 </div>
-                            
+
                             <!-- batas filter -->
 
-                        
+
                                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable"
                                     id="datatable">
                                     <thead class="table-dark">
                                         <tr>
                                             <th scope="col" style="text-align: center">No</th>
                                             <th scope="col" style="text-align: center">-</th>
-                                            <th scope="col" style="text-align: center">Kodes</th>
-                                            <th scope="col" style="text-align: center">Namas</th>
+                                            <th scope="col" style="text-align: center">Kode</th>
+                                            <th scope="col" style="text-align: center">Nama</th>
                                             <th scope="col" style="text-align: center">Pemilik</th>
-                                            <th scope="col" style="text-align: center">Email</th>
-                                            <th scope="col" style="text-align: center">Alamat Kantor</th>
-                                            <th scope="col" style="text-align: center">Kota Pemilik</th>
-                                            <th scope="col" style="text-align: center">Alamat Gudang</th>
-                                            <th scope="col" style="text-align: center">Alamat Rumah</th>
-                                            <th scope="col" style="text-align: center">Tlp Kantor</th>
-                                            <th scope="col" style="text-align: center">Tlp Rumah</th>
-                                            <th scope="col" style="text-align: center">Fax</th>
-                                            <th scope="col" style="text-align: center">Bank</th>
-                                            <th scope="col" style="text-align: center">Kota Bank</th>
-                                            <th scope="col" style="text-align: center">Nama Rekening</th>
-                                            <th scope="col" style="text-align: center">Rekening</th>
-                                            <th scope="col" style="text-align: center">Cara Bayar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -244,12 +231,12 @@
                         name: 'action'
                     },
                     {
-                        data: 'KODES',
-                        name: 'KODES'
+                        data: 'NO_SUPL',
+                        name: 'NO_SUPL'
                     },
                     {
-                        data: 'NAMAS',
-                        name: 'NAMAS',
+                        data: 'NAMA',
+                        name: 'NAMA',
                         render: function(data) {
                             return '<span class="badge badge-pill badge-warning">' + data +
                                 '</span>';
@@ -259,58 +246,55 @@
                         data: 'PEMILIK',
                         name: 'PEMILIK'
                     },
-                    {
-                        data: 'EMAIL',
-                        name: 'EMAIL'
-                    },
-                    {
-                        data: 'P_ALMT',
-                        name: 'P_ALMT'
-                    },
-                    {
-                        data: 'P_KOTA',
-                        name: 'P_KOTA'
-                    },
-                    {
-                        data: 'G_ALMT',
-                        name: 'G_ALMT'
-                    },
-                    {
-                        data: 'R_ALMT',
-                        name: 'R_ALMT'
-                    },
-                    {
-                        data: 'P_TLP',
-                        name: 'P_TLP'
-                    },
-                    {
-                        data: 'R_TLP',
-                        name: 'R_TLP'
-                    },
-                    {
-                        data: 'P_FAX',
-                        name: 'P_FAX'
-                    },
-                    {
-                        data: 'B_BANK',
-                        name: 'B_BANK'
-                    },
-                    {
-                        data: 'B_KOTA',
-                        name: 'B_KOTA'
-                    },
-                    {
-                        data: 'B_NAMA',
-                        name: 'B_NAMA'
-                    },
-                    {
-                        data: 'B_ACC',
-                        name: 'B_ACC'
-                    },
-                    {
-                        data: 'CARA',
-                        name: 'CARA'
-                    }
+
+                    // {
+                    //     data: 'P_ALMT',
+                    //     name: 'P_ALMT'
+                    // },
+                    // {
+                    //     data: 'P_KOTA',
+                    //     name: 'P_KOTA'
+                    // },
+                    // {
+                    //     data: 'G_ALMT',
+                    //     name: 'G_ALMT'
+                    // },
+                    // {
+                    //     data: 'R_ALMT',
+                    //     name: 'R_ALMT'
+                    // },
+                    // {
+                    //     data: 'P_TLP',
+                    //     name: 'P_TLP'
+                    // },
+                    // {
+                    //     data: 'R_TLP',
+                    //     name: 'R_TLP'
+                    // },
+                    // {
+                    //     data: 'P_FAX',
+                    //     name: 'P_FAX'
+                    // },
+                    // {
+                    //     data: 'B_BANK',
+                    //     name: 'B_BANK'
+                    // },
+                    // {
+                    //     data: 'B_KOTA',
+                    //     name: 'B_KOTA'
+                    // },
+                    // {
+                    //     data: 'B_NAMA',
+                    //     name: 'B_NAMA'
+                    // },
+                    // {
+                    //     data: 'B_ACC',
+                    //     name: 'B_ACC'
+                    // },
+                    // {
+                    //     data: 'CARA',
+                    //     name: 'CARA'
+                    // }
                 ],
                 columnDefs: [{
                     "className": "dt-center",
@@ -337,7 +321,7 @@
                 var column = dataTable.column($(this).val());
                 column.visible($(this).is(':checked'));
             });
-            
+
             // batas filter
 
             $("div.test_btn").html(
