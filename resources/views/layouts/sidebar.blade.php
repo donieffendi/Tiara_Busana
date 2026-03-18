@@ -1426,7 +1426,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-                      <a href="javascript:addTab('Report Konsinasi', '{{url('rtpiu')}}')">
+                      <a href="javascript:addTab('Report Konsinasi', '{{url('rkonsinyasi')}}')">
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cash-register icon-purple"></i>
                         <h6>Report Konsinasi</h6>

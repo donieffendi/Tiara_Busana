@@ -52,7 +52,7 @@ class BrgController extends Controller
     {
 		// $PPN = Auth::user()->PPN;
 		
-        $brg = DB::SELECT("SELECT NO_ID, SUB, KDBAR, NMBAR, ITEM_SUP, KET AS PLU, KET_UK, KET_KEM, SUPP, QTY_BELI1, HB, DIS_A, DIS_B, DIS_C, TOT_BL 
+        $brg = DB::SELECT("SELECT NO_ID, SUB, KDBAR, NMBAR, ITEM_SUP, KDBAR, KET_UK, KET_KEM, SUPP, QTY_BELI1, HB, DIS_A, DIS_B, DIS_C, TOT_BL 
                         from nwmasbar 
                         order by SUB ");
 
