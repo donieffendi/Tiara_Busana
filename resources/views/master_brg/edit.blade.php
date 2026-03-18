@@ -181,7 +181,11 @@
 										<label for="KD_EVENT">Kode Event</label>
 									</div>
 
-									<div class="col-md-7">
+									<div class="col-md-1 form-group row special-input-label">
+										<button type="button" class="btn btn-primary" onclick="browseEvent()" style="width:40px"><i class="fa fa-search"></i></button>
+									</div>
+
+									<div class="col-md-6">
 									</div>
 
 									<div class="col-md-2 form-group row special-input-label">
@@ -195,9 +199,9 @@
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
 
-										<input type="text" class="HADIAH_1" id="HADIAH_1" name="HADIAH_1" 
-											value="{{$header->HADIAH_1}}" placeholder=" " >
-										<label for="HADIAH_1">Nama Event</label>
+										<input type="text" class="NM_EVENT" id="NM_EVENT" name="NM_EVENT" 
+											value="{{$header->NM_EVENT}}" placeholder=" " >
+										<label for="NM_EVENT">Nama Event</label>
 									</div>
 
 									<div class="col-md-6">
@@ -267,6 +271,10 @@
 										<label for="SUB">No. Sub</label>
 									</div>
 
+									<div class="col-md-1 form-group row special-input-label">
+										<button type="button" class="btn btn-primary" onclick="browseSub()" style="width:40px"><i class="fa fa-search"></i></button>
+									</div>
+
 									<div class="col-md-4 form-group row special-input-label">
 
 										<input type="text" class="KDBAR" id="KDBAR" name="KDBAR" 
@@ -274,7 +282,7 @@
 										{{-- <label for="NAMA">No. Supplier</label> --}}
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 									</div>
 
 									<div class="col-md-2 form-group row special-input-label">
@@ -399,6 +407,63 @@
 	  </div>
 	</div>
 
+	<div class="modal fade" id="browseSubModal" tabindex="-1" role="dialog" aria-labelledby="browseSubModalLabel" aria-hidden="true">
+	 <div class="modal-dialog mw-100 w-75" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseSubModalLabel">Cari Sub</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-sub">
+				<thead>
+					<tr>
+						<th>Sub</th>
+						<th>Kelompok</th>
+						<th>Dept</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="browseEventModal" tabindex="-1" role="dialog" aria-labelledby="browseEventModalLabel" aria-hidden="true">
+	 <div class="modal-dialog mw-100 w-75" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseEventModalLabel">Cari Event</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-event">
+				<thead>
+					<tr>
+						<th>Kode Event</th>
+						<th>Nama Event</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
 @endsection
 
 @section('footer-scripts')
@@ -507,7 +572,94 @@
 			$("#NAMA").val(NAMA);
 			$("#browseSupModal").modal("hide");
 		}
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//CHOOSE Sub
+		var dTableBSub;
+		loadDataBSub = function(){
+			$.ajax(
+			{
+				type: 'GET',    
+				url: '{{url('brg/browse_sub')}}',
+
+				success: function( response )
+				{
+			
+					resp = response;
+					if(dTableBSub){
+						dTableBSub.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBSub.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSub(\''+resp[i].SUB+'\')">'+resp[i].SUB+'</a>',
+							resp[i].KELOMPOK,
+							resp[i].DEPT
+						]);
+					}
+					dTableBSub.draw();
+				}
+			});
+		}
 		
+		dTableBSub = $("#table-sub").DataTable({
+			
+		});
+		
+		browseSub = function(){
+			loadDataBSub();
+			$("#browseSubModal").modal("show");
+		}
+		
+		chooseSub = function(SUB){
+			$("#SUB").val(SUB);
+			$("#browseSubModal").modal("hide");
+		}
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		//CHOOSE Event
+		var dTableBEvent;
+		loadDataBEvent = function(){
+			$.ajax(
+			{
+				type: 'GET',    
+				url: '{{url('brg/browse_event')}}',
+
+				success: function( response )
+				{
+			
+					resp = response;
+					if(dTableBEvent){
+						dTableBEvent.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBEvent.row.add([
+							'<a href="javascript:void(0);" onclick="chooseEvent(\''+resp[i].KODE+'\',  \''+resp[i].NAMA+'\')">'+resp[i].KODE+'</a>',
+							resp[i].NAMA
+						]);
+					}
+					dTableBEvent.draw();
+				}
+			});
+		}
+		
+		dTableBEvent = $("#table-event").DataTable({
+			
+		});
+		
+		browseEvent = function(){
+			loadDataBEvent();
+			$("#browseEventModal").modal("show");
+		}
+		
+		chooseEvent = function(KODE, NAMA){
+			$("#KD_EVENT").val(KODE);
+			$("#NM_EVENT").val(NAMA);
+			$("#browseEventModal").modal("hide");
+		}
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -555,7 +707,7 @@
         if ( $tipx == 'new' )		
 		{	
 		  	
-			$("#KDBAR").attr("readonly", false);	
+			$("#KDBAR").attr("readonly", true);	
 
 		   }
 		else
