@@ -31,7 +31,7 @@ class RUjController extends Controller
 	 	 
 	public function jasperUjReport(Request $request) 
 	{
-		$file 	= 'umj';
+		$file 	= 'report turun harga';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 			
@@ -60,6 +60,9 @@ class RUjController extends Controller
 		$data = json_decode(json_encode($query), true);
 
 		$PHPJasperXML->setData($data);
+		$PHPJasperXML->arrayParameter = [
+                "TGL_CTK" => date('d/m/Y')
+        ];
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");
 	}

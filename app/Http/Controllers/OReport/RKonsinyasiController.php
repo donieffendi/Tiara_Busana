@@ -19,10 +19,11 @@ use \koolreport\bootstrap4\Theme;
 class RKonsinyasiController extends Controller
 {
 
-   	public function report()
+   	public function report(Request $request)
     {
 		$per = Perid::query()->get();
-		session()->put('filter_periode', '');
+		$perx = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+		session()->put('filter_periode', $perx);
 
 		session()->put('filter_cnt', '');
 		session()->put('filter_ncnt', '');

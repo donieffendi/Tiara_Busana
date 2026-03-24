@@ -28,11 +28,11 @@
 					<div class="form-group row">
 						<div class="col-md-2">						
 							<label class="form-label">Counter</label>
-							<input type="text" class="form-control CNT1" id="CNT1" name="CNT1" placeholder="Pilih Customer" value="{{ session()->get('filter_CNT1') }}" readonly>
+							<input type="text" class="form-control CNT1" id="CNT1" name="CNT1" placeholder="Pilih Counter" value="{{ session()->get('filter_CNT1') }}" readonly>
 						</div>  
 						<div class="col-md-2">						
 							<label class="form-label">s/d</label>
-							<input type="text" class="form-control CNT2" id="CNT2" name="CNT2" placeholder="Pilih Customer" value="{{ session()->get('filter_CNT2') }}" readonly>
+							<input type="text" class="form-control CNT2" id="CNT2" name="CNT2" placeholder="Pilih Counter" value="{{ session()->get('filter_CNT2') }}" readonly>
 						</div>
 					</div>
 						
@@ -162,7 +162,7 @@
 	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="browseCounterModalLabel">Cari Counteromer</h5>
+				<h5 class="modal-title" id="browseCounterModalLabel">Cari Counter</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
