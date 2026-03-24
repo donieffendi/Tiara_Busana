@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kasc" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="98"/>
+	<property name="ireport.y" value="613"/>
+	<parameter name="TGL_CTK" class="java.lang.String"/>
+	<field name="kd_brg" class="java.lang.String"/>
+	<field name="NA_BRG" class="java.lang.String"/>
+	<field name="p_almt" class="java.lang.String"/>
+	<field name="p_kota" class="java.lang.String"/>
+	<field name="TGL1" class="java.lang.String"/>
+	<field name="p_tlp" class="java.lang.String"/>
+	<field name="qty" class="java.lang.String"/>
+	<field name="cnt" class="java.lang.String"/>
+	<field name="na_cnt" class="java.lang.String"/>
+	<field name="ST_PJK" class="java.lang.String"/>
+	<field name="p_zona" class="java.lang.String"/>
+	<field name="p_fax" class="java.lang.String"/>
+	<field name="TGL2" class="java.lang.String"/>
+	<field name="REC" class="java.lang.String"/>
+	<field name="NACNO" class="java.lang.String"/>
+	<field name="JUDUL" class="java.lang.String"/>
+	<field name="per" class="java.lang.String"/>
+	<field name="NA_TOKO" class="java.lang.String"/>
+	<field name="NOW" class="java.lang.String"/>
+	<field name="NAMAS" class="java.lang.String"/>
+	<field name="NO_BUKTI" class="java.lang.String"/>
+	<field name="SUB" class="java.lang.String"/>
+	<field name="ITEM" class="java.lang.String"/>
+	<field name="STOK" class="java.lang.String"/>
+	<field name="TGL_BELI" class="java.lang.String"/>
+	<field name="TOTAL" class="java.lang.String"/>
+	<field name="DISKON" class="java.lang.String"/>
+	<field name="NO_FORM" class="java.lang.String"/>
+	<field name="kodes" class="java.lang.String"/>
+	<field name="namas" class="java.lang.String"/>
+	<field name="barcode" class="java.lang.String"/>
+	<field name="hargaksr" class="java.lang.String"/>
+	<field name="harga" class="java.lang.String"/>
+	<field name="PER" class="java.lang.String"/>
+	<field name="tgmax" class="java.lang.String"/>
+	<field name="tgl_ctk" class="java.lang.String"/>
+	<field name="jam_ctk" class="java.lang.String"/>
+	<field name="no_trm" class="java.lang.String"/>
+	<field name="nett" class="java.lang.String"/>
+	<field name="qtyk" class="java.lang.String"/>
+	<field name="tgl_jual" class="java.lang.String"/>
+	<field name="tharga" class="java.lang.String"/>
+	<field name="par" class="java.lang.String"/>
+	<field name="dis" class="java.lang.String"/>
+	<field name="ptiara" class="java.lang.String"/>
+	<field name="psup" class="java.lang.String"/>
+	<field name="nilai_jual" class="java.lang.String"/>
+	<field name="nilai_margin" class="java.lang.String"/>
+	<field name="nilai_nota" class="java.lang.String"/>
+	<field name="ppn" class="java.lang.String"/>
+	<variable name="bruto" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tharga}]]></variableExpression>
+	</variable>
+	<variable name="dis" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{dis}]]></variableExpression>
+	</variable>
+	<variable name="par" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{par}]]></variableExpression>
+	</variable>
+	<variable name="ptiara" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ptiara}]]></variableExpression>
+	</variable>
+	<variable name="psup" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{psup}]]></variableExpression>
+	</variable>
+	<variable name="netto" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{nilai_jual}]]></variableExpression>
+	</variable>
+	<variable name="margin" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{nilai_margin}]]></variableExpression>
+	</variable>
+	<variable name="nota" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{nilai_nota}]]></variableExpression>
+	</variable>
+	<variable name="qty" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="ppn" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ppn}]]></variableExpression>
+	</variable>
+	<variable name="nett" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{nett}]]></variableExpression>
+	</variable>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="373" splitType="Stretch">
+			<textField>
+				<reportElement x="270" y="15" width="221" height="20" uuid="1952a119-3b83-4d78-af15-0d73756a45cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SURAT PESANAN BUSANA"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="6" width="183" height="18" uuid="a60394d4-52df-4793-93ef-7d9e0ea8aae2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TIARA GATZU DEPT. STORE"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="24" width="182" height="19" uuid="27f14e6e-99af-48ca-9b14-3f877a759c18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Jl. Gatot Subroto No. 567"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="45" width="182" height="20" uuid="a87bed39-4151-4714-9f9e-33d7322cfaa4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Denpasar - Bali"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="65" width="182" height="19" uuid="6e9cbe85-b045-4151-a1df-190c29d67245"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["N.P.W.P :"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="85" width="800" height="1" uuid="16e382c0-be90-4699-a557-757946c49655"/>
+			</line>
+			<staticText>
+				<reportElement x="25" y="197" width="360" height="90" uuid="ae46caaf-ceb8-47fb-8472-1aee0469ae05"/>
+				<text><![CDATA[ 	Untuk menjaga Kelancaran distribusi busana bapak / ibu, maka sesuai
+budget periode                     s/d                   maka kami minta dikirim barang
+sejumlah                 Pcs.                            Rupiah.
+Pesanan ini harus sudah kami terima paling lambat tgl 25 bulan berikutnya. Nilai 
+pesanan ini sudah termasuk item - item yang tercantum pada lampiran surat 
+pesanan ini (bila ada).
+Sekian dan terima kasih.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="487" y="310" width="70" height="12" uuid="791a9a4e-9677-4341-99fd-a209d310be61"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hormat Kami,"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="182" width="105" height="13" uuid="d4039a0d-e470-43c7-b3c0-6b89249e8244"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dengan Hormat."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="487" y="296" width="130" height="13" uuid="bf82584a-8456-45eb-a13f-002ae6bb4e07"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Denpasar, " + $P{TGL_CTK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="95" width="70" height="13" uuid="4501764d-4836-4de8-b3bd-74ac4a255062"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Kepada Yth,"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="109" width="131" height="13" uuid="d81707eb-0597-4b96-8b8d-e1d8ec8452ed"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{na_cnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="516" y="109" width="70" height="13" uuid="344a3b80-a845-4ccb-bd06-8b68f90c5fa3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{cnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="122" width="290" height="13" uuid="d596ffcb-df8d-47af-8f2f-973f3496ca81"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_almt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="136" width="290" height="13" uuid="3a844f47-a353-4af3-aaf1-2bbda766ba57"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_kota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="150" width="131" height="13" uuid="0ff1f724-9ec8-445f-a28e-ca03ad1c6f07"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telpon : " + " " + $F{p_tlp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="516" y="150" width="159" height="13" uuid="270b7235-cee7-46ad-9c4e-313a76296941"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Status Pajak : " + $F{ST_PJK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="163" width="131" height="13" uuid="ece89be0-03d7-4c29-b85a-355221eb9dc5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Zona : " + " " + $F{p_zona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="516" y="163" width="158" height="13" uuid="012ba18e-97ac-433f-a7f8-409c14929ef5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FAX : " + " " + $F{p_fax}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="94" y="210" width="55" height="13" uuid="edaaa594-d155-48b7-9b44-51f6901eaebf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TGL1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="167" y="210" width="50" height="13" uuid="46bea171-250b-4fe8-a06d-c57213ebe892">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TGL2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="66" y="222" width="45" height="13" uuid="66c67f4d-1c00-45af-b697-c1500c49a5bf">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="130" y="222" width="77" height="13" uuid="cb22e285-6732-44b4-b40d-a52cc634ca1b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="295" width="182" height="74" uuid="36e3e97d-77a0-493f-9ea1-c905cae85577">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Persyratan :
+1. Mohon Barng Dikirim Ke Tiara Gatzu
+Distribusi:
+1. Supplier (disertakan pada pengiriman barang)
+2. Staf pembelian Ors. Budget SPM & Busana
+     (Khusu Non Konsinyasi)
+1. PDK-300.3     (BU-31.PRG)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="487" y="361" width="130" height="12" uuid="932480c6-c87b-4226-991c-44819c9c1ae6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(Ka/Po/Pnl.Brg & Jasa)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="586" y="109" width="89" height="13" uuid="b168af07-2757-4772-9242-45a0affb9f4b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{kodes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+</jasperReport>

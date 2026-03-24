@@ -142,9 +142,9 @@
 															<button class="btn btn-danger mr-1" type="button" onclick="resetFilter('detail')">
 																<i class="fas fa-redo mr-1"></i>Reset
 															</button>
-															{{-- <button class="btn btn-warning mr-1" type="button" onclick="cetakDetail()">
+															<button class="btn btn-warning mr-1" type="button" onclick="cetakDetail()">
 																<i class="fas fa-print mr-1"></i>Cetak
-															</button> --}}
+															</button>
 														</div>
 													</div>
 
@@ -209,11 +209,17 @@
 															<button class="btn btn-primary mr-1" type="button" id="btnFilterSummary" onclick="filterPenjualan('summary')">
 																<i class="fas fa-search mr-1"></i>Filter
 															</button>
+															<button class="btn btn-success mr-1" type="button" id="btnSummaryDetail" onclick="filterPenjualan('summary_detail')">
+																<i class="fas fa-file-alt mr-1"></i>Report Detail
+															</button>
 															<button class="btn btn-danger mr-1" type="button" onclick="resetFilter('summary')">
 																<i class="fas fa-redo mr-1"></i>Reset
 															</button>
 															<button class="btn btn-warning mr-1" type="button" onclick="cetakSummary()">
 																<i class="fas fa-print mr-1"></i>Cetak
+															</button>
+															<button class="btn btn-secondary mr-1" type="button" onclick="cetakSummaryDetail()">
+																<i class="fas fa-print mr-1"></i>Cetak Report Detail
 															</button>
 														</div>
 													</div>
@@ -291,6 +297,9 @@
 															</button>
 															<button class="btn btn-warning mr-1" type="button" onclick="cetakKasir()">
 																<i class="fas fa-print mr-1"></i>Cetak
+															</button>
+															<button class="btn btn-warning mr-1" type="button" onclick="cetakSpbsn()">
+																<i class="fas fa-print mr-1"></i>Cetak Sp Busana
 															</button>
 														</div>
 													</div>
@@ -879,6 +888,29 @@ $(document).ready(function(){
 
 	///////////////////////////////
 
+	$('#per').on('change', function () {
+        var per = $(this).val(); // contoh: 01/2026
+
+        if (per) {
+            var split = per.split('/');
+            var bulan = parseInt(split[0]);
+            var tahun = parseInt(split[1]);
+
+            // tanggal pertama
+            var tglAwal = '01-' + (bulan < 10 ? '0' + bulan : bulan) + '-' + tahun;
+
+            // cari tanggal terakhir
+            var lastDay = new Date(tahun, bulan, 0).getDate();
+            var tglAkhir = lastDay + '-' + (bulan < 10 ? '0' + bulan : bulan) + '-' + tahun;
+
+            // set ke input
+            $('#tglDr').val(tglAwal);
+            $('#tglSmp').val(tglAkhir);
+        }
+    });
+
+	$('#per').trigger('change');
+
 });
 
 // -------------------------------
@@ -945,6 +977,14 @@ function filterPenjualan(tabType){
                 return; 
             }
         break;
+
+		case 'summary_detail':
+			btnId = '#btnSummaryDetail'; // biar reuse button loading
+			if(!cbg){ 
+				alert('Pilih cabang terlebih dahulu'); 
+				return; 
+			}
+		break;
     }
 
     $(btnId).html('<i class="fas fa-spinner fa-spin mr-1"></i>Loading...').prop('disabled',true);
@@ -983,7 +1023,8 @@ function filterPenjualan(tabType){
 // Fungsi Render Data di Tab
 // -------------------------------
 function displayTabData(tabType, data){
-    var targetDiv = '#' + tabType + '-result';
+    // var targetDiv = '#' + tabType + '-result';
+	var targetDiv = (tabType === 'summary_detail') ? '#summary-result' : '#' + tabType + '-result';
     var html = '';
 
     if(data.length===0){
@@ -995,7 +1036,9 @@ function displayTabData(tabType, data){
             html += '<th>Kitir SPM</th><th>Kitir BC</th><th>Tanggal</th><th>Kode Barang</th><th>Nama Barang</th><th>Qty</th><th>Harga</th><th>Total</th><th>Cabang</th><th>Kasir</th><th>Petugas Kasir</th><th>Post Status</th>';
         } else if(tabType==='summary'){
             html += '<th>CNT</th><th>Nama Counter</th><th>S. Pajak</th><th>Tanggal</th><th>Laku</th><th>Laku Kredit</th><th>T Laku</th><th>Nilai Laku</th><th>Nilai Kredit</th><th>Jumlah Nilai</th><th>Qty Refund</th><th>Total Refund</th>';
-        } else if(tabType==='kasir'){
+        } else if(tabType==='summary_detail'){
+			html += '<th>CNT</th><th>Nama Counter</th><th>S. Pajak</th><th>Tanggal</th><th>Laku</th><th>Laku Kredit</th><th>T Laku</th><th>Nilai Laku</th><th>Nilai Kredit</th><th>Jumlah Nilai</th><th>Qty Refund</th><th>Total Refund</th>';
+		} else if(tabType==='kasir'){
             html += '<th>Tanggal</th><th>Conter</th><th>Nama</th><th>Kodes</th><th>Qty</th><th>Bruto</th><th>Dis</th><th>Par</th><th>Dis Tiara</th><th>Dis Supp</th><th>Margin</th><th>Harga Jual</th><th>Nilai Margin</th><th>Nilai Nota</th><th>PPN</th><th>NETT</th>';
 		} else if(tabType==='rconter'){
 			html += '<th>Tanggal</th><th>Conter</th><th>Nama</th><th>Kodes</th><th>Qty</th><th>Bruto</th><th>Dis</th><th>Par</th><th>Dis Tiara</th><th>Dis Supp</th><th>Nilai jual</th><th>DPP</th><th>PPN</th>';
@@ -1012,7 +1055,20 @@ function displayTabData(tabType, data){
                 html += '<td>'+item.no_bukti+'</td><td>'+item.bukti2+'</td><td>'+formatDate(item.initanggal)+'</td><td>'+item.KD_BRG+'</td><td>'+item.NA_BRG+'</td><td class="text-right">'+formatNumber(item.qty)+'</td><td class="text-right">'+formatNumber(item.harga)+'</td><td class="text-right">'+formatNumber(item.total)+'</td><td>'+item.cabang+'</td><td>'+item.KSR+'</td><td>'+item.usrnm+'</td><td>'+item.posted+'</td>';
             } else if(tabType==='summary'){
                 html += '<td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.st_pjk+'</td><td>'+formatDate(item.tgl_jual)+'</td><td class="text-right">'+formatNumber(item.qcash)+'</td><td class="text-right">'+formatNumber(item.qkred)+'</td><td class="text-right">'+formatNumber(item.qjml)+'</td><td class="text-right">'+formatNumber(item.cash)+'</td><td class="text-right">'+formatNumber(item.kred)+'</td><td class="text-right">'+formatNumber(item.jml)+'</td><td class="text-right">'+formatNumber(item.qtyrf)+'</td><td class="text-right">'+formatNumber(item.totalrf)+'</td>';
-            } else if(tabType==='kasir'){
+            } else if(tabType==='summary_detail'){
+				html += '<td>'+item.cnt+'</td>'
+					+'<td>'+item.na_cnt+'</td>'
+					+'<td>'+item.st_pjk+'</td>'
+					+'<td>'+formatDate(item.tgl_jual)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.qcash)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.qkred)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.qjml)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.cash)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.kred)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.jml)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.qtyrf)+'</td>'
+					+'<td class="text-right">'+formatNumber(item.totalrf)+'</td>';
+			} else if(tabType==='kasir'){
                 html += '<td>'+formatDate(item.tgl_jual)+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kodes+'</td><td class="text-right">'+formatNumber(item.qty)+'</td><td class="text-right">'+formatNumber(item.tharga)+'</td><td class="text-right">'+formatNumber(item.dis)+'</td><td class="text-right">'+formatNumber(item.par)+'</td><td class="text-right">'+formatNumber(item.ptiara)+'</td><td class="text-right">'+formatNumber(item.psup)+'</td><td class="text-right">'+formatNumber(item.margin)+'</td><td class="text-right">'+formatNumber(item.nilai_jual)+'</td><td class="text-right">'+formatNumber(item.nilai_margin)+'</td><td class="text-right">'+formatNumber(item.nilai_nota)+'</td><td class="text-right">'+formatNumber(item.ppn)+'</td><td class="text-right">'+formatNumber(item.nett)+'</td>';
 			} else if(tabType==='rconter'){
 				html += '<td>'+formatDate(item.tgl_jual)+'</td><td>'+item.cnt+'</td><td>'+item.na_cnt+'</td><td>'+item.kodes+'</td><td class="text-right">'+formatNumber(item.qty)+'</td><td class="text-right">'+formatNumber(item.tharga)+'</td><td class="text-right">'+formatNumber(item.dis)+'</td><td class="text-right">'+formatNumber(item.par)+'</td><td class="text-right">'+formatNumber(item.ptiara)+'</td><td class="text-right">'+formatNumber(item.psup)+'</td><td class="text-right">'+formatNumber(item.nilai_jual)+'</td><td class="text-right">'+formatNumber(item.DPP)+'</td><td class="text-right">'+formatNumber(item.PPN)+'</td>';
@@ -1120,71 +1176,178 @@ function resetFilter(tabType){
 }
 
 function printReport(url) {
-			var form = $('<form>', {
-				'method': 'POST',
-				'action': url,
-				'target': '_blank'
-			});
-
-			form.append($('<input>', {
-				'type': 'hidden',
-				'name': '_token',
-				'value': $('meta[name="csrf-token"]').attr('content')
-			}));
-
-			form.appendTo('body').submit().remove();
+    window.open(url, '_blank');
 }
 
 // Print function
-function cetakKasir() {
-			var cbg = $('#cbg_kasir').val();
-
-			if (!cbg) {
-				alert('Silakan lengkapi Cabang terlebih dahulu');
-				return;
-			}
-
-			var params = new URLSearchParams({
-				report_type: 1,
-				cbg: cbg,
-			});
-
-			var url = '{{ route('jasper-penjualan-report') }}?' + params.toString();
-			printReport(url);
-}
-
 function cetakDetail() {
-			var cbg = $('#cbg_detail').val();
+    var cbg   = $('#cbg').val();
+    var cnt   = $('#CNT').val();
+    var tgl1  = $('#tglDr').val();
+    var tgl2  = $('#tglSmp').val();
+    var per   = $('#per').val(); // contoh: 01/2026
 
-			if (!cbg) {
-				alert('Silakan lengkapi Cabang terlebih dahulu');
-				return;
-			}
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
 
-			var params = new URLSearchParams({
-				report_type: 1,
-				cbg: cbg,
-			});
+    var bulan = per ? per.split('/')[0] : '';
 
-			var url = '{{ route('jasper-penjualandetail-report') }}?' + params.toString();
-			printReport(url);
+    var params = new URLSearchParams({
+        cbg: cbg,
+        cnt: cnt,
+        tgl1: tgl1,
+        tgl2: tgl2,
+        per: per,
+        bulan: bulan
+    });
+
+    var url = '{{ route('jasper-penjualandetail-report') }}?' + params.toString();
+    printReport(url);
 }
 
 function cetakSummary() {
-			var cbg = $('#cbg_summary').val();
+    var cbg   = $('#cbg').val();
+    var cnt   = $('#CNT').val();
+    var tgl1  = $('#tglDr').val();
+    var tgl2  = $('#tglSmp').val();
+    var per   = $('#per').val(); // contoh: 01/2026
 
-			if (!cbg) {
-				alert('Silakan lengkapi Cabang terlebih dahulu');
-				return;
-			}
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
 
-			var params = new URLSearchParams({
-				report_type: 1,
-				cbg: cbg,
-			});
+    var bulan = per ? per.split('/')[0] : '';
 
-			var url = '{{ route('jasper-penjualansummary-report') }}?' + params.toString();
-			printReport(url);
+    var params = new URLSearchParams({
+        cbg: cbg,
+        cnt: cnt,
+        tgl1: tgl1,
+        tgl2: tgl2,
+        per: per,
+        bulan: bulan
+    });
+
+    var url = '{{ route('jasper-penjualansummary-report') }}?' + params.toString();
+    printReport(url);
+}
+
+function cetakSummaryDetail() {
+    var cbg   = $('#cbg').val();
+    var cnt   = $('#CNT').val();
+    var tgl1  = $('#tglDr').val();
+    var tgl2  = $('#tglSmp').val();
+    var per   = $('#per').val(); // contoh: 01/2026
+
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
+
+    var bulan = per ? per.split('/')[0] : '';
+
+    var params = new URLSearchParams({
+        cbg: cbg,
+        cnt: cnt,
+        tgl1: tgl1,
+        tgl2: tgl2,
+        per: per,
+        bulan: bulan
+    });
+
+    var url = '{{ route('jasper-penjualansummarydetail-report') }}?' + params.toString();
+    printReport(url);
+}
+
+function cetakKasir() {
+    var cbg   = $('#cbg').val();
+    var per   = $('#per').val();
+	var kode1 = $('#CNT1').val();
+	var kode2 = $('#CNT2').val();
+
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
+
+    var bulan = per ? per.split('/')[0] : '';
+
+    var params = new URLSearchParams({
+        cbg: cbg,
+        per: per,
+		cnt1: kode1,
+		cnt2: kode2
+    });
+
+    var url = '{{ route('jasper-penjualan-report') }}?' + params.toString();
+    printReport(url);
+}
+
+function cetakSpbsn() {
+    var cbg   = $('#cbg').val();
+    var per   = $('#per').val();
+	var kode1 = $('#CNT1').val();
+	var kode2 = $('#CNT2').val();
+
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
+
+    var bulan = per ? per.split('/')[0] : '';
+
+    var params = new URLSearchParams({
+        cbg: cbg,
+        per: per,
+		cnt1: kode1,
+		cnt2: kode2
+    });
+
+    var url = '{{ route('jasper-spbsn-report') }}?' + params.toString();
+    printReport(url);
+}
+
+function cetakCounter() {
+    var cbg   = $('#cbg').val();
+    var per   = $('#per').val();
+	var cnt   = $('#CNT').val();
+
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
+
+    var bulan = per ? per.split('/')[0] : '';
+
+    var params = new URLSearchParams({
+        cbg: cbg,
+        per: per,
+		cnt: cnt
+    });
+
+    var url = '{{ route('jasper-counter-report') }}?' + params.toString();
+    printReport(url);
+}
+
+function cetakJual() {
+    var per   = $('#per').val();
+	var cbg   = $('#cbg').val();
+
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
+
+
+    var params = new URLSearchParams({
+        per: per,
+		cbg: cbg
+    });
+
+    var url = '{{ route('jasper-jual-report') }}?' + params.toString();
+    printReport(url);
 }
 
 
