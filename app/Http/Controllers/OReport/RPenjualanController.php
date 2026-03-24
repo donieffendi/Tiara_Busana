@@ -23,8 +23,7 @@ class RPenjualanController extends Controller
     {
         $cbg = DB::SELECT("SELECT KODE FROM toko WHERE STA IN ('MA','CB') ORDER BY NO_ID ASC");
 		session()->put('filter_cbg', '');
-		// $per = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
-		$per = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/2025')");
+		$per = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 		session()->put('filter_periode', '');
 		
 		session()->put('filter_CNT', '');
@@ -42,8 +41,7 @@ class RPenjualanController extends Controller
     public function getPenjualanReport(Request $request)
     {
         $listCbg = DB::SELECT("SELECT KODE FROM toko WHERE STA IN ('MA','CB') ORDER BY NO_ID ASC");
-        // $listPer = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
-        $listPer = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/2025')");
+        $listPer = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
         $tab = $request->tab ?? 'detail';
 
         switch ($tab) {
