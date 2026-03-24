@@ -449,6 +449,9 @@
 															<button class="btn btn-warning mr-1" type="button" onclick="cetakJual()">
 																<i class="fas fa-print mr-1"></i>Cetak
 															</button>
+															<button class="btn btn-warning mr-1" type="button" onclick="cetakOmzet()">
+																<i class="fas fa-print mr-1"></i>Cetak Omzet Per Outlet
+															</button>
 														</div>
 													</div>
 
@@ -1347,6 +1350,56 @@ function cetakJual() {
     });
 
     var url = '{{ route('jasper-jual-report') }}?' + params.toString();
+    printReport(url);
+}
+
+function cetakOmzet() {
+    var cbg   = $('#cbg').val();
+    var cnt   = $('#CNT').val();
+    var tgl1  = $('#tglDr').val();
+    var tgl2  = $('#tglSmp').val();
+    var per   = $('#per').val(); // contoh: 01/2026
+	var bulan = per ? per.split('/')[0] : '';
+
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
+
+
+    var params = new URLSearchParams({
+        cbg: cbg,
+        cnt: cnt,
+        tgl1: tgl1,
+        tgl2: tgl2,
+        per: per,
+        bulan: bulan
+    });
+
+    var url = '{{ route('jasper-omzet-report') }}?' + params.toString();
+    printReport(url);
+}
+
+function cetakHari() {
+	var cbg   = $('#cbg').val();
+	var cnt   = $('#CNT').val();
+    var per   = $('#per').val();
+	var bulan = per ? per.split('/')[0] : '';
+
+    if (!cbg) {
+        alert('Silakan lengkapi Cabang terlebih dahulu');
+        return;
+    }
+
+
+    var params = new URLSearchParams({
+		cbg: cbg,
+		cnt: cnt,
+        per: per,
+		bulan: bulan
+    });
+
+    var url = '{{ route('jasper-hari-report') }}?' + params.toString();
     printReport(url);
 }
 

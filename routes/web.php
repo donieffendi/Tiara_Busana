@@ -771,6 +771,8 @@ Route::get('/jasper-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanC
 Route::get('/jasper-spbsn-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperSpbsnReport')->middleware(['auth'])->name('jasper-spbsn-report');
 Route::get('/jasper-counter-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperCounterReport')->middleware(['auth'])->name('jasper-counter-report');
 Route::get('/jasper-jual-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperJualReport')->middleware(['auth'])->name('jasper-jual-report');
+Route::get('/jasper-omzet-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperOmzetReport')->middleware(['auth'])->name('jasper-omzet-report');
+Route::get('/jasper-hari-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperHariReport')->middleware(['auth'])->name('jasper-hari-report');
 Route::get('/get-penjualan-report-ajax', 'App\Http\Controllers\OReport\RPenjualanController@getPenjualanReportAjax')->name('get-penjualan-report-ajax');
 
 // Report Pembelian

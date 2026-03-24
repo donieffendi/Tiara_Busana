@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kasc" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="98"/>
@@ -437,7 +437,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dpp}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="254" y="0" width="50" height="20" uuid="1909e532-11b3-456e-9152-7ed24f3e66c5"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -507,7 +507,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ptiara}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="304" y="0" width="50" height="20" uuid="cf725109-1002-47ec-9ca8-a0cef6f37e53"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -521,7 +521,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tdiskonvip}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="354" y="0" width="47" height="20" uuid="cd539706-c296-454c-8c92-04e080bdbc41"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -605,7 +605,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{dis}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="354" y="0" width="47" height="20" uuid="5357a6a6-059f-423a-9787-3386bd94f6ea"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -633,7 +633,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{ppn}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="254" y="0" width="50" height="20" uuid="7779fe24-885f-4433-b994-2d8a1c7ed749"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -675,7 +675,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{tharga}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="304" y="0" width="50" height="20" uuid="a267240a-7a73-47d8-8679-92dec97b9068"/>
 				<box>
 					<pen lineWidth="1.0"/>

@@ -674,6 +674,170 @@ class RPenjualanController extends Controller
 		}
 	}
 
+	public function jasperOmzetReport(Request $request)
+	{
+		try {
+
+			if (empty($request->cbg)) {
+				return response()->json(['error' => 'Cabang harus dipilih.'], 400);
+			}
+
+			$file = 'rpenjualan_omzet'; 
+			$PHPJasperXML = new PHPJasperXML();
+			$PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+			// ===========================
+			// Ambil parameter
+			// ===========================
+			$cbg     = $request->cbg;
+			$cnt     = $request->cnt;
+			$tgl1    = date('Y-m-d', strtotime($request->tgl1));
+			$tgl2    = date('Y-m-d', strtotime($request->tgl2));
+			$periode = $request->per;
+			$bulan = substr($periode,0,2);
+
+			// ===========================
+			// PAKAI METHOD YANG SUDAH ADA
+			// ===========================
+			$rows = $this->getOmzetPenjualan($tgl1, $tgl2, $periode);
+
+			// ===========================
+			// Mapping ke Jasper
+			// ===========================
+			$data = array_map(function ($item) {
+				return [
+					'YER' 			=> $item->YER ?? '',
+					'KEL_PT' 		=> $item->KEL_PT ?? '',
+					'CNT' 			=> $item->CNT ?? '',
+					'ST_CNT'    	=> $item->ST_CNT ?? '',
+					'B01'      		=> $item->B01 ?? 0,
+					'B02'    		=> $item->B02 ?? 0,
+					'B03'    		=> $item->B03 ?? 0,
+					'B04'    		=> $item->B04 ?? 0,
+					'B05'    		=> $item->B05 ?? 0,
+					'B06'    		=> $item->B06 ?? 0,
+					'B07'    		=> $item->B07 ?? 0,
+					'B08'  			=> $item->B08 ?? 0,
+					'B09'  			=> $item->B09 ?? 0,
+					'B10'  			=> $item->B10 ?? 0,
+					'B11'  			=> $item->B11 ?? 0,
+					'B12'  			=> $item->B12 ?? 0,
+					'JUMB'  		=> $item->JUMB ?? 0,
+					'P01'      		=> $item->P01 ?? 0,
+					'P02'    		=> $item->P02 ?? 0,
+					'P03'    		=> $item->P03 ?? 0,
+					'P04'    		=> $item->P04 ?? 0,
+					'P05'    		=> $item->P05 ?? 0,
+					'P06'    		=> $item->P06 ?? 0,
+					'P07'    		=> $item->P07 ?? 0,
+					'P08'  			=> $item->P08 ?? 0,
+					'P09'  			=> $item->P09 ?? 0,
+					'P10'  			=> $item->P10 ?? 0,
+					'P11'  			=> $item->P11 ?? 0,
+					'P12'  			=> $item->P12 ?? 0,
+					'JUMP'  		=> $item->JUMP ?? 0,
+				];
+			}, $rows);
+
+			$PHPJasperXML->setData($data);
+
+			$PHPJasperXML->arrayParameter = [
+				"TGL_CTK" => date('d/m/Y')
+			];
+
+			ob_end_clean();
+			$PHPJasperXML->outpage("I");
+
+		} catch (\Exception $e) {
+			Log::error('Error Jasper Detail: ' . $e->getMessage());
+			return response()->json(['error' => $e->getMessage()], 500);
+		}
+	}
+	
+	public function jasperHariReport(Request $request)
+	{
+		try {
+
+			if (empty($request->cbg)) {
+				return response()->json(['error' => 'Cabang harus dipilih.'], 400);
+			}
+
+			$file = 'rpenjualan_hari'; 
+			$PHPJasperXML = new PHPJasperXML();
+			$PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+			// ===========================
+			// Ambil parameter
+			// ===========================
+			$cbg = $request->cbg;
+			$cnt = $request->cnt;
+			$periode = $request->per;
+			$bulan = substr($periode,0,2);
+
+			// ===========================
+			// PAKAI METHOD YANG SUDAH ADA
+			// ===========================
+			$rows = $this->getRekapHarian($cbg, $cnt, $periode, $bulan);
+
+			// ===========================
+			// Mapping ke Jasper
+			// ===========================
+			$data = array_map(function ($item) {
+				return [
+					'PER' 			=> $item->per ?? '',
+					'kode' 			=> $item->kode ?? '',
+					'CNT' 			=> $item->CNT ?? '',
+					'ST_CNT'    	=> $item->ST_CNT ?? '',
+					'b01'      		=> $item->b01 ?? 0,
+					'b02'    		=> $item->b02 ?? 0,
+					'b03'    		=> $item->b03 ?? 0,
+					'b04'    		=> $item->b04 ?? 0,
+					'b05'    		=> $item->b05 ?? 0,
+					'b06'    		=> $item->b06 ?? 0,
+					'b07'    		=> $item->b07 ?? 0,
+					'b08'  			=> $item->b08 ?? 0,
+					'b09'  			=> $item->b09 ?? 0,
+					'b10'  			=> $item->b10 ?? 0,
+					'b11'  			=> $item->b11 ?? 0,
+					'b12'  			=> $item->b12 ?? 0,
+					'b13'  			=> $item->b13 ?? 0,
+					'b14'      		=> $item->b14 ?? 0,
+					'b15'    		=> $item->b15 ?? 0,
+					'b16'    		=> $item->b16 ?? 0,
+					'b17'    		=> $item->b17 ?? 0,
+					'b18'    		=> $item->b18 ?? 0,
+					'b19'    		=> $item->b19 ?? 0,
+					'b20'    		=> $item->b20 ?? 0,
+					'b21'  			=> $item->b21 ?? 0,
+					'b22'  			=> $item->b22 ?? 0,
+					'b23'  			=> $item->b23 ?? 0,
+					'b24'  			=> $item->b24 ?? 0,
+					'b25'  			=> $item->b25 ?? 0,
+					'b26'  			=> $item->b26 ?? 0,
+					'b27'  			=> $item->b27 ?? 0,
+					'b28'  			=> $item->b28 ?? 0,
+					'b29'  			=> $item->b29 ?? 0,
+					'b30'  			=> $item->b30 ?? 0,
+					'b31'  			=> $item->b31 ?? 0,
+					'hjual' 		=> $item->hjual ?? 0,
+					'total' 		=> $item->total ?? 0
+				];
+			}, $rows);
+
+			$PHPJasperXML->setData($data);
+
+			$PHPJasperXML->arrayParameter = [
+				"TGL_CTK" => date('d/m/Y')
+			];
+
+			ob_end_clean();
+			$PHPJasperXML->outpage("I");
+
+		} catch (\Exception $e) {
+			Log::error('Error Jasper Detail: ' . $e->getMessage());
+			return response()->json(['error' => $e->getMessage()], 500);
+		}
+	}
 
     private function getDetailPenjualan($cbg, $cnt, $tgl1, $tgl2, $periode, $bulan)
     {	
@@ -1302,6 +1466,79 @@ class RPenjualanController extends Controller
 			throw $e;
 
 		}
+	}
+
+	public function getOmzetPenjualan($tgl1, $tgl2, $periode)
+	{
+		// ambil bulan (01,02,...)
+		$mon = substr(trim($periode), 0, 2);
+
+		// ambil list cabang (seperti cbgx di Delphi)
+		$cabangList = DB::select("SELECT KODE FROM toko WHERE STA IN ('MA','CB') ORDER BY NO_ID ASC");
+
+		$unionQueries = [];
+
+		foreach ($cabangList as $cabang) {
+
+			$cbg = strtolower($cabang->KODE);
+
+			$unionQueries[] = "
+				SELECT 
+					'$cbg' as cbg,
+					brgbsn.cnt,
+					brgbsn.ncnt as na_cnt,
+					DATE('$tgl1') as tgmin,
+					DATE('$tgl2') as tgmax,
+					brgbsn.st_pjk,
+
+					ROUND(SUM(jld.qty)) as qcash,
+					0 as qkred,
+					ROUND(SUM(jld.qty)) as qjml,
+
+					ROUND(SUM(jld.qty * jld.harga)) as cash,
+					0 as kred,
+					ROUND(SUM(jld.qty * jld.harga)) as jml,
+
+					SUM(jld.total) as nbruto,
+
+					SUM(
+						IF(brgbsn.st_pjk='P1',
+							FLOOR(jld.total / ((100 + $cbg.xx_ppn(1)) / 100)),
+							jld.total
+						)
+					) as nnett,
+
+					SUM(
+						IF(brgbsn.st_pjk='P1',
+							jld.total - FLOOR(jld.total / ((100 + $cbg.xx_ppn(1)) / 100)),
+							0
+						)
+					) as nppn,
+
+					ROUND(SUM(IF(jld.qty < 0 AND jld.type='RF', jld.qty, 0))) as qtyrf,
+					ROUND(SUM(IF(jld.total < 0 AND jld.type='RF', jld.qty * jld.harga, 0))) as totalrf
+
+				FROM {$cbg}.jual{$mon} jl
+				JOIN {$cbg}.juald{$mon} jld ON jl.no_bukti = jld.no_bukti
+				JOIN brgbsn ON jld.KD_BRG = brgbsn.KD_BRG
+
+				WHERE LENGTH(jld.KD_BRG) > 7
+				AND jl.flag = 'JL'
+				AND jl.tgl BETWEEN '$tgl1' AND '$tgl2'
+
+				GROUP BY brgbsn.cnt
+			";
+		}
+
+		// gabungkan UNION ALL
+		$sql = "
+			SELECT * FROM (
+				" . implode(" UNION ALL ", $unionQueries) . "
+			) as rekap
+			ORDER BY cbg, cnt
+		";
+
+		return DB::select($sql);
 	}
 
 	private function getRekapHarian($cbg, $cnt, $periode, $bulan)
