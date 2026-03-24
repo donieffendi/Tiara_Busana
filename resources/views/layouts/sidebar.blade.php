@@ -1526,7 +1526,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
-                      <a href="javascript:addTab('Jadwal Pemantauan barang Tidak Laku', '{{url('rhut')}}')" >
+                      <a href="javascript:addTab('Jadwal Pemantauan barang Tidak Laku', '{{url('rjadwal_pemantauan')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
                         <h6>Jadwal Pemantauan Barang</h6>
@@ -1536,7 +1536,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
-                      <a href="javascript:addTab('Laporan Barang TL & Tidak ada T.J', '{{url('rso')}}')" >
+                      <a href="javascript:addTab('Laporan Barang TL & Tidak ada T.J', '{{url('rbrg_tidak_laku_jual')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
                         <h6>Laporan Barang TL</h6>

@@ -900,54 +900,44 @@ function printReport(url) {
 
 // Print function
 function cetakKasir() {
-			var cbg = $('#cbg_kasir').val();
-
-			if (!cbg) {
-				alert('Silakan lengkapi Cabang terlebih dahulu');
-				return;
-			}
-
-			var params = new URLSearchParams({
-				report_type: 1,
-				cbg: cbg,
-			});
-
-			var url = '{{ route('jasper-pembelian-report') }}?' + params.toString();
-			printReport(url);
+    var per = $('#per').val();
+	var url = '{{ route('jasper-pembelian-report') }}' + '?per=' + per;
+	window.open(url, '_blank');
 }
 
 function cetakDetail() {
-			var cbg = $('#cbg_detail').val();
+    var per = $('#per').val(); 
+    var url = '{{ route('jasper-pembeliandetail-report') }}' + '?per=' + per;
 
-			if (!cbg) {
-				alert('Silakan lengkapi Cabang terlebih dahulu');
-				return;
-			}
-
-			var params = new URLSearchParams({
-				report_type: 1,
-				cbg: cbg,
-			});
-
-			var url = '{{ route('jasper-pembeliandetail-report') }}?' + params.toString();
-			printReport(url);
+    window.open(url, '_blank');
 }
 
 function cetakSummary() {
-			var cbg = $('#cbg_summary').val();
+			
+    var per = $('#per').val(); 
+	var url = '{{ route('jasper-pembeliansummary-report') }}' + '?per=' + per;
+	window.open(url, '_blank');
+}
 
-			if (!cbg) {
-				alert('Silakan lengkapi Cabang terlebih dahulu');
-				return;
-			}
+function cetakCounter() {
+			
+    var per = $('#per').val(); 
+	var url = '{{ route('jasper-pembeliansubretur-report') }}' + '?per=' + per;
+	window.open(url, '_blank');
+}
 
-			var params = new URLSearchParams({
-				report_type: 1,
-				cbg: cbg,
-			});
+function cetakJual() {
+			
+    var per = $('#per').val(); 
+	var url = '{{ route('jasper-pembeliankons-report') }}' + '?per=' + per;
+	window.open(url, '_blank');
+}
 
-			var url = '{{ route('jasper-pembeliansummary-report') }}?' + params.toString();
-			printReport(url);
+function cetakHari() {
+			
+    var per = $('#per').val(); 
+	var url = '{{ route('jasper-pembelianlain-report') }}' + '?per=' + per;
+	window.open(url, '_blank');
 }
 
 

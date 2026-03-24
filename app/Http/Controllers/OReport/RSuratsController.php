@@ -1,18 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\OReport;
 
 use App\Http\Controllers\Controller;
 use App\Models\Master\Cbg;
 // ganti 1
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Models\Master\Cust;
-use DataTables;
-use Auth;
+use App\Models\Master\Perid;
 use DB;
+use Illuminate\Http\Request;
 
-include_once base_path()."/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
+include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
 use PHPJasperXML;
 
 // ganti 2
@@ -24,189 +20,176 @@ class RSuratsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-  	public function report()
+    public function report()
     {
-		$cbg = Cbg::groupBy('CBG')->get();
-		session()->put('filter_cbg', '');
+        $cbg = Cbg::groupBy('CBG')->get();
+        $per = Perid::query()->get();
+        session()->put('filter_cbg', '');
+        session()->put('filter_sup', '');
+        session()->put('filter_sup2', 'ZZZ');
 
-		// $kodec = Cust::orderBy('KODEC')->get();
-		session()->put('filter_gol', '');
-		session()->put('filter_kodec1', '');
-		session()->put('filter_kodec2', 'ZZZ');
-		session()->put('filter_namac1', '');
-		session()->put('filter_kodet1', '');
-		session()->put('filter_namat1', '');
-		session()->put('filter_tglDari', date("d-m-Y"));
-		session()->put('filter_tglSampai', date("d-m-Y"));
-		session()->put('filter_pilih', '');
-	
-        return view('oreport_surats.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
-		
+        return view('oreport_surats.report')->with(['cbg' => $cbg, 'per' => $per])->with(['hasil' => []]);
+
     }
-	
-		public function getSuratsReport(Request $request)
+
+    public function jasperSuratsReport(Request $request)
     {
-        $query = DB::table('surats')
-			->select('NO_BUKTI','TGL','NO_SO','KODEC','NAMAC','TOTAL','NOTES','GOL')
-			->get();
-			
-		if ($request->ajax())
-		{
-			// Ganti format tanggal input agar sama dengan database
-			$tglDrD = date("Y-m-d", strtotime($request['tglDr']));
-            $tglSmpD = date("Y-m-d", strtotime($request['tglSmp']));
-			
-			// Convert tanggal agar ambil start of day/end of day
-			//$tglDr = Carbon::parse($request->tglDr)->startOfDay();
-            $tglSmp = Carbon::parse($request->tglSmp)->endOfDay();
-			
-			// Check Filter
-			if (!empty($request->gol))
-			{
-				$query = $query->where('GOL', $request->gol);
-			}
-			
-			// if (!empty($request->KODEC))
-			// {
-			// 	$query = $query->where('KODEC', $request->kodec);
-			// }
-		
-			if (!empty($request->kodec) && !empty($request->kodec2))
-			{
-				$filterkodec = " WHERE KODEC between '".$request->kodec."' and '".$request->kodec2."' ";
-			}
-			
-			if (!empty($request->tglDr) && !empty($request->tglSmp))
-			{
-				$query = $query->whereBetween('TGL', [$tglDrD, $tglSmp]);
-			}
-			
-			return Datatables::of($query)->addIndexColumn()->make(true);
-		}
-		
-    }	  
+        $file         = 'suratsn';
+        $PHPJasperXML = new PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
+        $per   = $request->per;
+        $cbg   = $request->cbg;
+        $sub1  = $request->sub1;
+        $sub2  = $request->sub2;
+        $kode1 = $request->kode1;
+        $kode2 = $request->kode2;
+        $urut  = $request->urut;
+        $mode  = $request->mode ?? 'periode';
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+        $yerini = date('Y');
+        $yeritu = substr($per, -4);
 
-	public function jasperSuratsReport(Request $request) 
-	{
-		$file 	= 'suratsn';
-		$PHPJasperXML = new PHPJasperXML();
-		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
-		
-			// Check Filter
-			if($request['cbg'])
-			{
-				$cbg = $request['cbg'];
-			}
+        $monthNow = date('m');
+        $yearNow  = date('Y');
 
-			if (!empty($request->gol))
-			{
-				$filtergol = " and a.GOL='".$request->gol."' ";
-			}
-			
-			// if (!empty($request->kodec))
-			// {
-			// 	$filterkodec = " and a.KODEC='".$request->kodec."' ";
-			// }
-		
-			if (!empty($request->kodec) && !empty($request->kodec2))
-			{
-				$filterkodec = " and a.KODEC between '".$request->kodec."' and '".$request->kodec2."' ";
-			}
-			
-			if (!empty($request->tglDr) && !empty($request->tglSmp))
-			{
-				$tglDrD = date("Y-m-d", strtotime($request->tglDr));
-				$tglSmpD = date("Y-m-d", strtotime($request->tglSmp));
-				$filtertgl = " and a.TGL between '".$tglDrD."' and '".$tglSmpD."' ";
-			}
-			
-			if (!empty($request->cbg))
-			{
-				$filtercbg = " and a.CBG='".$request->cbg."' ";
-			}
-			
-			$tgl_1 = date("Y-m-d", strtotime($request->tglDr));
-			$tgl_2 = date("Y-m-d", strtotime($request->tglSmp));
-			$kodec_1 = $request->kodec;
-			$kodec_2 = $request->kodec2;
-			
+        $mon = substr($per, 0, 2);
 
-			session()->put('filter_gol', $request->gol);
-			session()->put('filter_kodec1', $request->kodec);
-			session()->put('filter_kodec2', $request->kodec2);
-			session()->put('filter_namac1', $request->NAMAC);
-			session()->put('filter_tglDari', $request->tglDr);
-			session()->put('filter_tglSampai', $request->tglSmp);
-			session()->put('filter_cbg', $request->cbg);
-			session()->put('filter_pilih', $request->PILIH);
-		
-			if (  $request->PILIH == '1' )
-			{
-				$query = DB::SELECT("SELECT a.NO_BUKTI, a.TGL, b.NO_SO, a.KODEC, a.NAMAC, a.TOTAL, a.NOTES, a.GOL, a.TRUCK,
-							b.NA_BRG, b.QTY 
-							from surats a, suratsd b 
-							WHERE a.NO_BUKTI = b.NO_BUKTI and a.FLAG='JL' $filtertgl $filtergol $filterkodec $filtercbg 
-							ORDER BY a.NO_BUKTI;
-						");
+        if ($mon == $monthNow && $yeritu == $yearNow) {
+            $mon = '00';
+        }
 
-			} else if (  $request->PILIH == '2' )
-			{
-				$query = DB::SELECT("SELECT a.NO_BUKTI, a.TGL, b.NO_SO, a.KODEC, a.NAMAC, a.TOTAL, a.NOTES, a.GOL, a.TRUCK,
-							b.NA_BRG, b.QTY 
-							from surats a, suratsd b 
-							WHERE a.NO_BUKTI = b.NO_BUKTI and a.FLAG='JL' and a.KIRIM = '1' AND POSTED ='0' $filtertgl $filtergol $filterkodec $filtercbg 
-							ORDER BY a.NO_BUKTI;
-						");
-			}  
-	
+        $whereCbg = '';
+        if (! empty($cbg) && $cbg != 'ALL') {
+            $whereCbg = " AND brgbsnd.cbg = '$cbg'";
+        }
 
+        $order = ($urut == 'kode_brg') ? 'brgbsn.kd_brg' : 'brgbsn.na_brg';
 
+        if ($yerini == $yeritu) {
+            $tableDetail = 'brgbsnd';
+        } else {
+            $tableDetail = 'brgbsnd';
+            //sementara disamakan untuk test data
+            //$tableDetail = 'brgbsnd' . $yeritu;
+        }
+        // dd( $sub1, $sub2, $kode1, $kode2,$whereCbg);
+        // dd($tableDetail);
+        if ($mode == 'periode') {
 
-		
+            $query = DB::select("
+        SELECT
+            brgbsn.kd_brg,
+            brgbsn.cnt,
+            brgbsn.ncnt,
+            brgbsn.NA_brg,
+            brgbsn.barcode,
+            '$per' as per,
+            '$cbg' as cbg,
+            brgbsn.HJUAL,
+            brgbsn.tgl_trm,
+            brgbsnd.TGL_KSR as tgl_jual,
 
-		
-		if($request->has('filter'))
-		{
-			$cbg = Cbg::groupBy('CBG')->get();
+            SUM(brgbsnd.aw$mon) as aw,
+            SUM(brgbsnd.ma$mon) as ma,
+            SUM(brgbsnd.ke$mon) as ke,
+            SUM(brgbsnd.ln$mon) as ln,
+            SUM(brgbsnd.AK$mon) as ak,
 
-			return view('oreport_surats.report')->with(['cbg' => $cbg])->with(['hasil' => $query]);
-		}
-        
-		$data=[];
-		foreach ($query as $key => $value)
-		{
-			array_push($data, array(
-				'NO_BUKTI' => $query[$key]->NO_BUKTI,
-				'TGL' => $query[$key]->TGL,
-				'TGL_1' => $tgl_1,
-				'TGL_2' => $tgl_2,
-				'KODEC_1' => $kodec_1,
-				'KODEC_2' => $kodec_2,
-				'NO_SO' => $query[$key]->NO_SO,
-				'KODEC' => $query[$key]->KODEC,
-				'NAMAC' => $query[$key]->NAMAC,
-				'TOTAL' => $query[$key]->TOTAL,
-				'NOTES' => $query[$key]->NOTES,
-				'GOL' => $query[$key]->GOL,
-				'NA_BRG' => $query[$key]->NA_BRG,
-				'TRUCK' => $query[$key]->TRUCK,
-				'QTY' => $query[$key]->QTY,
-			));
-		}
-		$PHPJasperXML->setData($data);
-		ob_end_clean();
-		$PHPJasperXML->outpage("I");
-	}
-	
-	
+            SUM(brgbsnd.AK$mon) * brgbsn.HBELI as tbeli,
+            SUM(brgbsnd.AK$mon) * brgbsn.HJUAL as tsisa,
 
-	
+            brgbsn.hbeli,
+            brgbsn.hbnet,
+            brgbsnd.psn as statpsn,
+            CONCAT(brgbsnd.td_od,'-',cat_od) as tdod
+
+        FROM brgbsn
+        JOIN $tableDetail brgbsnd ON brgbsn.kd_brg = brgbsnd.kd_brg
+
+        WHERE
+            brgbsn.cnt >= ? AND brgbsn.cnt <= ?
+            AND brgbsn.kd_brg >= ? AND brgbsn.kd_brg <= ?
+            $whereCbg
+
+        GROUP BY brgbsn.kd_brg
+        ORDER BY brgbsn.cnt, $order
+    ", [
+                $sub1, $sub2, $kode1, $kode2,
+            ]);
+        } elseif ($mode == 'card') {
+            $query = DB::select("
+        SELECT
+            brgbsn.kd_brg,
+            brgbsn.cnt,
+            brgbsn.ncnt,
+            brgbsn.NA_brg,
+            brgbsn.barcode,
+            '$per' as per,
+            '$cbg' as cbg,
+            brgbsn.HJUAL,
+            brgbsn.tgl_trm,
+            brgbsnd.TGL_KSR as tgl_jual,
+
+            SUM(brgbsnd.aw$mon) as aw,
+            SUM(brgbsnd.ma$mon) as ma,
+            SUM(brgbsnd.ke$mon) as ke,
+            SUM(brgbsnd.ln$mon) as ln,
+            SUM(brgbsnd.AK$mon) as ak,
+
+            SUM(brgbsnd.AK$mon) * brgbsn.HBELI as tbeli,
+            SUM(brgbsnd.AK$mon) * brgbsn.HJUAL as tsisa,
+
+            brgbsn.hbeli,
+            brgbsn.hbnet,
+            brgbsnd.psn as statpsn,
+            CONCAT(brgbsnd.td_od,'-',cat_od) as tdod
+
+        FROM brgbsn
+        JOIN $tableDetail brgbsnd ON brgbsn.kd_brg = brgbsnd.kd_brg
+
+        WHERE
+            brgbsn.cnt >= ? AND brgbsn.cnt <= ?
+            AND brgbsn.kd_brg >= ? AND brgbsn.kd_brg <= ?
+            $whereCbg
+
+        GROUP BY brgbsn.kd_brg
+        ORDER BY brgbsn.cnt, $order
+    ", [
+                $sub1, $sub2, $kode1, $kode2,
+            ]);
+        }
+        if ($request->has('filter')) {
+            $cbgList = Cbg::groupBy('CBG')->get();
+            $perList = Perid::all();
+
+            return view('oreport_surats.report', [
+                'cbg'   => $cbgList,
+                'per'   => $perList,
+                'hasil' => $hasilArray,
+            ]);
+        }
+
+        $data = [];
+        foreach ($query as $row) {
+            $data[] = [
+                'KD_BRG' => $row->kd_brg,
+                'NA_BRG' => $row->NA_brg,
+                'QTY'    => $row->ak,
+                'AW'     => $row->aw,
+                'MA'     => $row->ma,
+                'KE'     => $row->ke,
+                'LN'     => $row->ln,
+                'TBELI'  => $row->tbeli,
+                'TSISA'  => $row->tsisa,
+                'CBG'    => $row->cbg,
+                'PER'    => $row->per,
+            ];
+        }
+
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
+    }
+
 }

@@ -19,10 +19,11 @@ class RPembelianController extends Controller
     /**
      * Halaman utama report - Route: /rkasirbantu
      */
-    public function report()
+    public function report(Request $request)
     {
 		$per = Perid::query()->get();
-		session()->put('filter_periode', '');
+		$perx = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+		session()->put('filter_periode', $perx);
 
         return view('oreport_pembelian.report')->with([
             'per' => $per,
@@ -194,50 +195,55 @@ class RPembelianController extends Controller
     public function jasperPembelianReport(Request $request)
     {
         try {
-            // Cek cbg wajib diisi
-            if (empty($request->cbg)) {
-                return response()->json(['error' => 'Cabang harus dipilih.'], 400);
-            }
 
-            $file = 'kasirbantu'; 
+            $file = 'report pembelian repretur'; 
             $PHPJasperXML = new PHPJasperXML();
             $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-            $cbg = preg_replace('/[^A-Za-z0-9_]/', '', $request->cbg) . ".";
+			$cbg = Auth::user()->CBG;
+            $per = $request->per;
+            $sql = "SELECT toko.na_toko,
+					toko.typ_pers,
+					toko.typ_npwp,
+					toko.alamat,
+					toko.nama_toko as nmtoko,
+					
+					belibsnz.NO_BUKTI,
+					belibsnz.TGL,
+					belibsnz.REF,
+					belibsnz.per,
+					belibsnz.cnt,
+					cntbsn.NA_CNT,
+					belibsnz.kodes,
+					belibsnz.namas,
+					belibsnz.FLAG,
+					belibsnz.total,
+					belibsnz.PROM,
+					belibsnz.dpp,
+					belibsnz.ppn,
+					belibsnz.nett
+					
+				FROM tgz.belibsnz
+				JOIN tgz.cntbsn ON belibsnz.cnt = cntbsn.CNT
+				JOIN toko ON toko.KODE = ?
 
-            // ===========================
-            // SQL sesuai Delphi TAB KASIR
-            // ===========================
-            $sql = "
-                SELECT 
-                    jual.NO_BUKTI,
-                    jual.tgl AS TGL,
-                    jual.CBG
-                FROM {$cbg}jual jual
-                WHERE jual.FLAG = 'OB'
-                AND jual.CBG = ?
-                GROUP BY jual.NO_BUKTI, jual.tgl, jual.CBG
-                ORDER BY jual.NO_BUKTI
+				WHERE 
+					cntbsn.st_cnt = 'P'
+					AND belibsnz.per = ?
+					AND belibsnz.FLAG = 'RX'
+
+				ORDER BY belibsnz.NO_BUKTI ASC
             ";
 
-            $rows = DB::select($sql, [$request->cbg]);
+            $data = DB::select($sql, [$cbg, $per]);
 
-            // Format data untuk Jasper
-            $data = array_map(function ($item) {
-                return [
-                    'NO_BUKTI' => $item->NO_BUKTI,
-                    'TGL'      => $item->TGL,
-                    'CBG'      => $item->CBG,
-                    'TANGGAL_CETAK' => date('Y-m-d H:i:s'),
-                ];
-            }, $rows);
+            $cleanData = json_decode(json_encode($data), true);
+       		$PHPJasperXML->setData($cleanData);
 
-            $PHPJasperXML->setData($data);
-
-            // Parameter tambahan jika butuh di jasper
+            // 
             $PHPJasperXML->arrayParameter = [
-                "CBG" => $request->cbg,
-                "TANGGAL_CETAK" => date('d/m/Y H:i:s')
+				'JUDULE' => "LAPORAN PEMBELIAN PER SUB ",
+                "TGL_CTK" => date('d/m/Y')
             ];
 
             ob_end_clean();
@@ -252,50 +258,55 @@ class RPembelianController extends Controller
     public function jasperPembelianDetailReport(Request $request)
     {
         try {
-            // Cek cbg wajib diisi
-            if (empty($request->cbg)) {
-                return response()->json(['error' => 'Cabang harus dipilih.'], 400);
-            }
 
-            $file = 'kasirbantu'; 
+            $file = 'report pembelian periode'; 
             $PHPJasperXML = new PHPJasperXML();
             $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-            $cbg = preg_replace('/[^A-Za-z0-9_]/', '', $request->cbg) . ".";
+            $per = $request->per;
+            $sql = "SELECT 
+					toko.na_toko,
+					toko.typ_pers,
+					toko.typ_npwp,
+					toko.alamat,
+					toko.kode as nmtoko,
 
-            // ===========================
-            // SQL sesuai Delphi TAB KASIR
-            // ===========================
-            $sql = "
-                SELECT 
-                    jual.NO_BUKTI,
-                    jual.tgl AS TGL,
-                    jual.CBG
-                FROM {$cbg}jual jual
-                WHERE jual.FLAG = 'OB'
-                AND jual.CBG = ?
-                GROUP BY jual.NO_BUKTI, jual.tgl, jual.CBG
-                ORDER BY jual.NO_BUKTI
+					belibsnz.NO_BUKTI,
+					belibsnz.TGL,
+					belibsnz.REF,
+					belibsnz.per,
+					belibsnz.cnt,
+					cntbsn.NA_CNT,
+					belibsnz.kodes,
+					belibsnz.namas as NAMAS,
+					belibsnz.FLAG,
+					belibsnz.total,
+					belibsnz.PROM,
+					belibsnz.dpp,
+					belibsnz.ppn,
+					belibsnz.nett  
+
+				FROM tgz.belibsnz
+				JOIN tgz.cntbsn ON belibsnz.cnt = cntbsn.CNT
+				JOIN toko ON toko.KODE = 'tgz'
+
+				WHERE 
+					cntbsn.st_cnt = 'P'
+					AND belibsnz.per = ?
+					AND belibsnz.FLAG = 'BS'
+
+				ORDER BY belibsnz.NO_BUKTI ASC 
             ";
 
-            $rows = DB::select($sql, [$request->cbg]);
+            $data = DB::select($sql, [$per]);
 
-            // Format data untuk Jasper
-            $data = array_map(function ($item) {
-                return [
-                    'NO_BUKTI' => $item->NO_BUKTI,
-                    'TGL'      => $item->TGL,
-                    'CBG'      => $item->CBG,
-                    'TANGGAL_CETAK' => date('Y-m-d H:i:s'),
-                ];
-            }, $rows);
+            $cleanData = json_decode(json_encode($data), true);
+       		$PHPJasperXML->setData($cleanData);
 
-            $PHPJasperXML->setData($data);
-
-            // Parameter tambahan jika butuh di jasper
+            // 
             $PHPJasperXML->arrayParameter = [
-                "CBG" => $request->cbg,
-                "TANGGAL_CETAK" => date('d/m/Y H:i:s')
+				'JUDULE' => "LAPORAN AGENDA PER TANGGAL ",
+                "TGL_CTK" => date('d/m/Y')
             ];
 
             ob_end_clean();
@@ -310,50 +321,45 @@ class RPembelianController extends Controller
     public function jasperPembelianSummaryReport(Request $request)
     {
         try {
-            // Cek cbg wajib diisi
-            if (empty($request->cbg)) {
-                return response()->json(['error' => 'Cabang harus dipilih.'], 400);
-            }
 
-            $file = 'kasirbantu'; 
+            $file = 'report pembelian subbeli'; 
             $PHPJasperXML = new PHPJasperXML();
             $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-            $cbg = preg_replace('/[^A-Za-z0-9_]/', '', $request->cbg) . ".";
+			$cbg = Auth::user()->CBG;
+            $per = $request->per;
+            $sql = "SELECT toko.na_toko,
+					toko.typ_pers,
+					toko.typ_npwp,
+					toko.alamat,
+					toko.kode as nmtoko,
+					
+					belibsnz.cnt as SUB,
+					cntbsn.NA_CNT AS KELOMPOK,
+					sum(belibsnz.total) as BRUTO,
+					sum(belibsnz.PROM) as prom
 
-            // ===========================
-            // SQL sesuai Delphi TAB KASIR
-            // ===========================
-            $sql = "
-                SELECT 
-                    jual.NO_BUKTI,
-                    jual.tgl AS TGL,
-                    jual.CBG
-                FROM {$cbg}jual jual
-                WHERE jual.FLAG = 'OB'
-                AND jual.CBG = ?
-                GROUP BY jual.NO_BUKTI, jual.tgl, jual.CBG
-                ORDER BY jual.NO_BUKTI
+				FROM tgz.belibsnz
+				JOIN tgz.cntbsn ON belibsnz.cnt = cntbsn.CNT
+				JOIN toko ON toko.KODE = ?
+
+				WHERE 
+					cntbsn.st_cnt = 'P'
+					AND belibsnz.per = ?
+					AND belibsnz.FLAG = 'BS'
+
+				GROUP BY belibsnz.cnt
             ";
 
-            $rows = DB::select($sql, [$request->cbg]);
+            $data = DB::select($sql, [$cbg, $per]);
 
-            // Format data untuk Jasper
-            $data = array_map(function ($item) {
-                return [
-                    'NO_BUKTI' => $item->NO_BUKTI,
-                    'TGL'      => $item->TGL,
-                    'CBG'      => $item->CBG,
-                    'TANGGAL_CETAK' => date('Y-m-d H:i:s'),
-                ];
-            }, $rows);
+            $cleanData = json_decode(json_encode($data), true);
+       		$PHPJasperXML->setData($cleanData);
 
-            $PHPJasperXML->setData($data);
-
-            // Parameter tambahan jika butuh di jasper
+            // 
             $PHPJasperXML->arrayParameter = [
-                "CBG" => $request->cbg,
-                "TANGGAL_CETAK" => date('d/m/Y H:i:s')
+				'JUDULE' => "LAPORAN PEMBELIAN PER SUB ",
+                "TGL_CTK" => date('d/m/Y')
             ];
 
             ob_end_clean();
@@ -365,6 +371,212 @@ class RPembelianController extends Controller
         }
     }
 
+	public function jasperPembelianSubReturReport(Request $request)
+    {
+        try {
+
+            $file = 'report pembelian subbeli'; 
+            $PHPJasperXML = new PHPJasperXML();
+            $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+			$cbg = Auth::user()->CBG;
+            $per = $request->per;
+            $sql = "SELECT toko.na_toko,
+					toko.typ_pers,
+					toko.typ_npwp,
+					toko.alamat,
+					toko.nama_toko as nmtoko,
+					
+					belibsnz.cnt as SUB,
+					cntbsn.NA_CNT as KELOMPOK,
+					sum(belibsnz.total) as BRUTO,
+					sum(belibsnz.PROM) as prom
+
+				FROM tgz.belibsnz
+				JOIN tgz.cntbsn ON belibsnz.cnt = cntbsn.CNT
+				JOIN toko ON toko.KODE = ?
+
+				WHERE 
+					cntbsn.st_cnt = 'P'
+					AND belibsnz.per = ?
+					AND belibsnz.FLAG = 'RX'
+
+				GROUP BY belibsnz.cnt";
+
+            $data = DB::select($sql, [$cbg, $per]);
+
+            $cleanData = json_decode(json_encode($data), true);
+       		$PHPJasperXML->setData($cleanData);
+
+            // 
+            $PHPJasperXML->arrayParameter = [
+				'JUDULE' => "LAPORAN RETUR PER SUB ",
+                "TGL_CTK" => date('d/m/Y')
+            ];
+
+            ob_end_clean();
+            $PHPJasperXML->outpage("I");
+
+        } catch (\Exception $e) {
+            Log::error('Error Jasper Kasir: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+	public function jasperPembelianKonsinyasiReport(Request $request)
+    {
+        try {
+
+            $file = 'report pembelian kons'; 
+            $PHPJasperXML = new PHPJasperXML();
+            $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+			$cbg = Auth::user()->CBG;
+            $per = $request->per;
+            $sql = "SELECT 
+					AA.*,
+					toko.na_toko,
+					toko.typ_pers,
+					toko.typ_npwp,
+					toko.alamat
+
+				FROM (
+					SELECT 
+						belibsnz.ACNO,
+						belibsnz.per,
+						belibsnz.cnt as sub,
+						cntbsn.na_cnt as kelompok,
+						belibsnz.kodes,
+						belibsnz.namas,
+						belibsnz.FLAG,
+						SUM(belibsnz.total) as total,
+						SUM(belibsnz.ppn) as ppn,
+						SUM(belibsnz.nett) as nett,
+						SUM(belibsnz.prom) as prom
+
+					FROM belibsnz
+					JOIN cntbsn ON belibsnz.cnt = cntbsn.CNT
+
+					WHERE 
+						cntbsn.st_cnt = 'K'
+						AND belibsnz.per = ?
+						AND belibsnz.FLAG = 'BK'
+
+					GROUP BY belibsnz.cnt, belibsnz.ACNO, belibsnz.flag
+				) AA
+
+				JOIN toko ON toko.KODE = ?
+				ORDER BY AA.sub";
+
+            $data = DB::select($sql, [$per, $cbg]);
+
+            $cleanData = json_decode(json_encode($data), true);
+       		$PHPJasperXML->setData($cleanData);
+
+            // 
+            $PHPJasperXML->arrayParameter = [
+				'JUDULE' => "LAPORAN KONSIYIASI PER SUB ",
+                "TGL_CTK" => date('d/m/Y')
+            ];
+
+            ob_end_clean();
+            $PHPJasperXML->outpage("I");
+
+        } catch (\Exception $e) {
+            Log::error('Error Jasper Kasir: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+	public function jasperPembelianLainReport(Request $request)
+    {
+        try {
+
+            $file = 'report pembelian lain'; 
+            $PHPJasperXML = new PHPJasperXML();
+            $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+			$cbg = Auth::user()->CBG;
+            $per = $request->per;
+            $sql = "SELECT 
+					toko.na_toko,
+					toko.typ_pers,
+					toko.typ_npwp,
+					toko.alamat,
+
+					AA.NO_BUKTI,
+					AA.TGL,
+					AA.NACNO AS nacc,
+					TRIM(AA.ACNO) AS ACNO,
+					AA.KODES,
+					AA.PER,
+					UPPER(AA.ket) AS KET,
+					IF(AA.total>0,AA.total,0) as DEBET,
+					IF(AA.total<0,AA.total*-1,0) as KREDIT
+
+				FROM (
+					SELECT  
+						belibsnz.tgl,
+						belibsnz.notes AS KET,
+						belibsnz.ACNO,
+						belibsnz.NACNO,
+						belibsnz.NO_BUKTI,
+						belibsnz.per,
+						belibsnz.kodes,
+						belibsnz.namas,
+						belibsnz.FLAG,
+						belibsnz.TOTAL * -1 as total
+
+					FROM tgz.belibsnz
+					WHERE belibsnz.per = ?
+					AND belibsnz.FLAG = 'LB'
+
+					UNION ALL
+
+					SELECT  
+						belibsnz.tgl,
+						belibsnzd.ket AS KET,
+						belibsnzd.ACNOD AS ACNO,
+						belibsnzd.NACNOD,
+						belibsnz.NO_BUKTI,
+						belibsnz.per,
+						belibsnz.kodes,
+						belibsnz.namas,
+						belibsnz.FLAG,
+						belibsnzd.TOTAL as total
+
+					FROM tgz.belibsnz
+					JOIN tgz.belibsnzd 
+						ON belibsnz.NO_BUKTI = belibsnzd.NO_BUKTI
+
+					WHERE belibsnz.per = ?
+					AND belibsnz.FLAG = 'LL'
+
+				) AA
+
+				JOIN toko ON toko.KODE = ?
+
+				ORDER BY AA.NO_BUKTI, AA.TGL";
+
+            $data = DB::select($sql, [$per,$per, $cbg]);
+
+            $cleanData = json_decode(json_encode($data), true);
+       		$PHPJasperXML->setData($cleanData);
+
+            // 
+            $PHPJasperXML->arrayParameter = [
+				'JUDULE' => "LAPORAN TRANSAKSI LAIN-LAIN ",
+                "TGL_CTK" => date('d/m/Y')
+            ];
+
+            ob_end_clean();
+            $PHPJasperXML->outpage("I");
+
+        } catch (\Exception $e) {
+            Log::error('Error Jasper Kasir: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
     private function getDetailPembelian($periode)
     {	
