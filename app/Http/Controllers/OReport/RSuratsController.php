@@ -34,6 +34,7 @@ class RSuratsController extends Controller
 		session()->put('filter_kodec1', '');
 		session()->put('filter_kodec2', 'ZZZ');
 		session()->put('filter_namac1', '');
+        
 		session()->put('filter_kodet1', '');
 		session()->put('filter_namat1', '');
 		session()->put('filter_tglDari', date("d-m-Y"));
