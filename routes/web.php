@@ -608,7 +608,6 @@ Route::get('/jstcounterc/{tcounter:NO_ID}', 'App\Http\Controllers\OTransaksi\Cou
 // Operational Buat Faktur Pajak
 
 Route::get('/rfakturpj', 'App\Http\Controllers\OReport\RFakturpjController@report')->middleware(['auth'])->name('rfakturpj');
-Route::get('/get-fakturpj-report', 'App\Http\Controllers\OReport\RFakturpjController@getFakturpjReport')->middleware(['auth'])->name('get-fakturpj-report');
 Route::post('jasper-fakturpj-report', 'App\Http\Controllers\OReport\RFakturpjController@jasperFakturpjReport')->middleware(['auth']);
 
 // Posting
