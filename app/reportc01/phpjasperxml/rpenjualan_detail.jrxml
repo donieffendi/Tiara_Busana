@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kasc" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="98"/>
@@ -13,7 +13,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<parameter name="JUDUL" class="java.lang.String"/>
+	<parameter name="TGL_CTK" class="java.lang.String"/>
 	<field name="kd_brg" class="java.lang.String"/>
 	<field name="NA_BRG" class="java.lang.String"/>
 	<field name="KODES" class="java.lang.String"/>
@@ -150,11 +150,11 @@
 				<textFieldExpression><![CDATA["TGL"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="60" height="15" uuid="875729ca-5e46-4ea1-8f6b-325780f270b3"/>
+				<reportElement x="0" y="0" width="70" height="15" uuid="875729ca-5e46-4ea1-8f6b-325780f270b3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{NOW}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{TGL_CTK}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="185" y="1" width="259" height="20" uuid="1952a119-3b83-4d78-af15-0d73756a45cf"/>
@@ -336,7 +336,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ncnt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{na_cnt}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="56" width="48" height="14" uuid="167c8a4b-ceac-4075-bdb8-57d882bed878"/>
@@ -350,7 +350,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="false" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[ "DETAIL PENJ. CASH/KREDIT u/ SC / BA BY TGL"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["DETAIL PENJ. CASH/KREDIT u/ SC / BA BY TGL"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="224" y="41" width="33" height="12" uuid="afb29abc-ce1e-44e1-98aa-1fddbd0e27b8"/>
@@ -363,7 +363,7 @@
 	</pageHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="27" y="0" width="72" height="20" uuid="47c294d6-388c-4d7f-9c54-8411906fae76"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -403,9 +403,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{REC}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField pattern="#,##0">
 				<reportElement stretchType="RelativeToTallestObject" x="250" y="0" width="51" height="20" uuid="1909e532-11b3-456e-9152-7ed24f3e66c5"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -414,7 +414,7 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cash}]]></textFieldExpression>
@@ -433,7 +433,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalrf}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="99" y="0" width="51" height="20" uuid="7b2144c6-b453-4f69-b5ab-d4cfa3d04f5f"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -442,12 +442,12 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{qcash}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="150" y="0" width="50" height="20" uuid="94a63b4f-c685-400f-b67f-9844c7a62bfa"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -456,12 +456,12 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{qkred}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="200" y="0" width="50" height="20" uuid="e00d8dab-b578-49d2-9460-0b3aab227640"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -470,12 +470,12 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{qjml}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField pattern="#,##0">
 				<reportElement stretchType="RelativeToTallestObject" x="301" y="0" width="50" height="20" uuid="cf725109-1002-47ec-9ca8-a0cef6f37e53"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -484,12 +484,12 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{kred}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField pattern="#,##0">
 				<reportElement stretchType="RelativeToTallestObject" x="351" y="0" width="50" height="20" uuid="cd539706-c296-454c-8c92-04e080bdbc41"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -498,7 +498,7 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{jml}]]></textFieldExpression>
@@ -538,7 +538,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["diserah terimakan tidak ada complain."]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="150" y="0" width="50" height="20" uuid="24653027-c1e4-4893-9fde-0cc9cd6f5560"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -547,12 +547,12 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{qkred}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField pattern="#,##0">
 				<reportElement stretchType="RelativeToTallestObject" x="351" y="0" width="50" height="20" uuid="5357a6a6-059f-423a-9787-3386bd94f6ea"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -561,7 +561,7 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{jml}]]></textFieldExpression>
@@ -580,7 +580,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalrf}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField pattern="#,##0">
 				<reportElement stretchType="RelativeToTallestObject" x="250" y="0" width="51" height="20" uuid="7779fe24-885f-4433-b994-2d8a1c7ed749"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -589,7 +589,7 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{cash}]]></textFieldExpression>
@@ -608,7 +608,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="99" y="0" width="51" height="20" uuid="cc5a622c-81e2-447a-b54c-ae6435668c90"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -617,12 +617,12 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{qcash}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
+			<textField pattern="#,##0">
 				<reportElement stretchType="RelativeToTallestObject" x="301" y="0" width="50" height="20" uuid="a267240a-7a73-47d8-8679-92dec97b9068"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -631,12 +631,12 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{kred}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="200" y="0" width="50" height="20" uuid="46dd2bd2-983a-4283-ab12-faa6233691ee"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -645,7 +645,7 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{qjml}]]></textFieldExpression>

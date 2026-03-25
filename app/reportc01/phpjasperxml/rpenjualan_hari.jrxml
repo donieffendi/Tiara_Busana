@@ -1,0 +1,1421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kasc" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="98"/>
+	<property name="ireport.y" value="613"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="TGL_CTK" class="java.lang.String"/>
+	<field name="kd_brg" class="java.lang.String"/>
+	<field name="NA_BRG" class="java.lang.String"/>
+	<field name="KODES" class="java.lang.String"/>
+	<field name="sts" class="java.lang.String"/>
+	<field name="tgl" class="java.lang.String"/>
+	<field name="KEL_PT" class="java.lang.String"/>
+	<field name="qtyb" class="java.lang.String"/>
+	<field name="kode" class="java.lang.String"/>
+	<field name="na_cnt" class="java.lang.String"/>
+	<field name="hargajl" class="java.lang.String"/>
+	<field name="KET" class="java.lang.String"/>
+	<field name="TERBILANG" class="java.lang.String"/>
+	<field name="NOTES" class="java.lang.String"/>
+	<field name="REC" class="java.lang.String"/>
+	<field name="NACNO" class="java.lang.String"/>
+	<field name="JUDUL" class="java.lang.String"/>
+	<field name="PER" class="java.lang.String"/>
+	<field name="NA_TOKO" class="java.lang.String"/>
+	<field name="NOW" class="java.lang.String"/>
+	<field name="NAMAS" class="java.lang.String"/>
+	<field name="NO_BUKTI" class="java.lang.String"/>
+	<field name="SUB" class="java.lang.String"/>
+	<field name="ITEM" class="java.lang.String"/>
+	<field name="STOK" class="java.lang.String"/>
+	<field name="TGL_BELI" class="java.lang.String"/>
+	<field name="HARI" class="java.lang.String"/>
+	<field name="DISKON" class="java.lang.String"/>
+	<field name="NO_FORM" class="java.lang.String"/>
+	<field name="kodes" class="java.lang.String"/>
+	<field name="namas" class="java.lang.String"/>
+	<field name="barcode" class="java.lang.String"/>
+	<field name="hargaksr" class="java.lang.String"/>
+	<field name="harga" class="java.lang.String"/>
+	<field name="tgmin" class="java.lang.String"/>
+	<field name="tgmax" class="java.lang.String"/>
+	<field name="tgl_ctk" class="java.lang.String"/>
+	<field name="jam_ctk" class="java.lang.String"/>
+	<field name="no_trm" class="java.lang.String"/>
+	<field name="tgl_trm" class="java.lang.String"/>
+	<field name="qtyk" class="java.lang.String"/>
+	<field name="tgl_jual" class="java.lang.String"/>
+	<field name="qcash" class="java.lang.String"/>
+	<field name="qjml" class="java.lang.String"/>
+	<field name="qkred" class="java.lang.String"/>
+	<field name="cash" class="java.lang.String"/>
+	<field name="kred" class="java.lang.String"/>
+	<field name="jml" class="java.lang.String"/>
+	<field name="qtyrf" class="java.lang.String"/>
+	<field name="totalrf" class="java.lang.String"/>
+	<field name="st_pjk" class="java.lang.String"/>
+	<field name="YER" class="java.lang.String"/>
+	<field name="ST_CNT" class="java.lang.String"/>
+	<field name="b01" class="java.lang.String"/>
+	<field name="b02" class="java.lang.String"/>
+	<field name="b03" class="java.lang.String"/>
+	<field name="b04" class="java.lang.String"/>
+	<field name="b05" class="java.lang.String"/>
+	<field name="b06" class="java.lang.String"/>
+	<field name="b07" class="java.lang.String"/>
+	<field name="b08" class="java.lang.String"/>
+	<field name="b09" class="java.lang.String"/>
+	<field name="b10" class="java.lang.String"/>
+	<field name="b11" class="java.lang.String"/>
+	<field name="b12" class="java.lang.String"/>
+	<field name="b13" class="java.lang.String"/>
+	<field name="b14" class="java.lang.String"/>
+	<field name="b15" class="java.lang.String"/>
+	<field name="b16" class="java.lang.String"/>
+	<field name="b17" class="java.lang.String"/>
+	<field name="b18" class="java.lang.String"/>
+	<field name="b19" class="java.lang.String"/>
+	<field name="b20" class="java.lang.String"/>
+	<field name="b21" class="java.lang.String"/>
+	<field name="b22" class="java.lang.String"/>
+	<field name="b23" class="java.lang.String"/>
+	<field name="b24" class="java.lang.String"/>
+	<field name="b25" class="java.lang.String"/>
+	<field name="b26" class="java.lang.String"/>
+	<field name="b27" class="java.lang.String"/>
+	<field name="b28" class="java.lang.String"/>
+	<field name="b29" class="java.lang.String"/>
+	<field name="b30" class="java.lang.String"/>
+	<field name="b31" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="hjual" class="java.lang.String"/>
+	<variable name="qcash" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qcash}]]></variableExpression>
+	</variable>
+	<variable name="qkred" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qkred}]]></variableExpression>
+	</variable>
+	<variable name="qjml" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qjml}]]></variableExpression>
+	</variable>
+	<variable name="cash" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cash}]]></variableExpression>
+	</variable>
+	<variable name="kred" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{kred}]]></variableExpression>
+	</variable>
+	<variable name="jml" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{jml}]]></variableExpression>
+	</variable>
+	<variable name="qtyrf" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtyrf}]]></variableExpression>
+	</variable>
+	<variable name="totalrf" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalrf}]]></variableExpression>
+	</variable>
+	<variable name="B01" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b01}]]></variableExpression>
+	</variable>
+	<variable name="B02" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b02}]]></variableExpression>
+	</variable>
+	<variable name="B03" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b03}]]></variableExpression>
+	</variable>
+	<variable name="B04" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b04}]]></variableExpression>
+	</variable>
+	<variable name="B05" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b05}]]></variableExpression>
+	</variable>
+	<variable name="B06" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b06}]]></variableExpression>
+	</variable>
+	<variable name="B07" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b07}]]></variableExpression>
+	</variable>
+	<variable name="B08" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b08}]]></variableExpression>
+	</variable>
+	<variable name="B09" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b09}]]></variableExpression>
+	</variable>
+	<variable name="B10" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b10}]]></variableExpression>
+	</variable>
+	<variable name="B11" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b11}]]></variableExpression>
+	</variable>
+	<variable name="B12" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b12}]]></variableExpression>
+	</variable>
+	<variable name="jumb" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b13}]]></variableExpression>
+	</variable>
+	<variable name="P01" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b14}]]></variableExpression>
+	</variable>
+	<variable name="P02" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b15}]]></variableExpression>
+	</variable>
+	<variable name="P03" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b16}]]></variableExpression>
+	</variable>
+	<variable name="P04" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b17}]]></variableExpression>
+	</variable>
+	<variable name="P05" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b18}]]></variableExpression>
+	</variable>
+	<variable name="P06" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b19}]]></variableExpression>
+	</variable>
+	<variable name="P07" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b20}]]></variableExpression>
+	</variable>
+	<variable name="P08" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b21}]]></variableExpression>
+	</variable>
+	<variable name="P09" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b22}]]></variableExpression>
+	</variable>
+	<variable name="P10" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b23}]]></variableExpression>
+	</variable>
+	<variable name="P11" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b24}]]></variableExpression>
+	</variable>
+	<variable name="P12" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b25}]]></variableExpression>
+	</variable>
+	<variable name="jump" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{b26}]]></variableExpression>
+	</variable>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="59" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="41" width="20" height="18" uuid="6650c074-fad8-43c3-b0a0-410d2bbbc196"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="21" width="40" height="15" uuid="875729ca-5e46-4ea1-8f6b-325780f270b3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="21" width="50" height="15" uuid="434ad85b-ba87-4ce9-aa26-d0769ff41579"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PERIODE"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="21" width="10" height="15" uuid="17dd8d5b-0972-4079-b6ad-546424195e5e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="1" width="259" height="20" uuid="1952a119-3b83-4d78-af15-0d73756a45cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RINCIAN PENJUALAN PER TANGGAL"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="41" width="16" height="18" uuid="409cbeab-7e6c-4d10-84be-8b7b3eff433d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["01"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="41" width="50" height="18" uuid="011c8272-56fa-4895-90ef-e15845c81615"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No. Item"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="41" width="16" height="18" uuid="a8160bb0-b6c2-48b9-b3f7-a533a8e11de6"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["02"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="41" width="16" height="18" uuid="c25d6aae-4439-4a6a-95da-84f143c1c8d2">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["03"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="41" width="16" height="18" uuid="7e48a561-1c12-4b0a-bbad-9ac08a81583f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["04"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="41" width="16" height="18" uuid="b8d6e2ae-8794-401b-9793-a915bd964c4a"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["05"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="41" width="16" height="18" uuid="93175cb9-c8fd-4ee4-a425-ecebae9c3ae3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["06"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="41" width="16" height="18" uuid="a5e29ae2-72d4-49d8-a1d0-73a1e5b089a0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["07"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["08"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["09"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["10"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["11"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["12"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["13"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["14"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="294" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["15"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["16"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="41" width="16" height="18" uuid="26782a58-0801-4447-bffa-da54943812e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["17"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="41" width="16" height="18" uuid="2875a51f-bdb7-42bc-9485-161e38f70380">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["18"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="41" width="16" height="18" uuid="2a5e70a7-0f1b-456f-99b7-696ab4edc2d7">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["19"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="41" width="16" height="18" uuid="5d971065-2464-4cce-bf06-f486bbc0ac52">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["20"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="41" width="16" height="18" uuid="0e97fb77-f1f9-44b5-a4a2-c81a593cf4ad">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["21"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="41" width="16" height="18" uuid="66ffbe60-a56d-45c1-aaa3-f8f4069bf66e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["22"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="41" width="16" height="18" uuid="9906a4ae-b66a-4f0b-96d0-fa65d20a69d2">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["23"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="41" width="16" height="18" uuid="5a29321b-1c19-4894-9be5-dc956de950c0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["24"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="41" width="16" height="18" uuid="7de30468-7df3-4199-8c08-62debd61961f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["25"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="41" width="16" height="18" uuid="5ea8bc0c-c412-474a-a251-8949ce0386e7">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["26"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="41" width="16" height="18" uuid="755ef944-8af5-4392-9170-7e8a61aab2fa">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["27"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="502" y="41" width="16" height="18" uuid="2bff26b6-4822-4900-92db-1ea64772acbc">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["28"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="518" y="41" width="16" height="18" uuid="e8d1806d-3eb2-4ef8-a1d3-38540e50d57c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["29"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="41" width="16" height="18" uuid="ce58caa7-aa46-4ae1-990b-5abaa208eb7b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["30"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="550" y="41" width="16" height="18" uuid="fc28a7c5-8903-40c8-b7b6-5604f895007a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["31"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="566" y="41" width="60" height="18" uuid="a8f1aea2-8b47-4c9d-af0e-1031fadc05a1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Harga Jual Satuan"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="626" y="41" width="60" height="18" uuid="d6fb3f2e-543b-4b03-bd81-fe2dc0243ac9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="0" width="50" height="20" uuid="e778ba95-2d91-43e4-85e7-289ded1cf073"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{kode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="16" height="20" uuid="94a63b4f-c685-400f-b67f-9844c7a62bfa">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b01}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="20" height="20" uuid="66d76545-3b34-47d3-b666-28df16ba7dc5"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="16" height="20" uuid="5f20acd4-9db5-43ce-8bb9-83d38451f4af">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b02}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="0" width="16" height="20" uuid="b591a8e0-d3dd-4c3d-8cbe-9b41922f4823">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b03}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="0" width="16" height="20" uuid="95de2719-91d6-4ac2-b102-b3c457b7ee78">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b04}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="0" width="16" height="20" uuid="16b44e55-b63a-4f11-aab1-570e170e2027">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b05}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="16" height="20" uuid="d6e6e5f9-ced7-4474-a46b-9399ba15aba5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b06}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="0" width="16" height="20" uuid="e8f7e670-4344-4e78-be62-0d37832a5ffd">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b07}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="0" width="16" height="20" uuid="b156834b-c0e2-418f-8bd1-044cb8e55def">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b08}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="16" height="20" uuid="51a3c43a-a9f8-4266-966e-6f7e000588bd">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b09}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="0" width="16" height="20" uuid="8ac0dc78-df98-44d8-b868-37c9a899f8af">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="16" height="20" uuid="37f7147d-2420-4fc5-a43b-3769b0f2be3e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b11}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="0" width="16" height="20" uuid="b89a71af-06b2-4598-a725-3bc24f9e60a3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b12}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="16" height="20" uuid="a7cb1e30-3b06-4c17-91f1-e61c05bb5f91">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b13}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="0" width="16" height="20" uuid="4c808287-e4cb-40f5-a76a-f63bacdab7c6">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b14}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="294" y="0" width="16" height="20" uuid="3b766b3b-02d8-4f56-8676-818f4894da8e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b15}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="16" height="20" uuid="1b9d61fd-720c-47e4-a374-ff29a8cc83b1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b16}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="0" width="16" height="20" uuid="05c7f61f-f58b-4eeb-949b-6f028a7fb0c1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b17}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="0" width="16" height="20" uuid="13eb5ea9-6571-4258-b4a7-ec8ace8f2f17">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b18}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="0" width="16" height="20" uuid="e7a54f6a-73c4-4ddf-b814-1c0c0d6b4741">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b19}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="0" width="16" height="20" uuid="3e47b598-d43a-42fa-9b94-74f6ff4edeac">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b20}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="16" height="20" uuid="08f8bdcb-0f2a-4cf9-a08f-06266fa23910">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b21}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="0" width="16" height="20" uuid="a664cf83-1797-45e1-a279-472ba76bdb28">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b22}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="0" width="16" height="20" uuid="cbe8012a-3a43-4b2d-ab34-cd821914b38f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b23}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="0" width="16" height="20" uuid="fd931e7d-706d-4086-b4fa-04b74f9fe055">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b24}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="0" width="16" height="20" uuid="d5d3125c-b56c-4486-be74-b009b1c40d8b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b25}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="0" width="16" height="20" uuid="6e8c7d9c-7187-43e2-9dfd-46a574d21e8d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b26}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="0" width="16" height="20" uuid="30af28d2-f45e-4653-9db7-1c6be62dd726">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b27}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="502" y="0" width="16" height="20" uuid="d1d1bc50-c647-4bad-9c57-7e27e7b87e0a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b28}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="518" y="0" width="16" height="20" uuid="ee039fc7-e73a-4286-a2c3-987749a24423">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b29}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="0" width="16" height="20" uuid="a327befd-4cd1-40f6-9068-cec6e6b81ef7">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b30}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="566" y="0" width="60" height="20" uuid="56c75244-1871-478b-a452-c7dbe94d51fc">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hjual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="626" y="0" width="60" height="20" uuid="ddb556e3-67f9-41ae-9b33-76007f73f625">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="550" y="0" width="16" height="20" uuid="78c0052b-1c42-4201-a3a1-4cd023cc3e47">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b31}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band height="46">
+			<textField>
+				<reportElement x="173" y="4" width="43" height="13" uuid="442d0aa4-1d45-49f3-8a7e-513601eef2cc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Distribusi :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="4" width="150" height="13" uuid="840cdd57-beae-42d1-9bd3-50f49b43fd0e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1. Counter Konsinyasi"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="17" width="150" height="13" uuid="373f37f0-e286-405b-9dad-72caad728415"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2. PT Administrasi Umum (Khusus tgl 15 )"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="80" height="20" uuid="830b3b55-3523-44c1-839a-39e948ed67a3"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dicetak Tanggal :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="80" height="20" uuid="0e979e89-cd8f-415d-bec9-02a7bda5201d"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TGL_CTK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="26" width="151" height="20" uuid="6cc892dc-44ed-4f23-a2cd-92a9f6a92eaf"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TD-PBK1-152.1 (Ex. TD-PPK5-067.1)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -25,67 +25,63 @@
 				<div class="card-body">
 					<form method="POST" action="{{url('jasper-sup-report')}}">
 					@csrf
+
 					<div class="form-group row">
-						<!--<div class="col-md-1">-->
-						<!--	<label><strong>Gol :</strong></label>-->
-							
-						<!--	<select name="gol" id="gol" class="form-control gol">-->
-						<!--		<option value="Y" {{ session()->get('filter_gol')=='Y' ? 'selected': ''}}>Y</option>-->
-						<!--		<option value="Z" {{ session()->get('filter_gol')=='Z' ? 'selected': ''}}>Z</option>-->
-						<!--	</select>-->
-						<!--</div>-->
+						<div class="col-md-1" align="right">
+							<label class="form-label">Dari Supplier</label>
+						</div>
 						<div class="col-md-2">
+							<input type="text" class="form-control kodes1" id="kodes1" name="kodes1" placeholder="Masukkan No. Supl" value="{{ session()->get('filter_kodes1') }}" readonly>
+						</div>
+						<div>s/d</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control kodes2" id="kodes2" name="kodes2" placeholder="Masukkan No. Supl" value="{{ session()->get('filter_kodes1') }}" readonly>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-md-1" align="right">
+							<label class="form-label">Budget</label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control budget" id="budget" name="budget" placeholder="Masukkan Jenis" value="{{ session()->get('filter_budget') }}">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-md-1" align	="right">
 							<label><strong>Periode :</strong></label>
-							<select name="perio" id="perio" class="form-control perio" style="width: 200px">
+						</div>
+						<div class="col-md-2">
+							<select name="per" id="per" class="form-control per" style="width: 200px">
 								<option value="">--Pilih Periode--</option>
 								@foreach($per as $perD)
-									<option value="{{$perD->PERIO}}" {{ session()->get('filter_per')== $perD->PERIO ? 'selected' : '' }}>{{$perD->PERIO}}</option>
+									<option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
 								@endforeach
 							</select>
 						</div>
-						<!--
-						<select name="acno" id="acno" class="form-control acno" style="width: 200px">
-							<option value="">--Pilih Bahan--</option>
-							<option value="1000">Kas</option>
-							<option value="1100">Bank</option>
-						</select>
-						-->
-
 					</div>
+
+					<div class="form-group row">
+						<div class="col-md-1" align="right">
+							<label><strong>Tanggal :</strong></label>
+						</div>
+						<div class="col-md-3">
+							<input class="form-control date tglDr" id="tglDr" name="tglDr"
+							type="text" autocomplete="off" value="{{ session()->get('filter_tglDari') }}"> 
+						</div>
+						<div>s.d.</div> 
+						<div class="col-md-3">
+							<input class="form-control date tglSmp" id="tglSmp" name="tglSmp"
+							type="text" autocomplete="off" value="{{ session()->get('filter_tglSampai') }}">
+						</div>
+					</div>
+
 					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
 					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rsup")}}'">Reset</button>
 					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>
-					<!--
-					<table class="table table-fixed table-striped table-border table-hover nowrap datatable">
-						<thead class="table-dark">
-							<tr>
-								<th scope="col" style="text-align: center">#</th>
-								<th scope="col" style="text-align: center">Kode</th>
-								<th scope="col" style="text-align: center">-</th>
-								<th scope="col" style="text-align: center">Awal</th>
-								<th scope="col" style="text-align: center">Beli</th>
-								<th scope="col" style="text-align: center">Bayar</th>
-								<th scope="col" style="text-align: center">Lain</th>
-								<th scope="col" style="text-align: center">Akhir</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-						<tfoot>
-							<tr>
-								<th></th>
-								<th>Total</th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-							</tr>
-						</tfoot>							
-					</table> -->
 					
 				<!-- PASTE DIBAWAH INI -->
 				<!-- DISINI BATAS AWAL KOOLREPORT-->
@@ -205,138 +201,201 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="browseSuplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSuplierModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="browseSuplierModalLabel">Cari Suplier</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bsuplier">
+				<thead>
+					<tr>
+						<th>Suplier</th>
+						<th>Nama</th>
+						<th>Alamat</th>
+						<th>Kota</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="browseSuplier2Modal" tabindex="-1" role="dialog" aria-labelledby="browseSuplier2ModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="browseSuplier2ModalLabel">Cari Suplier2</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bsuplier2">
+				<thead>
+					<tr>
+						<th>Suplier</th>
+						<th>Nama</th>
+						<th>Alamat</th>
+						<th>Kota</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+</div>
 @endsection
 
 @section('javascripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
-	/*
 	$(document).ready(function() {
-	fill_datatable();
 		
-	function fill_datatable(per='')	
-	{
-			var dataTable = $('.datatable').DataTable({
-				dom: '<"row"<"col-4"B>>fltip',
-				lengthMenu: [
-					[ 10, 25, 50, -1 ],
-					[ '10 rows', '25 rows', '50 rows', 'Show all' ]
-				],
-				processing: true,
-				serverSide: true,
-				autoWidth: true,
-				//scrollX: true,
-				//'scrollY': '400px',
-				"order": [[ 0, "asc" ]],
-				ajax: 
+		$('.date').datepicker({  
+			dateFormat: 'dd-mm-yy'
+		}); 
+
+
+		var dTableBSuplier;
+		loadDataBSuplier = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: "{{url('sup/browse_amplop')}}",
+				success: function( response )
 				{
-					url: "{{ route('get-sup-report') }}",
-					data: {
-						'perio': per,
-					},
-				},
-				columns: 
-				[
-					{data: 'DT_RowIndex', orderable: false, searchable: false },
-					{data: 'KODES', name: 'KODES'},
-					{data: 'NAMAS', name: 'NAMAS'},
-					{
-						data: 'AW', 
-						name: 'AW',
-						render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-					},
-					{
-						data: 'MA', 
-						name: 'MA',
-						render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-					},						
-					{
-						data: 'KE', 
-						name: 'KE',
-						render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-					},
-					{
-						data: 'LN', 
-						name: 'LN',
-						render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-					},
-					{
-						data: 'AK', 
-						name: 'AK',
-						render: $.fn.dataTable.render.number( ',', '.', 2, '' )
+					resp = response;
+					if(dTableBSuplier){
+						dTableBSuplier.clear();
 					}
-				],
-				
-			///////////////////////////////////////////////////
-				footerCallback: function (row, data, start, end, display) {
-					var api = this.api();
-			
-					// Remove the formatting to get integer data for summation
-					var intVal = function (i) {
-						return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
-					};
-			
-					// Total over this page
-					pageAwalTotal = api
-						.column(3, { page: 'current' })
-						.data()
-						.reduce(function (a, b) {
-							return intVal(a) + intVal(b);
-						}, 0);
-					pageJualTotal = api
-						.column(4, { page: 'current' })
-						.data()
-						.reduce(function (a, b) {
-							return intVal(a) + intVal(b);
-						}, 0);
-					pageBayarTotal = api
-						.column(5, { page: 'current' })
-						.data()
-						.reduce(function (a, b) {
-							return intVal(a) + intVal(b);
-						}, 0);
-					pageLainTotal = api
-						.column(6, { page: 'current' })
-						.data()
-						.reduce(function (a, b) {
-							return intVal(a) + intVal(b);
-						}, 0);
-					pageAkhirTotal = api
-						.column(7, { page: 'current' })
-						.data()
-						.reduce(function (a, b) {
-							return intVal(a) + intVal(b);
-						}, 0);
-					
-			
-					// Update footer
-					$(api.column(3).footer()).html(pageAwalTotal.toLocaleString('en-US'));
-					$(api.column(4).footer()).html(pageJualTotal.toLocaleString('en-US'));
-					$(api.column(5).footer()).html(pageBayarTotal.toLocaleString('en-US'));
-					$(api.column(6).footer()).html(pageLainTotal.toLocaleString('en-US'));
-					$(api.column(7).footer()).html(pageAkhirTotal.toLocaleString('en-US'));
-				},
-			
+					for(i=0; i<resp.length; i++){
+						
+						dTableBSuplier.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSuplier(\''+resp[i].KODES+'\')">'+resp[i].KODES+'</a>',
+							resp[i].NAMAS,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
+						]);
+					}
+					dTableBSuplier.draw();
+				}
 			});
 		}
 		
-		$('#filter').click(function() {
-			//var acno = $('#acno').val();
-			//if (acno != '')
-			//{
-				$('.datatable').DataTable().destroy();
-				var periode = $('#perio').val();
-				fill_datatable(periode);
-			//}
+		dTableBSuplier = $("#table-bsuplier").DataTable({
+			
+		});
+		
+		browseSuplier = function(){
+			loadDataBSuplier();
+			$("#browseSuplierModal").modal("show");
+		}
+		
+		chooseSuplier = function(KODES){
+			$("#kodes1").val(KODES);
+			$("#browseSuplierModal").modal("hide");
+		}
+		
+		$("#kodes1").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseSuplier();
+			}
+		}); 
+
+	//////////////////////////////////////////////////////////////////////
+
+		var dTableBSuplier2;
+		loadDataBSuplier2 = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: "{{url('sup/browse_amplop')}}",
+				success: function( response )
+				{
+					resp = response;
+					if(dTableBSuplier2){
+						dTableBSuplier2.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBSuplier2.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSuplier2(\''+resp[i].KODES+'\')">'+resp[i].KODES+'</a>',
+							resp[i].NAMAS,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
+						]);
+					}
+					dTableBSuplier2.draw();
+				}
+			});
+		}
+		
+		dTableBSuplier2 = $("#table-bsuplier2").DataTable({
+			
+		});
+		
+		browseSuplier2 = function(){
+			loadDataBSuplier2();
+			$("#browseSuplier2Modal").modal("show");
+		}
+		
+		chooseSuplier2 = function(KODES){
+			$("#kodes2").val(KODES);
+			// $("#NAMAS").val(NAMAS);	
+			$("#browseSuplier2Modal").modal("hide");
+		}
+		
+		$("#kodes2").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseSuplier2();
+			}
+		}); 
+
+
+		$('#per').on('change', function () {
+			var per = $(this).val(); // contoh: 01/2026
+
+			if (per) {
+				var split = per.split('/');
+				var bulan = parseInt(split[0]);
+				var tahun = parseInt(split[1]);
+
+				// tanggal pertama
+				var tglAwal = '01-' + (bulan < 10 ? '0' + bulan : bulan) + '-' + tahun;
+
+				// cari tanggal terakhir
+				var lastDay = new Date(tahun, bulan, 0).getDate();
+				var tglAkhir = lastDay + '-' + (bulan < 10 ? '0' + bulan : bulan) + '-' + tahun;
+
+				// set ke input
+				$('#tglDr').val(tglAwal);
+				$('#tglSmp').val(tglAkhir);
+			}
 		});
 
-		$('#resetfilter').click(function() {
-			var periode = '';
-
-			$('.datatable').DataTable().destroy();
-			fill_datatable(periode);
-		});
-
+		$('#per').trigger('change');
 	});
-	*/
+
 </script>
 @endsection
