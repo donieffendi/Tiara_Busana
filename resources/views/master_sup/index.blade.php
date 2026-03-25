@@ -17,6 +17,10 @@
     .content-header {
         padding: 0 !important;
     }
+
+    .input-group-text {
+        background-color: #f4f6f9;
+    }
 </style>
 
 @section('content')
@@ -81,71 +85,6 @@
                                                             value="4" id="columnPemilik" checked>
                                                         <label class="form-check-label" for="columnPemilik">Pemilik</label>
                                                     </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="5" id="columnEmail" checked>
-                                                        <label class="form-check-label" for="columnEmail">Email</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="6" id="columnAlamatKantor">
-                                                        <label class="form-check-label" for="columnAlamatKantor">Alamat Kantor</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="7" id="columnKotaPemilik">
-                                                        <label class="form-check-label" for="columnKotaPemilik">Kota Pemilik</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="8" id="columnAlamatGudang">
-                                                        <label class="form-check-label" for="columnAlamatGudang">Alamat Gudang</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="9" id="columnAlamatRumah" checked>
-                                                        <label class="form-check-label" for="columnAlamatRumah">Alamat Rumah</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="10" id="columnTlpKantor" checked>
-                                                        <label class="form-check-label" for="columnTlpKantor">Tlp Kantor</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="11" id="columnTlpRumah" checked>
-                                                        <label class="form-check-label" for="columnTlpRumah">Tlp Rumah</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="12" id="columnFax" checked>
-                                                        <label class="form-check-label" for="columnFax">Fax</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="13" id="columnBank" checked>
-                                                        <label class="form-check-label" for="columnBank">Bank</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="14" id="columnKotaBank" checked>
-                                                        <label class="form-check-label" for="columnKotaBank">Kota Bank</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="15" id="columnNamaRekening" checked>
-                                                        <label class="form-check-label" for="columnNamaRekening">Nama Rekening</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="16" id="columnRekening" checked>
-                                                        <label class="form-check-label" for="columnRekening">Rekening</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                                            value="17" id="columnCaraBayar" checked>
-                                                        <label class="form-check-label" for="columnCaraBayar">Cara Bayar</label>
-                                                    </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -158,8 +97,32 @@
                                     </div>
                                 </div>
 
-                            <!-- batas filter -->
+                                <!-- batas filter -->
 
+                                <div class="row mb-3 align-items-center">
+
+                                    <!-- Label -->
+                                    <div class="col-md-2" align="right">
+                                        <label for="kodes1" class="mb-0">Kode Supplier</label>
+                                    </div>
+
+                                    <!-- Input range -->
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="text" id="kodes1" class="form-control" placeholder="Kode Awal">
+                                            <span class="input-group-text">s/d</span>
+                                            <input type="text" id="kodes2" class="form-control" placeholder="Kode Akhir">
+                                        </div>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="col-md-2">
+                                        <button id="btnPrint" class="btn btn-warning w-100">
+                                            <i class="fas fa-print"></i> Print
+                                        </button>
+                                    </div>
+
+                                </div>
 
                                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable"
                                     id="datatable">
@@ -194,6 +157,8 @@
     <!-- filter kolom di index -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- batas filter  -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
 
@@ -246,55 +211,6 @@
                         data: 'PEMILIK',
                         name: 'PEMILIK'
                     },
-
-                    // {
-                    //     data: 'P_ALMT',
-                    //     name: 'P_ALMT'
-                    // },
-                    // {
-                    //     data: 'P_KOTA',
-                    //     name: 'P_KOTA'
-                    // },
-                    // {
-                    //     data: 'G_ALMT',
-                    //     name: 'G_ALMT'
-                    // },
-                    // {
-                    //     data: 'R_ALMT',
-                    //     name: 'R_ALMT'
-                    // },
-                    // {
-                    //     data: 'P_TLP',
-                    //     name: 'P_TLP'
-                    // },
-                    // {
-                    //     data: 'R_TLP',
-                    //     name: 'R_TLP'
-                    // },
-                    // {
-                    //     data: 'P_FAX',
-                    //     name: 'P_FAX'
-                    // },
-                    // {
-                    //     data: 'B_BANK',
-                    //     name: 'B_BANK'
-                    // },
-                    // {
-                    //     data: 'B_KOTA',
-                    //     name: 'B_KOTA'
-                    // },
-                    // {
-                    //     data: 'B_NAMA',
-                    //     name: 'B_NAMA'
-                    // },
-                    // {
-                    //     data: 'B_ACC',
-                    //     name: 'B_ACC'
-                    // },
-                    // {
-                    //     data: 'CARA',
-                    //     name: 'CARA'
-                    // }
                 ],
                 columnDefs: [{
                     "className": "dt-center",
@@ -325,14 +241,38 @@
             // batas filter
 
             $("div.test_btn").html(
-                '<a class="btn btn-lg btn-md btn-success" href="{{ url('sup/edit?idx=0&tipx=new') }}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
+                '<a class="btn btn-lg btn-md btn-success" href="{{ url('sup/edit?idx=0&tipx=new') }}"> <i class="fas fa-plus fa-sm md-3" ></i></a>'
             );
+
+            $('#btnPrint').on('click', function() {
+				let kodes1 = $('#kodes1').val();
+                let kodes2 = $('#kodes2').val();
+
+                if (kodes1 == '' && kodes2 == '') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Anda belum mengisi filter!',
+                    });
+                    return;
+                }
+
+				Swal.fire({
+					title: 'Cetak Data Barang?',
+					text: "Laporan akan dibuka di tab baru sesuai filter Sub yang dipilih.",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonText: 'Ya, Cetak!',
+					cancelButtonText: 'Batal',
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// buka jasper report di tab baru
+						window.open(`{{ url('sup/print') }}?kodes1=${kodes1}&kodes2=${kodes2}`, '_blank');
+					}
+				});
+			});
         });
-        // Open modal programmatically
-        // document.querySelector('.btn-primary').addEventListener('click', function(e) {
-        //     e.preventDefault(); // Optional, only if needed
-        //     var myModal = new bootstrap.Modal(document.getElementById('columnModal'));
-        //     myModal.show();
-        // });
     </script>
 @endsection

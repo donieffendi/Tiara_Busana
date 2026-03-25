@@ -127,6 +127,7 @@ Route::get('/rsup', 'App\Http\Controllers\OReport\RSupController@report')->middl
     Route::post('/jasper-sup-report', 'App\Http\Controllers\OReport\RSupController@jasperSupReport')->middleware(['auth'])->name('jasper-sup-report');
     Route::get('sup/ceksup', 'App\Http\Controllers\Master\SupController@ceksup')->middleware(['auth']);
 	Route::get('sup/get-select-kodes', 'App\Http\Controllers\Master\SupController@getSelectKodes')->middleware(['auth']);
+    Route::get('/sup/print', 'App\Http\Controllers\Master\SupController@Print')->middleware(['auth'])->name('sup.print');
 // Dynamic Suplier
 Route::get('/sup/edit', 'App\Http\Controllers\Master\SupController@edit')->middleware(['auth'])->name('sup.edit');
 Route::post('/sup/update/{sup}', 'App\Http\Controllers\Master\SupController@update')->middleware(['auth'])->name('sup.update');

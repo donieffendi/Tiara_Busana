@@ -10,6 +10,10 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
+include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
+
+use PHPJasperXML;
+
 class SupController extends Controller
 {
     /**
@@ -51,7 +55,8 @@ class SupController extends Controller
 
     public function browse_amplop(Request $request)
     {
-        $sup = DB::SELECT("SELECT NO_SUPL, NAMA, P_ALMT AS ALAMAT, P_KOTA AS KOTA, P_TLP AS TELP FROM SUPBSN ORDER BY NO_SUPL ");
+        // $sup = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA, TLP_K AS TELP FROM nwmassup ORDER BY NO_SUPL ");
+        $sup = DB::SELECT("SELECT KODES, NAMAS, P_ALMT AS ALAMAT, P_KOTA AS KOTA, P_TLP AS TELP FROM supbsn ORDER BY KODES ");
 
         return response()->json($sup);
     }
@@ -457,5 +462,42 @@ class SupController extends Controller
         $select['total_count'] =  count($selectajax);
         $select['items'] = $selectajax;
         return response()->json($select);
+    }
+
+    public function Print(Request $request)
+    {
+        // Ambil filter range
+        $kodes1  = $request->input('kodes1');
+        $kodes2  = $request->input('kodes2');
+
+        // Nama file laporan Jasper
+        $file = 'Daftar_Supplier'; // ubah sesuai nama file .jrxml kamu, misalnya 'brg_list.jrxml'
+        $PHPJasperXML = new \PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+        // === Query utama (sesuai dengan query DataTables kamu) ===
+        $query = DB::table('nwmassup')
+            ->select(
+                'NO_SUPL',
+                'NAMA',
+                'ALMT_K'
+            );
+
+        // Filter SUB BETWEEN
+        if (!empty($kodes1) && !empty($kodes2)) {
+            $query->whereBetween('NO_SUPL', [$kodes1, $kodes2]);
+        }
+
+        $result = $query->orderBy('NO_SUPL')->get();
+
+        // === Konversi hasil ke array untuk Jasper ===
+        $data = [];
+        
+        $data = json_decode(json_encode($result), true);
+
+        // Kirim data ke Jasper
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I"); // "I" artinya inline (tampil di browser)
     }
 }
