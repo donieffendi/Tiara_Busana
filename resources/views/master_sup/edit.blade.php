@@ -306,8 +306,16 @@
 										<label for="AN_B">Rek. Bank A/N</label>
 									</div>
 									<!-- tutupannya -->
+								</div>
 
-
+								<div class="form-group row">
+									<!-- code text box baru -->
+									<div class="col-md-3 form-group row special-input-label">
+										<input type="text" class="PMSR_PROD" id="PMSR_PROD" name="PMSR_PROD"
+											value="{{$header->PMSR_PROD}}" placeholder=" " >
+										<label for="PMSR_PROD">Pm. Product</label>
+									</div>
+									<!-- tutupannya -->
 								</div>
 
 								<div class="form-group row">

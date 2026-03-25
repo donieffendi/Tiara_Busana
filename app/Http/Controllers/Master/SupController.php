@@ -183,6 +183,7 @@ class SupController extends Controller
                 'PPN'       => (float) str_replace(',', '', $request['PPN']),
                 'BEBAN'       => (float) str_replace(',', '', $request['BEBAN']),
                 'ACC'     => ($request['ACC'] == null) ? "" : $request['ACC'],
+                'PMSR_PROD'     => ($request['PMSR_PROD'] == null) ? "" : $request['PMSR_PROD'],
                 // 'TGL_M'     => date('Y-m-d', strtotime($request['TGL_M'])),
 
                 // 'USRNM'     => Auth::user()->username,
@@ -406,6 +407,7 @@ class SupController extends Controller
                 'PPN'       => (float) str_replace(',', '', $request['PPN']),
                 'BEBAN'       => (float) str_replace(',', '', $request['BEBAN']),
                 'ACC'     => ($request['ACC'] == null) ? "" : $request['ACC'],
+                'PMSR_PROD'     => ($request['PMSR_PROD'] == null) ? "" : $request['PMSR_PROD'],
 
                 // 'USRNM'     => Auth::user()->username,
                 // 'TG_SMP'    => Carbon::now()
