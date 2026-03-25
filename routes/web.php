@@ -921,7 +921,6 @@ Route::post('jasper-so-report', 'App\Http\Controllers\OReport\RSoController@jasp
 
 // Barang belum Dilayani
 Route::get('/rodcbelum', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@report')->middleware(['auth'])->name('rodcbelum');
-Route::get('/get-odcbelum-report', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@getODCBelumDilayaniReport')->middleware(['auth'])->name('get-odcbelum-report');
 Route::post('/jasper-odcbelum-report', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@jasperRODCBelumLayaniReport')->middleware(['auth'])->name('jasper-odcbelum-report');
 
 // Rencana Order Kode 9
