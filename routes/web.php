@@ -127,6 +127,7 @@ Route::get('/rsup', 'App\Http\Controllers\OReport\RSupController@report')->middl
     Route::post('/jasper-sup-report', 'App\Http\Controllers\OReport\RSupController@jasperSupReport')->middleware(['auth'])->name('jasper-sup-report');
     Route::get('sup/ceksup', 'App\Http\Controllers\Master\SupController@ceksup')->middleware(['auth']);
 	Route::get('sup/get-select-kodes', 'App\Http\Controllers\Master\SupController@getSelectKodes')->middleware(['auth']);
+    Route::get('/sup/print', 'App\Http\Controllers\Master\SupController@Print')->middleware(['auth'])->name('sup.print');
 // Dynamic Suplier
 Route::get('/sup/edit', 'App\Http\Controllers\Master\SupController@edit')->middleware(['auth'])->name('sup.edit');
 Route::post('/sup/update/{sup}', 'App\Http\Controllers\Master\SupController@update')->middleware(['auth'])->name('sup.update');
@@ -173,7 +174,7 @@ Route::get('/rbrg', 'App\Http\Controllers\OReport\RBrgController@report')->middl
     Route::get('/brg/browse_sup', 'App\Http\Controllers\Master\BrgController@browse_sup')->middleware(['auth'])->name('brg/browse_sup');
     Route::get('/brg/browse_sub', 'App\Http\Controllers\Master\BrgController@browse_sub')->middleware(['auth'])->name('brg/browse_sub');
     Route::get('/brg/browse_event', 'App\Http\Controllers\Master\BrgController@browse_event')->middleware(['auth'])->name('brg/browse_event');
-    Route::get('/brg/browse_harga', 'App\Http\Controllers\Master\BrgController@browse_harga')->middleware(['auth'])->name('brg/browse_harga');
+    Route::get('/brg/browse_plu', 'App\Http\Controllers\Master\BrgController@browse_plu')->middleware(['auth'])->name('brg/browse_plu');
     Route::get('/brg/browse_beli', 'App\Http\Controllers\Master\BrgController@browse_beli')->middleware(['auth'])->name('brg/browse_beli');
     Route::get('/brg/browse_koreksi', 'App\Http\Controllers\Master\BrgController@browse_koreksi')->middleware(['auth'])->name('brg/browse_koreksi');
     Route::get('/brg/browse_sedia', 'App\Http\Controllers\Master\BrgController@browse_sedia')->middleware(['auth'])->name('brg/browse_sedia');
@@ -607,7 +608,6 @@ Route::get('/jstcounterc/{tcounter:NO_ID}', 'App\Http\Controllers\OTransaksi\Cou
 // Operational Buat Faktur Pajak
 
 Route::get('/rfakturpj', 'App\Http\Controllers\OReport\RFakturpjController@report')->middleware(['auth'])->name('rfakturpj');
-Route::get('/get-fakturpj-report', 'App\Http\Controllers\OReport\RFakturpjController@getFakturpjReport')->middleware(['auth'])->name('get-fakturpj-report');
 Route::post('jasper-fakturpj-report', 'App\Http\Controllers\OReport\RFakturpjController@jasperFakturpjReport')->middleware(['auth']);
 
 // Posting
@@ -920,13 +920,11 @@ Route::post('jasper-so-report', 'App\Http\Controllers\OReport\RSoController@jasp
 
 // Barang belum Dilayani
 Route::get('/rodcbelum', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@report')->middleware(['auth'])->name('rodcbelum');
-Route::get('/get-odcbelum-report', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@getODCBelumDilayaniReport')->middleware(['auth'])->name('get-odcbelum-report');
 Route::post('/jasper-odcbelum-report', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@jasperRODCBelumLayaniReport')->middleware(['auth'])->name('jasper-odcbelum-report');
 
 // Rencana Order Kode 9
 Route::get('/rrcnorder9', 'App\Http\Controllers\OReport\RRcnorder9Controller@report')->middleware(['auth'])->name('rrcnorder9');
-Route::get('/get-rcnorder9-report', 'App\Http\Controllers\OReport\RRcnorder9Controller@getRcnorder9Report')->middleware(['auth'])->name('get-rcnorder9-report');
-Route::get('/print-report', 'App\Http\Controllers\OReport\RRcnorder9Controller@print')->name('print.report');
+Route::post('/jasper-rcnorder9-report', 'App\Http\Controllers\OReport\RODCBelumDilayaniController@jasperRcnorder9Report')->middleware(['auth'])->name('jasper-rcnorder9-report');
 
 // Operational Jual
 

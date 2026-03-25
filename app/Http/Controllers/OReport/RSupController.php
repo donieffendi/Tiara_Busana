@@ -24,15 +24,16 @@ class RSupController extends Controller
 
    public function report()
     {
-		$cbg = Cbg::groupBy('CBG')->get();
-		session()->put('filter_cbg', '');
+		$per = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+        session()->put('filter_periode', '');
 
-		$kodes = Sup::query()->get();
-		$per = Perid::query()->get();
-		session()->put('filter_gol', '');
-		session()->put('filter_per', '');
+		session()->put('filter_kodes1', '');
+		session()->put('filter_kodes2', '');
+        session()->put('filter_tglDari', date("d-m-Y"));
+        session()->put('filter_tglSampai', date("d-m-Y"));
+		session()->put('filter_budget', '');
 		
-        return view('oreport_sup.report')->with(['kodes' => $kodes])->with(['per' => $per])->with(['cbg' => $cbg])->with(['hasil' => []]);
+        return view('oreport_sup.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 
@@ -43,30 +44,29 @@ class RSupController extends Controller
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		
-		if($request['cbg'])
-		{
-			$cbg = $request['cbg'];
-		}
+		$periode = $request->per;
 
-		
-        if ($request->session()->has('periode')) 
-		{
-			$periode = $request->session()->get('periode')['bulan']. '/' . $request->session()->get('periode')['tahun'];
-		} else
-		{
-			$periode = '';
-		}
-		
-		$bulan = substr($periode,0,2);
-		$tahun = substr($periode,3,4);
-		/*            
-		$query = DB::SELECT("
-			SELECT sup.KODES,sup.NAMAS,supd.AW$bulan as AW,supd.MA$bulan as MA, 
-			supd.KE$bulan as KE,supd.LN$bulan as LN,supd.AK$bulan as AK 
-			from sup,supd 
-			WHERE sup.KODES=supd.KODES and supd.YER='$tahun';
-		");
-		*/        
+        $bulan = substr($periode,0,2);
+        $tahun = substr($periode,3,4);
+			
+		if (!empty($request->kodes1) && !empty($request->kodes2))
+        {
+            $filterkodes = " AND KODES >= '".$request->kodes1."' AND KODES <= '".$request->kodes2."' ";
+        }
+
+        if (!empty($request->tglDr) && !empty($request->tglSmp))
+        {
+            $tglDrD = date("Y-m-d", strtotime($request->tglDr));
+            $tglSmpD = date("Y-m-d", strtotime($request->tglSmp));
+            $filtertgl = " AND TGL >= '".$tglDrD."' AND TGL <= '".$tglSmpD."' ";
+        }
+
+        session()->put('filter_kodes1', $request->kodes1);
+        session()->put('filter_kodes2', $request->kodes2);
+        session()->put('filter_tglDari', $request->tglDr);
+        session()->put('filter_tglSampai', $request->tglSmp);
+        session()->put('filter_periode', $request->per);
+        session()->put('filter_budget', $request->budget);
 		
 		$queryakum = DB::SELECT("SET @tglx:=last_day(concat('$tahun','-','$bulan','-01'));");
 		$query = DB::SELECT("
@@ -89,35 +89,17 @@ class RSupController extends Controller
 		order by sup.KODES;
 		");
 
-		$per = Perid::query()->get();
-		session()->put('filter_gol', $request->gol);
-		session()->put('filter_per', $periode);
-		session()->put('filter_cbg', $request->cbg);
-
 		if($request->has('filter'))
 		{
-			$cbg = Cbg::groupBy('CBG')->get();
+			$per = DB::select("SELECT * FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 
-			return view('oreport_sup.report')->with(['per' => $per])->with(['cbg' => $cbg])->with(['hasil' => $query]);
+			return view('oreport_sup.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];
-		foreach ($query as $key => $value)
-		{
-			array_push($data, array(
-				'KODES' => $query[$key]->KODES,
-				'NAMAS' => $query[$key]->NAMAS,
-				'AW' => $query[$key]->AW,
-				'MA' => $query[$key]->MA,
-				'KE' => $query[$key]->KE,
-				'LN' => $query[$key]->LN,
-				'AK' => $query[$key]->AK,
-				'SATU' => $query[$key]->SATU,
-				'DUA' => $query[$key]->DUA,
-				'TIGA' => $query[$key]->TIGA,
-				'SALDO' => $query[$key]->SALDO,
-			));
-		}
+		
+		$data = json_decode(json_encode($query), true);
+
 		$PHPJasperXML->setData($data);
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");

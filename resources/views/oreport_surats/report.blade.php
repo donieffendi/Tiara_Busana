@@ -29,7 +29,7 @@
                             <!-- ================= FILTER GLOBAL ================= -->
                             <div class="form-group row">
 
-                                 <div class="col-md-2 mr-4">
+                                <div class="col-md-2 mr-4">
                                     <label>Periode</label>
                                     <select name="per" id="per" class="form-control per" style="width: 150px">
                                         <option value="">--Pilih Periode--</option>
@@ -71,14 +71,16 @@
                                     <label>s/d</label>
                                     <input type="text" name="sub2" class="form-control" value="{{ session('sub2') }}">
                                 </div>
-                                 <div class="col-md-2">
+                                <div class="col-md-2">
                                     <label>Suplier</label>
-                                    <input type="text" id="sup" name="sup1" class="form-control" value="{{ session('sup1') }}" readonly>
+                                    <input type="text" id="sup" name="sup1" class="form-control"
+                                        value="{{ session('sup1') }}" readonly>
                                 </div>
 
                                 <div class="col-md-2">
                                     <label>s/d</label>
-                                    <input type="text" id="sup2" name="sup2" class="form-control" value="{{ session('sup2') }}" readonly>
+                                    <input type="text" id="sup2" name="sup2" class="form-control"
+                                        value="{{ session('sup2') }}" readonly>
                                 </div>
 
                             </div>
@@ -105,66 +107,184 @@
                                     <div class="form-group row">
                                         <div class="col-md-2">
                                             <label>Kode 1</label>
-                                            <input type="text" name="kode1" class="form-control">
+                                            <input type="text" name="kode1" value="{{ session('kode1') }}" class="form-control">
                                         </div>
 
                                         <div class="col-md-2">
                                             <label>Kode 2</label>
-                                            <input type="text" name="kode2" class="form-control">
+                                            <input type="text" name="kode2" value="{{ session('kode2') }}" class="form-control">
                                         </div>
                                     </div>
 
-                                    <button class="btn btn-success" type="submit" onclick="setMode('periode', true)">Filter Periode</button>
+                                    <button class="btn btn-success" type="submit" onclick="setMode('periode', true)">Filter
+                                        Periode</button>
 
-<button class="btn btn-warning" type="submit" formtarget="_blank" onclick="setMode('periode', false)">Cetak</button>
+                                    <button class="btn btn-warning" type="submit" formtarget="_blank"
+                                        onclick="setMode('periode', false)">Cetak</button>
                                     <br><br>
 
                                     <!-- TABLE PERIODE -->
-                                    <div style="overflow-x:auto;">
+                                    {{-- <div style="overflow-x:auto;">
+                                        <script>
+                                            let dataHasil = @json($hasil);
+                                            console.log(dataHasil);
+                                        </script>
                                         <?php
                                         if ($hasil) {
                                             \koolreport\datagrid\DataTables::create([
-                                                'dataSource' => $hasil,
-                                               'columns' => [
-    'cnt'      => 'Sub',
-    'kd_brg'   => 'Kode Barang',
-    'barcode'  => 'Barcode',
-    'NA_brg'   => 'Nama Barang',
+                                                'dataSource' => collect($hasil),
+                                                'columns' => [
+                                                    'CNT' => 'Sub',
+                                                    'KD_BRG' => 'Kode Barang',
+                                                    'BARCODE' => 'Barcode',
+                                                    'NA_BRG' => 'Nama Barang',
 
-    'tgl_trm'  => 'Tgl Beli',
-    'tgl_jual' => 'Tgl Jual',
+                                                    'TGL_TRM' => 'Tgl Beli',
+                                                    'TGL_JUAL' => 'Tgl Jual',
 
-    'aw' => [
-        'label' => 'Awal',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ma' => [
-        'label' => 'Masuk',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ke' => [
-        'label' => 'Keluar',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ln' => [
-        'label' => 'Lain',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ak' => [
-        'label' => 'Akhir',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-],
+                                                    'AW' => [
+                                                        'label' => 'Awal',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'MA' => [
+                                                        'label' => 'Masuk',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'KE' => [
+                                                        'label' => 'Keluar',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'LN' => [
+                                                        'label' => 'Lain',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'AK' => [
+                                                        'label' => 'Akhir',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                ],
                                                 'options' => [
                                                     'paging' => true,
                                                     'searching' => true,
                                                     'dom' => 'Blfrtip',
                                                     'buttons' => ['copy', 'excel', 'csv', 'pdf', 'print'],
+                                                ],
+                                            ]);
+                                        }
+                                        ?>
+                                    </div> --}}
+                                    <div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
+                                        <?php
+                                        use koolreport\datagrid\DataTables;
+
+                                        if ($hasil) {
+                                            DataTables::create([
+                                                'dataSource' => $hasil,
+                                                'name' => 'example',
+                                                'fastRender' => true,
+                                                'fixedHeader' => true,
+                                                'scrollX' => true,
+                                                'showFooter' => true,
+                                                'showFooter' => 'bottom',
+                                                'columns' => [
+                                                    'CNT' => [
+                                                        'label' => 'CNT',
+                                                    ],
+                                                    'KD_BRG' => [
+                                                        'label' => 'Kode Barang',
+                                                    ],
+                                                    'NA_BRG' => [
+                                                        'label' => 'Nama Barang',
+                                                    ],
+                                                    'BARCODE' => [
+                                                        'label' => 'Barcode',
+                                                    ],
+                                                    'TGL_TRM' => [
+                                                        'label' => 'Tgl Terima',
+                                                    ],
+                                                    'TGL_JUAL' => [
+                                                        'label' => 'Tgl Jual',
+                                                    ],
+                                                    'AW' => [
+                                                        'label' => 'AW',
+                                                        'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
+                                                        'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
+                                                    ],
+                                                    'MA' => [
+                                                        'label' => 'MA',
+                                                        'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
+                                                        'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
+                                                    ],
+                                                    'KE' => [
+                                                        'label' => 'KE',
+                                                        'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
+                                                        'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
+                                                    ],
+
+                                                    'LN' => [
+                                                        'label' => 'LN',
+                                                        'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
+                                                        'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
+                                                    ],
+                                                    'AK' => [
+                                                        'label' => 'AK',
+                                                        'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
+                                                        'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
+                                                    ],
+                                                ],
+                                                'cssClass' => [
+                                                    'table' => 'table table-hover table-striped table-bordered compact',
+                                                    'th' => 'label-title',
+                                                    'td' => 'detail',
+                                                    'tf' => 'footerCss',
+                                                ],
+                                                'options' => [
+                                                    'columnDefs' => [
+                                                        [
+                                                            'className' => 'dt-right',
+                                                            'targets' => [8, 9, 10],
+                                                        ],
+                                                    ],
+                                                    'order' => [],
+                                                    'paging' => true,
+                                                    // "pageLength" => 12,
+                                                    'searching' => true,
+                                                    'colReorder' => true,
+                                                    'select' => true,
+                                                    'dom' => 'Blfrtip', // B e dilangi
+                                                    // "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
+                                                    'buttons' => [
+                                                        [
+                                                            'extend' => 'collection',
+                                                            'text' => 'Export',
+                                                            'buttons' => ['copy', 'excel', 'csv', 'pdf', 'print'],
+                                                        ],
+                                                    ],
                                                 ],
                                             ]);
                                         }
@@ -191,52 +311,54 @@
                                         </div>
                                     </div>
 
-                                   <button class="btn btn-success" type="submit" onclick="setMode('card', true)">Filter Card</button>
+                                    <button class="btn btn-success" type="submit" onclick="setMode('card', true)">Filter
+                                        Card</button>
 
-<button class="btn btn-warning" type="submit" formtarget="_blank" onclick="setMode('card', false)">Cetak</button>
+                                    <button class="btn btn-warning" type="submit" formtarget="_blank"
+                                        onclick="setMode('card', false)">Cetak</button>
                                     <br><br>
 
                                     <!-- TABLE CARD -->
                                     <div style="overflow-x:auto;">
                                         <?php
-                                        if ($hasil) {
+                                        if ($hasil2) {
                                             \koolreport\datagrid\DataTables::create([
-                                                'dataSource' => $hasil,
-                                                                                              'columns' => [
-    'cnt'      => 'Sub',
-    'kd_brg'   => 'Kode Barang',
-    'barcode'  => 'Barcode',
-    'NA_brg'   => 'Nama Barang',
+                                                'dataSource' => $hasil2,
+                                                'columns' => [
+                                                    'cnt' => 'Sub',
+                                                    'kd_brg' => 'Kode Barang',
+                                                    'barcode' => 'Barcode',
+                                                    'NA_brg' => 'Nama Barang',
 
-    'tgl_trm'  => 'Tgl Beli',
-    'tgl_jual' => 'Tgl Jual',
+                                                    'tgl_trm' => 'Tgl Beli',
+                                                    'tgl_jual' => 'Tgl Jual',
 
-    'aw' => [
-        'label' => 'Awal',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ma' => [
-        'label' => 'Masuk',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ke' => [
-        'label' => 'Keluar',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ln' => [
-        'label' => 'Lain',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-    'ak' => [
-        'label' => 'Akhir',
-        'type' => 'number',
-        'footer' => 'sum',
-    ],
-],
+                                                    'aw' => [
+                                                        'label' => 'Awal',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'ma' => [
+                                                        'label' => 'Masuk',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'ke' => [
+                                                        'label' => 'Keluar',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'ln' => [
+                                                        'label' => 'Lain',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                    'ak' => [
+                                                        'label' => 'Akhir',
+                                                        'type' => 'number',
+                                                        'footer' => 'sum',
+                                                    ],
+                                                ],
                                                 'options' => [
                                                     'paging' => true,
                                                     'searching' => true,
@@ -385,7 +507,8 @@
                     for (i = 0; i < resp.length; i++) {
 
                         dTableSup.row.add([
-                            '<a href="javascript:void(0);" onclick="chooseSup(\'' + resp[i].NO_SUPL +
+                            '<a href="javascript:void(0);" onclick="chooseSup(\'' + resp[i]
+                            .NO_SUPL +
                             '\')">' + resp[i].NO_SUPL + '</a>',
                             resp[i].NAMA,
                             resp[i].ALAMAT,
@@ -580,16 +703,16 @@
         });
 
         function setMode(mode, isFilter) {
-    document.getElementById('mode').value = mode;
+            document.getElementById('mode').value = mode;
 
-    if (isFilter) {
-        // tambahin flag filter
-        let input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "filter";
-        input.value = "1";
-        document.forms[0].appendChild(input);
-    }
-}
+            if (isFilter) {
+                // tambahin flag filter
+                let input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "filter";
+                input.value = "1";
+                document.forms[0].appendChild(input);
+            }
+        }
     </script>
 @endsection

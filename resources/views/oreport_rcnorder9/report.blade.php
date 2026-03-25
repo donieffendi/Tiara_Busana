@@ -1,406 +1,329 @@
 @extends('layouts.plain')
 
-@section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endsection
-
 @section('content')
-    <div class="content-wrapper">
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Laporan Masa Tarik Kode 9</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active">Laporan Masa Tarik Kode 9</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="content-wrapper">
+	<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+		<div class="col-sm-6">
+			<h1 class="m-0">Laporan Barang Di Order (K.9)</h1>
+		</div>
+		<div class="col-sm-6">
+			<ol class="breadcrumb float-sm-right">
+				<li class="breadcrumb-item active">Laporan Barang Di Order (K.9)</li>
+			</ol>
+		</div>
+		</div>
+	</div>
+	</div>
+	
+	<div class="content">
+		<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<form method="POST" action="{{url('jasper-rcnorder9-report')}}">
+					@csrf
+					
+					
+					
+					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
+					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rrcnorder9")}}'">Reset</button>
+					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
+					</form>
+					<div style="margin-bottom: 15px;"></div>
+					
+				<!-- PASTE DIBAWAH INI -->
+				<!-- DISINI BATAS AWAL KOOLREPORT-->
+				<div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
+					<?php
+					use \koolreport\datagrid\DataTables;
 
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Filter Section -->
-                                <form method="GET" action="{{ route('get-rcnorder9-report') }}" id="macetForm">
-                                    @csrf
-                                    <div class="row align-items-end mb-3">
-                                        <div class="col-md-2  mb-2">
-                                            <label for="cbg">Cabang</label>
-                                            <select name="cbg" id="cbg" class="form-control" required>
-                                                <option value="">Pilih Cabang</option>
-                                                @foreach ($cbg as $cabang)
-                                                    <option value="{{ $cabang->CBG }}"
-                                                        {{ session()->get('filter_cbg') == $cabang->CBG ? 'selected' : '' }}>
-                                                        {{ $cabang->CBG }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+					if($hasil)
+					{
+						DataTables::create(array(
+							"dataSource" => $hasil,
+							"name" => "example",
+							"fastRender" => true,
+							"fixedHeader" => true,
+							'scrollX' => true,
+							"showFooter" => true,
+							"showFooter" => "bottom",
+							"columns" => array(
+								"ROWNUM" => array(
+									"label" => "No",
+									"value" => function($row, $index) {
+										return $index + 1;
+									}
+								),
+								"NO_BUKTI" => array(
+									"label" => "No Sp",
+								),
+								"KD_BRG" => array(
+									"label" => "P.L.U",
+								),
+								"ITEM_SUP" => array(
+									"label" => "Item Supplier",
+								),
+								"NA_BRG" => array(
+									"label" => "Nama Barang",
+								),
+								"QTY" => array(
+									"label" => "Jumlah Order",
+									"type" => "number",
+									"decimals" => 2,
+									"decimalPoint" => ".",
+									"thousandSeparator" => ",",
+									"footer" => "sum",
+									"footerText" => "<b>@value</b>",
+								),
+								"KET" => array(
+									"label" => "Keterangan",
+								)
+							),
+							"cssClass" => array(
+								"table" => "table table-hover table-striped table-bordered compact",
+								"th" => "label-title",
+								"td" => "detail",
+								"tf" => "footerCss"
+							),
+							"options" => array(
+								"columnDefs"=>array(
+									array(
+										"className" => "dt-right", 
+										"targets" => [5],
+									),
+								),
+								"order" => [],
+								"paging" => true,
+								// "pageLength" => 12,
+								"lengthMenu" => [[10, 25, 50,-1], [10,25,50, "All"]],
+								"searching" => true,
+								"colReorder" => true,
+								"select" => true,
+								"dom" => 'Blfrtip', // B e dilangi
+								// "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
+								"buttons" => array(
+									array(
+										"extend" => 'collection',
+										"text" => 'Export',
+										"buttons" => [
+											'copy',
+											'excel',
+											'csv',
+											'pdf',
+											'print'
+										],
+									),
+								),
+							),
+						));
+					}
+					?>
+				</div>
+				<!-- DISINI BATAS AKHIR KOOLREPORT-->
+				</div>
+			</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="browseSuplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSuplierModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="browseSuplierModalLabel">Cari Suplier</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bsuplier">
+				<thead>
+					<tr>
+						<th>Suplier</th>
+						<th>Nama</th>
+						<th>Alamat</th>
+						<th>Kota</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+</div>
 
-                                        <div class="col-md-2 mb-2" id="wrapper-nobukti">
-                                            <label for="sub">Sub <span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                {{-- <input type="text" name="sub" id="sub" class="form-control"
-                                                    placeholder="Masukkan SUB" value="{{ session()->get('filter_sub') }}"
-                                                    required> --}}
-                                                <select name="sub" id="sub" class="form-control select2" required>
-                                                    <option value="ALL"
-                                                        {{ session()->get('filter_sub') == 'ALL' ? 'selected' : '' }}>
-                                                        ALL
-                                                    </option>
-
-                                                    @foreach($subList as $subItem)
-                                                        <option value="{{ $subItem }}"
-                                                            {{ session()->get('filter_sub') == $subItem ? 'selected' : '' }}>
-                                                            {{ $subItem }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2 mb-2" id="wrapper-posting">
-                                            <input type="checkbox" name="ulang" id="ulang" value="1"
-                                                {{ session()->get('filter_ulang') == 1 ? 'checked' : '' }}>
-                                            <label for="ulang">Ulang</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="row align-items-end mb-3">
-                                        <div class="col-md-2 mb-2">
-                                            <label for="nobukti">No. Rencana Order <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <input type="text" name="nobukti" id="nobukti" class="form-control"
-                                                    placeholder="No. Rencana Order"
-                                                    value="{{ session()->get('filter_nobukti') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 mb-2">
-                                            <button class="btn btn-dark mr-1" type="submit" name="action" value="posting">
-                                                <i class="fas fa-search mr-1"></i>Posting
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="row align-items-end mb-3">
-                                        <div class="col-md-12 mb-2 text-right">
-                                            <input type="hidden" name="action" value="filter">
-                                            <button class="btn btn-primary mr-1" type="submit" name="action"
-                                                value="filter">
-                                                <i class="fas fa-search mr-1"></i>Proses
-                                            </button>
-                                            <button class="btn btn-danger mr-1" type="button" onclick="resetForm()">
-                                                <i class="fas fa-undo mr-1"></i>Reset
-                                            </button>
-                                            <button class="btn btn-primary mr-1" type="button" name="print"
-                                                id="print">
-                                                <i class="fas fa-print mr-1"></i>Print
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Active Filter Display -->
-                                    @if (session()->get('filter_ulang') == 0)
-                                        @if (session()->get('filter_cbg') && session()->get('filter_sub') && session()->get('filter_ulang'))
-                                            <div class="row mb-3">
-                                                <div class="col-12">
-                                                    <div class="alert alert-info">
-                                                        <strong>Filter Aktif:</strong>
-                                                        Cabang: {{ session()->get('filter_cbg') }} |
-                                                        SUB: {{ session()->get('filter_sub') }} |
-                                                        {{ session()->get('filter_ulang') == 1 ? 'Bukan Tampil Ulang' : 'Tampil Ulang' }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @elseif (session()->get('filter_ulang') == 1)
-                                        @if (session()->get('filter_nobukti') && session()->get('filter_ulang'))
-                                            <div class="row mb-3">
-                                                <div class="col-12">
-                                                    <div class="alert alert-info">
-                                                        <strong>Filter Aktif:</strong>
-                                                        No. Rencana Order: {{ session()->get('filter_nobukti') }} |
-                                                        {{ session()->get('filter_ulang') == 1 ? 'Bukan Tampil Ulang' : 'Tampil Ulang' }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endif
-                                </form>
-
-                                <!-- Data Table Section -->
-                                <div class="report-content">
-                                    @if ($rcnorder9 && count($rcnorder9) > 0)
-                                        <?php
-                                        \koolreport\datagrid\DataTables::create([
-                                            'dataSource' => $rcnorder9,
-                                            'name' => 'barangMacetTable',
-                                            'fastRender' => true,
-                                            'fixedHeader' => true,
-                                            // 'scrollX' => true,
-                                            'showFooter' => false,
-                                            'columns' => [
-                                                'NAMAFILE' => [
-                                                    'label' => 'Nama File',
-                                                ],
-                                                'KD_BRG' => [
-                                                    'label' => 'Sub Item',
-                                                ],
-                                                'NA_BRG' => [
-                                                    'label' => 'Nama Barang',
-                                                ],
-                                                'KET_UK' => [
-                                                    'label' => 'Ket. Ukuran',
-                                                ],
-                                                'KET_KEM' => [
-                                                    'label' => 'Ket. Kemasan',
-                                                ],
-                                                'SUPP' => [
-                                                    'label' => 'Barcode',
-                                                ],
-                                                'STOK' => [
-                                                    'label' => 'Stok',
-                                                    'type' => 'number',
-                                                    'decimals' => 0,
-                                                ],
-                                                'TARIK' => [
-                                                    'label' => 'Tarik',
-                                                    'type' => 'number',
-                                                    'decimals' => 0,
-                                                ],
-                                                'TGL_TRM' => [
-                                                    'label' => 'Tgl. Beli AKhir',
-                                                ],
-                                                'TGL_PRODUKSI' => [
-                                                    'label' => 'Tgl. Produksi',
-                                                ],
-                                                'TGL_MASA_TARIK' => [
-                                                    'label' => 'Tgl. Masa Tarik',
-                                                ],
-                                                'TGL_KSR' => [
-                                                    'label' => 'Tgl. Jual Akhir',
-                                                ],
-                                                'TG_POST' => [
-                                                    'label' => 'Tgl. Posting',
-                                                ],
-                                            ],
-                                            'cssClass' => [
-                                                'table' => 'table table-hover table-striped table-bordered compact',
-                                                'th' => 'label-title',
-                                                'td' => 'detail',
-                                                'tf' => 'footerCss',
-                                            ],
-                                            'options' => [
-                                                'columnDefs' => [
-                                                    [
-                                                        'className' => 'dt-right',
-                                                        'targets' => [6, 7], // numeric columns
-                                                    ],
-                                                    [
-                                                        'className' => 'dt-center',
-                                                        'targets' => [0, 1, 2, 3, 4, 5, 8, 9, 10, 11, 12], // center aligned columns
-                                                    ],
-                                                ],
-                                                'order' => [[0, 'asc']], // Order by Sub Item
-                                                'paging' => true,
-                                                'pageLength' => 25,
-                                                'searching' => true,
-                                                'colReorder' => true,
-                                                'select' => true,
-                                                'dom' => 'Blfrtip',
-                                                'buttons' => [
-                                                    [
-                                                        'extend' => 'collection',
-                                                        'text' => 'Export',
-                                                        'buttons' => [
-                                                            [
-                                                                'extend' => 'copy',
-                                                                'text' => 'Copy',
-                                                            ],
-                                                            [
-                                                                'extend' => 'excel',
-                                                                'text' => 'Excel',
-                                                                'title' => 'Report Belum SO',
-                                                            ],
-                                                            [
-                                                                'extend' => 'csv',
-                                                                'text' => 'CSV',
-                                                            ],
-                                                            [
-                                                                'extend' => 'pdf',
-                                                                'text' => 'PDF',
-                                                                'orientation' => 'landscape',
-                                                                'pageSize' => 'A4',
-                                                            ],
-                                                            [
-                                                                'extend' => 'print',
-                                                                'text' => 'Print',
-                                                            ],
-                                                        ],
-                                                    ],
-                                                ],
-                                                'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'Semua']],
-                                                'language' => [
-                                                    'lengthMenu' => 'Tampilkan _MENU_ data per halaman',
-                                                    'zeroRecords' => 'Data tidak ditemukan',
-                                                    'info' => 'Menampilkan halaman _PAGE_ dari _PAGES_',
-                                                    'infoEmpty' => 'Tidak ada data tersedia',
-                                                    'infoFiltered' => '(difilter dari _MAX_ total data)',
-                                                    'search' => 'Cari:',
-                                                    'paginate' => [
-                                                        'first' => 'Pertama',
-                                                        'last' => 'Terakhir',
-                                                        'next' => 'Selanjutnya',
-                                                        'previous' => 'Sebelumnya',
-                                                    ],
-                                                ],
-                                            ],
-                                        ]);
-                                        ?>
-                                    @elseif(request()->has('action') && request()->get('action') == 'filter')
-                                        <div class="alert alert-warning text-center">
-                                            <i class="fas fa-exclamation-triangle mr-2"></i>
-                                            Tidak ada data Rencana Order Kode 9.
-                                        </div>
-                                    @else
-                                        <div class="alert alert-info text-center">
-                                            <i class="fas fa-info-circle mr-2"></i>
-                                            Silakan Masukkan Cabang dan Sub untuk menampilkan data Rencana Order Kode 9.
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" id="browseSuplier2Modal" tabindex="-1" role="dialog" aria-labelledby="browseSuplier2ModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="browseSuplier2ModalLabel">Cari Suplier2</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bsuplier2">
+				<thead>
+					<tr>
+						<th>Suplier</th>
+						<th>Nama</th>
+						<th>Alamat</th>
+						<th>Kota</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+</div>
 @endsection
 
 @section('javascripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function() {
+		
+		$('.date').datepicker({  
+			dateFormat: 'dd-mm-yy'
+		}); 
 
-    <script>
-        $(document).ready(function() {
 
-            function toggleUlangFields() {
-                var ulangChecked = $('#ulang').is(':checked');
+		var dTableBSuplier;
+		loadDataBSuplier = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: "{{url('sup/browse_amplop')}}",
+				success: function( response )
+				{
+					resp = response;
+					if(dTableBSuplier){
+						dTableBSuplier.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBSuplier.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSuplier(\''+resp[i].KODES+'\')">'+resp[i].KODES+'</a>',
+							resp[i].NAMAS,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
+						]);
+					}
+					dTableBSuplier.draw();
+				}
+			});
+		}
+		
+		dTableBSuplier = $("#table-bsuplier").DataTable({
+			
+		});
+		
+		browseSuplier = function(){
+			loadDataBSuplier();
+			$("#browseSuplierModal").modal("show");
+		}
+		
+		chooseSuplier = function(KODES){
+			$("#kodes1").val(KODES);
+			$("#browseSuplierModal").modal("hide");
+		}
+		
+		$("#kodes1").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseSuplier();
+			}
+		}); 
 
-                // Jika ulang dicentang -> show nobukti & posting button
-                if (ulangChecked) {
-                    $('#nobukti').closest('.col-md-2').show();
-                    $('button[name="action"][value="posting"]').closest('.col-md-2').show();
-                } else {
-                    // Jika tidak dicentang -> hide
-                    $('#nobukti').closest('.col-md-2').hide();
-                    $('button[name="action"][value="posting"]').closest('.col-md-2').hide();
-                }
-            }
+	//////////////////////////////////////////////////////////////////////
 
-            // Saat halaman load
-            toggleUlangFields();
+		var dTableBSuplier2;
+		loadDataBSuplier2 = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: "{{url('sup/browse_amplop')}}",
+				success: function( response )
+				{
+					resp = response;
+					if(dTableBSuplier2){
+						dTableBSuplier2.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBSuplier2.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSuplier2(\''+resp[i].KODES+'\')">'+resp[i].KODES+'</a>',
+							resp[i].NAMAS,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
+						]);
+					}
+					dTableBSuplier2.draw();
+				}
+			});
+		}
+		
+		dTableBSuplier2 = $("#table-bsuplier2").DataTable({
+			
+		});
+		
+		browseSuplier2 = function(){
+			loadDataBSuplier2();
+			$("#browseSuplier2Modal").modal("show");
+		}
+		
+		chooseSuplier2 = function(KODES){
+			$("#kodes2").val(KODES);
+			// $("#NAMAS").val(NAMAS);	
+			$("#browseSuplier2Modal").modal("hide");
+		}
+		
+		$("#kodes2").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseSuplier2();
+			}
+		}); 
 
-            // Saat checkbox berubah
-            $('#ulang').on('change', function() {
-                toggleUlangFields();
-            });
 
-            // Auto-resize table on window resize
-            $(window).on('resize', function() {
-                if ($.fn.DataTable.isDataTable('#barangMacetTable')) {
-                    $('#barangMacetTable').DataTable().columns.adjust().responsive.recalc();
-                }
-            });
+		$('#per').on('change', function () {
+			var per = $(this).val(); // contoh: 01/2026
 
-            let clickedAction = null;
+			if (per) {
+				var split = per.split('/');
+				var bulan = parseInt(split[0]);
+				var tahun = parseInt(split[1]);
 
-            // deteksi tombol mana yang diklik
-            $('button[name="action"]').on('click', function() {
-                clickedAction = $(this).val();
-            });
+				// tanggal pertama
+				var tglAwal = '01-' + (bulan < 10 ? '0' + bulan : bulan) + '-' + tahun;
 
-            $('#macetForm').on('submit', function(e) {
-                var cbg = $('#cbg').val();
-                var sub = $('#sub').val();
-                var ulang = $('#ulang').is(':checked');
-                var nobukti = $('#nobukti').val();
+				// cari tanggal terakhir
+				var lastDay = new Date(tahun, bulan, 0).getDate();
+				var tglAkhir = lastDay + '-' + (bulan < 10 ? '0' + bulan : bulan) + '-' + tahun;
 
-                if (!cbg) {
-                    alert('Harap pilih Cabang terlebih dahulu');
-                    e.preventDefault();
-                    return false;
-                }
-                if (!sub) {
-                    alert('Harap pilih Sub terlebih dahulu');
-                    e.preventDefault();
-                    return false;
-                }
+				// set ke input
+				$('#tglDr').val(tglAwal);
+				$('#tglSmp').val(tglAkhir);
+			}
+		});
 
-                if (ulang && !nobukti) {
-                    alert('Harap pilih Bukti terlebih dahulu');
-                    e.preventDefault();
-                    return false;
-                }
+		$('#per').trigger('change');
+	});
 
-                // hanya disable dan ubah text kalau tombol Proses yang ditekan
-                if (clickedAction === 'filter') {
-                    $('button[name="action"][value="filter"]')
-                        .html('<i class="fas fa-spinner fa-spin mr-1"></i>Processing...')
-                        .prop('disabled', true);
-                }
-            });
-
-            // Enter key handling
-            $('#sub').on('keypress', function(e) {
-                if (e.which == 13) { // Enter key
-                    e.preventDefault();
-                    $('#macetForm').find('button[name="action"][value="filter"]').click();
-                }
-            });
-
-            $('.select2').select2({
-                placeholder: "Pilih SUB",
-                allowClear: false,
-                width: '100%'
-            });
-        });
-
-        // Reset form function
-        function resetForm() {
-            window.location.href = '{{ route('rrcnorder9') }}';
-        }
-
-        // Utility function to format numbers
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        // Utility function to format currency
-        function formatCurrency(num) {
-            return 'Rp ' + formatNumber(num);
-        }
-
-        $('#print').on('click', function() {
-
-            let no_bukti = $('#nobukti').val();
-            let sub = $('#sub').val();
-            let ulang = $('#ulang').val();
-
-            let url = "{{ route('print.report') }}" +
-                "?no_bukti=" + no_bukti +
-                "&sub=" + sub +
-                "&ulang=" + ulang;
-
-            window.open(url, "_blank");
-        });
-    </script>
+</script>
 @endsection

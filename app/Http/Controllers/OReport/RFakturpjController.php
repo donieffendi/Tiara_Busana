@@ -21,71 +21,57 @@ class RFakturpjController extends Controller
 {
     public function report()
     {
-		$cbg = Cbg::groupBy('CBG')->get();
+        $per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+        session()->put('filter_periode', '');
+
+		$cbg = DB::SELECT("SELECT KODE FROM toko WHERE STA IN ('MA','CB') ORDER BY NO_ID ASC");
 		session()->put('filter_cbg', '');
-		session()->put('filter_nobukti1', '');
-        return view('oreport_fakturpj.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
+
+        return view('oreport_fakturpj.report')->with(['per' => $per])->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	
 	
 	 
 	public function jasperFakturpjReport(Request $request) 
 	{
-		$file 	= 'pon';
+		$file 	= 'Laporan_Barang_Datang';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		
-			
-			if($request['cbg'])
-			{
-				$cbg = $request['cbg'];
-			}
+		$periode = $request->per;
+		$cbg = $request->cbg;
 
-			if (!empty($request->cbg))
-			{
-				$filtercbg = " and po.CBG='".$request->cbg."' ";
-			}
+        $bulan = substr($periode,0,2);
+        $tahun = substr($periode,3,4);
 			
-			$nobukti_1 = $request->nobukti;
+		if(!empty($cbg))
+		{
+			$filtercbg = " AND beli.CBG = '$cbg'";		
+		}
 
-			session()->put('filter_nobukti1', $request->nobukti);
-			session()->put('filter_cbg', $request->cbg);
+        session()->put('filter_periode', $request->per);
+		session()->put('filter_cbg', $request->cbg);
 		
 
-		$query = $db->prepare("CALL bsn_turun_harga_terima(?, ?, ?, ?)");
-		$query->execute([$jnsx, $cbgx, $buktix, $userx]);
+		$query = DB::SELECT("SELECT trim(NO_BUKTI) as NO_BUKTI, TGL, JTEMPO, KODES, NAMAS,
+										TOTAL_QTY, TOTAL, TDPP AS DPP, TPPN AS PPN, NETT
+							FROM beli
+							WHERE FLAG = 'BL' AND PER = '$periode' $filtercbg
+                            ORDER BY NO_BUKTI ASC");
 
 
 		if($request->has('filter'))
 		{
-			$cbg = Cbg::groupBy('CBG')->get();
+			$per = DB::SELECT("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+			$cbg = DB::SELECT("SELECT KODE FROM toko WHERE STA IN ('MA','CB') ORDER BY NO_ID ASC");
 
-			return view('oreport_fakturpj.report')->with(['cbg' => $cbg])->with(['hasil' => $query]);
+			return view('oreport_fakturpj.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];
-		foreach ($query as $key => $value)
-		{
-			array_push($data, array(
-				'NO_PO' => $query[$key]->NO_BUKTI,
-				'TGL' => $query[$key]->TGL,
-				'TGL_1' => $tgl_1,
-				'TGL_2' => $tgl_2,
-				'KODES_1' => $kodes_1,
-				'KODES_2' => $kodes_2,
-				'KODES' => $query[$key]->KODES,
-				'NAMAS' => $query[$key]->NAMAS,
-				'KD_BRG' => $query[$key]->KD_BRG,
-				'NA_BRG' => $query[$key]->NA_BRG,
-				'QTY' => $query[$key]->QTY,
-				'HARGA' => $query[$key]->HARGA,
-				'TOTAL' => $query[$key]->TOTAL,
-				'KET' => $query[$key]->KET,
-				'GOL' => $query[$key]->GOL,
-				'KIRIM' => $query[$key]->KIRIM,
-				'SISA' => $query[$key]->SISA,
-			));
-		}
+		
+        $data = json_decode(json_encode($query), true);
+
 		$PHPJasperXML->setData($data);
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");
