@@ -70,11 +70,11 @@
         <!-- tambahan notifikasinya untuk delete di index -->
         <script>
             Swal.fire({
-					title: 'Deleted!',
-					text: 'Data has been deleted. {{session('status')}}',
-					icon: 'success',
-					confirmButtonText: 'OK'
-				})
+                title: 'Sukses!',
+                text: '{{session('status')}}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
         </script>
         <!-- tutupannya -->
 
@@ -226,6 +226,43 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location = link;
+            }
+        });
+    }
+
+    function postingData(id) {
+
+        Swal.fire({
+            title: 'Posting Data?',
+            text: "Data akan diposting!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, posting!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url: "{{ route('usulhapus.posting', ':id') }}".replace(':id', id),
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(res) {
+
+                        if (res.success) {
+                            Swal.fire('Sukses!', res.message, 'success');
+
+                            // reload datatable
+                            $('.datatable').DataTable().ajax.reload(null, false);
+
+                        } else {
+                            Swal.fire('Error!', res.message, 'error');
+                        }
+                    }
+                });
+
             }
         });
     }

@@ -544,7 +544,7 @@ Route::get('/usulhapus/browse_brg', 'App\Http\Controllers\OTransaksi\UsulhapusCo
 
 Route::get('/get-usulhapus', 'App\Http\Controllers\OTransaksi\UsulhapusController@getUsulhapus')->middleware(['auth'])->name('get-usulhapus');
 Route::get('/usulhapus/cetak/{usulhapus:NO_ID}', 'App\Http\Controllers\OTransaksi\UsulhapusController@cetak')->middleware(['auth']);
-Route::get('/usulhapus/pengesahan/{usulhapus:NO_ID}', 'App\Http\Controllers\OTransaksi\UsulhapusController@pengesahan')->middleware(['auth']);
+Route::post('/usulhapus/posting/{id}', 'App\Http\Controllers\OTransaksi\UsulhapusController@posting')->middleware(['auth'])->name('usulhapus.posting');
 
 // Dynamic Usulan Penghapusan Barang
 Route::get('/usulhapus/edit', 'App\Http\Controllers\OTransaksi\UsulhapusController@edit')->middleware(['auth'])->name('usulhapus.edit');

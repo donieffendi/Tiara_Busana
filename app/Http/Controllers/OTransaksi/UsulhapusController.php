@@ -70,6 +70,7 @@ class UsulhapusController extends Controller
 
                     $btnEdit   = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="usulhapus/edit/?idx=' . $row->NO_ID . '&tipx=edit"';
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow(' . $url . ')"';
+                    $btnPosting = ($row->POSTED == 1) ? ' onclick="alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="#" onclick="postingData(\'' . $row->NO_ID . '\')" ';
 
                     $btnPrivilege =
                     '
@@ -77,13 +78,12 @@ class UsulhapusController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
+                                <a class="dropdown-item btn btn-success" ' . $btnPosting . '>
+                                    <i class="fa fa-check"></i> Posting
+                                </a>
                                 <a class="dropdown-item btn btn-danger" target="_blank" href="usulhapus/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Cetak Usulan
-                                </a>
-                                <a class="dropdown-item btn btn-danger" target="_blank" href="usulhapus/pengesahan/' . $row->NO_ID . '">
-                                    <i class="fa fa-print" aria-hidden="true"></i>
-                                    Cetak Pengesahan
                                 </a>
                                 <hr></hr>
                                 <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
@@ -198,6 +198,11 @@ class UsulhapusController extends Controller
         DB::SELECT("UPDATE nwusul_hapus_brg,  nwusul_hapus_brgd
                             SET  nwusul_hapus_brgd.ID =  nwusul_hapus_brg.NO_ID  WHERE  nwusul_hapus_brg.NO_BUKTI =  nwusul_hapus_brgd.NO_BUKTI
 							AND  nwusul_hapus_brg.NO_BUKTI='$no_buktix';");
+        
+        DB::SELECT("UPDATE nwmasbar m,  nwusul_hapus_brgd d
+                            SET  m.TD_OD = '*', m.ALASAN = d.KET, m.TG_TD_OD = DATE(NOW())
+                            WHERE m.KDBAR = d.KDBAR
+                            AND d.NO_BUKTI='$no_buktix'");
 
         // return redirect('/pp/edit/?idx=' . $pp->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&golz=' . $this->GOLZ . '&judul=' . $this->judul . '');
         return redirect('/usulhapus')->with('statusInsert', 'Data baru berhasil ditambahkan');
@@ -515,6 +520,8 @@ class UsulhapusController extends Controller
             JOIN nwusul_hapus_brgd d 
                 ON m.KDBAR = d.KDBAR
             SET m.TD_OD = '*'
+                m.ALASAN = d.KET
+                m.TG_TD_OD = DATE(NOW())
             WHERE d.NO_BUKTI = ?
         ", [$no_pp]);
     }
@@ -581,10 +588,11 @@ class UsulhapusController extends Controller
                     a.KDBAR,
                     a.NMBAR,
                     s.NAMA,
-                    'AUTO' as KET
+                    'TL/MACET' as KET
                 FROM nwmasbar a
                 JOIN nwmasbard d ON a.KDBAR = d.KDBAR
                 LEFT JOIN nwmassup s ON a.SUPP = s.NO_SUPL
+                WHERE COALESCE(a.TD_OD, '') <> '*'
                 GROUP BY a.KDBAR, a.NMBAR, s.NAMA
                 HAVING SUM(d.$fieldAK <> 0) = 0
             ", [$no_id, $no_bukti, $periode]);
@@ -600,6 +608,20 @@ class UsulhapusController extends Controller
                 throw new \Exception('Tidak ada data yang memenuhi syarat!');
             }
 
+            // =========================
+            // 6. UPDATE MASTER BARANG
+            // =========================
+            DB::update("
+                UPDATE nwmasbar m
+                JOIN nwusul_hapus_brgd d 
+                    ON m.KDBAR = d.KDBAR
+                SET  
+                    m.TD_OD = '*', 
+                    m.ALASAN = d.KET, 
+                    m.TG_TD_OD = DATE(NOW())
+                WHERE d.NO_BUKTI = ?
+            ", [$no_bukti]);
+
             DB::commit();
 
             return redirect()->back()->with('status', 
@@ -610,6 +632,35 @@ class UsulhapusController extends Controller
             DB::rollBack();
 
             return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function posting($id)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            DB::update("
+                UPDATE nwusul_hapus_brg
+                SET POSTED = 1
+                WHERE NO_ID = ?
+            ", [$id]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil diposting'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
         }
     }
 }
