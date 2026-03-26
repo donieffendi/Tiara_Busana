@@ -6,6 +6,7 @@ use App\Models\Master\Cbg;
 // ganti 1
 use App\Models\Master\Perid;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
@@ -34,7 +35,7 @@ class RSuratsController extends Controller
 
     public function jasperSuratsReport(Request $request)
     {
-        $file         = 'suratsn';
+        $file         = 'stock_barang_1';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
@@ -47,6 +48,7 @@ class RSuratsController extends Controller
         $urut  = $request->urut;
         $kode_card = $request->kode_card;
         $tgl_card = $request->tgl_card;
+        $tgl = Carbon::now();
         $mode  = $request->mode ?? 'periode';
 
         $yerini = date('Y');
@@ -221,8 +223,6 @@ ORDER BY KD_BRG, TGL, URT");
         session()->put('kode2', $request->kode2);
          session()->put('cbg', $request->cbg);
 
-         dd($query2);
-
         if ($request->has('filter')) {
 
             $hasil = collect($query)->map(function ($row) {
@@ -274,26 +274,34 @@ ORDER BY KD_BRG, TGL, URT");
             ]);
         }
 
-        // $data = [];
-        // foreach ($query as $row) {
-        //     $data[] = [
-        //         'KD_BRG' => $row->kd_brg,
-        //         'NA_BRG' => $row->NA_brg,
-        //         'QTY'    => $row->ak,
-        //         'AW'     => $row->aw,
-        //         'MA'     => $row->ma,
-        //         'KE'     => $row->ke,
-        //         'LN'     => $row->ln,
-        //         'TBELI'  => $row->tbeli,
-        //         'TSISA'  => $row->tsisa,
-        //         'CBG'    => $row->cbg,
-        //         'PER'    => $row->per,
-        //     ];
-        // }
 
-        // $PHPJasperXML->setData($data);
-        // ob_end_clean();
-        // $PHPJasperXML->outpage("I");
+        $data = [];
+        foreach ($query as $row) {
+            $data[] = [
+                'KD_BRG' => $row->KD_BRG,
+                'NA_BRG' => $row->NA_BRG,
+                'QTY'    => $row->ak,
+                'AW'     => $row->AW,
+                'MA'     => $row->MA,
+                'KE'     => $row->KE,
+                'LN'     => $row->LN,
+                'TBELI'  => $row->tbeli,
+                'tsisa'  => $row->tsisa,
+                'CBG'    => $row->CBG,
+                'PER'    => $row->PER,
+                'TGL_TRM'    => $row->TGL_TRM,
+                'TGL_JUAL'    => $row->TGL_JUAL,
+                'CNT'    => $row->CNT,
+                'NCNT'    => $row->NCNT,
+            ];
+        }
+        $PHPJasperXML->arrayParameter = [
+            "TGL" => $tgl
+        ];
+
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
     }
 
 }
