@@ -75,8 +75,8 @@ class PoController extends Controller
     public function browse_brg(Request $request)
     {   
         // $KD_BRG = $request->KD_BRG;
-		$CNT = $request->CNT;
-        $po = DB::SELECT("SELECT KD_BRG, NA_BRG, BARCODE, HJUAL AS HARGA, 1 AS STOK FROM brgbsn WHERE CNT = '$CNT'");
+		$sup = $request->sup;
+        $po = DB::SELECT("SELECT KDBAR, NMBAR, BARCODE, HJ AS HARGA, 1 AS STOK FROM nwmasbar WHERE SUPP = '$sup'");
         return response()->json($po);
     }
 
@@ -87,17 +87,17 @@ class PoController extends Controller
     	if (!empty(request('q'))) {
 
 
-                 $po = DB::SELECT("SELECT NO_ID, KODES, NAMAS
-                            from supbsn 
-                            WHERE  NAMAS LIKE ('%$request->q%') 
-                            ORDER BY NAMAS "); 
+                 $po = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
+                            from nwmassup 
+                            WHERE  NAMA LIKE ('%$request->q%') 
+                            ORDER BY NAMA "); 
 	
     	    
         } else {
-			$po = DB::SELECT("SELECT NO_ID, KODES, NAMAS
-                            from supbsn
+			$po = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
+                            from nwmassup
                             
-                            ORDER BY NAMAS ");			
+                            ORDER BY NAMA ");			
 		}
 		
         return response()->json($po);

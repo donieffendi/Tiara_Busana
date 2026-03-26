@@ -153,7 +153,7 @@
 										</div>
 										<div class="col-md-2">
 											<select id="CBG" class="form-control"  name="CBG">
-												<option value="TGZ" {{ ($header->CBG == 'TGZ') ? 'selected' : '' }}>TGZ</option>
+												<option value="DC1" {{ ($header->CBG == 'DC1') ? 'selected' : '' }}>DC1</option>
 												<option value="-" {{ ($header->CBG == '-') ? 'selected' : '' }}>-</option>
 											</select>
 										</div>
@@ -696,9 +696,9 @@
             processResults: function(data) {
                 return {
                     results: data.map(item => ({
-                        id: item.KODES, // The ID of the user
-                        text: item.NAMAS, // The text to display
-						NAMAS: item.NAMAS
+                        id: item.NO_SUPL, // The ID of the user
+                        text: item.NAMA, // The text to display
+						NAMAS: item.NAMA
                     }))
                 };
             },
@@ -714,7 +714,7 @@
 		$('#KODES').val(data.id);
 
 		// isi nama supplier
-		$('#NAMAS').val(data.NAMAS);
+		$('#NAMAS').val(data.NAMA);
 
 	});
 
@@ -965,7 +965,7 @@
 				url: "{{url('po/browse_brg')}}",
 				async : false,
 				data: {
-						'CNT': $("#CNT").val()
+						'sup': $("#KODES").val()
 				},
 				success: function( response )
 
@@ -981,8 +981,8 @@
 							for(i=0; i<resp.length; i++){
 								
 								dTableBBarang.row.add([
-									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\',\''+resp[i].BARCODE+'\',\''+resp[i].STOK+'\',\''+resp[i].HARGA+'\',  )">'+resp[i].KD_BRG+'</a>',
-									resp[i].NA_BRG,
+									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KDBAR+'\', \''+resp[i].NMBAR+'\',\''+resp[i].BARCODE+'\',\''+resp[i].STOK+'\',\''+resp[i].HARGA+'\',  )">'+resp[i].KDBAR+'</a>',
+									resp[i].NMBAR,
 								]);
 							}
 							dTableBBarang.draw();
@@ -990,8 +990,8 @@
 					}
 					else
 					{
-						$("#KD_BRG"+rowidBarang).val(resp[0].KD_BRG);
-						$("#NA_BRG"+rowidBarang).val(resp[0].NA_BRG);
+						$("#KD_BRG"+rowidBarang).val(resp[0].KDBAR);
+						$("#NA_BRG"+rowidBarang).val(resp[0].NMBAR);
 					}
 				}
 			});
@@ -1012,9 +1012,9 @@
 			}	
 		}
 		
-		chooseBarang = function(KD_BRG,NA_BRG,BARCODE,STOK,HARGA){
-			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
+		chooseBarang = function(KDBAR,NMBAR,BARCODE,STOK,HARGA){
+			$("#KD_BRG"+rowidBarang).val(KDBAR);
+			$("#NA_BRG"+rowidBarang).val(NMBAR);	
 			$("#BARCODE"+rowidBarang).val(BARCODE);	
 			$("#SISA"+rowidBarang).val(STOK);	
 			$("#HARGA"+rowidBarang).val(HARGA);	
