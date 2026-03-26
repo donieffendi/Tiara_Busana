@@ -513,6 +513,23 @@ Route::post('ubsup/posting', 'App\Http\Controllers\OTransaksi\UbsupController@po
 Route::get('ubsup/index-posting', 'App\Http\Controllers\OTransaksi\UbsupController@index_posting')->middleware(['auth']);
 
 
+// Opertational Usulan Ganti No. Sup
+Route::get('/usulnosup', 'App\Http\Controllers\OTransaksi\UsulnosupController@index')->middleware(['auth'])->name('usulnosup');
+Route::post('/usulnosup/store', 'App\Http\Controllers\OTransaksi\UsulnosupController@store')->middleware(['auth'])->name('bsup/store');
+
+// GET Usulan Ganti No.sup
+Route::get('/usulnosup/browse_sup', 'App\Http\Controllers\OTransaksi\UsulnosupController@browse_sup')->middleware(['auth'])->name('usulnosup/browse_sup');
+
+Route::get('/get-usulnosup', 'App\Http\Controllers\OTransaksi\UsulnosupController@getUsulnosup')->middleware(['auth'])->name('get-usulnosup');
+Route::get('/usulnosup/cetak/{usulnosup:NO_ID}', 'App\Http\Controllers\OTransaksi\UsulnosupController@cetak')->middleware(['auth']);
+Route::get('/usulnosup/pengesahan/{usulnosup:NO_ID}', 'App\Http\Controllers\OTransaksi\UsulnosupController@pengesahan')->middleware(['auth']);
+
+// Dynamic Usulan Ganti No. Sup
+Route::get('/usulnosup/edit', 'App\Http\Controllers\OTransaksi\UsulnosupController@edit')->middleware(['auth'])->name('usulnosup.edit');
+Route::post('/usulnosup/update/{usulnosup}', 'App\Http\Controllers\OTransaksi\UsulnosupController@update')->middleware(['auth'])->name('usulnosup.update');
+Route::get('/usulnosup/delete/{usulnosup}', 'App\Http\Controllers\OTransaksi\UsulnosupController@destroy')->middleware(['auth'])->name('usulnosup.delete');
+
+
 // Opertational Usulan Rubah Tanda PPN
 Route::get('/uppn', 'App\Http\Controllers\OTransaksi\UppnController@index')->middleware(['auth'])->name('uppn');
 Route::get('/uppnpost', 'App\Http\Controllers\OTransaksi\UppnController@index_post')->middleware(['auth'])->name('uppnpost');
