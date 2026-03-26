@@ -610,7 +610,7 @@
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
                 {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
-                <a href="javascript:addTab('Usl. Ganti   No. Sup', '{{url('po?flagz=PO&golz=UG')}}')">
+                <a href="javascript:addTab('Usl. Ganti   No. Sup', '{{url('usulnosup')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Usulan Ganti No. Sup</h6>
@@ -932,7 +932,7 @@
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
                 {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BO')}}')"> --}}
-                <a href="javascript:addTab('Usulan Penghapusan Barang', '{{url('ubsup?flagz=HB&golz=1')}}')">
+                <a href="javascript:addTab('Usulan Penghapusan Barang', '{{url('usulhapus')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Usulan Penghapusan Barang</h6>
