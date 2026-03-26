@@ -22,7 +22,7 @@ class RStockbController extends Controller
 
     public function report()
     {
-		$per = Perid::query()->get();
+		$per = DB::SELECT("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 		session()->put('filter_periode', '');
 
 		session()->put('filter_tglDari', date("d-m-Y"));
@@ -203,7 +203,7 @@ class RStockbController extends Controller
 
 		if($request->has('filter'))
 		{
-			$per = Perid::query()->get();
+			$per = DB::SELECT("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 
 			return view('oreport_stockb.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
