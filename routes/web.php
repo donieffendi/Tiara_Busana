@@ -515,7 +515,7 @@ Route::get('ubsup/index-posting', 'App\Http\Controllers\OTransaksi\UbsupControll
 
 // Opertational Usulan Ganti No. Sup
 Route::get('/usulnosup', 'App\Http\Controllers\OTransaksi\UsulnosupController@index')->middleware(['auth'])->name('usulnosup');
-Route::post('/usulnosup/store', 'App\Http\Controllers\OTransaksi\UsulnosupController@store')->middleware(['auth'])->name('bsup/store');
+Route::post('/usulnosup/store', 'App\Http\Controllers\OTransaksi\UsulnosupController@store')->middleware(['auth'])->name('usulnosup/store');
 
 // GET Usulan Ganti No.sup
 Route::get('/usulnosup/browse_sup', 'App\Http\Controllers\OTransaksi\UsulnosupController@browse_sup')->middleware(['auth'])->name('usulnosup/browse_sup');
@@ -528,6 +528,28 @@ Route::get('/usulnosup/pengesahan/{usulnosup:NO_ID}', 'App\Http\Controllers\OTra
 Route::get('/usulnosup/edit', 'App\Http\Controllers\OTransaksi\UsulnosupController@edit')->middleware(['auth'])->name('usulnosup.edit');
 Route::post('/usulnosup/update/{usulnosup}', 'App\Http\Controllers\OTransaksi\UsulnosupController@update')->middleware(['auth'])->name('usulnosup.update');
 Route::get('/usulnosup/delete/{usulnosup}', 'App\Http\Controllers\OTransaksi\UsulnosupController@destroy')->middleware(['auth'])->name('usulnosup.delete');
+
+
+
+
+
+
+// Opertational Usulan Penghapusan Barang
+Route::get('/usulhapus', 'App\Http\Controllers\OTransaksi\UsulhapusController@index')->middleware(['auth'])->name('usulhapus');
+Route::post('/usulhapus/store', 'App\Http\Controllers\OTransaksi\UsulhapusController@store')->middleware(['auth'])->name('usulhapus/store');
+Route::post('/usulhapus/proses', 'App\Http\Controllers\OTransaksi\UsulhapusController@prosesOtomatis')->middleware(['auth'])->name('usulhapus/proses');
+
+// GET Usulan Penghapusan Barang
+Route::get('/usulhapus/browse_brg', 'App\Http\Controllers\OTransaksi\UsulhapusController@browse_brg')->middleware(['auth'])->name('usulhapus/browse_brg');
+
+Route::get('/get-usulhapus', 'App\Http\Controllers\OTransaksi\UsulhapusController@getUsulhapus')->middleware(['auth'])->name('get-usulhapus');
+Route::get('/usulhapus/cetak/{usulhapus:NO_ID}', 'App\Http\Controllers\OTransaksi\UsulhapusController@cetak')->middleware(['auth']);
+Route::get('/usulhapus/pengesahan/{usulhapus:NO_ID}', 'App\Http\Controllers\OTransaksi\UsulhapusController@pengesahan')->middleware(['auth']);
+
+// Dynamic Usulan Penghapusan Barang
+Route::get('/usulhapus/edit', 'App\Http\Controllers\OTransaksi\UsulhapusController@edit')->middleware(['auth'])->name('usulhapus.edit');
+Route::post('/usulhapus/update/{usulhapus}', 'App\Http\Controllers\OTransaksi\UsulhapusController@update')->middleware(['auth'])->name('usulhapus.update');
+Route::get('/usulhapus/delete/{usulhapus}', 'App\Http\Controllers\OTransaksi\UsulhapusController@destroy')->middleware(['auth'])->name('usulhapus.delete');
 
 
 // Opertational Usulan Rubah Tanda PPN
