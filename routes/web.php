@@ -301,11 +301,11 @@ Route::get('/pakai/cekOrderkWIP', 'App\Http\Controllers\OTransaksi\PakaiControll
 
 Route::post('/jasper-pakai-report', 'App\Http\Controllers\OReport\RPakaiController@jasperPakaiReport')->middleware(['auth']);
 Route::get('/jspakaic/{pakai:NO_ID}', 'App\Http\Controllers\OTransaksi\PakaiController@jspakaic')->middleware(['auth']);
-
-
 // Operational Transaksi Kirim
 Route::get('/kirim', 'App\Http\Controllers\OTransaksi\KirimController@index')->middleware(['auth'])->name('kirim');
 Route::post('/kirim/store', 'App\Http\Controllers\OTransaksi\KirimController@store')->middleware(['auth'])->name('kirim/store');
+Route::get('/ubsup/cetak/{ubsup:NO_ID}', 'App\Http\Controllers\OTransaksi\UbsupController@cetak')->middleware(['auth']);
+
 Route::get('/kirim/create', 'App\Http\Controllers\OTransaksi\KirimController@create')->middleware(['auth'])->name('kirim/create');
 Route::get('/get-kirim', 'App\Http\Controllers\OTransaksi\KirimController@getKirim')->middleware(['auth'])->name('get-kirim');
 Route::get('/kirim/browse_brg', 'App\Http\Controllers\OTransaksi\KirimController@browse_brg')->middleware(['auth'])->name('kirim/browse_brg');
@@ -313,11 +313,12 @@ Route::get('/kirim/browse_sup', 'App\Http\Controllers\OTransaksi\KirimController
 Route::get('/kirim/browse_cnt', 'App\Http\Controllers\OTransaksi\KirimController@browse_cnt')->middleware(['auth'])->name('kirim/browse_cnt');
 Route::get('/rkirim', 'App\Http\Controllers\OReport\RKirimController@report')->middleware(['auth'])->name('rkirim');
 Route::get('/get-kirim-report', 'App\Http\Controllers\OReport\RKirimController@getKirimReport')->middleware(['auth'])->name('get-kirim-report');
-
+Route::get('/get-data-po', 'App\Http\Controllers\OTransaksi\KirimController@getDataByNoPO')->name('get.data.po');
 Route::get('/kirim/show/{kirim}', 'App\Http\Controllers\OTransaksi\KirimController@show')->name('kirimid');
 Route::get('/kirim/edit', 'App\Http\Controllers\OTransaksi\KirimController@edit')->name('kirim.edit');
 Route::post('/kirim/update/{kirim}', 'App\Http\Controllers\OTransaksi\KirimController@update')->name('kirim.update');
 Route::get('/kirim/delete/{kirim}', 'App\Http\Controllers\OTransaksi\KirimController@destroy')->name('kirim.delete');
+Route::get('/kirim/cetak/{kirim:NO_ID}', 'App\Http\Controllers\OTransaksi\KirimController@cetak')->middleware(['auth']);
 
 Route::post('/jasper-kirim-report', 'App\Http\Controllers\OReport\RKirimController@jasperKirimReport')->middleware(['auth']);
 Route::get('/jskirimc/{kirim:NO_ID}', 'App\Http\Controllers\OTransaksi\KirimController@jskirimc')->middleware(['auth']);
