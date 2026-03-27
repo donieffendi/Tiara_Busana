@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 
 use App\Models\OTransaksi\Po;
 use App\Models\OTransaksi\PoDetail;
-use App\Models\OTransaksi\Nwbudget;
-use App\Models\OTransaksi\NwbudgetDetail;
 use App\Models\Master\Sup;
 use Illuminate\Http\Request;
 use DataTables;
@@ -59,17 +57,18 @@ class PoController extends Controller
 	
 	public function browse(Request $request)
     {
-        $tanggal = date('Y-m-d');
-        $CBG     = Auth::user()->CBG;
-        $kodes = $request->kodes;
+        $golz = $request->GOL;
 
-        //
-        $po = DB::SELECT("SELECT distinct PO.NO_BUKTI , PO.KODES, PO.NAMAS,
-	                    PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
-                        from nwbudget as po, nwbudgetd as pod
-                        WHERE PO.NO_BUKTI = POD.NO_BUKTI AND po.KODES='$kodes'
-                        AND POD.SISA > 0 AND po.POSTED = 1 AND po.JTEMPO > '$tanggal'
-                        GROUP BY NO_BUKTI ");
+        $CBG = Auth::user()->CBG;
+        $PPN = Auth::user()->PPN;
+		
+        $po = DB::SELECT("SELECT distinct po.NO_BUKTI , po.KODES, po.NAMAS, 
+		                  po.ALAMAT, po.KOTA, po.PKP, po.GUDANG, po.JTEMPO, po.NOTES from po, pod 
+                          WHERE po.NO_BUKTI = pod.NO_BUKTI AND po.GOL ='$golz'
+                          AND po.CBG = '$CBG' 
+                        --   AND po.PKP ='$PPN' 
+                          AND pod.SISA > 0 AND POSTED = 1
+                          GROUP BY NO_BUKTI ");
         return response()->json($po);
     }
 
@@ -124,16 +123,15 @@ class PoController extends Controller
 	  
 	public function browse_pod(Request $request)
     {
-        $sup = $request->kodes;
+        $golx = $request->GOL;
 
         
 
-            $pod = DB::SELECT("SELECT a.REC, a.KD_BRG, a.BARCODE, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, a.TOTAL,
-                                a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.HJ
-                            from nwbudgetd a
-                            LEFT JOIN nwmasbar b 
-                                ON b.KDBAR = a.KD_BRG
-                            where a.NO_BUKTI='".$request->nobukti."' ");
+            $pod = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, 
+                                a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.KALI AS KALI, a.PPN, a.DPP, a.DISK,
+                                a.QTY2 AS XQTY, a.KALI
+                            from pod a, brg b 
+                            where a.NO_BUKTI='".$request->nobukti."' AND a.KD_BRG = b.KD_BRG");
 
         
 
@@ -197,7 +195,7 @@ class PoController extends Controller
         $PPN = Auth::user()->PPN;
 		
 	  
-        $po = DB::SELECT("SELECT * FROM nwbudget where PER= '$periode' AND FLAG= '$this->FLAGZ' AND GOL= '$this->GOLZ'  order by NO_BUKTI ");
+        $po = DB::SELECT("SELECT * FROM pobsn where per= '$periode' AND FLAG= '$this->FLAGZ' AND GOL= '$this->GOLZ'  order by NO_BUKTI ");
 	   
         // ganti 6
 
@@ -319,9 +317,124 @@ class PoController extends Controller
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('nwbudget')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', $CBG)
+        $query = DB::table('pobsn')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', $CBG)
                 ->where('GOL', $this->GOLZ )->orderByDesc('NO_BUKTI')->limit(1)->get();
 
+        // if ($FLAGZ=='PO') {
+
+        //     if( $GOLZ =='PB' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'PB'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'PB'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+
+        //     } elseif ( $GOLZ =='PZ' ) {
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'PZ'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'PZ'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='PN' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'PN'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'PN'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='BS' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'BS'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'BS'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='KO' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'KO'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'KO'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='KB' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'KB'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'KB'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='BO' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'BO'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'BO'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RS' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RS'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RS'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RX' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RX'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RX'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RO' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RO'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RO'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     } elseif ( $GOLZ =='RM' ){
+
+        //         if ($query != '[]') {
+        //             $query = substr($query[0]->NO_BUKTI, -4);
+        //             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+        //             $no_bukti = 'RM'  . $CBG . $tahun . $bulan . '-' . $query;
+        //         } else {
+        //             $no_bukti = 'RM'  . $CBG . $tahun . $bulan . '-0001';
+        //         }
+                
+        //     }
+
+        // } 
 
         if ($query != '[]') {
             $query = substr($query[0]->NO_BUKTI, -4);
@@ -333,7 +446,7 @@ class PoController extends Controller
 
         		
 
-        $po = Nwbudget::create(
+        $po = Po::create(
             [
                 'NO_BUKTI'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
@@ -347,8 +460,8 @@ class PoController extends Controller
                 'GOL'              => $GOLZ,
                 'CBG'              => ($request['CBG'] == null) ? "" : $request['CBG'],
                 'NOTES'              => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'Q_SALDO'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
-                'R_SALDO'            => (float) str_replace(',', '', $request['TTOTAL']),
+                'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
+                'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
                 'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
             ]
@@ -370,7 +483,7 @@ class PoController extends Controller
         if ($REC) {
             foreach ($REC as $key => $value) {
                 // Declare new data di Model
-                $detail    = new NwbudgetDetail;
+                $detail    = new PoDetail;
 
                 // Insert ke Database
                 $detail->no_bukti    = $no_bukti;
@@ -397,23 +510,23 @@ class PoController extends Controller
 		$po = Po::where('NO_BUKTI', $no_buktix )->first();
 
 
-        DB::SELECT("UPDATE nwbudget, nwmassup
-                    SET nwbudget.NAMAS = nwmassup.NAMA  WHERE nwbudget.KODES = nwmassup.NO_SUPL 
-                    AND nwbudget.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn, supbsn
+                    SET pobsn.NAMAS = supbsn.NAMAS  WHERE pobsn.KODES = supbsn.KODES 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
 
-        DB::SELECT("UPDATE nwbudget, cntbsn
-                    SET nwbudget.NA_CNT = cntbsn.NA_CNT  WHERE nwbudget.CNT = cntbsn.CNT 
-                    AND nwbudget.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn, cntbsn
+                    SET pobsn.NA_CNT = cntbsn.NA_CNT  WHERE pobsn.CNT = cntbsn.CNT 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
 
-        DB::SELECT("UPDATE nwbudget,  nwbudgetd
-                            SET  nwbudgetd.ID =  nwbudget.NO_ID  WHERE  nwbudget.NO_BUKTI =  nwbudgetd.no_bukti 
-							AND  nwbudget.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn,  pobsnd
+                            SET  pobsnd.ID =  pobsn.NO_ID  WHERE  pobsn.NO_BUKTI =  pobsnd.no_bukti 
+							AND  pobsn.NO_BUKTI='$no_buktix';");
         
         return redirect('/po?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
 		
     }
 
-   public function edit( Request $request , Nwbudget $po)
+   public function edit( Request $request , Po $po)
     {
 
 
@@ -450,7 +563,7 @@ class PoController extends Controller
 		   	
     	   $buktix = $request->buktix;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwbudget
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
                          and GOL ='$this->GOLZ' 
                          AND CBG = '$CBG'
@@ -473,7 +586,7 @@ class PoController extends Controller
 		if ($tipx=='top') {
 			
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwbudget
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn
 		                 where PER ='$per' 
 						 and FLAG ='$this->FLAGZ' 
                          and GOL ='$this->GOLZ' 
@@ -498,7 +611,7 @@ class PoController extends Controller
 			
     	   $buktix = $request->buktix;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwbudget     
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn     
 		             where PER ='$per' 
 					 and FLAG ='$this->FLAGZ' 
                      and GOL ='$this->GOLZ' 
@@ -524,7 +637,7 @@ class PoController extends Controller
 				
       	   $buktix = $request->buktix;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwbudget    
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn    
 		             where PER ='$per'  
 					 and FLAG ='$this->FLAGZ' 
                      and GOL ='$this->GOLZ'
@@ -546,7 +659,7 @@ class PoController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwbudget
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from pobsn
 						where PER ='$per'
 						and FLAG ='$this->FLAGZ'
                         and GOL ='$this->GOLZ'
@@ -577,11 +690,11 @@ class PoController extends Controller
 
        	if ( $idx != 0 ) 
 		{
-			$po = Nwbudget::where('NO_ID', $idx )->first();	
+			$po = Po::where('NO_ID', $idx )->first();	
 	     }
 		 else
 		 {
-				$po = new Nwbudget;
+				$po = new Po;
                 $po->TGL = Carbon::now();
                 $po->JTEMPO = Carbon::now();
 				
@@ -589,7 +702,7 @@ class PoController extends Controller
 		 }
 
         $no_bukti = $po->NO_BUKTI;
-        $poDetail = DB::table('nwbudgetd')->where('no_bukti', $no_bukti)->orderBy('REC')->get();
+        $poDetail = DB::table('pobsnd')->where('no_bukti', $no_bukti)->orderBy('REC')->get();
 		
 		$data = [
             'header'        => $po,
@@ -613,7 +726,7 @@ class PoController extends Controller
 
     // ganti 18
 
-    public function update(Request $request, Nwbudget $po)
+    public function update(Request $request, Po $po)
     {
 
         $this->validate(
@@ -651,8 +764,8 @@ class PoController extends Controller
                 'GOL'              => $GOLZ,
                 'CBG'              => $CBG,
                 'NOTES'              => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'Q_SALDO'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
-                'R_SALDO'            => (float) str_replace(',', '', $request['TTOTAL']),
+                'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
+                'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
 				'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
             ]
@@ -676,13 +789,13 @@ class PoController extends Controller
         $KDLAKU     = $request->input('KDLAKU');	
         $KET        = $request->input('KET');	
 
-        $query = DB::table('nwbudgetd')->where('no_bukti', $request->no_bukti)->whereNotIn('NO_ID',  $NO_ID)->delete();
+        $query = DB::table('pobsnd')->where('no_bukti', $request->no_bukti)->whereNotIn('NO_ID',  $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
             // Insert jika NO_ID baru
             if ($NO_ID[$i] == 'new') {
-                $insert = NwbudgetDetail::create(
+                $insert = PoDetail::create(
                     [
                         'no_bukti'   => $request->no_bukti,
                         'rec'        => $REC[$i],
@@ -703,7 +816,7 @@ class PoController extends Controller
                 );
             } else {
                 // Update jika NO_ID sudah ada
-                $upsert = NwbudgetDetail::updateOrCreate(
+                $upsert = PoDetail::updateOrCreate(
                     [
                         'NO_BUKTI'  => $request->NO_BUKTI,
                         'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
@@ -730,21 +843,21 @@ class PoController extends Controller
             }
         }
 
- 		$po = Nwbudget::where('NO_BUKTI', $no_buktix )->first();
+ 		$po = Po::where('NO_BUKTI', $no_buktix )->first();
 
         $no_bukti = $po->NO_BUKTI;
         
-        DB::SELECT("UPDATE nwbudget, nwmassup
-                    SET nwbudget.NAMAS = nwmassup.NAMA WHERE nwbudget.KODES = nwmassup.NO_SUPL
-                    AND nwbudget.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn, supbsn
+                    SET pobsn.NAMAS = supbsn.NAMAS WHERE pobsn.KODES = supbsn.KODES 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
 
-        DB::SELECT("UPDATE nwbudget, cntbsn
-                    SET nwbudget.NA_CNT = cntbsn.NA_CNT  WHERE nwbudget.CNT = cntbsn.CNT 
-                    AND nwbudget.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE pobsn, cntbsn
+                    SET pobsn.NA_CNT = cntbsn.NA_CNT  WHERE pobsn.CNT = cntbsn.CNT 
+                    AND pobsn.NO_BUKTI='$no_buktix';");
 
-        DB::SELECT("UPDATE pobsn,  nwbudgetd
-                    SET  nwbudgetd.ID =  pobsn.NO_ID  WHERE  nwbudget.NO_BUKTI =  nwbudget.NO_BUKTI 
-                    AND  nwbudget.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE pobsn,  pobsnd
+                    SET  pobsnd.ID =  pobsn.NO_ID  WHERE  pobsn.NO_BUKTI =  pobsnd.NO_BUKTI 
+                    AND  pobsn.NO_BUKTI='$no_bukti';");
 
         // $variablell = DB::select('call poins(?)', array($po['NO_BUKTI']));
 					 
@@ -781,7 +894,7 @@ class PoController extends Controller
             ->with('statusHapus','Data '.$po->NO_BUKTI.' berhasil dihapus');
     }
     
-    public function cetak(Nwbudget $po, Request $request)
+    public function cetak(Po $po, Request $request)
     {
         $no_po = $po->NO_BUKTI;
         $tipe = $request->tipe;
@@ -794,20 +907,20 @@ class PoController extends Controller
 
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
-        $data = DB::table('nwbudget')->where('NO_BUKTI', $no_po)->first();
+        $data = DB::table('pobsn')->where('NO_BUKTI', $no_po)->first();
         $jenis = ($data->POSTED == 0) ? 'ASLI' : 'COPY';
 
         if($tipe != 'lampiran') {
-            DB::update("UPDATE nwbudget SET POSTED = 1 WHERE NO_BUKTI = ?", [$no_po]);
+            DB::update("UPDATE pobsn SET POSTED = 1 WHERE NO_BUKTI = ?", [$no_po]);
         }
         
-        $query = DB::SELECT("SELECT po.NO_BUKTI, po.TGL, po.PER, po.CBG, po.KODES, po.NAMAS, po.Q_SALDO AS TOTAL_QTY, po.NOTES,
+        $query = DB::SELECT("SELECT po.NO_BUKTI, po.TGL, po.PER, po.CBG, po.KODES, po.NAMAS, po.TOTAL_QTY, po.NOTES,
                                     pod.KD_BRG, pod.BARCODE, pod.NA_BRG, pod.SATUAN, pod.qty AS QTY, 
-                                    pod.HARGA, pod.TOTAL, pod.KET, 
-                                    po.JTEMPO, nwmassup.ALMT_K AS ALAMAT, nwmassup.KOTA, nwmassup.GOLONGAN AS PKP,
+                                    pod.HARGA, pod.TOTAL, pod.KET, po.PPN, po.NETT, 
+                                    po.JTEMPO, po.DISC, nwmassup.ALMT_K AS ALAMAT, nwmassup.KOTA, nwmassup.GOLONGAN AS PKP,
                                     nwmassup.CARA, nwmassup.TLP_R, nwmassup.NO_FAX, '$jenis' as COPY
-                            FROM nwbudget as po
-                            JOIN nwbudgetd pod ON po.NO_BUKTI = pod.NO_BUKTI
+                            FROM pobsn as po
+                            JOIN pobsnd pod ON po.NO_BUKTI = pod.NO_BUKTI
                             LEFT JOIN nwmassup ON po.KODES = nwmassup.NO_SUPL
                             WHERE po.NO_BUKTI='$no_po' AND po.NO_BUKTI = pod.NO_BUKTI 
                             ;
@@ -893,7 +1006,7 @@ class PoController extends Controller
 	public function getDetailPo(){
 
         $no_bukti = $_GET['no_bukti'];
-        $result = DB::table('nwbudgetd')->where('NO_BUKTI', $no_bukti)->get();
+        $result = DB::table('pod')->where('NO_BUKTI', $no_bukti)->get();
         
         return response()->json($result);;
     }

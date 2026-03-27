@@ -138,6 +138,11 @@
                                             value="7" id="columnNotes">
                                         <label class="form-check-label" for="columnNotes">Notes</label>
                                     </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                            value="8" id="columnPosted">
+                                        <label class="form-check-label" for="columnPosted">Posted</label>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -172,6 +177,7 @@
                             <th scope="col" style="text-align: left">Kode</th>
                             <th scope="col" style="text-align: left">Suplier</th>
                             <th scope="col" style="text-align: left">Notes</th>
+                            <th scope="col" style="text-align: center">Posted</th>
                         </tr>
                     </thead>
     
@@ -256,6 +262,17 @@
                   }
                 },
                 { data: 'NOTES', name: 'NOTES'},
+                {
+                    data: 'POSTED',
+                    name: 'POSTED',
+                    render: function(data, type, row, meta) {
+                         if (row['POSTED'] == "0") {
+                            return '';
+                        } else {
+                            return '<input type="checkbox" checked style="pointer-events: none;">';
+                        }
+                    }
+                },
             ],
             columnDefs: 
             [
@@ -347,12 +364,9 @@
                                             <th>Barang</th>
                                             <th>Nama</th>
                                             <th>Satuan</th>
-                                            <th>QTY X</th>
-                                            <th>X</th>
                                             <th>QTY</th>
                                             <th>Harga</th>
                                             <th>Total</th>
-                                            <th>Diskon</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -360,8 +374,8 @@
 
                         response.forEach((item, index) => {
                             // untuk menjumlah
-                            totalQty += parseFloat(item.QTY);
-                            totalTotal += parseFloat(item.TOTAL);
+                            totalQty += parseFloat(item.qty);
+                            totalTotal += parseFloat(item.total);
 
                             detailHtml += `
                                 <tr>
@@ -369,12 +383,9 @@
                                     <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.KD_BRG}</div></td>
                                     <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.NA_BRG}</div></td>
                                     <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.SATUAN}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTY2).toFixed(2)}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.KALI).toFixed(2)}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTY).toFixed(2)}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.HARGA).toFixed(2)}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.TOTAL).toFixed(2)}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.DISK).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.qty).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.harga).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.total).toFixed(2)}</div></td>
                                 </tr>
                             `;
                         });
@@ -382,10 +393,6 @@
                         detailHtml += `
                                     <tr>
                                         <td colspan="4" style="text-align: right;"><strong>Total:</strong></td>
-                                        <td>
-                                        </td>
-                                        <td>
-                                        </td>
                                         <td>
                                             <div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalQty.toFixed(2)}</div>
                                         </td>
