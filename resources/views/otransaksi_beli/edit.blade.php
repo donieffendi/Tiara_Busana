@@ -131,7 +131,7 @@
                                 </div>
                                	<div class="col-md-2 input-group" >
                                   <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" >
-        						  {{-- <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button> --}}
+        						  <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button> 
                                 </div>
 								
 								<div class="col-md-1" align="left">							
@@ -581,6 +581,36 @@
 	  </div>
 	</div>
 
+	<div class="modal fade" id="browsePoModal" tabindex="-1" role="dialog" aria-labelledby="browsePoModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="browsePoModalLabel">Cari Po</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table table-stripped table-bordered" id="table-bpo">
+						<thead>
+							<tr>
+								<th>PO#</th>
+								<th>Suplier</th>
+								<th>Nama</th>
+								<th>Alamat</th>
+								<th>Kota</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
@@ -797,116 +827,202 @@
 			$("#KODES").val(KODES);
 			$("#NAMAS").val(NAMAS);		
 			$("#browseSupModal").modal("hide");
-			// getPod(NO_BUKTI);
+			//getPod(NO_BUKTI);
 		}
 
 ////////////////////////////////////////////////////////////////////
 
+		// CHOOSE Po
+ 		//		CHOOSE Po
+			var dTableBPo;
+			loadDataBPo = function() {
+
+				$.ajax({
+					type: 'GET',
+					url: "{{url('po/browse')}}",
+					data: {
+						kodes:$('#KODES').val(),
+					}, 
+					beforeSend: function() {
+						$("#LOADX").show();
+					},
+
+					success: function(response) {
+						$("#LOADX").hide();
+
+						resp = response;
+						if (dTableBPo) {
+							dTableBPo.clear();
+						}
+						for (i = 0; i < resp.length; i++) {
+
+							dTableBPo.row.add([
+								'<a href="javascript:void(0);" onclick="choosePo(\'' + resp[i].NO_BUKTI + '\' ,\'' + resp[i].KODES + '\',  \'' + resp[i].NAMAS + '\', \'' + resp[i].ALAMAT + '\',  \'' + resp[i].KOTA + '\',  \'' + resp[i].JTEMPO + '\',  \'' + resp[i].NOTES + '\',  \'' + resp[i].CBG + '\')">' + resp[i].NO_BUKTI + '</a>',
+								resp[i].KODES,
+								resp[i].NAMAS,
+								resp[i].ALAMAT,
+								resp[i].KOTA,
+							]);
+						}
+						dTableBPo.draw();
+					}
+				});
+			}
+
+			dTableBPo = $("#table-bpo").DataTable({
+
+			});
+
+			browsePo = function() {
+				loadDataBPo();
+				$("#browsePoModal").modal("show");
+
+			}
+
+			choosePo = function(NO_BUKTI, KODES, NAMAS, ALAMAT, KOTA, JTEMPO, NOTES, CBG) {
+				$("#NO_PO").val(NO_BUKTI);
+				$("#KODES").val(KODES);
+				$("#NAMAS").val(NAMAS);
+				$("#ALAMAT").val(ALAMAT);
+				$("#KOTA").val(KOTA);
+				// $("#PKP").val(PKP);
+				// $("#GUDANG").val(GUDANG);
+				$("#JTEMPO").val(JTEMPO);
+				$("#NOTES").val(NOTES);
+
+
+				// if ($("#PKP").val() == '1') {
+
+				// 	document.getElementById("PKP").checked = true;
+
+				// } else {
+				// 	document.getElementById("PKP").checked = false;
+
+				// }
+
+
+
+				$("#browsePoModal").modal("hide");
+
+				getPod(NO_BUKTI);
+			}
+
+			$("#NO_PO").keypress(function(e) {
+
+				if (e.keyCode == 46) {
+					e.preventDefault();
+					browsePo();
+				}
+			});
+
 //////////////////////////////////////////////////////////////////
 
-	// function getPod(bukti)
-	// {
+	function getPod(bukti)
+	{
 		
-	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
+		var mulai = (idrow==baris) ? idrow-1 : idrow;
 
-	// 	$.ajax(
-	// 		{
-	// 			type: 'GET',    
-	// 			url: "{{url('po/browse_pod')}}",
-	// 			data: {
-	// 				nobukti: bukti,
-	// 			},
-	// 			success: function( resp )
-	// 			{
-	// 				var html = '';
-	// 				for(i=0; i<resp.length; i++){
-	// 					html+=`<tr>
-    //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
+		$.ajax(
+			{
+				type: 'GET',    
+				url: "{{url('po/browse_pod')}}",
+				data: {
+					nobukti: bukti,
+				},
+				success: function( resp )
+				{
+					var html = '';
+					for(i=0; i<resp.length; i++){
+						html+=`<tr>
+                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
                                     
 
-	// 								<td >
-	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-	// 					            </td>
-	// 					            <td >
-	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-	// 					            </td>
+									<td >
+										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG'>
+						            </td>
+						            <td >
+						 			    <input name='BARCODE[]' id='BARCODE${i}' value="${resp[i].BARCODE}" type='text' class='form-control  BARCODE' readonly>
+						            </td>
+						            <td >
+						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
+						            </td>
 									
-	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-    //                                 <td>
-	// 									<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
-	// 								</td>
-	// 								<td>
-	// 									<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
-	// 								</td>
-	// 								<td>
-	// 									<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
-	// 									<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
-	// 								</td>
-	// 								<td>
-	// 									<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
-	// 								</td>
-    //                                 <td>
-	// 									<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
-	// 								</td>
-	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
+									<td><input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly></td>
+                                    <td>
+										<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' >
+									</td>
+									<td >
+										<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' >
+									</td>
+									<td >
+										<input name='MARGIN[]' onclick='select()' onblur='hitung()' id='MARGIN${i}' value="0" type='text' style='text-align: right' class='form-control MARGIN text-primary' >
+									</td>
+									<td >
+										<input name='DISKON1[]' onclick='select()' onblur='hitung()' id='DISKON1${i}' value="0" type='text' style='text-align: right' class='form-control DISKON1 text-primary' >
+									</td>
+									<td >
+										<input name='DISKON2[]' onclick='select()' onblur='hitung()' id='DISKON2${i}' value="0" type='text' style='text-align: right' class='form-control DISKON2 text-primary' >
+									</td>
+									<td >
+										<input name='DISKON3[]' onclick='select()' onblur='hitung()' id='DISKON3${i}' value="0" type='text' style='text-align: right' class='form-control DISKON3 text-primary' >
+									</td>
+									<td >
+										<input name='DISKON4[]' onclick='select()' onblur='hitung()' id='DISKON4${i}' value="0" type='text' style='text-align: right' class='form-control DISKON4 text-primary' >
+									</td>
                                     
+									<td >
+										<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
+									</td>
+									<td >
+										<input name='HARGA_JL[]' onclick='select()' onblur='hitung()' id='HARGA_JL${i}' value="${resp[i].HJ}" type='text' style='text-align: right' class='form-control HARGA_JL text-primary' >
+									</td>
+									<td >
+										<input name='BLT[]' onclick='select()' onblur='hitung()' id='BLT${i}' value="0" type='text' style='text-align: right' class='form-control BLT text-primary' >
+									</td>
 
-	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-    //                             </tr>`;
-	// 				}
-	// 				$('#detailPod').html(html);
+									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
+                                </tr>`;
+					}
+					$('#detailPod').html(html);
 
-	// 				$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".XQTY").autoNumeric('update');
+					$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".QTY").autoNumeric('update');
+
+					$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".HARGA").autoNumeric('update');
 					
-	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY_PO").autoNumeric('update');
-
-	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY").autoNumeric('update');
+					$(".MARGIN").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".MARGIN").autoNumeric('update');
 					
-	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".HARGA").autoNumeric('update');
+					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".TOTAL").autoNumeric('update');
 					
-	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".KALI").autoNumeric('update');
+					$(".DISKON1").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".DISKON1").autoNumeric('update');
 					
-	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".TOTAL").autoNumeric('update');
-					
-	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".PPNX").autoNumeric('update');
-					
-	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".DPP").autoNumeric('update');
+					$(".DISKON2").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".DISKON2").autoNumeric('update');
 
-	// 				$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".DISK").autoNumeric('update');
+					$(".DISKON3").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".DISKON3").autoNumeric('update');
 
+					$(".DISKON4").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".DISKON4").autoNumeric('update');
 
-	// 				idrow=resp.length;
-	// 				baris=resp.length;
+					$(".HARGA_JL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".HARGA_JL").autoNumeric('update');
 
-	// 				nomor();
-	// 				hitung();
-	// 			}
-	// 		});
-	// }
+					$(".BLT").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".BLT").autoNumeric('update');
+
+					idrow=resp.length;
+					baris=resp.length;
+
+					nomor();
+					hitung();
+				}
+			});
+	}
 
 //////////////////////////////////////////////////////////////////
 

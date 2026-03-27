@@ -362,9 +362,9 @@
 											<td></td>
 											<td></td>
 											<td></td>
-											<td><input class="form-control TTOTAL_QTY  text-primary" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td>
+											<td><input class="form-control TTOTAL_QTY  text-primary" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->Q_SALDO}}" readonly></td>
 											<td></td>
-											<td><input class="form-control TTOTAL  text-primary" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td>
+											<td><input class="form-control TTOTAL  text-primary" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->R_SALDO}}" readonly></td>
 											<td></td>
 											<td></td>
 											<td></td>
@@ -714,7 +714,7 @@
 		$('#KODES').val(data.id);
 
 		// isi nama supplier
-		$('#NAMAS').val(data.NAMA);
+		$('#NAMAS').val(data.NAMAS);
 
 	});
 
@@ -818,6 +818,12 @@
 		    	var defaultOption1 = { id: initkode1, text: initcombo1 }; // Set your default option ID and text
                 var newOption1 = new Option(defaultOption1.text, defaultOption1.id, true, true);
                 $('#KODES').append(newOption1).trigger('change');
+
+				var initcnt1 ="{{ $header->CNT }}";			 
+			    var initcombo2 ="{{ $header->NA_CNT }}";
+		    	var defaultOption2 = { id: initcnt1, text: initcombo2 }; // Set your default option ID and text
+                var newOption2 = new Option(defaultOption2.text, defaultOption2.id, true, true);
+                $('#CNT').append(newOption2).trigger('change');
 			 
 		}    
 		

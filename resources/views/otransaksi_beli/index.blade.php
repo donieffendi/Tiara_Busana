@@ -147,6 +147,11 @@
                                             value="10" id="columnUser">
                                         <label class="form-check-label" for="columnUser">User</label>
                                     </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                            value="11" id="columnPosted">
+                                        <label class="form-check-label" for="columnPosted">User</label>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -182,6 +187,7 @@
                             <th scope="col" style="text-align: center">Total</th>
                             <th scope="col" style="text-align: center">Nett</th>
                             <th scope="col" style="text-align: center">User</th>
+                            <th scope="col" style="text-align: center">Posted</th>
                         </tr>
                     </thead>
     
@@ -283,6 +289,17 @@
                 { data: 'total', name: 'total', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
                 { data: 'nett', name: 'nett', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
                 { data: 'usrnm', name: 'usrnm'},
+                {
+                    data: 'POSTED',
+                    name: 'POSTED',
+                    render: function(data, type, row, meta) {
+                         if (row['POSTED'] == "0") {
+                            return '';
+                        } else {
+                            return '<input type="checkbox" checked style="pointer-events: none;">';
+                        }
+                    }
+                },
             ],
             columnDefs: 
             [
