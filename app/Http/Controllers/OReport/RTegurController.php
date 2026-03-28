@@ -21,11 +21,13 @@ class RTegurController extends Controller
 {
     public function report()
     {
+		$per = DB::SELECT("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+		session()->put('filter_periode', '');
 		session()->put('filter_kodes1', '');
 		session()->put('filter_namas1', '');
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
-        return view('oreport_tegur.report')->with(['hasil' => []]);
+        return view('oreport_tegur.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 	
@@ -48,6 +50,7 @@ class RTegurController extends Controller
 		session()->put('filter_namas1', $request->namas1);
 		session()->put('filter_kodes2', $request->kodes2);
 		session()->put('filter_namas2', $request->namas2);
+		session()->put('filter_periode', $request->per);
 
 		// ================= FILTER =================
 		$filterkodes = "WHERE 1=1";
@@ -58,6 +61,8 @@ class RTegurController extends Controller
 
 		// ================= JIKA KLIK FILTER =================
 		if ($request->has('filter')) {
+
+			$per = DB::SELECT("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 
 			$query = DB::select("
 				SELECT 
@@ -74,7 +79,7 @@ class RTegurController extends Controller
 				AND (BUDGET_AWL - BUDGET_LL) < 0
 			");
 
-			return view('oreport_tegur.report')->with(['hasil' => $query]);
+			return view('oreport_tegur.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		// ================= JIKA KLIK CETAK =================

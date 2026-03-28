@@ -20,13 +20,15 @@ use \koolreport\bootstrap4\Theme;
 class RMinusController extends Controller
 {
     public function report()
-    {
+    {	
+		$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+		session()->put('filter_periode', '');
 		session()->put('filter_kodes1', '');
 		session()->put('filter_namas1', '');
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
 
-        return view('oreport_minus.report')->with(['hasil' => []]);
+        return view('oreport_minus.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 	
@@ -52,6 +54,7 @@ class RMinusController extends Controller
 		session()->put('filter_namas1', $request->namas1);
 		session()->put('filter_kodes2', $request->kodes2);
 		session()->put('filter_namas2', $request->namas2);
+		session()->put('filter_periode', $request->per);
 		
 
 		$query = DB::select("
@@ -69,8 +72,9 @@ class RMinusController extends Controller
 		");
 
 		if($request->has('filter'))
-		{
-			return view('oreport_minus.report')->with(['hasil' => $query]);
+		{	
+			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+			return view('oreport_minus.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];

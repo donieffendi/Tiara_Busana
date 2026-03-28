@@ -26,6 +26,19 @@
 					<form method="POST" action="{{url('jasper-minus-report')}}">
 					@csrf
 					<div class="form-group row">
+						<div class="col-md-1" align="right">
+							<label class="form-label">Periode</label>
+						</div>
+						<div class="col-md-2">
+							<select name="per" id="per" class="form-control per" style="width: 200px">
+								<option value="">--Pilih Periode--</option>
+								@foreach($per as $perD)
+									<option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
 						    
 						<div class="col-md-1" align="right">						
 							<label class="form-label">No. Supl</label>

@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Proses Suplier Tidak Kirim Barang</h1>
+			<h1 class="m-0">Surat Teguran / Budget Minus</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Proses Suplier Tidak Kirim Barang</li>
+				<li class="breadcrumb-item active">Surat Teguran / Budget Minus</li>
 			</ol>
 		</div>
 		</div>
@@ -26,6 +26,19 @@
 					<form method="POST" action="{{url('jasper-tegur-report')}}">
 						<input type="hidden" name="selected_suppliers" id="selected_suppliers">
 					@csrf
+					<div class="form-group row">
+						<div class="col-md-1" align="right">
+							<label class="form-label">Periode</label>
+						</div>
+						<div class="col-md-2">
+							<select name="per" id="per" class="form-control per" style="width: 200px">
+								<option value="">--Pilih Periode--</option>
+								@foreach($per as $perD)
+									<option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
 					<div class="form-group row">
 						    
 						<div class="col-md-1" align="right">						

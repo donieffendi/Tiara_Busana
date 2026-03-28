@@ -20,13 +20,15 @@ use \koolreport\bootstrap4\Theme;
 class RSupnolController extends Controller
 {
     public function report()
-    {
+    {	
+		$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+		session()->put('filter_periode', '');
 		session()->put('filter_kodes1', '');
 		session()->put('filter_namas1', '');
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
 
-        return view('oreport_supnol.report')->with(['hasil' => []]);
+        return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 	
@@ -73,8 +75,8 @@ class RSupnolController extends Controller
 
 		if($request->has('filter'))
 		{
-
-			return view('oreport_supnol.report')->with(['hasil' => $query]);
+			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+			return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];

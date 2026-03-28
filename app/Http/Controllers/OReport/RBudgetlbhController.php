@@ -20,13 +20,15 @@ class RBudgetlbhController extends Controller
 {
 
    public function report()
-    {
+    {	
+		$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+		session()->put('filter_periode', '');
 		session()->put('filter_kodes1', '');
 		session()->put('filter_namas1', '');
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
 
-        return view('oreport_budgetlbh.report')->with(['hasil' => []]);
+        return view('oreport_budgetlbh.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 
@@ -52,12 +54,15 @@ class RBudgetlbhController extends Controller
 		session()->put('filter_namas1', $request->namas1);
 		session()->put('filter_kodes2', $request->kodes2);
 		session()->put('filter_namas2', $request->namas2);
+		session()->put('filter_periode', $request->per);
 
 		$query = DB::SELECT("NO_SP, SUPP, Q_BUDGET AS QTY, BUDGET from nwbudget $filterkodes ORDER BY NO_SP ASC");
 		
 		if($request->has('filter'))
 		{
-			return view('oreport_budgetlbh.report')->with(['hasil' => $query]);
+			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+
+			return view('oreport_budgetlbh.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];

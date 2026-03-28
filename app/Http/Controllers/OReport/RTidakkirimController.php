@@ -20,12 +20,14 @@ use \koolreport\bootstrap4\Theme;
 class RTidakkirimController extends Controller
 {
     public function report()
-    {
+    {	
+		$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
+		session()->put('filter_periode', '');
 		session()->put('filter_kodes1', '');
 		session()->put('filter_namas1', '');
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
-        return view('oreport_tidakkirim.report')->with(['hasil' => []]);
+        return view('oreport_tidakkirim.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 	
@@ -48,6 +50,7 @@ class RTidakkirimController extends Controller
 		session()->put('filter_namas1', $request->namas1);
 		session()->put('filter_kodes2', $request->kodes2);
 		session()->put('filter_namas2', $request->namas2);
+		session()->put('filter_periode', $request->per);
 
 		// ================= FILTER =================
 		$filterkodes = "WHERE 1=1";
@@ -58,6 +61,8 @@ class RTidakkirimController extends Controller
 
 		// ================= JIKA KLIK FILTER =================
 		if ($request->has('filter')) {
+
+			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 
 			$query = DB::select("
 				SELECT 
@@ -74,7 +79,7 @@ class RTidakkirimController extends Controller
 				AND (BUDGET_AWL - BUDGET_LL) < 0
 			");
 
-			return view('oreport_tidakkirim.report')->with(['hasil' => $query]);
+			return view('oreport_tidakkirim.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		// ================= JIKA KLIK CETAK =================
@@ -103,13 +108,6 @@ class RTidakkirimController extends Controller
 				FROM nwmassup, (SELECT @rownum := 0) r
 				WHERE NO_SUPL IN ($in)
 				AND (BUDGET_AWL - BUDGET_LL) < 0
-			");
-
-			// ================= UPDATE FLAG SUDAH CETAK =================
-			DB::update("
-				UPDATE nwmassup
-				SET CET_TEGUR = 'T'
-				WHERE NO_SUPL IN ($in)
 			");
 
 			DB::commit();
