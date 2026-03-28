@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="brgpr01" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bfad45cf-72e9-4697-a6dc-fa407eb0bfe2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="1ca77ded-8c64-4fed-a35d-53c974271eab"/>
+	<parameter name="compan01" class="java.lang.String"/>
+	<parameter name="TGL_CTK" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT KD_BRG, NA_BRG, TGL, AWAL, MASUK, KELUAR, LAIN, AKHIR FROM KARTU]]>
+	</queryString>
+	<field name="NO_BUKTI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NO_SUPL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ALMT_K" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KOTA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TLP_K" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TG_TD_OD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="var_awal" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{AWAL}]]></variableExpression>
+	</variable>
+	<variable name="var_masuk" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{MASUK}]]></variableExpression>
+	</variable>
+	<variable name="var_keluar" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{KELUAR}]]></variableExpression>
+	</variable>
+	<variable name="var_lain" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{LAIN}]]></variableExpression>
+	</variable>
+	<variable name="var_akhir" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{AKHIR}]]></variableExpression>
+	</variable>
+	<variable name="var_niw" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{NIW}]]></variableExpression>
+	</variable>
+	<variable name="var_nim" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{NIM}]]></variableExpression>
+	</variable>
+	<variable name="var_nik" class="java.lang.String">
+		<variableExpression><![CDATA[$F{NIK}]]></variableExpression>
+	</variable>
+	<variable name="var_nir" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{NIR}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="362" splitType="Stretch">
+			<staticText>
+				<reportElement x="260" y="34" width="307" height="20" uuid="3bc95b2a-8959-4d0b-ba9b-e4ece6bcb96e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="16" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SURAT TEGURAN SUPPLIER]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="320" y="55" width="70" height="20" uuid="4eaabba5-0dc2-4ca1-8fd0-c42a581546c2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["NOMOR :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="55" width="120" height="20" uuid="d1abb673-efc5-4722-af17-a361f86f036b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NO_BUKTI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="80" width="70" height="20" uuid="be94aba4-cfbf-4b9e-8297-61dc812994a2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Terbitan Ke :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="101" width="130" height="20" uuid="6b9f23ba-0fe3-40b6-bb0a-3a20df5c8afd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Ditujukan Kepada Suplier :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="122" width="70" height="20" uuid="29e73e1e-a0bb-4bde-a4e1-28e5edd373e7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Nama :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="143" width="70" height="20" uuid="aa21375f-f950-4671-8984-371f8e1f2011"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Alamat :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="122" width="200" height="20" uuid="016173a5-53bd-401f-b600-7357c7edb55b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NAMA} + "[" + $F{NO_SUPL} + "]"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="143" width="200" height="20" uuid="ef939124-ca26-4a25-a901-d10473f2470b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ALMT_K}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="164" width="200" height="20" uuid="6250d748-6149-4b17-a33e-620a50620cd3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{KOTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="185" width="70" height="20" uuid="6f7693d0-4fb8-46b9-880e-067866d9fc03"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Telp Kantor :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="185" width="200" height="20" uuid="4c8e3b72-10f9-4963-9522-f297aa20bf2c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TLP_K}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="210" width="479" height="15" uuid="b9dbb6fc-7d2d-4c47-9ca4-c2b8971c3b99">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Sesuai hasil pemantauan kami terhadap barang yang dikirim ke tempat kami, terdapat permasalahan sbb :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="229" width="264" height="15" uuid="32672762-da09-4032-a8ac-72a82730c143">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tidak muncul budget periode : 01/02/2022 - 28/02/2022]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="255" width="669" height="15" uuid="8e4d995a-98df-4fa8-8db3-9d86f7c18587">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Karena nilai stock barang ditempat kami melebihi 3X omzet perbulannya yang disebabkan barang kurang laku atau kirim melebihi budget.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="270" width="610" height="15" uuid="1cb40af1-a7ad-453a-9c39-4a1e77d968bb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Untuk selanjutnya kami harapkan bapak/ibu kami minta tidak melaksanakan pengiriman barang ke tempat kami terhitung sejak tanggal :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="620" y="270" width="99" height="15" uuid="d950f216-761a-4853-9d3b-94a5d3c72674"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TG_TD_OD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="285" width="610" height="15" uuid="cf216307-f0ac-4018-92f6-50181e9d0bcb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Untuk itu kami harapkan Bapak / Ibu berupaya mengurangi nilai stock di tempat kami (retur / tukar barang)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="305" width="610" height="15" uuid="e43be7ce-0158-45a1-953b-63ca487109c2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Demikianlah surat teguran kami buat agar Bapak/Ibu maklum adanya.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="331" width="60" height="15" uuid="22255a11-6f19-4aeb-9c33-d1d8c34d78d1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Denpasar, ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="331" width="99" height="15" uuid="c1726895-ba81-42f7-bc94-f646853588d0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TGL_CTK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="48" y="347" width="82" height="15" uuid="d2ab19ec-6c3b-44a3-a9f5-82e03ed8a3ed">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Hormat Kami,]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="27" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch"/>
+		<band height="1"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="32" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -17,7 +17,7 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RSupnolController extends Controller
+class RBudgetllController extends Controller
 {
     public function report()
     {	
@@ -28,14 +28,14 @@ class RSupnolController extends Controller
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
 
-        return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => []]);
+        return view('oreport_budgetll.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 	
 	 
-	public function jasperSupnolReport(Request $request) 
+	public function jasperBudgetllReport(Request $request) 
 	{
-		$file 	= 'Laporan_Suplier_Tidak_Ada_Budget';
+		$file 	= 'Melihat_Budget_Periode_Lalu';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		$params = [
@@ -61,28 +61,22 @@ class RSupnolController extends Controller
 				(@rownum := @rownum + 1) AS ROWNUM,
 				NO_SUPL,
 				NAMA,
-				ALMT_K,
-				KOTA,
-				GOL_BRG,
 				BUDGET,
-				0 AS QTY,
-				'' AS CETAK
+				BUDGET_LL AS QTY,
+				CAT
 			FROM nwmassup, (SELECT @rownum := 0) r
-			$filterkodes
-			AND BUDGET = 0
+			$filterkodes AND BUDGET <> 0
 		");
 
-
 		if($request->has('filter'))
-		{
+		{	
 			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
-			return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => $query]);
+
+			return view('oreport_budgetll.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];
-		
 		$data = json_decode(json_encode($query), true);
-
 		$PHPJasperXML->setData($data);
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");

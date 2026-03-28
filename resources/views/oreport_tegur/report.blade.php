@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Supplier Tidak Ada Budget</h1>
+			<h1 class="m-0">Surat Teguran / Budget Minus</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Laporan Supplier Tidak Ada Budget</li>
+				<li class="breadcrumb-item active">Surat Teguran / Budget Minus</li>
 			</ol>
 		</div>
 		</div>
@@ -23,7 +23,8 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-supnol-report')}}">
+					<form method="POST" action="{{url('jasper-tegur-report')}}">
+						<input type="hidden" name="selected_suppliers" id="selected_suppliers">
 					@csrf
 					<div class="form-group row">
 						<div class="col-md-1" align="right">
@@ -65,7 +66,7 @@
 					</div>
 					
 					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
-					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rsupnol")}}'">Reset</button>
+					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rtegur")}}'">Reset</button>
 					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>
@@ -73,10 +74,11 @@
 				<!-- PASTE DIBAWAH INI -->
 				<!-- DISINI BATAS AWAL KOOLREPORT-->
 				<div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
-					<?php
+					<?php 
 					use \koolreport\datagrid\DataTables;
 
 					$data = $hasil ?? [];
+
 					DataTables::create(array(
 						"dataSource" => $hasil,
 						"name" => "example",
@@ -98,12 +100,11 @@
 							"ALMT_K" => array(
 								"label" => "Alamat",
 							),
-							"QTY" => array(
-								"label" => "Qty",
-								"type" => "number",
-								"decimals" => 2,
-								"decimalPoint" => ".",
-								"thousandSeparator" => ",",
+							"KOTA" => array(
+								"label" => "Kota",
+							),
+							"GOL_BRG" => array(
+								"label" => "Gol. Barang",
 							),
 							"BUDGET" => array(
 								"label" => "Budget",
@@ -111,6 +112,15 @@
 								"decimals" => 2,
 								"decimalPoint" => ".",
 								"thousandSeparator" => ",",
+								"footer" => "sum",
+								"footerText" => "<b>@value</b>",
+							),
+							"CETAK" => array(
+								"label" => "Cetak",
+								"type" => "string",
+								"formatValue" => function($value, $row){
+									return '<input type="checkbox" style="transform: scale(2);" class="cek-cetak" value="'.$row["NO_SUPL"].'">';
+								}
 							),
 						),
 						"cssClass" => array(
@@ -123,11 +133,11 @@
 							"columnDefs"=>array(
 								array(
 									"className" => "dt-right", 
-									"targets" => [4,5],
+									"targets" => [6],
 								),
 								array(
 									"className" => "dt-center", 
-									"targets" => [0],
+									"targets" => [0,7],
 								),
 							),
 							"order" => [],
@@ -233,6 +243,22 @@
 		$('.date').datepicker({  
 			dateFormat: 'dd-mm-yy'
 		}); 
+
+		$('#cetak').on('click', function(e){
+			let selected = [];
+
+			$('.cek-cetak:checked').each(function(){
+				selected.push($(this).val());
+			});
+
+			if(selected.length === 0){
+				alert('Pilih minimal 1 data!');
+				e.preventDefault();
+				return false;
+			}
+
+			$('#selected_suppliers').val(JSON.stringify(selected));
+		});
 
 		var dTableBSuplier;
 		loadDataBSuplier = function(){

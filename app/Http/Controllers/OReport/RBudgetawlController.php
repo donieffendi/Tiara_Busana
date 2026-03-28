@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\OReport;
 
 use App\Http\Controllers\Controller;
-use App\Models\Master\Cbg;
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
+use App\Models\Master\Cust;
 use DataTables;
 use Auth;
 use DB;
@@ -17,32 +16,31 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RSupnolController extends Controller
+class RBudgetawlController extends Controller
 {
-    public function report()
-    {	
-		$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
-		session()->put('filter_periode', '');
+
+   public function report()
+    {
 		session()->put('filter_kodes1', '');
 		session()->put('filter_namas1', '');
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
+		session()->put('filter_budget', '');
 
-        return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => []]);
+        return view('oreport_budgetawl.report')->with(['hasil' => []]);
     }
 	
-	
-	 
-	public function jasperSupnolReport(Request $request) 
+
+	 	 
+	public function jasperBudgetawlReport(Request $request) 
 	{
-		$file 	= 'Laporan_Suplier_Tidak_Ada_Budget';
+		$file 	= 'Laporan_Budget_awal';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		$params = [
 			"TGL_CTK" => date('d/m/Y')
 		];
 		$PHPJasperXML->arrayParameter = $params;
-		
 			
 		$filterkodes = "";
 
@@ -50,40 +48,44 @@ class RSupnolController extends Controller
 			$filterkodes .= " WHERE NO_SUPL BETWEEN '".$request->kodes1."' AND '".$request->kodes2."'";
 		}
 
+		$filterbudget = "";
+		if (!empty($request->budget)) {
+			$filterbudget .= " AND BUDGET_AWL = '".$request->budget."'";
+		}
+		
 		session()->put('filter_kodes1', $request->kodes1);
 		session()->put('filter_namas1', $request->namas1);
 		session()->put('filter_kodes2', $request->kodes2);
 		session()->put('filter_namas2', $request->namas2);
-		
+		session()->put('filter_budget', $request->budget);
 
-		$query = DB::select("
-			SELECT 
-				(@rownum := @rownum + 1) AS ROWNUM,
-				NO_SUPL,
-				NAMA,
-				ALMT_K,
-				KOTA,
-				GOL_BRG,
-				BUDGET,
-				0 AS QTY,
-				'' AS CETAK
-			FROM nwmassup, (SELECT @rownum := 0) r
-			$filterkodes
-			AND BUDGET = 0
+		$query = DB::SELECT("SELECT 
+					(@rownum := @rownum + 1) AS ROWNUM,
+					NO_SUPL,
+					NAMA,
+					ALMT_K,
+					KOTA,
+					GOL_BRG,
+					BUDGET_AWL,
+					'' AS CETAK,
+					CAT AS KET
+				FROM nwmassup, (SELECT @rownum := 0) r
+				$filterkodes $filterbudget
 		");
-
-
+		
 		if($request->has('filter'))
 		{
-			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
-			return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => $query]);
+			return view('oreport_budgetawl.report')->with(['hasil' => $query]);
 		}
 
 		$data=[];
-		
+
 		$data = json_decode(json_encode($query), true);
 
 		$PHPJasperXML->setData($data);
+		$PHPJasperXML->arrayParameter = [
+                "TGL_CTK" => date('d/m/Y')
+        ];
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");
 	}

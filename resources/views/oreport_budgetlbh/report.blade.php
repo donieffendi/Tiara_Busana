@@ -3,18 +3,18 @@
 @section('content')
 <div class="content-wrapper">
 	<div class="content-header">
-	<div class="container-fluid">
-		<div class="row mb-2">
-		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Supplier Tidak Ada Budget</h1>
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1 class="m-0">Melihat Budget & Order Lebih</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item active">Melihat Budget & Order Lebih</li>
+					</ol>
+				</div>
+			</div>
 		</div>
-		<div class="col-sm-6">
-			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Laporan Supplier Tidak Ada Budget</li>
-			</ol>
-		</div>
-		</div>
-	</div>
 	</div>
 	
 	<div class="content">
@@ -23,7 +23,7 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-supnol-report')}}">
+					<form method="POST" action="{{url('jasper-budgetlbh-report')}}">
 					@csrf
 					<div class="form-group row">
 						<div class="col-md-1" align="right">
@@ -63,100 +63,98 @@
 							<input type="text" class="form-control namas2" id="namas2" name="namas2" placeholder="Nama Supplier" value="{{ session()->get('filter_namas2') }}" readonly>
 						</div>  
 					</div>
-					
-					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
-					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rsupnol")}}'">Reset</button>
-					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
+						
+                    {{-- <button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button> --}}
+					<button class="btn btn-primary" type="submit" id="cetak" class="cetak" formtarget="_blank">Proses</button>
+                    <button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rbudgetlbh")}}'">Reset</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>
 					
-				<!-- PASTE DIBAWAH INI -->
-				<!-- DISINI BATAS AWAL KOOLREPORT-->
-				<div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
-					<?php
-					use \koolreport\datagrid\DataTables;
+                    <!-- PASTE DIBAWAH INI -->
+                    <!-- DISINI BATAS AWAL KOOLREPORT-->
+                    <div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
+						<?php 
+						use \koolreport\datagrid\DataTables;
 
-					$data = $hasil ?? [];
-					DataTables::create(array(
-						"dataSource" => $hasil,
-						"name" => "example",
-						"fastRender" => true,
-						"fixedHeader" => true,
-						'scrollX' => true,
-						"showFooter" => true,
-						"showFooter" => "bottom",
-						"columns" => array(
-							"ROWNUM" => array(
-								"label" => "No",
-							),
-							"NO_SUPL" => array(
-								"label" => "Kode Supplier",
-							),
-							"NAMA" => array(
-								"label" => "Nama Supplier",
-							),
-							"ALMT_K" => array(
-								"label" => "Alamat",
-							),
-							"QTY" => array(
-								"label" => "Qty",
-								"type" => "number",
-								"decimals" => 2,
-								"decimalPoint" => ".",
-								"thousandSeparator" => ",",
-							),
-							"BUDGET" => array(
-								"label" => "Budget",
-								"type" => "number",
-								"decimals" => 2,
-								"decimalPoint" => ".",
-								"thousandSeparator" => ",",
-							),
-						),
-						"cssClass" => array(
-							"table" => "table table-hover table-striped table-bordered compact",
-							"th" => "label-title",
-							"td" => "detail",
-							"tf" => "footerCss"
-						),
-						"options" => array(
-							"columnDefs"=>array(
-								array(
-									"className" => "dt-right", 
-									"targets" => [4,5],
+						// $data = $hasil ?? [];
+						if($hasil){
+							DataTables::create(array(
+								"dataSource" => $hasil,
+								"name" => "example",
+								"fastRender" => true,
+								"fixedHeader" => true,
+								'scrollX' => true,
+								"showFooter" => true,
+								"showFooter" => "bottom",
+								"columns" => array(
+									"ROWNUM" => array(
+										"label" => "No",
+									),
+									"NO_SUPL" => array(
+										"label" => "Kode Supplier",
+									),
+									"NAMA" => array(
+										"label" => "Nama Supplier",
+									),
+									"BUDGET_AWL" => array(
+										"label" => "Budget Awal",
+										"type" => "number",
+										"decimals" => 2,
+										"decimalPoint" => ".",
+										"thousandSeparator" => ",",
+										"footer" => "sum",
+										"footerText" => "<b>@value</b>",
+									),
+									"KET" => array(
+										"label" => "Keterangan",
+									),
 								),
-								array(
-									"className" => "dt-center", 
-									"targets" => [0],
+								"cssClass" => array(
+									"table" => "table table-hover table-striped table-bordered compact",
+									"th" => "label-title",
+									"td" => "detail",
+									"tf" => "footerCss"
 								),
-							),
-							"order" => [],
-							"paging" => true,
-							// "pageLength" => 12,
-							"lengthMenu" => [[10, 25, 50,-1], [10,25,50, "All"]],
-							"searching" => true,
-							"colReorder" => true,
-							"select" => true,
-							"dom" => 'Blfrtip', // B e dilangi
-							// "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
-							"buttons" => array(
-								array(
-									"extend" => 'collection',
-									"text" => 'Export',
-									"buttons" => [
-										'copy',
-										'excel',
-										'csv',
-										'pdf',
-										'print'
-									],
+								"options" => array(
+									"columnDefs"=>array(
+										array(
+											"className" => "dt-right", 
+											"targets" => [3],
+										),
+										array(
+											"className" => "dt-center", 
+											"targets" => [0],
+										),
+									),
+									"order" => [],
+									"paging" => true,
+									// "pageLength" => 12,
+									"lengthMenu" => [[10, 25, 50,-1], [10,25,50, "All"]],
+									"searching" => true,
+									"colReorder" => true,
+									"select" => true,
+									"dom" => 'Blfrtip', // B e dilangi
+									// "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
+									"buttons" => array(
+										array(
+											"extend" => 'collection',
+											"text" => 'Export',
+											"buttons" => [
+												'copy',
+												'excel',
+												'csv',
+												'pdf',
+												'print'
+											],
+										),
+									),
 								),
-							),
-						),
-					));
-					?>
-				</div>
-				<!-- DISINI BATAS AKHIR KOOLREPORT-->
+							));
+						}
+						?>
+					</div>
+                    <!-- DISINI BATAS AKHIR KOOLREPORT-->
+
 				</div>
 			</div>
 			</div>
@@ -164,6 +162,7 @@
 		</div>
 	</div>
 </div>
+
 <div class="modal fade" id="browseSuplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSuplierModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
