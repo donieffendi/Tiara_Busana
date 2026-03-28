@@ -77,7 +77,7 @@ class PoController extends Controller
     {   
         // $KD_BRG = $request->KD_BRG;
 		$sup = $request->sup;
-        $po = DB::SELECT("SELECT KDBAR, NMBAR, BARCODE, HJ AS HARGA, 1 AS STOK FROM nwmasbar WHERE SUPP = '$sup'");
+        $po = DB::SELECT("SELECT KDBAR, NMBAR, BARCODE, HB AS HARGA, 1 AS STOK FROM nwmasbar WHERE SUPP = '$sup'");
         return response()->json($po);
     }
 

@@ -863,6 +863,8 @@ Route::get('/rbeli_gdg', 'App\Http\Controllers\OReport\RBeli_gdgController@repor
     Route::post('jasper-beli_gdg-report', 'App\Http\Controllers\OReport\RBeli_gdgController@jasperBeli_gdgReport')->middleware(['auth']);
 
     Route::get('/beli/browse_belid', 'App\Http\Controllers\OTransaksi\BeliController@browse_belid')->middleware(['auth'])->name('beli/browse_belid');
+    Route::get('/beli/get-ppn', 'App\Http\Controllers\OTransaksi\BeliController@getPpn')->middleware(['auth'])->name('beli/get-ppn');
+    Route::get('/beli/cek-harga', 'App\Http\Controllers\OTransaksi\BeliController@cekHarga')->middleware(['auth'])->name('beli/cek-harga');
 
 // Dynamic Beli
 Route::get('/beli/edit', 'App\Http\Controllers\OTransaksi\BeliController@edit')->middleware(['auth'])->name('beli.edit');

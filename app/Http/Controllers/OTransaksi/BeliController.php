@@ -1131,6 +1131,30 @@ class BeliController extends Controller
     }
 	
 	
-	
+	public function getPpn(Request $request)
+    {
+        $tgl = $request->tgl;
+        $tgl = Carbon::parse($tgl)->format('Y-m-d');
+
+        $data = DB::select("call PPNTGL(?)", [$tgl]);
+
+        return response()->json([
+            'ppn' => $data[0]->PPN ?? 0
+        ]);
+    }
+
+    public function cekHarga(Request $request)
+    {
+        $kd_brg = $request->kd_brg;
+        $hjual  = $request->hjual;
+
+        $data = DB::table('brgbsn')
+            ->select('kd_brg', 'hjual')
+            ->where('kd_brg', $kd_brg)
+            ->where('hjual', '>', $hjual)
+            ->first();
+
+        return response()->json($data);
+    }
 	
 }

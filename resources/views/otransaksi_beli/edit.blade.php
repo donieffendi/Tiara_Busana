@@ -741,6 +741,10 @@
 		$("#NETT").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("HMARGIN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#POT_PROM").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$('#TJUMLAH, #TPROM,#TNETT').autoNumeric('init', {
+			aSign: '',
+			vMin: '-999999999.99'
+		});
 
 
 
@@ -949,35 +953,36 @@
 									
 									<td><input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly></td>
                                     <td>
-										<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' >
+										<input name='QTY[]' onclick='select()' onblur='prosesHitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' >
 									</td>
 									<td >
-										<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' >
+										<input name='HARGA[]' onclick='select()' onblur='prosesHitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' >
+										<input type="hidden" id="PPNX_GLOBAL">
 									</td>
 									<td >
-										<input name='MARGIN[]' onclick='select()' onblur='hitung()' id='MARGIN${i}' value="0" type='text' style='text-align: right' class='form-control MARGIN text-primary' >
+										<input name='MARGIN[]' onclick='select()' onblur='prosesHitung()' id='MARGIN${i}' value="0" type='text' style='text-align: right' class='form-control MARGIN text-primary' >
 									</td>
 									<td >
-										<input name='DISKON1[]' onclick='select()' onblur='hitung()' id='DISKON1${i}' value="0" type='text' style='text-align: right' class='form-control DISKON1 text-primary' >
+										<input name='DISKON1[]' onclick='select()' onblur='prosesHitung()' id='DISKON1${i}' value="0" type='text' style='text-align: right' class='form-control DISKON1 text-primary' >
 									</td>
 									<td >
-										<input name='DISKON2[]' onclick='select()' onblur='hitung()' id='DISKON2${i}' value="0" type='text' style='text-align: right' class='form-control DISKON2 text-primary' >
+										<input name='DISKON2[]' onclick='select()' onblur='prosesHitung()' id='DISKON2${i}' value="0" type='text' style='text-align: right' class='form-control DISKON2 text-primary' >
 									</td>
 									<td >
-										<input name='DISKON3[]' onclick='select()' onblur='hitung()' id='DISKON3${i}' value="0" type='text' style='text-align: right' class='form-control DISKON3 text-primary' >
+										<input name='DISKON3[]' onclick='select()' onblur='prosesHitung()' id='DISKON3${i}' value="0" type='text' style='text-align: right' class='form-control DISKON3 text-primary' >
 									</td>
 									<td >
-										<input name='DISKON4[]' onclick='select()' onblur='hitung()' id='DISKON4${i}' value="0" type='text' style='text-align: right' class='form-control DISKON4 text-primary' >
+										<input name='DISKON4[]' onclick='select()' onblur='prosesHitung()' id='DISKON4${i}' value="0" type='text' style='text-align: right' class='form-control DISKON4 text-primary' >
 									</td>
                                     
 									<td >
-										<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
+										<input name='TOTAL[]' onclick='select()' onblur='prosesHitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
 									</td>
 									<td >
-										<input name='HARGA_JL[]' onclick='select()' onblur='hitung()' id='HARGA_JL${i}' value="${resp[i].HJ}" type='text' style='text-align: right' class='form-control HARGA_JL text-primary' >
+										<input name='HARGA_JL[]' onclick='select()' onblur='prosesHitung()' id='HARGA_JL${i}' value="${resp[i].HJ}" type='text' style='text-align: right' class='form-control HARGA_JL text-primary' >
 									</td>
 									<td >
-										<input name='BLT[]' onclick='select()' onblur='hitung()' id='BLT${i}' value="0" type='text' style='text-align: right' class='form-control BLT text-primary' >
+										<input name='BLT[]' onclick='select()' onblur='prosesHitung()' id='BLT${i}' value="0" type='text' style='text-align: right' class='form-control BLT text-primary' >
 									</td>
 
 									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
@@ -1019,7 +1024,7 @@
 					baris=resp.length;
 
 					nomor();
-					hitung();
+					prosesHitung();
 				}
 			});
 	}
@@ -1388,123 +1393,256 @@
 	
 	}
 
-   function hitung() {
-		var TTOTAL_QTY = 0;
-		var TTOTAL = 0;
-		var TDISK = 0;
-		var TDPPX = 0;
-		var TPPNX = 0;
-		var NETTX = 0;
+//    function hitung() {
+// 		var TTOTAL_QTY = 0;
+// 		var TTOTAL = 0;
+// 		var TDISK = 0;
+// 		var TDPPX = 0;
+// 		var TPPNX = 0;
+// 		var NETTX = 0;
 
 		
-		$(".QTY_PO").each(function() {
+// 		$(".QTY_PO").each(function() {
 			
-			let z = $(this).closest('tr');
-			var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
-			var XQTYX = parseFloat(z.find('.XQTY').val().replace(/,/g, ''));
-			var XX = parseFloat(z.find('.KALI').val().replace(/,/g, ''));
-			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
-			var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
-			var DISKX = parseFloat(z.find('.DISK').val().replace(/,/g, ''));
+// 			let z = $(this).closest('tr');
+// 			var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
+// 			var XQTYX = parseFloat(z.find('.XQTY').val().replace(/,/g, ''));
+// 			var XX = parseFloat(z.find('.KALI').val().replace(/,/g, ''));
+// 			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
+// 			var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
+// 			var DISKX = parseFloat(z.find('.DISK').val().replace(/,/g, ''));
 	
-			var PKPX  = $('#PKP').val();
+// 			var PKPX  = $('#PKP').val();
 
-			var FLAGZ = $('#flagz').val();
+// 			var FLAGZ = $('#flagz').val();
 	
-			if (FLAGZ == 'RB'){
+// 			if (FLAGZ == 'RB'){
 				
-				var XQTYX  = ( XQTYX * -1 ) ;
-				var QTY_POX  = ( QTY_POX * -1 ) ;
-				var DISKX  = ( DISKX * -1 ) ;
+// 				var XQTYX  = ( XQTYX * -1 ) ;
+// 				var QTY_POX  = ( QTY_POX * -1 ) ;
+// 				var DISKX  = ( DISKX * -1 ) ;
 				
-				z.find('.QTY_PO').autoNumeric('update');
-				z.find('.DISKX').autoNumeric('update');
-				z.find('.XQTY').autoNumeric('update');
+// 				z.find('.QTY_PO').autoNumeric('update');
+// 				z.find('.DISKX').autoNumeric('update');
+// 				z.find('.XQTY').autoNumeric('update');
 
-			} 
+// 			} 
 
-			var QTYX  = ( XQTYX * XX );
-			z.find('.QTY').val(QTYX);
+// 			var QTYX  = ( XQTYX * XX );
+// 			z.find('.QTY').val(QTYX);
 
-		    z.find('.KALI').autoNumeric('update');	
-		    z.find('.QTY').autoNumeric('update');	
+// 		    z.find('.KALI').autoNumeric('update');	
+// 		    z.find('.QTY').autoNumeric('update');	
 
             
-            var TOTALX  =  ( XQTYX * HARGAX ) - DISKX;
+//             var TOTALX  =  ( XQTYX * HARGAX ) - DISKX;
             
-			z.find('.TOTAL').val(TOTALX);
+// 			z.find('.TOTAL').val(TOTALX);
 
 
-			var DPPX = 0 ;
-			var PPNX = 0;
+// 			var DPPX = 0 ;
+// 			var PPNX = 0;
 			
-            DPPX = TOTALX;
-	     	z.find('.DPP').val(DPPX);
+//             DPPX = TOTALX;
+// 	     	z.find('.DPP').val(DPPX);
 
-			if (PKPX == '0' ) {
-			    PPNX = 0;
+// 			if (PKPX == '0' ) {
+// 			    PPNX = 0;
 			    
-			} 
+// 			} 
 
 	     		
-			if (PKPX == '1' ) {
-			    DPPX = TOTALX * 100/111;
-			    PPNX = TOTALX - DPPX;
-	     	    z.find('.DPP').val(DPPX);
+// 			if (PKPX == '1' ) {
+// 			    DPPX = TOTALX * 100/111;
+// 			    PPNX = TOTALX - DPPX;
+// 	     	    z.find('.DPP').val(DPPX);
 	     	
-			} 
+// 			} 
 
 
             
-			z.find('.PPNX').val(PPNX);	
+// 			z.find('.PPNX').val(PPNX);	
 
-		    z.find('.HARGA').autoNumeric('update');			
-		    z.find('.QTY').autoNumeric('update');	
-		    z.find('.TOTAL').autoNumeric('update');				
-		    z.find('.DPP').autoNumeric('update');			
-		    z.find('.DISK').autoNumeric('update');			
-		    z.find('.PPNX').autoNumeric('update');		
+// 		    z.find('.HARGA').autoNumeric('update');			
+// 		    z.find('.QTY').autoNumeric('update');	
+// 		    z.find('.TOTAL').autoNumeric('update');				
+// 		    z.find('.DPP').autoNumeric('update');			
+// 		    z.find('.DISK').autoNumeric('update');			
+// 		    z.find('.PPNX').autoNumeric('update');		
 
-            TTOTAL_QTY +=QTYX;		
-            TTOTAL +=TOTALX;				
-            TPPNX +=PPNX;
-            TDPPX +=DPPX;
+//             TTOTAL_QTY +=QTYX;		
+//             TTOTAL +=TOTALX;				
+//             TPPNX +=PPNX;
+//             TDPPX +=DPPX;
             
-            TDISK +=DISKX;				
+//             TDISK +=DISKX;				
 		
+// 		});
+
+		
+// 		NETTX = TTOTAL ;
+
+		
+// 		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
+
+// 		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));		
+// 		$("#TTOTAL_QTY").autoNumeric('update');
+		
+// 		if(isNaN(TTOTAL)) TTOTAL = 0;
+
+// 		$('#TTOTAL').val(numberWithCommas(TTOTAL));		
+// 		$("#TTOTAL").autoNumeric('update');
+
+// 		$('#TDISK').val(numberWithCommas(TDISK));		
+// 		$("#TDISK").autoNumeric('update');
+
+
+// 		$('#TDPP').val(numberWithCommas(TDPPX));		
+// 		$("#TDPP").autoNumeric('update');
+		
+// 		$('#TPPN').val(numberWithCommas(TPPNX));		
+// 		$("#TPPN").autoNumeric('update');
+
+// 		$('#NETT').val(numberWithCommas(NETTX));		
+// 		$("#NETT").autoNumeric('update');
+
+		
+// 	}
+
+	function prosesHitung(row = null) {
+		let tgl = $('#TGL').val();
+
+		// 1. ambil ppn dari procedure (WAJIB)
+		$.get("{{url('beli/get-ppn')}}", { tgl: tgl }, function (res) {
+
+			let ppnx = parseFloat(res.ppn || 0);
+
+			// simpan global
+			$('#PPNX_GLOBAL').val(ppnx);
+
+			// 2. hitung harga jual (kalau ada row yg berubah)
+			if (row) {
+				hitungbl(row, ppnx);
+			}
+
+			// 3. hitung semua total
+			hitung(ppnx);
 		});
+	}
 
-		
-		NETTX = TTOTAL ;
+	function hitungbl(row, ppnx) {
 
-		
-		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
+		let z = $(row).closest('tr');
 
-		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));		
-		$("#TTOTAL_QTY").autoNumeric('update');
-		
-		if(isNaN(TTOTAL)) TTOTAL = 0;
+		let harga  = parseFloat(z.find('.HARGA').val().replace(/,/g, '')) || 0;
+		let margin = parseFloat(z.find('.MARGIN').val().replace(/,/g, '')) || 0;
+		let st_nota = $('#ST_NOTA').val();
 
-		$('#TTOTAL').val(numberWithCommas(TTOTAL));		
-		$("#TTOTAL").autoNumeric('update');
+		if (harga !== 0) {
 
-		$('#TDISK').val(numberWithCommas(TDISK));		
-		$("#TDISK").autoNumeric('update');
+			let harga_jl = 0;
 
+			if (st_nota === 'B') {
+				harga_jl = Math.round(
+					harga * ((100 + margin) / 100) * (1 + ppnx)
+				);
+			} else {
+				harga_jl = parseInt(
+					harga * (1 + ppnx) / ((100 - margin) / 100)
+				);
+			}
 
-		$('#TDPP').val(numberWithCommas(TDPPX));		
-		$("#TDPP").autoNumeric('update');
-		
-		$('#TPPN').val(numberWithCommas(TPPNX));		
-		$("#TPPN").autoNumeric('update');
+			// pembulatan 
+			let jj = harga_jl % 100;
+			if (100 - jj === 1) {
+				harga_jl = harga_jl + 1;
+			}
 
-		$('#NETT').val(numberWithCommas(NETTX));		
-		$("#NETT").autoNumeric('update');
+			// cek ke database 
+			let kd_brg = z.find('.KD_BRG').val();
 
-		
+			$.get("{{url('beli/cek-harga')}}", {
+				kd_brg: kd_brg,
+				hjual: harga_jl
+			}, function (res) {
+
+				if (res && res.hjual) {
+					harga_jl = res.hjual;
+				}
+
+				z.find('.HARGA_JL').val(harga_jl).autoNumeric('update');
+				console.log('harga : ',harga_jl);
+			});
+		}
 	}
 	
+	function hitung(ppnx) {
 
+		let x1 = 0;
+		let x2 = 0;
+
+		$('#detailPod tr').each(function (i) {
+
+			let z = $(this);
+
+			let QTY   = parseFloat(z.find('.QTY').val().replace(/,/g, '')) || 0;
+			let HARGA = parseFloat(z.find('.HARGA').val().replace(/,/g, '')) || 0;
+
+			let D1 = parseFloat(z.find('.DISKON1').val().replace(/,/g, '')) || 0;
+			let D2 = parseFloat(z.find('.DISKON2').val().replace(/,/g, '')) || 0;
+			let D3 = parseFloat(z.find('.DISKON3').val().replace(/,/g, '')) || 0;
+			let D4 = parseFloat(z.find('.DISKON4').val().replace(/,/g, '')) || 0;
+
+			let BLT = parseFloat(z.find('.BLT').val().replace(/,/g, '')) || 0;
+
+			// Delphi: nilai := round(QTY * harga)
+			let nilai = Math.round(QTY * HARGA);
+
+			let total =
+				(((nilai * (100 - D1) / 100)
+					* (100 - D2) / 100)
+					* (100 - D3) / 100)
+					* (100 - D4) / 100;
+
+			total = Math.round(total) + BLT;
+
+			z.find('.TOTAL').val(total).autoNumeric('update');
+			z.find('.REC').val(i + 1);
+
+			x1 += QTY;
+			x2 += total;
+		});
+
+		$('#TTOTAL_QTY').val(numberWithCommas(x1)).autoNumeric('update');
+		$('#TJUMLAH').val(numberWithCommas(x2)).autoNumeric('update');
+
+		let PROM = parseFloat($('#TPOT_PROM').val() || 0);
+
+		let txtprom = Math.round(x2 * PROM / 100);
+		let txtdpp = Math.round(x2 - txtprom);
+		console.log('prom : ',txtprom);
+
+		$('#TPROM').val(numberWithCommas(txtprom)).autoNumeric('update');
+		$('#TDPP').val(numberWithCommas(txtdpp)).autoNumeric('update');
+
+		let txtppn = 0;
+		if ($('#ST_PJK').val() === 'P1') {
+			txtppn = Math.round(txtdpp * ppnx);
+		}
+
+		$('#TPPN').val(numberWithCommas(txtppn)).autoNumeric('update');
+
+		let nett = Math.round(txtdpp + txtppn);
+		$('#TNETT').val(numberWithCommas(nett)).autoNumeric('update');
+	}
+
+	$(document).on('blur', '.HARGA, .MARGIN', function () {
+		prosesHitung(this); // trigger full flow
+	});
+
+	$(document).on('blur', '.QTY, .DISKON1, .DISKON2, .DISKON3, .DISKON4, .BLT', function () {
+		prosesHitung(); // tanpa hitungbl
+	});
 	
   
 	function baru() {
