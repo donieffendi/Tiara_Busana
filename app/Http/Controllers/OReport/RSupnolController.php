@@ -42,10 +42,10 @@ class RSupnolController extends Controller
 		$PHPJasperXML->arrayParameter = $params;
 		
 			
-		$filterkodes = "WHERE 1=1";
+		$filterkodes = "";
 
 		if (!empty($request->kodes1) && !empty($request->kodes2)) {
-			$filterkodes .= " AND NO_SUPL BETWEEN '".$request->kodes1."' AND '".$request->kodes2."'";
+			$filterkodes .= " WHERE NO_SUPL BETWEEN '".$request->kodes1."' AND '".$request->kodes2."'";
 		}
 
 		session()->put('filter_kodes1', $request->kodes1);
