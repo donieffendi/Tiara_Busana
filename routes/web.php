@@ -473,11 +473,18 @@ Route::get('/rminus', 'App\Http\Controllers\OReport\RMinusController@report')->m
 Route::get('/get-minus-report', 'App\Http\Controllers\OReport\RMinusController@getMinusReport')->middleware(['auth'])->name('get-minus-report');
 Route::post('jasper-minus-report', 'App\Http\Controllers\OReport\RMinusController@jasperMinusReport')->middleware(['auth']);
 
-// Operational Budget Minus
+// Operational Surat Teguran Budget Minus
 
 Route::get('/rtegur', 'App\Http\Controllers\OReport\RTegurController@report')->middleware(['auth'])->name('rtegur');
 Route::get('/get-tegur-report', 'App\Http\Controllers\OReport\RTegurController@getTegurReport')->middleware(['auth'])->name('get-tegur-report');
 Route::post('jasper-tegur-report', 'App\Http\Controllers\OReport\RTegurController@jasperTegurReport')->middleware(['auth']);
+
+
+// Operational Proses Suplier Tidak Kirim Barang
+
+Route::get('/rtidakkirim', 'App\Http\Controllers\OReport\RTidakkirimController@report')->middleware(['auth'])->name('rtidakkirim');
+Route::get('/get-tidakkirim-report', 'App\Http\Controllers\OReport\RTidakkirimController@getTidakkirimReport')->middleware(['auth'])->name('get-tidakkirim-report');
+Route::post('jasper-tidakkirim-report', 'App\Http\Controllers\OReport\RTidakkirimController@jasperTidakkirimReport')->middleware(['auth']);
 
 
 // Opertational Usulan Penghapusan Barang
