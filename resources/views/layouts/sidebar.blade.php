@@ -576,8 +576,7 @@
       <div class="row">
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
-                <a href="javascript:addTab('Surat Teguran', '{{url('po?flagz=PO&golz=ST')}}')">
+                <a href="javascript:addTab('Surat Teguran', '{{url('rtegur')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Surat Teguran / Budget Minus</h6>
@@ -588,18 +587,7 @@
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
                 {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
-                <a href="javascript:addTab('Suplier tidak kirim barang', '{{url('po?flagz=PO&golz=PS')}}')">
-                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
-                  <h6>Proses suplier tidak kirim barang</h6>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
-                <a href="javascript:addTab('Suplier tidak kirim barang', '{{url('po?flagz=PO&golz=PS')}}')">
+                <a href="javascript:addTab('Suplier tidak kirim barang', '{{url('rtidakkirim')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Proses suplier tidak kirim barang</h6>
@@ -675,8 +663,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
-                <a href="javascript:addTab('Laporan Awal', '{{url('po?flagz=PO&golz=LA')}}')">
+                <a href="javascript:addTab('Laporan Awal', '{{url('rbudgetawl')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Laporan Awal Budget Suplier</h6>
@@ -822,8 +809,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BO')}}')"> --}}
-                <a href="javascript:addTab('Melihat Budget & Order lebih', '{{url('terima?flagz=BO')}}')">
+                <a href="javascript:addTab('Melihat Budget & Order lebih', '{{url('rbudgetlbh')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Melihat Budget & Order lebih</h6>
@@ -863,8 +849,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BP')}}')"> --}}
-                <a href="javascript:addTab('Suplier Yang Punya Budget Pokok', '{{url('terima?flagz=BP')}}')">
+                <a href="javascript:addTab('Suplier Yang Punya Budget Pokok', '{{url('rbudgetpk')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-blue"></i>
                   <h6>Suplier Yang Punya Budget Pokok</h6>
@@ -888,6 +873,18 @@
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-blue"></i>
                   <h6>Suplier yang Punya Budget Repeat</h6>
+                </a>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffbaba;">
+                <a href="javascript:addTab('Melihat Budget Periode Lalu', '{{url('rbudgetll')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-red"></i>
+                  <h6>Melihat Budget Periode Lalu</h6>
                 </a>
             </div>
         </div>

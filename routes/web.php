@@ -121,6 +121,7 @@ Route::get('/rsup', 'App\Http\Controllers\OReport\RSupController@report')->middl
     Route::get('/sup/browse', 'App\Http\Controllers\Master\SupController@browse')->middleware(['auth'])->name('sup/browse');
     Route::get('/sup/browse_hari', 'App\Http\Controllers\Master\SupController@browse_hari')->middleware(['auth'])->name('sup/browse_hari');
     Route::get('/sup/browse_amplop', 'App\Http\Controllers\Master\SupController@browse_amplop')->middleware(['auth'])->name('sup/browse_amplop');
+    Route::get('/sup/browse_stegur', 'App\Http\Controllers\Master\SupController@browse_stegur')->middleware(['auth'])->name('sup/browse_stegur');
     Route::get('/sup/browsesupz', 'App\Http\Controllers\Master\SupController@browsesupz')->middleware(['auth'])->name('sup/browsesupz');
 
     Route::get('/get-sup-report', 'App\Http\Controllers\OReport\RSupController@getSupReport')->middleware(['auth'])->name('get-sup-report');
@@ -465,12 +466,49 @@ Route::get('/rsupnol', 'App\Http\Controllers\OReport\RSupnolController@report')-
 Route::get('/get-supnol-report', 'App\Http\Controllers\OReport\RSupnolController@getSupnolReport')->middleware(['auth'])->name('get-supnol-report');
 Route::post('jasper-supnol-report', 'App\Http\Controllers\OReport\RSupnolController@jasperSupnolReport')->middleware(['auth']);
 
+// Operational Suplier Suplier Punya Budget Pokok
+
+Route::get('/rbudgetpk', 'App\Http\Controllers\OReport\RBudgetpkController@report')->middleware(['auth'])->name('rbudgetpk');
+Route::get('/get-budgetpk-report', 'App\Http\Controllers\OReport\RBudgetpkController@getBudgetpkReport')->middleware(['auth'])->name('get-budgetpk-report');
+Route::post('jasper-budgetpk-report', 'App\Http\Controllers\OReport\RBudgetpkController@jasperBudgetpkReport')->middleware(['auth']);
+
 
 // Operational Budget Minus
 
 Route::get('/rminus', 'App\Http\Controllers\OReport\RMinusController@report')->middleware(['auth'])->name('rminus');
 Route::get('/get-minus-report', 'App\Http\Controllers\OReport\RMinusController@getMinusReport')->middleware(['auth'])->name('get-minus-report');
 Route::post('jasper-minus-report', 'App\Http\Controllers\OReport\RMinusController@jasperMinusReport')->middleware(['auth']);
+
+// Operational Budget Periode Lalu
+
+Route::get('/rbudgetll', 'App\Http\Controllers\OReport\RBudgetllController@report')->middleware(['auth'])->name('rbudgetll');
+Route::get('/get-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@getBudgetllReport')->middleware(['auth'])->name('get-budgetll-report');
+Route::post('jasper-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@jasperBudgetllReport')->middleware(['auth']);
+
+// Operational Surat Teguran Budget Minus
+
+Route::get('/rtegur', 'App\Http\Controllers\OReport\RTegurController@report')->middleware(['auth'])->name('rtegur');
+Route::get('/get-tegur-report', 'App\Http\Controllers\OReport\RTegurController@getTegurReport')->middleware(['auth'])->name('get-tegur-report');
+Route::post('jasper-tegur-report', 'App\Http\Controllers\OReport\RTegurController@jasperTegurReport')->middleware(['auth']);
+
+
+// Operational Proses Suplier Tidak Kirim Barang
+
+Route::get('/rtidakkirim', 'App\Http\Controllers\OReport\RTidakkirimController@report')->middleware(['auth'])->name('rtidakkirim');
+Route::get('/get-tidakkirim-report', 'App\Http\Controllers\OReport\RTidakkirimController@getTidakkirimReport')->middleware(['auth'])->name('get-tidakkirim-report');
+Route::post('jasper-tidakkirim-report', 'App\Http\Controllers\OReport\RTidakkirimController@jasperTidakkirimReport')->middleware(['auth']);
+
+// Laporan Budget Awal Supplier
+
+Route::get('/rbudgetawl', 'App\Http\Controllers\OReport\RBudgetawlController@report')->middleware(['auth'])->name('rbudgetawl');
+Route::get('/get-budgetawl-report', 'App\Http\Controllers\OReport\RBudgetawlController@getBudgetawlReport')->middleware(['auth'])->name('get-budgetawl-report');
+Route::post('jasper-budgetawl-report', 'App\Http\Controllers\OReport\RBudgetawlController@jasperBudgetawlReport')->middleware(['auth']);
+
+// Laporan Budget & Order lebih
+
+Route::get('/rbudgetlbh', 'App\Http\Controllers\OReport\RBudgetlbhController@report')->middleware(['auth'])->name('rbudgetlbh');
+Route::get('/get-budgetlbh-report', 'App\Http\Controllers\OReport\RBudgetlbhController@getBudgetlbhReport')->middleware(['auth'])->name('get-budgetlbh-report');
+Route::post('jasper-budgetlbh-report', 'App\Http\Controllers\OReport\RBudgetlbhController@jasperBudgetlbhReport')->middleware(['auth']);
 
 
 // Opertational Usulan Penghapusan Barang

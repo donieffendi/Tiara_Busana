@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\OReport;
 
 use App\Http\Controllers\Controller;
-use App\Models\Master\Cbg;
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
+use App\Models\Master\Cust;
 use DataTables;
 use Auth;
 use DB;
@@ -17,9 +16,10 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RSupnolController extends Controller
+class RBudgetlbhController extends Controller
 {
-    public function report()
+
+   public function report()
     {	
 		$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 		session()->put('filter_periode', '');
@@ -28,59 +28,45 @@ class RSupnolController extends Controller
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
 
-        return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => []]);
+        return view('oreport_budgetlbh.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
-	
-	 
-	public function jasperSupnolReport(Request $request) 
+
+	 	 
+	public function jasperBudgetlbhReport(Request $request) 
 	{
-		$file 	= 'Laporan_Suplier_Tidak_Ada_Budget';
+		$file 	= 'Melihat_Budget';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		$params = [
 			"TGL_CTK" => date('d/m/Y')
 		];
 		$PHPJasperXML->arrayParameter = $params;
-		
 			
 		$filterkodes = "";
 
 		if (!empty($request->kodes1) && !empty($request->kodes2)) {
-			$filterkodes .= " WHERE NO_SUPL BETWEEN '".$request->kodes1."' AND '".$request->kodes2."'";
+			$filterkodes .= " WHERE SUPP BETWEEN '".$request->kodes1."' AND '".$request->kodes2."'";
 		}
 
+		
 		session()->put('filter_kodes1', $request->kodes1);
 		session()->put('filter_namas1', $request->namas1);
 		session()->put('filter_kodes2', $request->kodes2);
 		session()->put('filter_namas2', $request->namas2);
+		session()->put('filter_periode', $request->per);
+
+		$query = DB::SELECT("NO_SP, SUPP, Q_BUDGET AS QTY, BUDGET from nwbudget $filterkodes ORDER BY NO_SP ASC");
 		
-
-		$query = DB::select("
-			SELECT 
-				(@rownum := @rownum + 1) AS ROWNUM,
-				NO_SUPL,
-				NAMA,
-				ALMT_K,
-				KOTA,
-				GOL_BRG,
-				BUDGET,
-				0 AS QTY,
-				'' AS CETAK
-			FROM nwmassup, (SELECT @rownum := 0) r
-			$filterkodes
-			AND BUDGET = 0
-		");
-
-
 		if($request->has('filter'))
 		{
 			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
-			return view('oreport_supnol.report')->with(['per' => $per])->with(['hasil' => $query]);
+
+			return view('oreport_budgetlbh.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];
-		
+
 		$data = json_decode(json_encode($query), true);
 
 		$PHPJasperXML->setData($data);

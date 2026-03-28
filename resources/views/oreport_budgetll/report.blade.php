@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Supplier Tidak Ada Budget</h1>
+			<h1 class="m-0">Melihat Budget Periode Lalu</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Laporan Supplier Tidak Ada Budget</li>
+				<li class="breadcrumb-item active">Melihat Budget Periode Lalu</li>
 			</ol>
 		</div>
 		</div>
@@ -23,7 +23,7 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-supnol-report')}}">
+					<form method="POST" action="{{url('jasper-budgetll-report')}}">
 					@csrf
 					<div class="form-group row">
 						<div class="col-md-1" align="right">
@@ -38,6 +38,7 @@
 							</select>
 						</div>
 					</div>
+
 					<div class="form-group row">
 						    
 						<div class="col-md-1" align="right">						
@@ -64,9 +65,9 @@
 						</div>  
 					</div>
 					
-					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
-					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rsupnol")}}'">Reset</button>
-					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
+					{{-- <button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button> --}}
+					<button class="btn btn-primary" type="submit" id="cetak" class="cetak" formtarget="_blank">Tampilkan</button>
+					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rbudgetll")}}'">Reset</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>
 					
@@ -76,84 +77,85 @@
 					<?php
 					use \koolreport\datagrid\DataTables;
 
-					$data = $hasil ?? [];
-					DataTables::create(array(
-						"dataSource" => $hasil,
-						"name" => "example",
-						"fastRender" => true,
-						"fixedHeader" => true,
-						'scrollX' => true,
-						"showFooter" => true,
-						"showFooter" => "bottom",
-						"columns" => array(
-							"ROWNUM" => array(
-								"label" => "No",
-							),
-							"NO_SUPL" => array(
-								"label" => "Kode Supplier",
-							),
-							"NAMA" => array(
-								"label" => "Nama Supplier",
-							),
-							"ALMT_K" => array(
-								"label" => "Alamat",
-							),
-							"QTY" => array(
-								"label" => "Qty",
-								"type" => "number",
-								"decimals" => 2,
-								"decimalPoint" => ".",
-								"thousandSeparator" => ",",
-							),
-							"BUDGET" => array(
-								"label" => "Budget",
-								"type" => "number",
-								"decimals" => 2,
-								"decimalPoint" => ".",
-								"thousandSeparator" => ",",
-							),
-						),
-						"cssClass" => array(
-							"table" => "table table-hover table-striped table-bordered compact",
-							"th" => "label-title",
-							"td" => "detail",
-							"tf" => "footerCss"
-						),
-						"options" => array(
-							"columnDefs"=>array(
-								array(
-									"className" => "dt-right", 
-									"targets" => [4,5],
+					if($hasil){
+						DataTables::create(array(
+							"dataSource" => $hasil,
+							"name" => "example",
+							"fastRender" => true,
+							"fixedHeader" => true,
+							'scrollX' => true,
+							"showFooter" => true,
+							"showFooter" => "bottom",
+							"columns" => array(
+								"ROWNUM" => array(
+									"label" => "No",
 								),
-								array(
-									"className" => "dt-center", 
-									"targets" => [0],
+								"NO_SUPL" => array(
+									"label" => "Kode Supplier",
+								),
+								"NAMA" => array(
+									"label" => "Nama Supplier",
+								),
+								"BUDGET" => array(
+									"label" => "Budget Pokok",
+									"type" => "number",
+									"decimals" => 2,
+									"decimalPoint" => ".",
+									"thousandSeparator" => ",",
+								),
+								"QTY" => array(
+									"label" => "Nilai Order",
+									"type" => "number",
+									"decimals" => 2,
+									"decimalPoint" => ".",
+									"thousandSeparator" => ",",
+								),
+								"CAT" => array(
+									"label" => "Keterangan",
 								),
 							),
-							"order" => [],
-							"paging" => true,
-							// "pageLength" => 12,
-							"lengthMenu" => [[10, 25, 50,-1], [10,25,50, "All"]],
-							"searching" => true,
-							"colReorder" => true,
-							"select" => true,
-							"dom" => 'Blfrtip', // B e dilangi
-							// "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
-							"buttons" => array(
-								array(
-									"extend" => 'collection',
-									"text" => 'Export',
-									"buttons" => [
-										'copy',
-										'excel',
-										'csv',
-										'pdf',
-										'print'
-									],
+							"cssClass" => array(
+								"table" => "table table-hover table-striped table-bordered compact",
+								"th" => "label-title",
+								"td" => "detail",
+								"tf" => "footerCss"
+							),
+							"options" => array(
+								"columnDefs"=>array(
+									array(
+										"className" => "dt-right", 
+										"targets" => [3,4],
+									),
+									array(
+										"className" => "dt-center", 
+										"targets" => [0],
+									),
+								),
+								"order" => [],
+								"paging" => true,
+								// "pageLength" => 12,
+								"lengthMenu" => [[10, 25, 50,-1], [10,25,50, "All"]],
+								"searching" => true,
+								"colReorder" => true,
+								"select" => true,
+								"dom" => 'Blfrtip', // B e dilangi
+								// "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
+								"buttons" => array(
+									array(
+										"extend" => 'collection',
+										"text" => 'Export',
+										"buttons" => [
+											'copy',
+											'excel',
+											'csv',
+											'pdf',
+											'print'
+										],
+									),
 								),
 							),
-						),
-					));
+						));
+					}
 					?>
 				</div>
 				<!-- DISINI BATAS AKHIR KOOLREPORT-->
