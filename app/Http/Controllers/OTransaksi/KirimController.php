@@ -232,17 +232,19 @@ class KirimController extends Controller
         $this->setFlag($request);
 
         $CBG    = Auth::user()->CBG;
-        $OUTLET = 'TMM';
+        //outlet ini belum
+        $OUTLET = $request->cbg_tujuan;
+
         $FLAG   = $this->FLAGZ;
         // dd($periode, $CBG, $OUTLET, $FLAG);
 
         $kirim = DB::SELECT("SELECT NO_ID, FLAG as flag, NO_BUKTI, TGL, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, OUTLET
                                     FROM BSTOCKA
-                                    where PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' and OUTLET= '$OUTLET'
+                                    where PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' AND OUTLET= '$OUTLET'
                             union all
                             SELECT NO_ID, FLAG as flag,NO_BUKTI, TGL, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, OUTLET
                                     FROM BSTOCKAZ
-                                    where PER = PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' and OUTLET= '$OUTLET'
+                                    where PER = PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG' AND OUTLET= '$OUTLET'
                                     order by NO_BUKTI
                           ");
 
@@ -278,14 +280,14 @@ class KirimController extends Controller
 
                     if (Auth::user()->divisi != 'gudang') {
                         $btnPrivilege .= '
-                                <a class="dropdown-item btn btn-danger" target="_blank" href="kirim/cetak/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" target="_blank" href="kirim/cetak/' . $row->NO_BUKTI . '">
                                     <i class="fa fa-print" aria-hidden="true"></i> Print
                                 </a>';
                     }
 
                     if (Auth::user()->divisi == 'gudang') {
                         $btnPrivilege .= '
-                                <a class="dropdown-item btn btn-danger" target="_blank"  href="kirim/cetak2/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" target="_blank"  href="kirim/cetak2/' . $row->NO_BUKTI . '">
                                     <i class="fa fa-print" aria-hidden="true"></i> Print SPB
                                 </a>';
                     }
@@ -370,8 +372,10 @@ class KirimController extends Controller
             ->orderByDesc('NO_BUKTI')
             ->value('NO_BUKTI');
 
+
         if ($last) {
-            $urut = str_pad(substr($last, -5, 4) + 1, 4, '0', STR_PAD_LEFT);
+            $angka = preg_replace('/[^0-9]/', '', $last);
+            $urut = str_pad(substr($angka, -4) + 1, 4, '0', STR_PAD_LEFT);
         } else {
             $urut = '0001';
         }
@@ -475,8 +479,8 @@ class KirimController extends Controller
         DB::SELECT("UPDATE bstocka,  bstockad
                             SET  bstockad.ID = bstocka.NO_ID  WHERE  bstocka.NO_BUKTI =  bstockad.NO_BUKTI
 							AND  bstocka.NO_BUKTI='$no_buktix';");
-
-        $variablell = DB::select('call kirimins(?)', [$no_buktix]);
+        //sementara prosedur kirimins dikomen dulu
+        //$variablell = DB::select('call kirimins(?)', [$no_buktix]);
 
         // return redirect('/kirim/edit/?idx=' . $kirim->NO_ID . '&tipx=edit&flagz=' . $FLAGZ . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '');
         return redirect('/kirim?flagz=' . $FLAGZ)->with(['status' => 'Data Berhasil Disimpan!', 'flagz' => $FLAGZ]);
@@ -887,71 +891,68 @@ class KirimController extends Controller
             ->with('status', 'Berhasil batal posting.');
     }
 
-    public function cetak(Kirim $kirim)
+    public function cetak(Request $request, $kirim)
     {
-        $no_kirim = $kirim->NO_BUKTI;
+        $bukti = $kirim;
+        $file = 'pelayanan_outlet';
 
-        $file = 'kirimc';
-
-        $flagz1 = $kirim->FLAG;
         $judul  = '';
+        $cbg = Auth::user()->CBG;
 
-        if ($flagz1 == 'BL') {
-            $judul = 'Order Pemkiriman';
-
+        if ($request->session()->has('periode')) {
+            $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+        } else {
+            $periode = '';
         }
 
-        if ($flagz1 == 'RB') {
-            $judul = 'Retur Pemkiriman';
-        }
 
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-        $query = DB::SELECT("SELECT stocka.NO_BUKTI, stocka.TGL, stocka.KODES, stocka.NAMAS, stocka.TOTAL_QTY, stocka.NOTES, stocka.ALAMAT,
-                                    stocka.KOTA, stockad.KD_BRG, stockad.NA_BRG, stockad.SATUAN, stockad.QTY2 AS QTY, stockad.DISK,
-                                    stockad.HARGA, stockad.TOTAL, stockad.KET, stocka.TPPN, stocka.NETT,
-                                    stocka.NO_PO, stocka.USRNM, stockad.KALI, stocka.TDISK, stocka.TDPP, stockad.PPN, stockad.DPP
-                            FROM stocka, stockad
-                            WHERE stocka.NO_BUKTI='$no_kirim' AND stocka.NO_BUKTI = stockad.NO_BUKTI
-                            ;
-		");
+        $query = DB::select("SELECT '$periode' as PER,
+                                bstocka.outlet, bstocka.NO_BUKTI, bstocka.ref, bstocka.NO_po, bstocka.tgl, bstocka.JTEMPO,
+                                bstocka.CNT, bstocka.NCNT, bstocka.POT_PROM, bstocka.ST_PJK,
+                                bstocka.ST_NOTA, bstocka.KK_STS, bstocka.FORMAL, bstocka.St_CNT, bstocka.BASIC, bstocka.NOTA_KHS,
+                                bstockad.KD_BRG, bstockad.NA_BRG, brgbsn.BARCODE,
+                                brgbsn.jns, bstockad.qty, bstockad.harga,
+                                bstockad.DISKON1, bstockad.DISKON2, bstockad.DISKON3, bstockad.DISKON4,
+                                bstockad.total, bstockad.HARGA_JL,
+                                bstocka.total as totalh, bstocka.prom as promh,
+                                bstocka.dpp as dpph, bstocka.ppn as ppnh, bstocka.nett as netth,
+                                bstocka.outlet, toko.na_toko
+                            FROM bstocka
+                            LEFT JOIN toko ON bstocka.outlet = toko.kode
+                            LEFT JOIN bstockad ON bstocka.NO_BUKTI = bstockad.no_bukti
+                            LEFT JOIN brgbsn ON bstockad.KD_BRG = brgbsn.KD_BRG
+                            WHERE bstocka.no_bukti = ?
 
-        DB::SELECT("UPDATE stocka SET POSTED = 1 WHERE NO_BUKTI='$no_kirim';");
+                            UNION ALL
 
-        $data = [];
+                            SELECT '$periode' as PER,
+                                bstockaz.outlet, bstockaz.NO_BUKTI, bstockaz.ref, bstockaz.NO_po, bstockaz.tgl, bstockaz.JTEMPO,
+                                bstockaz.CNT, bstockaz.NCNT, bstockaz.POT_PROM, bstockaz.ST_PJK,
+                                bstockaz.ST_NOTA, bstockaz.KK_STS, bstockaz.FORMAL, bstockaz.St_CNT, bstockaz.BASIC, bstockaz.NOTA_KHS,
+                                bstockazd.KD_BRG, bstockazd.NA_BRG, brgbsn.BARCODE,
+                                brgbsn.jns, bstockazd.qty, bstockazd.harga,
+                                bstockazd.DISKON1, bstockazd.DISKON2, bstockazd.DISKON3, bstockazd.DISKON4,
+                                bstockazd.total, bstockazd.HARGA_JL,
+                                bstockaz.total as totalh, bstockaz.prom as promh,
+                                bstockaz.dpp as dpph, bstockaz.ppn as ppnh, bstockaz.nett as netth,
+                                bstockaz.outlet, toko.na_toko
+                            FROM bstockaz
+                            LEFT JOIN toko ON bstockaz.outlet = toko.kode
+                            LEFT JOIN bstockazd ON bstockaz.NO_BUKTI = bstockazd.no_bukti
+                            LEFT JOIN brgbsn ON bstockazd.KD_BRG = brgbsn.KD_BRG
+                            WHERE bstockaz.no_bukti = ?
+                        ", [$bukti, $bukti]);
+        // dd($query);
 
-        foreach ($query as $key => $value) {
-            array_push($data, [
-                'NO_BUKTI' => $query[$key]->NO_BUKTI,
-                'TGL'      => $query[$key]->TGL,
-                'KODES'    => $query[$key]->KODES,
-                'NAMAS'    => $query[$key]->NAMAS,
-                'ALAMAT'   => $query[$key]->ALAMAT,
-                'KOTA'     => $query[$key]->KOTA,
-                'KG'       => $query[$key]->KG,
-                'HARGA'    => $query[$key]->HARGA,
-                'TOTAL'    => $query[$key]->TOTAL,
-                'BAYAR'    => $query[$key]->BAYAR,
-                'NOTES'    => $query[$key]->NOTES,
-                'KD_BRG'   => $query[$key]->KD_BRG,
-                'NA_BRG'   => $query[$key]->NA_BRG,
-                'SATUAN'   => $query[$key]->SATUAN,
-                'QTY'      => $query[$key]->QTY,
-                'DISK'     => $query[$key]->DISK,
-                'NETT'     => $query[$key]->NETT,
-                'KET'      => $query[$key]->KET,
-                'NO_PO'    => $query[$key]->NO_PO,
-                'JUDUL'    => $judul,
-                'USRNM'    => $query[$key]->USRNM,
-                'KALI'     => $query[$key]->KALI,
-                'TPPN'     => $query[$key]->TPPN,
-                'TDISK'    => $query[$key]->TDISK,
-                'TDPP'     => $query[$key]->TDPP,
-                'PPN'      => $query[$key]->PPN,
-                'DPP'      => $query[$key]->DPP,
-            ]);
-        }
+        // DB::SELECT("UPDATE stocka SET POSTED = 1 WHERE NO_BUKTI='$no_kirim';");
+
+        $data = json_decode(json_encode($query), true);
+        $PHPJasperXML->arrayParameter = [
+            "CBG"   => $cbg,
+        ];
 
         $PHPJasperXML->setData($data);
         ob_end_clean();
