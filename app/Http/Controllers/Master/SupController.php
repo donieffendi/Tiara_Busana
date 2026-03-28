@@ -61,6 +61,14 @@ class SupController extends Controller
         return response()->json($sup);
     }
 
+    public function browse_stegur(Request $request)
+    {
+        $sup = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA, TLP_K AS TELP FROM nwmassup ORDER BY NO_SUPL ");
+        // $sup = DB::SELECT("SELECT KODES, NAMAS, P_ALMT AS ALAMAT, P_KOTA AS KOTA, P_TLP AS TELP FROM supbsn ORDER BY KODES ");
+
+        return response()->json($sup);
+    }
+
     public function getSup( Request $request )
     {
 		// $PPN = Auth::user()->PPN;
