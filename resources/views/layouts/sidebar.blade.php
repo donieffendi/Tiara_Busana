@@ -849,8 +849,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=BP')}}')"> --}}
-                <a href="javascript:addTab('Suplier Yang Punya Budget Pokok', '{{url('terima?flagz=BP')}}')">
+                <a href="javascript:addTab('Suplier Yang Punya Budget Pokok', '{{url('rbudgetpk')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-blue"></i>
                   <h6>Suplier Yang Punya Budget Pokok</h6>
