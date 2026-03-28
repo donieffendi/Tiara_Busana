@@ -472,6 +472,12 @@ Route::get('/rbudgetpk', 'App\Http\Controllers\OReport\RBudgetpkController@repor
 Route::get('/get-budgetpk-report', 'App\Http\Controllers\OReport\RBudgetpkController@getBudgetpkReport')->middleware(['auth'])->name('get-budgetpk-report');
 Route::post('jasper-budgetpk-report', 'App\Http\Controllers\OReport\RBudgetpkController@jasperBudgetpkReport')->middleware(['auth']);
 
+// Operational Suplier Suplier Punya Budget Repeat
+
+Route::get('/rbudgetrp', 'App\Http\Controllers\OReport\RBudgetrpController@report')->middleware(['auth'])->name('rbudgetrp');
+Route::get('/get-budgetrp-report', 'App\Http\Controllers\OReport\RBudgetrpController@getBudgetrpReport')->middleware(['auth'])->name('get-budgetrp-report');
+Route::post('jasper-budgetrp-report', 'App\Http\Controllers\OReport\RBudgetrpController@jasperBudgetrpReport')->middleware(['auth']);
+
 
 // Operational Budget Minus
 

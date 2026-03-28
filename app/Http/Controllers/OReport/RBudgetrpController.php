@@ -17,7 +17,7 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RBudgetpkController extends Controller
+class RBudgetrpController extends Controller
 {
     public function report()
     {	
@@ -28,14 +28,14 @@ class RBudgetpkController extends Controller
 		session()->put('filter_kodes2', '');
 		session()->put('filter_namas2', '');
 
-        return view('oreport_budgetpk.report')->with(['per' => $per])->with(['hasil' => []]);
+        return view('oreport_budgetrp.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 	
 	 
-	public function jasperBudgetpkReport(Request $request) 
+	public function jasperBudgetrpReport(Request $request) 
 	{
-		$file 	= 'Laporan_Suplier_Punya_Budget_Pokok';
+		$file 	= 'Laporan_Suplier_Punya_Budget_Repeat';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		$params = [
@@ -73,7 +73,7 @@ class RBudgetpkController extends Controller
 		{	
 			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 
-			return view('oreport_budgetpk.report')->with(['per' => $per])->with(['hasil' => $query]);
+			return view('oreport_budgetrp.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];
