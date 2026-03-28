@@ -129,15 +129,14 @@ class BeliController extends Controller
 
             $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY, TOTAL, NETT,
                                             NOTES, TYP
-                                        FROM beli
+                                        FROM BELIBSN
                                         WHERE CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
-
 
         } else if ($cari != ''){
 
             $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY, TOTAL, NETT,
                                             NOTES, TYP
-                                        FROM beli
+                                        FROM BELIBSN
                                         WHERE NO_BUKTI = '$cari' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
         }
 
