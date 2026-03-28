@@ -319,7 +319,7 @@ Route::get('/kirim/show/{kirim}', 'App\Http\Controllers\OTransaksi\KirimControll
 Route::get('/kirim/edit', 'App\Http\Controllers\OTransaksi\KirimController@edit')->name('kirim.edit');
 Route::post('/kirim/update/{kirim}', 'App\Http\Controllers\OTransaksi\KirimController@update')->name('kirim.update');
 Route::get('/kirim/delete/{kirim}', 'App\Http\Controllers\OTransaksi\KirimController@destroy')->name('kirim.delete');
-Route::get('/kirim/cetak/{kirim:NO_ID}', 'App\Http\Controllers\OTransaksi\KirimController@cetak')->middleware(['auth']);
+Route::get('/kirim/cetak/{kirim}', 'App\Http\Controllers\OTransaksi\KirimController@cetak')->middleware(['auth']);
 
 Route::post('/jasper-kirim-report', 'App\Http\Controllers\OReport\RKirimController@jasperKirimReport')->middleware(['auth']);
 Route::get('/jskirimc/{kirim:NO_ID}', 'App\Http\Controllers\OTransaksi\KirimController@jskirimc')->middleware(['auth']);
@@ -908,6 +908,8 @@ Route::get('/rbeli_gdg', 'App\Http\Controllers\OReport\RBeli_gdgController@repor
     Route::post('jasper-beli_gdg-report', 'App\Http\Controllers\OReport\RBeli_gdgController@jasperBeli_gdgReport')->middleware(['auth']);
 
     Route::get('/beli/browse_belid', 'App\Http\Controllers\OTransaksi\BeliController@browse_belid')->middleware(['auth'])->name('beli/browse_belid');
+    Route::get('/beli/get-ppn', 'App\Http\Controllers\OTransaksi\BeliController@getPpn')->middleware(['auth'])->name('beli/get-ppn');
+    Route::get('/beli/cek-harga', 'App\Http\Controllers\OTransaksi\BeliController@cekHarga')->middleware(['auth'])->name('beli/cek-harga');
 
 // Dynamic Beli
 Route::get('/beli/edit', 'App\Http\Controllers\OTransaksi\BeliController@edit')->middleware(['auth'])->name('beli.edit');
