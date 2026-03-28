@@ -27,7 +27,7 @@ class StockbController extends Controller
      */
     var $judul = '';
     var $FLAGZ = '';
-	
+
     function setFlag(Request $request)
     {
         if ( $request->flagz == 'KB' ) {
@@ -39,7 +39,7 @@ class StockbController extends Controller
         $this->FLAGZ = $request->flagz;
 
     }
-		
+
     public function index(Request $request)
     {
 
@@ -47,8 +47,8 @@ class StockbController extends Controller
 	    $this->setFlag($request);
         // ganti 3
         return view('otransaksi_stockb.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
-	
-		
+
+
     }
 
     public function browse_posting(Request $request)
@@ -56,35 +56,35 @@ class StockbController extends Controller
         $this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $CBG = Auth::user()->CBG;
-        
+
 		$cari = $request->CARI;
-		
+
 		if ($cari == ''){
-			
+
             $posting = DB::SELECT("SELECT NO_ID, concat(left(nolap,2),right(nolap,5)) as BUKT, no_bukti,
                                             TGL, NOTES, TOTAL_QTY
-                                        FROM stockb
-                                        WHERE no_bukti ='' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
-                                
+                                        FROM bstockb
+                                        WHERE CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
+
         } else if ($cari != ''){
-			
+
             $posting = DB::SELECT("SELECT NO_ID, concat(left(nolap,2),right(nolap,5)) as BUKT, no_bukti,
                                             TGL, NOTES, TOTAL_QTY
-                                        FROM stockb
+                                        FROM bstockb
                                         WHERE no_bukti = '$cari' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
-        } 
+        }
 
         return response()->json($posting);
     }
-	
+
 		public function browse(Request $request)
     {
         $golz = $request->GOL;
 
         $CBG = Auth::user()->CBG;
-		
-        $stockb = DB::SELECT("SELECT distinct PO.no_bukti , PO.KODES, PO.NAMAS, 
-		                  PO.ALAMAT, PO.KOTA from lapbsn, lapbsnd 
+
+        $stockb = DB::SELECT("SELECT distinct PO.no_bukti , PO.KODES, PO.NAMAS,
+		                  PO.ALAMAT, PO.KOTA from lapbsn, lapbsnd
                           WHERE PO.no_bukti = POD.no_bukti AND PO.GOL ='$golz' AND CBG = '$CBG'
                           AND POD.SISA > 0	");
         return resstockbnse()->json($stockb);
@@ -93,8 +93,8 @@ class StockbController extends Controller
     public function browseuang(Request $request)
     {
         $CBG = Auth::user()->CBG;
-		
-		$stockb = DB::SELECT("SELECT no_bukti,TGL,  KODES, NAMAS, TOTAL,  BAYAR, 
+
+		$stockb = DB::SELECT("SELECT no_bukti,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
                         (TOTAL-BAYAR) AS SISA, ALAMAT, KOTA from lapbsn
 		                WHERE LNS <> 1 AND CBG = '$CBG' ORDER BY no_bukti; ");
 
@@ -104,25 +104,25 @@ class StockbController extends Controller
 
 	public function post(Request $request)
     {
- 
+
         return view('otransaksi_stockb.post');
     }
-	  
+
 	//SHELVI
-	
+
 	public function browse_detail(Request $request)
     {
 		$filterbukti = '';
 		if($request->NO_PO)
 		{
-	
+
 			$filterbukti = " WHERE a.no_bukti='".$request->NO_PO."' AND a.KD_BRG = b.KD_BRG ";
 		}
-		$lapbsnd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, 
+		$lapbsnd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X
-                            from lapbsnd a, brg b 
+                            from lapbsnd a, brg b
                             $filterbukti ORDER BY no_bukti ");
-	
+
 
 		return response()->json($lapbsnd);
 	}
@@ -133,24 +133,24 @@ class StockbController extends Controller
 		$filterbukti = '';
 		if($request->NO_PO)
 		{
-	
+
 			$filterbukti = " WHERE no_bukti='".$request->NO_PO."' AND a.KD_BRG = b.KD_BRG ";
 		}
-		$lapbsnd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, 
-                                b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X 
+		$lapbsnd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
+                                b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X
                             from lapbsnd a, brg b
                             $filterbukti ORDER BY no_bukti ");
-	
+
 
 		return response()->json($lapbsnd);
 	}
 
     public function browse_brg(Request $request)
-    {   
+    {
         // $KD_BRG = $request->KD_BRG;
 		$SUPP = $request->KODES;
-        $beli = DB::SELECT("SELECT CONCAT(SUB,KDBAR) AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN 
-                            FROM nwmasbar 
+        $beli = DB::SELECT("SELECT CONCAT(SUB,KDBAR) AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN
+                            FROM nwmasbar
                             WHERE SUPP = '$SUPP'");
         return response()->json($beli);
     }
@@ -158,9 +158,9 @@ class StockbController extends Controller
     public function browse_sup(Request $request)
     {
 
-    	$kirim = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA 
+    	$kirim = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA
                             FROM nwmassup");
-		
+
         return response()->json($kirim);
     }
 
@@ -168,18 +168,18 @@ class StockbController extends Controller
     public function browse_cnt(Request $request)
     {
 
-    	$kirim = DB::SELECT("SELECT CNT, NA_CNT AS NCNT 
+    	$kirim = DB::SELECT("SELECT CNT, NA_CNT AS NCNT
                             FROM cntbsn");
-		
+
         return response()->json($kirim);
     }
 
     public function browse_brgd(Request $request)
-    {   
+    {
         // $KD_BRG = $request->KD_BRG;
 		$SUPP = $request->KODES;
         $beli = DB::SELECT("SELECT CONCAT(SUB,KDBAR) AS KD_BRG, NMBAR AS NA_BRG
-                            FROM nwmasbar 
+                            FROM nwmasbar
                             WHERE SUPP = '$SUPP'");
         return response()->json($beli);
     }
@@ -202,13 +202,13 @@ class StockbController extends Controller
         $judul = $this->judul;
 
         $CBG = Auth::user()->CBG;
-		
+
         $stockb = DB::SELECT("SELECT no_bukti,tgl,total_qty,notes,type,posted
                                     FROM bstockb
-                                    where per='$periode' and flag='$FLAGZ' and cbg='$CBG' union all 
+                                    where per='$periode' and flag='$FLAGZ' and cbg='$CBG' union all
                             SELECT no_bukti,tgl,total_qty,notes,type,posted
                                     FROM bstockbz
-                                    where per='$periode' and flag='$FLAGZ' and cbg='$CBG' 
+                                    where per='$periode' and flag='$FLAGZ' and cbg='$CBG'
                             order by no_bukti");
 
         // ganti 6
@@ -216,7 +216,7 @@ class StockbController extends Controller
         return Datatables::of($stockb)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                if (Auth::user()->divisi=="programmer" ) 
+                if (Auth::user()->divisi=="programmer" )
 				{
                     //CEK POSTED di index dan edit
 
@@ -224,7 +224,7 @@ class StockbController extends Controller
                     $url = "'".url("stockb/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
                     // batas
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->no_bukti . ' sudah diposting!\')" href="#" ' : ' href="stockb/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';					
+                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->no_bukti . ' sudah diposting!\')" href="#" ' : ' href="stockb/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->no_bukti . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
 
 
@@ -237,13 +237,13 @@ class StockbController extends Controller
                                 <a class="dropdown-item btn btn-danger" href="cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
-                                </a> 									
+                                </a>
                                 <hr></hr>
                                 <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
-   
+
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Delete
-                                </a> 
+                                </a>
                         ';
                 } else {
                     $btnPrivilege = '';
@@ -257,7 +257,7 @@ class StockbController extends Controller
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            
+
 
                             ' . $btnPrivilege . '
                         </div>
@@ -266,16 +266,16 @@ class StockbController extends Controller
 
                 return $actionBtn;
             })
-			
-	
+
+
 			->addColumn('cek', function ($row) {
                 return
                     '
-                    <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->POSTED == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->POSTED == 2) ? "disabled" : "") . '></input> 				
+                    <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->POSTED == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->POSTED == 2) ? "disabled" : "") . '></input>
                     ';
-            
-            })			
-			
+
+            })
+
             ->rawColumns(['action','cek'])
             ->make(true);
     }
@@ -307,13 +307,13 @@ class StockbController extends Controller
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
-		
+
         $CBG = Auth::user()->CBG;
 
         $CBG_KODE = DB::table('toko')
             ->where('KODE', $CBG)
             ->value('TYPE');
-		
+
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
         $bulan    = session()->get('periode')['bulan'];
@@ -328,16 +328,16 @@ class StockbController extends Controller
             $no_bukti = 'KB' . $tahun . $bulan . '-' . $query . $CBG_KODE;
         } else {
             $no_bukti = 'KB' . $tahun . $bulan . '-0001' . $CBG_KODE;
-        }		
+        }
 
         $stockb = Stockb::create(
             [
                 'no_bukti'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'per'              => $periode,
-                'flag'             => 'KB',			
-                'notes'            => ($request['NOTES']==null) ? "" : $request['NOTES'],				
-                'cnt'              => ($request['CNT']==null) ? "" : $request['CNT'],				
+                'flag'             => 'KB',
+                'notes'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
+                'cnt'              => ($request['CNT']==null) ? "" : $request['CNT'],
                 'ncnt'             => ($request['NCNT']==null) ? "" : $request['NCNT'],
                 'kodes'            => ($request['KODES']==null) ? "" : $request['KODES'],
                 'namas'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],
@@ -368,29 +368,29 @@ class StockbController extends Controller
                 $detail->no_bukti    = $no_bukti;
                 $detail->rec         = $REC[$key];
                 $detail->per         = $periode;
-                $detail->flag        = $FLAGZ;	
+                $detail->flag        = $FLAGZ;
 				$detail->kd_brg	     = ($KD_BRG[$key]==null) ? "" :  $KD_BRG[$key];
 				$detail->na_brg	     = ($NA_BRG[$key]==null) ? "" :  $NA_BRG[$key];
 				$detail->saldo	     = (float) str_replace(',', '', $SALDO[$key]);
-				$detail->KET	     = ($KET[$key]==null) ? "" :  $KET[$key];						
+				$detail->KET	     = ($KET[$key]==null) ? "" :  $KET[$key];
                 $detail->save();
             }
-        }	
-		
+        }
+
 		$no_buktix = $no_bukti;
-		
+
 		$stockb = Stockb::where('no_bukti', $no_buktix )->first();
 
 
         DB::SELECT("UPDATE lapbsn,  lapbsnd
-                            SET  lapbsnd.ID =  lapbsn.NO_ID  WHERE  lapbsn.no_bukti =  lapbsnd.no_bukti 
+                            SET  lapbsnd.ID =  lapbsn.NO_ID  WHERE  lapbsn.no_bukti =  lapbsnd.no_bukti
 							AND  lapbsn.no_bukti='$no_buktix';");
 
-		
-					 
+
+
         // return redirect('/stockb/edit/?idx=' . $stockb->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');
         return redirect('/stockb?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
-		
+
     }
 
    public function edit( Request $request , Stockb $stockb)
@@ -398,8 +398,8 @@ class StockbController extends Controller
 
 
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
-		
-				
+
+
         // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
         // if ($cekperid[0]->POSTED==1)
         // {
@@ -407,167 +407,167 @@ class StockbController extends Controller
 		// 	       ->with('status', 'Maaf Periode sudah ditutup!')
         //            ->with(['judul' => $judul, 'flagz' => $FLAGZ]);
         // }
-		
+
 		$this->setFlag($request);
-		
+
         $tipx = $request->tipx;
 
 		$idx = $request->idx;
-		
+
         $CBG = Auth::user()->CBG;
-		
+
 		if ( $idx =='0' && $tipx=='undo'  )
 	    {
 			$tipx ='top';
-			
+
 		   }
-		   
-		 
-		   
+
+
+
 		if ($tipx=='search') {
-			
-		   	
+
+
     	   $buktix = $request->buktix;
-		   
+
 		   $bingco = DB::SELECT("SELECT NO_ID, no_bukti from lapbsn
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
-						 and no_bukti = '$buktix' AND CBG = '$CBG'					 
+						 and no_bukti = '$buktix' AND CBG = '$CBG'
 		                 ORDER BY no_bukti ASC  LIMIT 1" );
-						 
-			
-			if(!empty($bingco)) 
+
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = 0; 
+				$idx = 0;
 			  }
-		
-					
+
+
 		}
-		
+
 		if ($tipx=='top') {
-			
+
 
 		   $bingco = DB::SELECT("SELECT NO_ID, no_bukti from lapbsn
-		                 where PER ='$per' 
-						 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'  
+		                 where PER ='$per'
+						 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
 		                 ORDER BY no_bukti ASC  LIMIT 1" );
-						 
-		
-			if(!empty($bingco)) 
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0; 
-			  }
-		
-					
-		}
-		
-		
-		if ($tipx=='prev' ) {
-			
-    	   $buktix = $request->buktix;
-			
-		   $bingco = DB::SELECT("SELECT NO_ID, no_bukti from lapbsn     
-		             where PER ='$per' 
-					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
-                     and no_bukti < 
-					 '$buktix' ORDER BY no_bukti DESC LIMIT 1" );
-			
 
-			if(!empty($bingco)) 
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = $idx; 
+				$idx = 0;
 			  }
-			  
+
+
 		}
-		
-		
-		if ($tipx=='next' ) {
-			
-				
-      	   $buktix = $request->buktix;
-	   
-		   $bingco = DB::SELECT("SELECT NO_ID, no_bukti from lapbsn    
-		             where PER ='$per'  
+
+
+		if ($tipx=='prev' ) {
+
+    	   $buktix = $request->buktix;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, no_bukti from lapbsn
+		             where PER ='$per'
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
-                     and no_bukti > 
-					 '$buktix' ORDER BY no_bukti ASC LIMIT 1" );
-					 
-			if(!empty($bingco)) 
+                     and no_bukti <
+					 '$buktix' ORDER BY no_bukti DESC LIMIT 1" );
+
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = $idx; 
+				$idx = $idx;
 			  }
-			  
-			
+
+		}
+
+
+		if ($tipx=='next' ) {
+
+
+      	   $buktix = $request->buktix;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, no_bukti from lapbsn
+		             where PER ='$per'
+					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
+                     and no_bukti >
+					 '$buktix' ORDER BY no_bukti ASC LIMIT 1" );
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = $idx;
+			  }
+
+
 		}
 
 		if ($tipx=='bottom') {
-		  
+
     		$bingco = DB::SELECT("SELECT NO_ID, no_bukti from lapbsn
 						where PER ='$per'
-						and FLAG ='$this->FLAGZ' AND CBG = '$CBG'  
+						and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
 		              ORDER BY no_bukti DESC  LIMIT 1" );
-					 
-			if(!empty($bingco)) 
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = 0; 
+				$idx = 0;
 			  }
-			  
-			
+
+
 		}
 
-        
+
 		if ( $tipx=='undo' || $tipx=='search' )
 	    {
-        
-			$tipx ='edit';
-			
-		   }
-		
-		
 
-       	if ( $idx != 0 ) 
+			$tipx ='edit';
+
+		   }
+
+
+
+       	if ( $idx != 0 )
 		{
-			$stockb = Stockb::where('NO_ID', $idx )->first();	
+			$stockb = Stockb::where('NO_ID', $idx )->first();
 	     }
 		 else
 		 {
 				$stockb = new Stockb;
                 $stockb->tgl = Carbon::now();
-				
-				
+
+
 		 }
 
         $no_bukti = $stockb->no_bukti;
         $stockbDetail = DB::table('lapbsnd')->where('no_bukti', $no_bukti)->orderBy('rec')->get();
-		
+
 		$data = [
             'header'        => $stockb,
 			'detail'        => $stockbDetail
 
         ];
-		
+
          return view('otransaksi_stockb.edit', $data)
 		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' => $this->FLAGZ, 'judul'=> $this->judul ]);
-			 
+
 
     }
 
@@ -595,25 +595,25 @@ class StockbController extends Controller
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
-		
+
         $CBG = Auth::user()->CBG;
-		
+
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
 
         $stockb->update(
             [
-                'tgl'              => date('Y-m-d', strtotime($request['TGL'])),				
+                'tgl'              => date('Y-m-d', strtotime($request['TGL'])),
                 'notes'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
                 'kodes'            => ($request['KODES']==null) ? "" : $request['KODES'],
-                'namas'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],	
+                'namas'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],
 				'usrnm'            => Auth::user()->username,
                 'tg_smp'           => Carbon::now(),
             ]
         );
 
 		$no_buktix = $stockb->no_bukti;
-		
+
         // Update Detail
         $length = sizeof($request->input('REC'));
         $NO_ID  = $request->input('NO_ID');
@@ -623,7 +623,7 @@ class StockbController extends Controller
         $KD_BRG	= $request->input('KD_BRG');
 		$NA_BRG	= $request->input('NA_BRG');
 		$SALDO	    = $request->input('SALDO');
-		$KET	= $request->input('KET');	
+		$KET	= $request->input('KET');
 
         $query = DB::table('lapbsnd')->where('no_bukti', $request->no_bukti)->whereNotIn('NO_ID',  $NO_ID)->delete();
 
@@ -638,10 +638,10 @@ class StockbController extends Controller
                         'per'        => $periode,
                         'flag'       => $this->FLAGZ,
                         'kd_brg'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
-                        'na-brg'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],	
+                        'na-brg'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],
                         'saldo'      => (float) str_replace(',', '', $SALDO[$i]),
-						'KET'     	 => ($KET[$i]==null) ? "" : $KET[$i]	
-						
+						'KET'     	 => ($KET[$i]==null) ? "" : $KET[$i]
+
                     ]
                 );
             } else {
@@ -656,9 +656,9 @@ class StockbController extends Controller
                         'rec'        => $REC[$i],
 
                         'kd_brg'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
-                        'na_brg'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],	
+                        'na_brg'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],
                         'saldo'      => (float) str_replace(',', '', $AK[$i]),
-						'ket'     	 => ($KET[$i]==null) ? "" : $KET[$i],			
+						'ket'     	 => ($KET[$i]==null) ? "" : $KET[$i],
                     ]
                 );
             }
@@ -669,13 +669,13 @@ class StockbController extends Controller
         $no_bukti = $stockb->no_bukti;
 
         DB::SELECT("UPDATE lapbsn,  lapbsnd
-                    SET  lapbsnd.ID =  lapbsn.NO_ID  WHERE  lapbsn.no_bukti =  lapbsnd.no_bukti 
+                    SET  lapbsnd.ID =  lapbsn.NO_ID  WHERE  lapbsn.no_bukti =  lapbsnd.no_bukti
                     AND  lapbsn.no_bukti='$no_bukti';");
-					 
-        // return redirect('/stockb/edit/?idx=' . $stockb->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');	
+
+        // return redirect('/stockb/edit/?idx=' . $stockb->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');
         return redirect('/stockb?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
-		
-	   
+
+
     }
 
     /**
@@ -693,7 +693,7 @@ class StockbController extends Controller
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
-		
+
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
         // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
         // if ($cekperid[0]->POSTED==1)
@@ -702,7 +702,7 @@ class StockbController extends Controller
         //         ->with('status', 'Maaf Periode sudah ditutup!')
         //         ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
         // }
-		
+
         $deleteStockb = Stockb::find($stockb->NO_ID);
 
         $deleteStockb->delete();
@@ -711,7 +711,7 @@ class StockbController extends Controller
 
 
     }
-    
+
     public function cetak(Stockb $stockb)
     {
         $no_stockb = $stockb->no_bukti;
@@ -722,8 +722,8 @@ class StockbController extends Controller
 
         $query = DB::SELECT("
 			SELECT no_bukti,  TGL, KODES, NAMAS, TOTAL_QTY, NOTES, TOTAL, ALAMAT, KOTA
-			FROM lapbsn 
-			WHERE lapbsn.no_bukti='$no_stockb' 
+			FROM lapbsn
+			WHERE lapbsn.no_bukti='$no_stockb'
 			ORDER BY no_bukti;
 		");
 
@@ -736,7 +736,7 @@ class StockbController extends Controller
         $xharga1       = $query[0]->TOTAL;
         $xalamat1      = $query[0]->ALAMAT;
         $xkota1        = $query[0]->KOTA;
-        
+
         $PHPJasperXML->arrayParameter = array("HARGA1" => (float) $xharga1, "TOTAL1" => (float) $xtotal1, "NO_PO1" => (string) $xno_stockb1,
                                      "TGL1" => (string) $xtgl1,  "KODES1" => (string) $xkodes1,  "NAMAS1" => (string) $xnamas1, "NOTES1" => (string) $xnotes1, "ALAMAT1" => (string) $xalamat1, "KOTA1" => (string) $xkota1 );
         $PHPJasperXML->arraysqltable = array();
@@ -744,12 +744,12 @@ class StockbController extends Controller
 
         $query2 = DB::SELECT("
 			SELECT no_bukti, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT, NO_PO,  IF ( FLAG='BL' , 'A','B' ) AS FLAG, AJU, BL, EMKL, KD_BRG, NA_BRG, KG, RPHARGA AS HARGA, RPTOTAL AS TOTAL, 0 AS BAYAR,  NOTES
-			FROM beli 
-			WHERE beli.NO_PO='$no_stockb'  UNION ALL 
-			SELECT no_bukti, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT,  NO_PO,  'C' AS FLAG, '' AS AJU, '' AS BL, '' AS EMKL,  '' AS KD_BRG, '' AS NA_BRG, 0 AS KG, 
+			FROM beli
+			WHERE beli.NO_PO='$no_stockb'  UNION ALL
+			SELECT no_bukti, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT,  NO_PO,  'C' AS FLAG, '' AS AJU, '' AS BL, '' AS EMKL,  '' AS KD_BRG, '' AS NA_BRG, 0 AS KG,
 			0 AS HARGA, 0 AS TOTAL, BAYAR, NOTES
-			FROM hut 
-			WHERE hut.NO_PO='$no_stockb' 
+			FROM hut
+			WHERE hut.NO_PO='$no_stockb'
 			ORDER BY TGL, FLAG, no_bukti;
 		");
 
@@ -772,15 +772,15 @@ class StockbController extends Controller
                 'NOTES'    => $query2[$key]->NOTES
             ));
         }
-		
+
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
-       
+
     }
-	
-	
-	
+
+
+
 	function posting (Request $request, Stockb $stockb)
 	{
 
@@ -793,83 +793,83 @@ class StockbController extends Controller
         $NAMACX = $request->input('NAMAC');
         $NETTX = $request->input('NETT');
         $NO_FPX = $request->input('NO_FPX');
-        $TGL_FPX = $request->input('TGL_FPX');	
+        $TGL_FPX = $request->input('TGL_FPX');
 
         $USRNMX = Auth::user()->USERNAME;
-				
+
         session()->put('posttimer', time());
- 
+
         $hasil = "";
         // ddd($TGL_FPX);
         if ($REC) {
             foreach ($REC as $key => $value) {
-				
+
 					$periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 					$bulan    = session()->get('periode')['bulan'];
 					$tahun    = substr(session()->get('periode')['tahun'], -2);
-						
-				
+
+
 				// $NETTXZ = (float) str_replace(',', '', $NETTX[$key]);
 
 				$NO_IDXZ = $NO_IDX[$key];
-				
-				
+
+
 				// $HUTHGXZ = $HUTHGX[$key];
-				
-	
+
+
 				$CEK11 = $CEKX[$key];
-				
-				
+
+
 				// $no_buktiXZ = ($no_buktiX[$key] == null) ? "" :  $no_buktiX[$key];
 				// $TGLXZ = ($TGLX[$key] == null) ? "" :  $TGLX[$key];
 
 				// $NO_SURATSXZ = ($NO_SURATSX[$key] == null) ? "" :  $NO_SURATSX[$key];
 				// $NAMACXZ = ($NAMACX[$key] == null) ? "" :  $NAMACX[$key];
-		
+
 				$NO_FPXZ = ($NO_FPX[$key] == null) ? "" :  $NO_FPX[$key];
 				$TGL_FPXZ = ($TGL_FPX[$key] == null) ? "" :  date('Y-m-d', strtotime($TGL_FPX[$key]));
-	
-				
+
+
 				if ( $CEK11 == 1 )
 			    {
-								
+
                     DB::SELECT("UPDATE jual
                                 SET NO_FP = '$NO_FPXZ',
                                     TGL_FP = '$TGL_FPXZ'
                                 WHERE NO_ID ='$NO_IDXZ' ");
-                
-							
+
+
 				}
 
 					// IF CEK
-							
-            } // FOR 
-			
-			
+
+            } // FOR
+
+
         }
         else
         {
             $hasil = $hasil ."Tidak ada No Bukti yang dipilih! ; ";
         }
 
-		
-		return redirect('/stockb/post')->with('statusInsert', 'No Bukti berhasil diupdate');		
-	
-		
-		
+
+		return redirect('/stockb/post')->with('statusInsert', 'No Bukti berhasil diupdate');
+
+
+
 	}
-	
-	
+
+
 	public function getDetailStockb(){
 
         $no_bukti = $_GET['no_bukti'];
         $result = DB::table('lapbsnd')->where('no_bukti', $no_bukti)->get();
-        
+
         return response()->json($result);;
     }
-	
-	
-	
-	
-	
+
+
+
+
+
 }
