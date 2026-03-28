@@ -486,6 +486,12 @@ Route::get('/rtidakkirim', 'App\Http\Controllers\OReport\RTidakkirimController@r
 Route::get('/get-tidakkirim-report', 'App\Http\Controllers\OReport\RTidakkirimController@getTidakkirimReport')->middleware(['auth'])->name('get-tidakkirim-report');
 Route::post('jasper-tidakkirim-report', 'App\Http\Controllers\OReport\RTidakkirimController@jasperTidakkirimReport')->middleware(['auth']);
 
+// Laporan Budget Awal Supplier
+
+Route::get('/rbudgetawl', 'App\Http\Controllers\OReport\RBudgetawlController@report')->middleware(['auth'])->name('rbudgetawl');
+Route::get('/get-budgetawl-report', 'App\Http\Controllers\OReport\RBudgetawlController@getBudgetawlReport')->middleware(['auth'])->name('get-budgetawl-report');
+Route::post('jasper-budgetawl-report', 'App\Http\Controllers\OReport\RBudgetawlController@jasperBudgetawlReport')->middleware(['auth']);
+
 
 // Opertational Usulan Penghapusan Barang
 Route::get('/ubsup', 'App\Http\Controllers\OTransaksi\UbsupController@index')->middleware(['auth'])->name('ubsup');
