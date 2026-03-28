@@ -479,6 +479,12 @@ Route::get('/rminus', 'App\Http\Controllers\OReport\RMinusController@report')->m
 Route::get('/get-minus-report', 'App\Http\Controllers\OReport\RMinusController@getMinusReport')->middleware(['auth'])->name('get-minus-report');
 Route::post('jasper-minus-report', 'App\Http\Controllers\OReport\RMinusController@jasperMinusReport')->middleware(['auth']);
 
+// Operational Budget Periode Lalu
+
+Route::get('/rbudgetll', 'App\Http\Controllers\OReport\RBudgetllController@report')->middleware(['auth'])->name('rbudgetll');
+Route::get('/get-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@getBudgetllReport')->middleware(['auth'])->name('get-budgetll-report');
+Route::post('jasper-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@jasperBudgetllReport')->middleware(['auth']);
+
 // Operational Surat Teguran Budget Minus
 
 Route::get('/rtegur', 'App\Http\Controllers\OReport\RTegurController@report')->middleware(['auth'])->name('rtegur');

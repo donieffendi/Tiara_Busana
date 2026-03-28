@@ -877,6 +877,18 @@
             </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffbaba;">
+                <a href="javascript:addTab('Melihat Budget Periode Lalu', '{{url('rbudgetll')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-red"></i>
+                  <h6>Melihat Budget Periode Lalu</h6>
+                </a>
+            </div>
+        </div>
+      </div>
     </div>
 
 <!----- batas ----->
