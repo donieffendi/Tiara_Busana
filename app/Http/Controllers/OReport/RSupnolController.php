@@ -21,71 +21,66 @@ class RSupnolController extends Controller
 {
     public function report()
     {
-		$cbg = Cbg::groupBy('CBG')->get();
-		session()->put('filter_cbg', '');
-		session()->put('filter_nobukti1', '');
-        return view('oreport_supnol.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
+		session()->put('filter_kodes1', '');
+		session()->put('filter_namas1', '');
+		session()->put('filter_kodes2', '');
+		session()->put('filter_namas2', '');
+
+        return view('oreport_supnol.report')->with(['hasil' => []]);
     }
 	
 	
 	 
 	public function jasperSupnolReport(Request $request) 
 	{
-		$file 	= 'pon';
+		$file 	= 'Laporan_Suplier_Tidak_Ada_Budget';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
+		$params = [
+			"TGL_CTK" => date('d/m/Y')
+		];
+		$PHPJasperXML->arrayParameter = $params;
 		
 			
-			if($request['cbg'])
-			{
-				$cbg = $request['cbg'];
-			}
+		$filterkodes = "WHERE 1=1";
 
-			if (!empty($request->cbg))
-			{
-				$filtercbg = " and po.CBG='".$request->cbg."' ";
-			}
-			
-			$nobukti_1 = $request->nobukti;
+		if (!empty($request->kodes1) && !empty($request->kodes2)) {
+			$filterkodes .= " AND NO_SUPL BETWEEN '".$request->kodes1."' AND '".$request->kodes2."'";
+		}
 
-			session()->put('filter_nobukti1', $request->nobukti);
-			session()->put('filter_cbg', $request->cbg);
+		session()->put('filter_kodes1', $request->kodes1);
+		session()->put('filter_namas1', $request->namas1);
+		session()->put('filter_kodes2', $request->kodes2);
+		session()->put('filter_namas2', $request->namas2);
 		
 
-		$query = $db->prepare("CALL bsn_turun_harga_terima(?, ?, ?, ?)");
-		$query->execute([$jnsx, $cbgx, $buktix, $userx]);
+		$query = DB::select("
+			SELECT 
+				(@rownum := @rownum + 1) AS ROWNUM,
+				NO_SUPL,
+				NAMA,
+				ALMT_K,
+				KOTA,
+				GOL_BRG,
+				BUDGET,
+				0 AS QTY,
+				'' AS CETAK
+			FROM nwmassup, (SELECT @rownum := 0) r
+			$filterkodes
+			AND BUDGET = 0
+		");
 
 
 		if($request->has('filter'))
 		{
-			$cbg = Cbg::groupBy('CBG')->get();
 
-			return view('oreport_supnol.report')->with(['cbg' => $cbg])->with(['hasil' => $query]);
+			return view('oreport_supnol.report')->with(['hasil' => $query]);
 		}
 
 		$data=[];
-		foreach ($query as $key => $value)
-		{
-			array_push($data, array(
-				'NO_PO' => $query[$key]->NO_BUKTI,
-				'TGL' => $query[$key]->TGL,
-				'TGL_1' => $tgl_1,
-				'TGL_2' => $tgl_2,
-				'KODES_1' => $kodes_1,
-				'KODES_2' => $kodes_2,
-				'KODES' => $query[$key]->KODES,
-				'NAMAS' => $query[$key]->NAMAS,
-				'KD_BRG' => $query[$key]->KD_BRG,
-				'NA_BRG' => $query[$key]->NA_BRG,
-				'QTY' => $query[$key]->QTY,
-				'HARGA' => $query[$key]->HARGA,
-				'TOTAL' => $query[$key]->TOTAL,
-				'KET' => $query[$key]->KET,
-				'GOL' => $query[$key]->GOL,
-				'KIRIM' => $query[$key]->KIRIM,
-				'SISA' => $query[$key]->SISA,
-			));
-		}
+		
+		$data = json_decode(json_encode($query), true);
+
 		$PHPJasperXML->setData($data);
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");
