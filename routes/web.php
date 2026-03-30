@@ -479,6 +479,13 @@ Route::get('/get-budgetrp-report', 'App\Http\Controllers\OReport\RBudgetrpContro
 Route::post('jasper-budgetrp-report', 'App\Http\Controllers\OReport\RBudgetrpController@jasperBudgetrpReport')->middleware(['auth']);
 
 
+// Operational Laporan Data Baran Non Budget
+
+Route::get('/rbrgnonbud', 'App\Http\Controllers\OReport\RBrgnonbudController@report')->middleware(['auth'])->name('rbrgnonbud');
+Route::get('/get-brgnonbud-report', 'App\Http\Controllers\OReport\RBrgnonbudController@getBrgnonbudReport')->middleware(['auth'])->name('get-brgnonbud-report');
+Route::post('jasper-brgnonbud-report', 'App\Http\Controllers\OReport\RBrgnonbudController@jasperBrgnonbudReport')->middleware(['auth']);
+
+
 // Operational Budget Minus
 
 Route::get('/rminus', 'App\Http\Controllers\OReport\RMinusController@report')->middleware(['auth'])->name('rminus');
