@@ -23,12 +23,12 @@
         border-right: solid 2px #000;
         border-left: solid 2px #000;
     }
-	
+
 
     .btn-secondary {
         background-color: #42047e !important;
     }
-    
+
     th { font-size: 13px; }
     td { font-size: 13px; }
 
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-            
+
               <!-- batas filter -->
 
               <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
@@ -155,18 +155,19 @@
                     <thead class="table-dark">
                         <tr>
                             <th scope="col" style="text-align: center">#</th>
-				     		<th scope="col" style="text-align: center">-</th>							
+				     		<th scope="col" style="text-align: center">-</th>
                             <th scope="col" style="text-align: left">No. Bukti</th>
                             <th scope="col" style="text-align: left">Tgl</th>
                             <th scope="col" style="text-align: right">Conter</th>
                             <th scope="col" style="text-align: left">Nama</th>
                             <th scope="col" style="text-align: left">Total Qty</th>
                             <th scope="col" style="text-align: left">Notes</th>
+                            <th scope="col" style="text-align: left">Posted</th>
                         </tr>
                     </thead>
-    
+
                     <tbody>
-                    </tbody> 
+                    </tbody>
                 </table>
               </div>
             </div>
@@ -175,7 +176,7 @@
       </div>
     </div>
   </div>
-  
+
 @endsection
 
 @section('javascripts')
@@ -199,9 +200,9 @@
     // batas filter
 
   $(document).ready(function() {
-	  
 
-			  
+
+
         var dataTable = $('.datatable').DataTable({
             processing: true,
             serverSide: true,
@@ -209,17 +210,17 @@
             // 'scrollX': true,
             // 'scrollY': '400px',
             "order": [[ 0, "asc" ]],
-            ajax: 
+            ajax:
             {
                 url: "{{ route('get-retur') }}",
-				        data: 
+				        data:
                 {
                     flagz : $('#flagz').val(),
-				   
+
                 }
             },
 
-            columns: 
+            columns:
             [
 
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
@@ -237,25 +238,36 @@
                   data: 'total_qty',
                   name: 'total_qty',
                   render: $.fn.dataTable.render.number( ',', '.', 0, '' )
-				},								
+				},
                 {data: 'notes', name: 'notes'},
+                {
+                    data: 'POSTED',
+                    name: 'POSTED',
+                    render: function(data, type, row, meta) {
+                         if (row['POSTED'] == "0") {
+                            return '';
+                        } else {
+                            return '<input type="checkbox" checked style="pointer-events: none;">';
+                        }
+                    }
+                },
             ],
-            columnDefs: 
+            columnDefs:
             [
                 {
-                    "className": "dt-center", 
+                    "className": "dt-center",
                     "targets": [0,1,2,4,5]
                 },
                 {
-                    "className": "dt-right", 
+                    "className": "dt-right",
                     "targets": 6
-                },			
+                },
                 {
                   targets: 3,
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
                 }
             ],
-            lengthMenu: 
+            lengthMenu:
             [
                 [8, 10, 20, 50, 100, -1],
                 [8, 10, 20, 50, 100, "All"]
@@ -281,9 +293,9 @@
             var column = dataTable.column($(this).val());
             column.visible($(this).is(':checked'));
         });
-        
+
         // batas filter
-		
+
         $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('retur/edit?flagz='.$flagz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
 
         // function buat ganti tombol + onclick
@@ -371,7 +383,7 @@
 
           // tutupannya
     });
-	
+
 
     function deleteRow(link) {
         console.log('Masuk');
