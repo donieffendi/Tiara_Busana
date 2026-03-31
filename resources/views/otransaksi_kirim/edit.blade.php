@@ -110,16 +110,16 @@
                                                     value="{{ $header->NO_BUKTI }}" readonly>
                                             </div>
 
-                                            <div class="col-md-1" align="left">
+                                            <div class="col-md-1" align="left" hidden>
                                                 <label for="CNT" class="form-label">Counter</label>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1" hidden>
                                                 <input type="text" class="form-control CNT" id="CNT" name="CNT"
                                                     placeholder="Pilih Counter"value="{{ $header->CNT }}"
                                                     style="text-align: left">
                                             </div>
 
-                                            <div class="col-md-2 input-group">
+                                            <div class="col-md-2 input-group" hidden>
                                                 <input type="text" class="form-control NCNT" id="NCNT"
                                                     name="NCNT" placeholder=""value="{{ $header->NCNT }}"
                                                     style="text-align: left">
