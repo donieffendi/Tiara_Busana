@@ -478,6 +478,12 @@ Route::get('/rbudgetrp', 'App\Http\Controllers\OReport\RBudgetrpController@repor
 Route::get('/get-budgetrp-report', 'App\Http\Controllers\OReport\RBudgetrpController@getBudgetrpReport')->middleware(['auth'])->name('get-budgetrp-report');
 Route::post('jasper-budgetrp-report', 'App\Http\Controllers\OReport\RBudgetrpController@jasperBudgetrpReport')->middleware(['auth']);
 
+// Operational Suplier Yang Memiliki Sisa Budget
+
+Route::get('/rbudgetss', 'App\Http\Controllers\OReport\RBudgetssController@report')->middleware(['auth'])->name('rbudgetss');
+Route::get('/get-budgetss-report', 'App\Http\Controllers\OReport\RBudgetssController@getBudgetssReport')->middleware(['auth'])->name('get-budgetss-report');
+Route::post('jasper-budgetss-report', 'App\Http\Controllers\OReport\RBudgetssController@jasperBudgetssReport')->middleware(['auth']);
+
 
 // Operational Laporan Data Baran Non Budget
 
