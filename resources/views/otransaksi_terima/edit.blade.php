@@ -39,7 +39,7 @@
       animation: l17 1s infinite linear;
       position: relative;
     }
-    .loader::before {    
+    .loader::before {
       content:"";
       position: absolute;
       width: 8px;
@@ -52,7 +52,7 @@
       animation: inherit;
       animation-duration: 0.5s;
     }
-    @keyframes l17 { 
+    @keyframes l17 {
       100%{transform: rotate(1turn)}
     }
 
@@ -82,14 +82,14 @@
                 <div class="card-body">
 
                     <form action="{{($tipx=='new')? url('/terima/store?flagz='.$flagz.'') : url('/terima/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
-  
+
                         @csrf
                         <div class="tab-content mt-3">
                             <div class="form-group row">
                                 <div class="col-md-1" align="left">
                                     <label for="NO_BUKTI" class="form-label">No Bukti</label>
                                 </div>
-								
+
 
                                    <input type="text" class="form-control NO_ID" id="NO_ID" name="NO_ID"
                                     placeholder="Masukkan NO_ID" value="{{$header->NO_ID ?? ''}}" hidden readonly>
@@ -97,21 +97,21 @@
 									<input name="tipx" class="form-control tipx" id="tipx" value="{{$tipx}}" hidden>
 									<input name="flagz" class="form-control flagz" id="flagz" value="{{$flagz}}" hidden>
 
-								
-								
+
+
                                 <div class="col-md-2">
                                     <input type="text" class="form-control NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI"
                                     placeholder="Masukkan Bukti#" value="{{$header->NO_BUKTI}}" readonly>
                                 </div>
 
-								<div class="col-md-1" align="left">							
+								<div class="col-md-1" align="left" hidden>
                                     <label for="CNT" class="form-label">Counter</label>
                                 </div>
-                               	<div class="col-md-2">
+                               	<div class="col-md-2" hidden>
                                   <input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih Counter"value="{{$header->CNT}}" style="text-align: left" >
                                 </div>
 
-                               	<div class="col-md-4 input-group" >
+                               	<div class="col-md-4 input-group" hidden>
                                   <input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""value="{{$header->NCNT}}" style="text-align: left" >
         						  <button type="button" class="btn btn-primary" onclick="browseCounter()"><i class="fa fa-search"></i></button>
                                 </div>
@@ -120,21 +120,21 @@
 									<input type="checkbox" class="form-check-input" id="POSTED" name="POSTED" value="1" {{ ($header->POSTED == 1) ? 'checked' : '' }}>
 									<label for="POSTED">Posted</label>
 								</div>
-								
-								
+
+
                             </div>
 
 							<div class="form-group row">
 
-								<div class="col-md-1" align="left">							
+								<div class="col-md-1" align="left">
                                     <label for="NO_PO" class="form-label">No Retur</label>
                                 </div>
                                	<div class="col-md-2 input-group" >
                                   <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" >
         						  {{-- <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button> --}}
                                 </div>
-								
-								<div class="col-md-1" align="left">							
+
+								<div class="col-md-1" align="left">
                                     <label for="KODES" class="form-label">Supplier</label>
                                 </div>
                                	<div class="col-md-2">
@@ -150,36 +150,36 @@
 
                             <div class="form-group row">
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
                                     <label class="form-label">Referensi</label>
                                 </div>
                                	<div class="col-md-2 input-group" >
                                   <input type="text" class="form-control REF" id="REF" name="REF" placeholder="" value="{{$header->REF}}" style="text-align: left" readonly >
         						</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Margin</label>
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control HMARGIN" id="HMARGIN" name="HMARGIN" placeholder="" value="{{$header->MARGIN}}" style="text-align: right" readonly >
 								</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Sts. Nota</label>
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control ST_NOTA" id="ST_NOTA" name="ST_NOTA" placeholder="" value="{{$header->ST_NOTA}}" style="text-align: left" readonly >
 								</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Sistem</label>
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control ST_CNT" id="ST_CNT" name="ST_CNT" placeholder="" value="{{$header->ST_CNT}}" style="text-align: left" readonly >
 								</div>
-                                
+
                             </div>
-							
+
                             <div class="form-group row">
 								<div class="col-md-1" align="left">
 									<label for="TGL" class="form-label">Tgl</label>
@@ -188,14 +188,14 @@
 									<input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
 								</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Dis. Promosi</label>
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control POT_PROM" id="POT_PROM" name="POT_PROM" placeholder="" value="{{$header->POT_PROM}}" style="text-align: right" readonly >
 								</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Kupon krd</label>
 								</div>
 								<div class="col-md-2 input-group" >
@@ -203,7 +203,7 @@
 								</div>
 
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Basic</label>
 								</div>
 								<div class="col-md-2 input-group" >
@@ -219,21 +219,21 @@
 									<input class="form-control date" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->JTEMPO))}}">
 								</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Sts. Pajak</label>
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control ST_PJK" id="ST_PJK" name="ST_PJK" placeholder="" value="{{$header->ST_PJK}}" style="text-align: left" readonly >
 								</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Formalitas</label>
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control FORMAL" id="FORMAL" name="FORMAL" placeholder="" value="{{$header->FORMAL}}" style="text-align: left" readonly >
 								</div>
 
-								<div class="col-md-1" align="left">								
+								<div class="col-md-1" align="left">
 									<label class="form-label">Nota Khs</label>
 								</div>
 								<div class="col-md-2 input-group" >
@@ -254,7 +254,7 @@
 									<input type="checkbox" class="form-check-input" id="BAYAR" name="BAYAR" readonly  value="{{$header->BAYAR}}" {{ ($header->BAYAR == 1) ? 'checked' : '' }}>
 									<input type="text" hidden class="form-control ZBAYAR" id="ZBAYAR" name="ZBAYAR" value="{{$header->BAYAR}}" placeholder="" >
 								</div> -->
-								
+
 								<div class="col-md-1">
 									<input type="checkbox" class="form-check-input" id="BAYAR" name="BAYAR" value="1" {{ ($header->BAYAR == 1) ? 'checked' : '' }}>
 									<label for="BAYAR"></label>
@@ -275,7 +275,7 @@
 									/* geser kanan kirinya di atur disini */
 									margin-left: 50px ;
 								}
-						
+
 								/* Ensure only bottom border for input */
 								.form-group.special-input-label input {
 									width: 100%;
@@ -286,12 +286,12 @@
 									font-size: 16px !important;
 									background: transparent !important; /* Remove any background color */
 								}
-						
+
 								/* Bottom border color change on focus */
 								.form-group.special-input-label input:focus {
 									border-bottom: 2px solid #007BFF !important; /* Change color on focus */
 								}
-						
+
 								/* Style the label with a higher specificity */
 								.form-group.special-input-label label {
 									position: absolute;
@@ -302,7 +302,7 @@
 									transition: 0.3s ease all;
 									pointer-events: none;
 								}
-						
+
 								/* Move label above input when focused or has content */
 								.form-group.special-input-label input:focus + label,
 								.form-group.special-input-label input:not(:placeholder-shown) + label {
@@ -314,10 +314,10 @@
 							</style>
 
 							<!-- tutupannya -->
-							
-							
+
+
                             <hr style="margin-top: 30px; margin-buttom: 30px">
-							
+
 							<div style="overflow-y:scroll;" class="col-md-12 scrollable" align="right">
 
 								<table id="datatable" class="table table-striped table-border">
@@ -343,23 +343,23 @@
 											<th width="150px" style="text-align:center">Ket</th>
 
 											<th></th>
-																
+
 										</tr>
 									<tbody id="detailPod">
-			
+
 									<tbody>
 									<?php $no=0 ?>
-									@foreach ($detail as $detail)		
+									@foreach ($detail as $detail)
 										<tr>
 											<td>
-												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
+												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}"
 												class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
-												
+
 												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->rec}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
-											</td>								
+											</td>
 
 											<td>
-												<input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG " 
+												<input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG "
 												value="{{$detail->KD_BRG}}" onblur="browseBarang({{$no}})">
 											</td>
 
@@ -373,18 +373,18 @@
 
 											<td>
 												<input name="SATUAN[]" id="SATUAN{{$no}}" type="text" class="form-control SATUAN" value="{{$detail->satuan}}">
-											</td>										
+											</td>
 											<td>
 												<input name="QTYK[]" onclick="select()" onblur="hitung()" value="{{$detail->qtyk}}" id="QTYK{{$no}}" type="text" style="text-align: right"  class="form-control QTYK" >
 											</td>
 											<td>
 												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->qty}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
 											</td>
-																																	
+
 											<td >
 												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->harga}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
 											</td>
-		
+
 											<td >
 												<input name="MARGIN[]" onblur="hitung()"  value="{{$detail->MARGIN}}" id="MARGIN{{$no}}" type="text" style="text-align: right"  class="form-control MARGIN" readonly>
 											</td>
@@ -412,13 +412,13 @@
 											<td>
 												<input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->ket}}">
 											</td>
-											
+
 											<td>
 												<button type='button' id='DELETEX{{$no}}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
-											</td> 
+											</td>
 
 										</tr>
-									
+
 									<?php $no++; ?>
 									@endforeach
 									</tbody>
@@ -431,7 +431,7 @@
 										<td></td>
 										<td></td>
 										<td></td>
-										<td></td>									
+										<td></td>
 										<td></td>
 										<td></td>
 										<!-- <td><input class="form-control TTOTAL  text-primary" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> -->
@@ -442,17 +442,17 @@
 
                             <div class="col-md-2 row">
                                <a type="button" id='PLUSX' onclick="tambah()" class="fas fa-plus fa-sm md-3" style="font-size: 20px" ></a>
-					
-							</div>	
-							
-                        </div> 
+
+							</div>
+
+                        </div>
 
                         <hr style="margin-top: 30px; margin-buttom: 30px">
-                        
+
                         <div class="tab-content mt-6">
-						
+
 							<div class="form-group row">
-                                
+
                                 <div class="col-md-6" align="right">
                                      <label for="TJUMLAH" class="form-label">Bruto</label>
                                 </div>
@@ -460,7 +460,7 @@
                                 <div class="col-md-2">
                                     <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TJUMLAH" id="TJUMLAH" name="TJUMLAH" placeholder="" value="{{$header->JUMLAH}}" style="text-align: right" readonly>
                                 </div>
-                                
+
                                 <div class="col-md-1" align="right">
                                     <label for="TPROM" class="form-label">Promosi</label>
                                 </div>
@@ -488,7 +488,7 @@
                                     <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TPPN" id="TPPN" name="TPPN" placeholder="" value="{{$header->PPN}}" style="text-align: right" readonly>
                                 </div>
 							</div>
-							
+
                             <div class="form-group row">
                                 <div class="col-md-6" align="right">
                                     <label for="TNETT" class="form-label">Nett</label>
@@ -497,10 +497,10 @@
                                     <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TNETT" id="TNETT" name="TNETT" placeholder="" value="{{$header->NETT}}" style="text-align: right" readonly>
                                 </div>
 							</div>
-							
+
 						</div>
-						
-						   
+
+
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
 								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/terima/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
@@ -510,18 +510,18 @@
 							</div>
 							<div class="col-md-5">
 								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/terima/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
-								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>                    
-								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/terima/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
+								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>
+								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/terima/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>
 								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
 							<div class="col-md-3">
 								<button hidden type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
-								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>   
+								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
 							</div>
 						</div>
-						
-						
+
+
                     </form>
                 </div>
             </div>
@@ -618,9 +618,9 @@
 		</div>
 	  </div>
 	</div>
-	
-	
-	
+
+
+
 
 @endsection
 
@@ -642,7 +642,7 @@
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	
+
     $(document).ready(function () {
 
 		setTimeout(function(){
@@ -676,19 +676,19 @@
 
 		$tipx = $('#tipx').val();
 		$searchx = $('#CARI').val();
-		
-		
+
+
         if ( $tipx == 'new' )
 		{
 			 baru();
-             tambah();				 
+             tambah();
 		}
 
         if ( $tipx != 'new' )
 		{
-			 ganti();			
-		} 
-		
+			 ganti();
+		}
+
 		$('#TGL').on('change', function(){
 
 			let tgl = $(this).val();
@@ -732,37 +732,37 @@
 			$("#DPP" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#DISK" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#XQTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			
+
 			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#BLT" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#QTYK" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-		}	
+		}
 
 
-		
+
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
 			hitung();
 			nomor();
-			
+
 		});
 
-		$('.date').datepicker({  
+		$('.date').datepicker({
             dateFormat: 'dd-mm-yy'
 		});
-		
-		
- 	
-		
+
+
+
+
 //		CHOOSE Sup
  		var dTableBSup;
 		loadDataBSup = function(){
-		
+
 			$.ajax(
 			{
-				type: 'GET', 		
+				type: 'GET',
 				url: '{{url('terima/browse_sup')}}',
 
 				beforeSend: function(){
@@ -778,7 +778,7 @@
 						dTableBSup.clear();
 					}
 					for(i=0; i<resp.length; i++){
-						
+
 						dTableBSup.row.add([
 							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\')">'+resp[i].KODES+'</a>',
 							resp[i].KODES,
@@ -791,21 +791,21 @@
 				}
 			});
 		}
-		
+
 		dTableBSup = $("#table-bsup").DataTable({
-			
+
 		});
-		
+
 		browseSup = function(){
 			loadDataBSup();
 			$("#browseSupModal").modal("show");
 
 		}
-		
+
 		chooseSup = function(KODES,NAMAS){
 
 			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);		
+			$("#NAMAS").val(NAMAS);
 			$("#browseSupModal").modal("hide");
 			// getPod(NO_BUKTI);
 		}
@@ -816,12 +816,12 @@
 
 	// function getPod(bukti)
 	// {
-		
+
 	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
 
 	// 	$.ajax(
 	// 		{
-	// 			type: 'GET',    
+	// 			type: 'GET',
 	// 			url: "{{url('po/browse_pod')}}",
 	// 			data: {
 	// 				nobukti: bukti,
@@ -832,7 +832,7 @@
 	// 				for(i=0; i<resp.length; i++){
 	// 					html+=`<tr>
     //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-                                    
+
 
 	// 								<td >
 	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
@@ -840,7 +840,7 @@
 	// 					            <td >
 	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
 	// 					            </td>
-									
+
 	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
     //                                 <td>
 	// 									<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
@@ -874,7 +874,7 @@
 	// 									<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
 	// 								</td>
 	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-                                    
+
 
 	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
     //                             </tr>`;
@@ -883,25 +883,25 @@
 
 	// 				$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".XQTY").autoNumeric('update');
-					
+
 	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".QTY_PO").autoNumeric('update');
 
 	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".QTY").autoNumeric('update');
-					
+
 	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".HARGA").autoNumeric('update');
-					
+
 	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".KALI").autoNumeric('update');
-					
+
 	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".TOTAL").autoNumeric('update');
-					
+
 	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".PPNX").autoNumeric('update');
-					
+
 	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".DPP").autoNumeric('update');
 
@@ -923,10 +923,10 @@
 //		CHOOSE Counter
 		var dTableBCounter;
 		loadDataBCounter = function(){
-		
+
 			$.ajax(
 			{
-				type: 'GET', 		
+				type: 'GET',
 				url: '{{url('terima/browse_cnt')}}',
 
 				beforeSend: function(){
@@ -942,7 +942,7 @@
 						dTableBCounter.clear();
 					}
 					for(i=0; i<resp.length; i++){
-						
+
 						dTableBCounter.row.add([
 							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
 							resp[i].NCNT
@@ -952,20 +952,20 @@
 				}
 			});
 		}
-		
+
 		dTableBCounter = $("#table-bcounter").DataTable({
-			
+
 		});
-		
+
 		browseCounter = function(){
 			loadDataBCounter();
 			$("#browseCounterModal").modal("show");
 		}
-		
+
 		chooseCounter = function(CNT,NCNT){
 
 			$("#CNT").val(CNT);
-			$("#NCNT").val(NCNT);			
+			$("#NCNT").val(NCNT);
 			$("#browseCounterModal").modal("hide");
 			// getBelid(NO_BUKTI);
 		}
@@ -975,12 +975,12 @@
 
 	// function getBelid(bukti)
 	// {
-		
+
 	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
 
 	// 	$.ajax(
 	// 		{
-	// 			type: 'GET',    
+	// 			type: 'GET',
 	// 			url: "{{url('terima/browse_terimad')}}",
 	// 			data: {
 	// 				nobukti: bukti,
@@ -991,7 +991,7 @@
 	// 				for(i=0; i<resp.length; i++){
 	// 					html+=`<tr>
     //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-                                    
+
 
 	// 								<td >
 	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
@@ -999,7 +999,7 @@
 	// 					            <td >
 	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
 	// 					            </td>
-									
+
 	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
     //                                 <td>
 	// 									<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
@@ -1033,7 +1033,7 @@
 	// 									<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
 	// 								</td>
 	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-                                    
+
 
 	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
     //                             </tr>`;
@@ -1042,25 +1042,25 @@
 
 	// 				$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".XQTY").autoNumeric('update');
-					
+
 	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".QTY_PO").autoNumeric('update');
 
 	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".QTY").autoNumeric('update');
-					
+
 	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".HARGA").autoNumeric('update');
-					
+
 	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".KALI").autoNumeric('update');
-					
+
 	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".TOTAL").autoNumeric('update');
-					
+
 	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".PPNX").autoNumeric('update');
-					
+
 	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 	// 				$(".DPP").autoNumeric('update');
 
@@ -1082,10 +1082,10 @@
 		var dTableBBarang;
 		var rowidBarang;
 		loadDataBBarang = function(){
-		
+
 			$.ajax(
 			{
-				type: 'GET',    
+				type: 'GET',
 				url: "{{url('terima/browse_brg')}}",
 				async : false,
 				data: {
@@ -1095,22 +1095,22 @@
 
 				{
 					resp = response;
-					
-					
+
+
 					if ( resp.length > 1 )
-					{	
+					{
 							if(dTableBBarang){
 								dTableBBarang.clear();
 							}
 							for(i=0; i<resp.length; i++){
-								
+
 								dTableBBarang.row.add([
 									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\',\''+resp[i].BARCODE+'\',\''+resp[i].HARGA_JL+'\',\''+resp[i].HARGA+'\',\''+resp[i].SATUAN+'\',\''+resp[i].MARGIN+'\')">'+resp[i].KD_BRG+'</a>',
 									resp[i].NA_BRG,
 								]);
 							}
 							dTableBBarang.draw();
-					
+
 					}
 					else
 					{
@@ -1120,70 +1120,70 @@
 				}
 			});
 		}
-		
+
 		dTableBBarang = $("#table-bbarang").DataTable({
-			
+
 		});
 
 		browseBarang = function(rid){
 			rowidBarang = rid;
-			$("#NA_BRG"+rowidBarang).val("");			
+			$("#NA_BRG"+rowidBarang).val("");
 			loadDataBBarang();
-	
-			
-			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {				
+
+
+			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {
 					$("#browseBarangModal").modal("show");
-			}	
+			}
 		}
-		
+
 		chooseBarang = function(KD_BRG,NA_BRG,BARCODE,HARGA_JL,HARGA,SATUAN,MARGIN){
 			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
+			$("#NA_BRG"+rowidBarang).val(NA_BRG);
 			$("#BARCODE"+rowidBarang).val(BARCODE);
 			$("#HARGA_JL"+rowidBarang).val(HARGA_JL);
 			$("#HARGA"+rowidBarang).val(HARGA);
 			$("#SATUAN"+rowidBarang).val(SATUAN);
 			$("#MARGIN"+rowidBarang).val(MARGIN);
 			$("#browseBarangModal").modal("hide");
-		} 
+		}
 
 	});
 
 
-///////////////////////////////////////		
-    
+///////////////////////////////////////
+
 
     function cekDetail(){
 		var cekBarang = '';
 		$(".KD_BRG").each(function() {
-			
+
 			let z = $(this).closest('tr');
 			var KD_BRGX = z.find('.KD_BRG').val();
-			
+
 			if( KD_BRGX =="" )
 			{
 					cekBarang = '1';
-					
+
 			}
 		});
-		
+
 		return cekBarang;
 	}
-	
+
 
  	function simpan() {
 		hitung();
-		
+
 		var tgl = $('#TGL').val();
 		var bulanPer = {{session()->get('periode')['bulan']}};
 		var tahunPer = {{session()->get('periode')['tahun']}};
-		
+
         var check = '0';
 
 			if (cekDetail())
-    		{	
+    		{
     			check = '1';
-    
+
     			Swal.fire({
     				icon: 'warning',
     				title: 'Warning',
@@ -1191,9 +1191,9 @@
     			});
     			return;
     		}
-			
-			if ( $('#KODES').val()=='' ) 
-            {				
+
+			if ( $('#KODES').val()=='' )
+            {
 			    check = '1';
 				Swal.fire({
 					icon: 'warning',
@@ -1206,7 +1206,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-			if ( tgl.substring(3,5) != bulanPer ) 
+			if ( tgl.substring(3,5) != bulanPer )
 			{
 				check = '1';
 				Swal.fire({
@@ -1215,8 +1215,8 @@
 					text: 'Bulan tidak sama dengan Periode'
 				});
 				return; // Stop function execution
-			}	
-			
+			}
+
 
 			if ( tgl.substring(tgl.length-4) != tahunPer )
 			{
@@ -1227,8 +1227,8 @@
 					text: 'Tahun tidak sama dengan Periode'
 				});
 				return; // Stop function execution
-		    }	 
-			
+		    }
+
 			if (baris==0)
 			{
 				check = '1';
@@ -1268,18 +1268,18 @@
 			}
 
 		// tutupannya
-			
+
 			$("#LOADX").hide();
 	}
-		
+
     function nomor() {
 		var i = 1;
 		$(".REC").each(function() {
 			$(this).val(i++);
 		});
-		
+
 	//	hitung();
-	
+
 	}
 
    function hitung() {
@@ -1290,9 +1290,9 @@
 		var TPPNX = 0;
 		var NETTX = 0;
 
-		
+
 		$(".QTY_PO").each(function() {
-			
+
 			let z = $(this).closest('tr');
 			var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
 			var XQTYX = parseFloat(z.find('.XQTY').val().replace(/,/g, ''));
@@ -1300,137 +1300,137 @@
 			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
 			var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
 			var DISKX = parseFloat(z.find('.DISK').val().replace(/,/g, ''));
-	
+
 			var PKPX  = $('#PKP').val();
 
 			var FLAGZ = $('#flagz').val();
-	
+
 			if (FLAGZ == 'RB'){
-				
+
 				var XQTYX  = ( XQTYX * -1 ) ;
 				var QTY_POX  = ( QTY_POX * -1 ) ;
 				var DISKX  = ( DISKX * -1 ) ;
-				
+
 				z.find('.QTY_PO').autoNumeric('update');
 				z.find('.DISKX').autoNumeric('update');
 				z.find('.XQTY').autoNumeric('update');
 
-			} 
+			}
 
 			var QTYX  = ( XQTYX * XX );
 			z.find('.QTY').val(QTYX);
 
-		    z.find('.KALI').autoNumeric('update');	
-		    z.find('.QTY').autoNumeric('update');	
+		    z.find('.KALI').autoNumeric('update');
+		    z.find('.QTY').autoNumeric('update');
 
-            
+
             var TOTALX  =  ( XQTYX * HARGAX ) - DISKX;
-            
+
 			z.find('.TOTAL').val(TOTALX);
 
 
 			var DPPX = 0 ;
 			var PPNX = 0;
-			
+
             DPPX = TOTALX;
 	     	z.find('.DPP').val(DPPX);
 
 			if (PKPX == '0' ) {
 			    PPNX = 0;
-			    
-			} 
 
-	     		
+			}
+
+
 			if (PKPX == '1' ) {
 			    DPPX = TOTALX * 100/111;
 			    PPNX = TOTALX - DPPX;
 	     	    z.find('.DPP').val(DPPX);
-	     	
-			} 
+
+			}
 
 
-            
-			z.find('.PPNX').val(PPNX);	
 
-		    z.find('.HARGA').autoNumeric('update');			
-		    z.find('.QTY').autoNumeric('update');	
-		    z.find('.TOTAL').autoNumeric('update');				
-		    z.find('.DPP').autoNumeric('update');			
-		    z.find('.DISK').autoNumeric('update');			
-		    z.find('.PPNX').autoNumeric('update');		
+			z.find('.PPNX').val(PPNX);
 
-            TTOTAL_QTY +=QTYX;		
-            TTOTAL +=TOTALX;				
+		    z.find('.HARGA').autoNumeric('update');
+		    z.find('.QTY').autoNumeric('update');
+		    z.find('.TOTAL').autoNumeric('update');
+		    z.find('.DPP').autoNumeric('update');
+		    z.find('.DISK').autoNumeric('update');
+		    z.find('.PPNX').autoNumeric('update');
+
+            TTOTAL_QTY +=QTYX;
+            TTOTAL +=TOTALX;
             TPPNX +=PPNX;
             TDPPX +=DPPX;
-            
-            TDISK +=DISKX;				
-		
+
+            TDISK +=DISKX;
+
 		});
 
-		
+
 		NETTX = TTOTAL ;
 
-		
+
 		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
 
-		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));		
+		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));
 		$("#TTOTAL_QTY").autoNumeric('update');
-		
+
 		if(isNaN(TTOTAL)) TTOTAL = 0;
 
-		$('#TTOTAL').val(numberWithCommas(TTOTAL));		
+		$('#TTOTAL').val(numberWithCommas(TTOTAL));
 		$("#TTOTAL").autoNumeric('update');
 
-		$('#TDISK').val(numberWithCommas(TDISK));		
+		$('#TDISK').val(numberWithCommas(TDISK));
 		$("#TDISK").autoNumeric('update');
 
 
-		$('#TDPP').val(numberWithCommas(TDPPX));		
+		$('#TDPP').val(numberWithCommas(TDPPX));
 		$("#TDPP").autoNumeric('update');
-		
-		$('#TPPN').val(numberWithCommas(TPPNX));		
+
+		$('#TPPN').val(numberWithCommas(TPPNX));
 		$("#TPPN").autoNumeric('update');
 
-		$('#NETT').val(numberWithCommas(NETTX));		
+		$('#NETT').val(numberWithCommas(NETTX));
 		$("#NETT").autoNumeric('update');
 
-		
-	}
-	
 
-	
-  
+	}
+
+
+
+
 	function baru() {
-		
+
 		 kosong();
 		 hidup();
-	
+
 	}
-	
+
 	function ganti() {
-		
+
 // 		 mati();
 		 hidup();
-	
-	}
-	
-	function batal() {
-		
-		// alert($header[0]->NO_BUKTI);
-		
-		 //$('#NO_BUKTI').val($header[0]->NO_BUKTI);	
-		 mati();
-	
-	}
-	
- 
 
-	
-	
+	}
+
+	function batal() {
+
+		// alert($header[0]->NO_BUKTI);
+
+		 //$('#NO_BUKTI').val($header[0]->NO_BUKTI);
+		 mati();
+
+	}
+
+
+
+
+
 	function hidup() {
 
-		
+
 		$("#TOPX").attr("disabled", true);
 	    $("#PREVX").attr("disabled", true);
 	    $("#NEXTX").attr("disabled", true);
@@ -1440,48 +1440,48 @@
 	    $("#EDITX").attr("disabled", true);
 	    $("#UNDOX").attr("disabled", false);
 	    $("#SAVEX").attr("disabled", false);
-		
+
 	    $("#HAPUSX").attr("disabled", true);
 	    $("#CLOSEX").attr("disabled", false);
 
-		$("#CARI").attr("readonly", true);	
+		$("#CARI").attr("readonly", true);
 	    $("#SEARCHX").attr("disabled", true);
-		
+
 	    $("#PLUSX").attr("hidden", false)
-		   
-			$("#NO_BUKTI").attr("readonly", true);		   
+
+			$("#NO_BUKTI").attr("readonly", true);
 			$("#TGL").attr("readonly", false);
 			$("#KODES").attr("readonly", true);
-			$("#NAMAS").attr("readonly", true);			
+			$("#NAMAS").attr("readonly", true);
 			$("#ALAMAT").attr("readonly", true);
 			$("#KOTA").attr("readonly", true);
 			$("#JTEMPO").attr("readonly", false);
-			
+
 			$("#NOTES").attr("readonly", false);
 	        $("#PKP").attr("disabled", true);
 	        $("#CNT").attr("readonly", true);
 	        $("#NCNT").attr("readonly", true);
 	        $("#NO_PO").attr("readonly", false);
 
-			$("#TDPP").attr("readonly", true);			
+			$("#TDPP").attr("readonly", true);
 			$("#TPPN").attr("readonly", true);
-			$("#TNETT").attr("readonly", true);	
-			$("#TJUMLAH").attr("readonly", true);	
-			$("#TPROM").attr("readonly", true);	
+			$("#TNETT").attr("readonly", true);
+			$("#TJUMLAH").attr("readonly", true);
+			$("#TPROM").attr("readonly", true);
 
 
-			$("#REF").attr("readonly", false);	
-			$("#HMARGIN").attr("readonly", false);	
-			$("#ST_NOTA").attr("readonly", false);	
-			$("#ST_CNT").attr("readonly", false);	
-			$("#POT_PROM").attr("readonly", false);	
-			$("#KK_STS").attr("readonly", false);	
-			$("#BASIC").attr("readonly", false);	
-			$("#ST_PJK").attr("readonly", false);	
-			$("#FORMAL").attr("readonly", false);	
-			$("#NOTA_KHS").attr("readonly", false);	
-			$("#BAYAR").attr("disabled", false);	
-			$("#POSTED").attr("disabled", true);	
+			$("#REF").attr("readonly", false);
+			$("#HMARGIN").attr("readonly", false);
+			$("#ST_NOTA").attr("readonly", false);
+			$("#ST_CNT").attr("readonly", false);
+			$("#POT_PROM").attr("readonly", false);
+			$("#KK_STS").attr("readonly", false);
+			$("#BASIC").attr("readonly", false);
+			$("#ST_PJK").attr("readonly", false);
+			$("#FORMAL").attr("readonly", false);
+			$("#NOTA_KHS").attr("readonly", false);
+			$("#BAYAR").attr("disabled", false);
+			$("#POSTED").attr("disabled", true);
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -1503,22 +1503,22 @@
 			$("#DELETEX" + i.toString()).attr("hidden", false);
 
 			$tipx = $('#tipx').val();
-		
-			
+
+
 			if ( $tipx != 'new' )
 			{
-				$("#KD_BRG" + i.toString()).attr("readonly", true);	
+				$("#KD_BRG" + i.toString()).attr("readonly", true);
 				$("#KD_BRG" + i.toString()).removeAttr('onblur');
 			}
 		}
 
-		
+
 	}
 
 
 	function mati() {
 
-		
+
 	    $("#TOPX").attr("disabled", false);
 	    $("#PREVX").attr("disabled", false);
 	    $("#NEXTX").attr("disabled", false);
@@ -1532,48 +1532,48 @@
 	    $("#HAPUSX").attr("disabled", false);
 	    $("#CLOSEX").attr("disabled", false);
 
-		$("#CARI").attr("readonly", false);	
+		$("#CARI").attr("readonly", false);
 	    $("#SEARCHX").attr("disabled", false);
-		
-		
+
+
 	    $("#PLUSX").attr("hidden", true)
-		
-	    $(".NO_BUKTI").attr("readonly", true);	
-			   
+
+	    $(".NO_BUKTI").attr("readonly", true);
+
 			$("#TGL").attr("readonly", true);
 			$("#KODES").attr("readonly", true);
-			$("#NAMAS").attr("readonly", true);			
+			$("#NAMAS").attr("readonly", true);
 			$("#ALAMAT").attr("readonly", true);
 			$("#KOTA").attr("readonly", true);
 			$("#JTEMPO").attr("readonly", true);
-			
+
 			$("#NOTES").attr("readonly", true);
 	        $("#PKP").attr("disabled", true);
 	        $("#CNT").attr("readonly", true);
 	        $("#NCNT").attr("readonly", true);
 	        $("#NO_PO").attr("readonly", true);
 
-			$("#TDPP").attr("readonly", true);			
+			$("#TDPP").attr("readonly", true);
 			$("#TPPN").attr("readonly", true);
-			$("#TNETT").attr("readonly", true);	
-			$("#TJUMLAH").attr("readonly", true);	
-			$("#TPROM").attr("readonly", true);	
+			$("#TNETT").attr("readonly", true);
+			$("#TJUMLAH").attr("readonly", true);
+			$("#TPROM").attr("readonly", true);
 
 
-			$("#REF").attr("readonly", true);	
-			$("#HMARGIN").attr("readonly", true);	
-			$("#ST_NOTA").attr("readonly", true);	
-			$("#ST_CNT").attr("readonly", true);	
-			$("#POT_PROM").attr("readonly", true);	
-			$("#KK_STS").attr("readonly", true);	
-			$("#BASIC").attr("readonly", true);	
-			$("#ST_PJK").attr("readonly", true);	
-			$("#FORMAL").attr("readonly", true);	
-			$("#NOTA_KHS").attr("readonly", true);	
-			$("#BAYAR").attr("disabled", true);	
+			$("#REF").attr("readonly", true);
+			$("#HMARGIN").attr("readonly", true);
+			$("#ST_NOTA").attr("readonly", true);
+			$("#ST_CNT").attr("readonly", true);
+			$("#POT_PROM").attr("readonly", true);
+			$("#KK_STS").attr("readonly", true);
+			$("#BASIC").attr("readonly", true);
+			$("#ST_PJK").attr("readonly", true);
+			$("#FORMAL").attr("readonly", true);
+			$("#NOTA_KHS").attr("readonly", true);
+			$("#BAYAR").attr("disabled", true);
 			$("#POSTED").attr("disabled", true);
 
-		
+
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
@@ -1596,51 +1596,51 @@
 		}
 
 
-		
+
 	}
 
 
 	function kosong() {
-				
-		 $('#NO_BUKTI').val("+");		
-		 $('#KODES').val("");	
-		 $('#NAMAS').val("");	
-		 $('#ALAMAT').val("");	
-		 $('#KOTA').val("");	
-		 $('#NOTES').val("");	
+
+		 $('#NO_BUKTI').val("+");
+		 $('#KODES').val("");
+		 $('#NAMAS').val("");
+		 $('#ALAMAT').val("");
+		 $('#KOTA').val("");
+		 $('#NOTES').val("");
 		 $('#NO_PO').val("");
 		 $('#TJUMLAH').val("0.00");
 		 $('#TPROM').val("0.00");
 		 $('#TDPP').val("0.00");
-		 $('#TNETT').val("0.00");		 
-		 $('#TPPN').val("0.00");	 
-		 $('#HMARGIN').val("0.00");	 
-		 $('#POT_PROM').val("0.00");	 
-		 
-		 
+		 $('#TNETT').val("0.00");
+		 $('#TPPN').val("0.00");
+		 $('#HMARGIN').val("0.00");
+		 $('#POT_PROM').val("0.00");
+
+
 		var html = '';
-		$('#detailx').html(html);	
-		
+		$('#detailx').html(html);
+
 	}
-	
+
 	function hapusTrans() {
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
-		if (confirm(text) == true) 
+		if (confirm(text) == true)
 		{
 			window.location ="{{url('/terima/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
 			//return true;
-		} 
+		}
 		return false;
 	}
 
 	// sweetalert untuk tombol hapus dan close
-	
+
 	function hapusTrans() {
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
 
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		
+
 		Swal.fire({
 			title: 'Are you sure?',
 			text: text,
@@ -1664,16 +1664,16 @@
 
 		            // alert(loc);
 	            	window.location = loc;
-		
+
 				});
 			}
 		});
 	}
-	
+
 	function closeTrans() {
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		
+
 		Swal.fire({
 			title: 'Are you sure?',
 			text: 'Do you really want to close this page? Unsaved changes will be lost.',
@@ -1696,29 +1696,29 @@
 	}
 
 	// tutupannya
-	
+
 
 	function CariBukti() {
-		
+
 		var flagz = "{{ $flagz }}";
 		var cari = $("#CARI").val();
 		var loc = "{{ url('/terima/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
 		window.location = loc;
-		
+
 	}
 
 
     function tambah() {
 
         var x = document.getElementById('datatable').insertRow(baris + 1);
- 
+
 		html=`<tr>
 
                 <td>
- 					<input name='NO_ID[]' id='NO_ID${idrow}' type='hidden' class='form-control NO_ID' value='new' readonly> 
+ 					<input name='NO_ID[]' id='NO_ID${idrow}' type='hidden' class='form-control NO_ID' value='new' readonly>
 					<input name='REC[]' id='REC${idrow}' type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly>
 	            </td>
-				
+
 				<td>
 				    <input name='KD_BRG[]' data-rowid=${idrow} onblur='browseBarang(${idrow})' id='KD_BRG${idrow}' type='text' class='form-control  KD_BRG' >
                 </td>
@@ -1735,7 +1735,7 @@
 				<td>
 		            <input name='QTYK[]' onclick ='select()' onblur='hitung()' value='0' id='QTYK${idrow}' type='text' style='text-align: right' class='form-control QTYK text-primary' required >
                 </td>
-				
+
 				<td>
 		            <input name='QTY[]' onclick ='select()' onblur='hitung()' value='0' id='QTY${idrow}' type='text' style='text-align: right' class='form-control QTY text-primary' required >
                 </td>
@@ -1774,23 +1774,23 @@
 
 				<td>
 					<input name='BLT[]'  onblur='hitung()' value='0' id='BLT${idrow}' type='text' style='text-align: right' class='form-control BLT text-primary' required >
-				</td>	
+				</td>
 
 				<td>
 				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET'>
                 </td>
-				
+
                 <td>
 					<button type='button' id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
                 </td>
-								
+
          </tr>`;
-				
+
         x.innerHTML = html;
         var html='';
-		
-		
-		
+
+
+
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#QTY" + i.toString()).autoNumeric('init', {
@@ -1803,48 +1803,48 @@
 				vMin: '-999999999.99'
 			});
 
-			
+
 			$("#MARGIN" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
-			
+
+
 			$("#DISKON1" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
+
 			$("#DISKON2" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
+
 			$("#DISKON3" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
+
 			$("#DISKON4" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
+
 			$("#TOTAL" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
+
 			$("#HARGA_JL" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
+
 			$("#BLT" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
+
 		}
 
 
@@ -1852,7 +1852,7 @@
         idrow++;
         baris++;
         nomor();
-		
+
 		$(".ronly").on('keydown paste', function(e) {
              e.preventDefault();
              e.currentTarget.blur();

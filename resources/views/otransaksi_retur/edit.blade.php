@@ -24,7 +24,7 @@
       animation: l17 1s infinite linear;
       position: relative;
     }
-    .loader::before {    
+    .loader::before {
       content:"";
       position: absolute;
       width: 8px;
@@ -37,7 +37,7 @@
       animation: inherit;
       animation-duration: 0.5s;
     }
-    @keyframes l17 { 
+    @keyframes l17 {
       100%{transform: rotate(1turn)}
     }
 
@@ -75,7 +75,7 @@
                 <div class="card-body">
 
                     <form action="{{($tipx=='new')? url('/retur/store?flagz='.$flagz.'') : url('/retur/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
-  
+
                         @csrf
                         <div class="tab-content mt-3">
 
@@ -87,7 +87,7 @@
 									position: relative;
 									margin-left: 5px ;
 								}
-						
+
 								/* Ensure only bottom border for input */
 								.form-group.special-input-label input {
 									width: 100%;
@@ -98,12 +98,12 @@
 									font-size: 16px !important;
 									background: transparent !important; /* Remove any background color */
 								}
-						
+
 								/* Bottom border color change on focus */
 								.form-group.special-input-label input:focus {
 									border-bottom: 2px solid #007BFF !important; /* Change color on focus */
 								}
-						
+
 								/* Style the label with a higher specificity */
 								.form-group.special-input-label label {
 									position: absolute;
@@ -113,7 +113,7 @@
 									transition: 0.3s ease all;
 									pointer-events: none;
 								}
-						
+
 								/* Move label above input when focused or has content */
 								.form-group.special-input-label input:focus + label,
 								.form-group.special-input-label input:not(:placeholder-shown) + label {
@@ -129,7 +129,7 @@
                                 <div class="col-md-1" align="left">
                                     <label for="NO_BUKTI" class="form-label">Bukti#</label>
                                 </div>
-								
+
 
                                    <input type="text" class="form-control NO_ID" id="NO_ID" name="NO_ID"
                                     placeholder="Masukkan NO_ID" value="{{$header->NO_ID ?? ''}}" hidden readonly>
@@ -137,25 +137,25 @@
 									<input name="tipx" class="form-control tipx" id="tipx" value="{{$tipx}}" hidden>
 									<input name="flagz" class="form-control flagz" id="flagz" value="{{$flagz}}" hidden>
 
-								
+
 									<div class="col-md-2">
 										<input type="text" class="form-control NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI"
 										placeholder="Masukkan Bukti#" value="{{$header->NO_BUKTI}}" readonly>
 									</div>
 
-									<div class="col-md-1" align="left">							
+									<div class="col-md-1" align="left" hidden>
 										<label for="CNT" class="form-label">Counter</label>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2" hidden>
 										<input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih Counter"value="{{$header->CNT}}" style="text-align: left" >
 									</div>
 
-									<div class="col-md-4 input-group" >
+									<div class="col-md-4 input-group" hidden >
 										<input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""value="{{$header->NCNT}}" style="text-align: left" >
 										<button type="button" class="btn btn-primary" onclick="browseCounter()"><i class="fa fa-search"></i></button>
 									</div>
                         	</div>
-							
+
 							<div class="form-group row">
 
                                 <div class="col-md-1" align="left">
@@ -164,33 +164,33 @@
                                 <div class="col-md-2">
 								  <input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
                                 </div>
-								
+
                             </div>
 
 							<div class="form-group row">
                                 <!-- code text box baru -->
 								<div class="col-md-5 form-group row special-input-label">
 
-									<input type="text" class="NOTES" id="NOTES" name="NOTES" 
+									<input type="text" class="NOTES" id="NOTES" name="NOTES"
 										value="{{$header->NOTES}}" placeholder=" " >
 									<label for="NOTES">Notes</label>
 								</div>
 								<!-- tutupannya -->
-        
+
                             </div>
-							
+
 							<!-- loader tampil di modal  -->
 							<div class="loader" style="z-index: 1055;" id='LOADX' ></div>
 
 
                         <div class="tab-content mt-3">
-							
+
                             <table id="datatable" class="table table-striped table-border">
                                 <thead>
                                     <tr>
 										<th style="text-align: center;">No.</th>
                                         <th style="text-align: center;">
-									       <label style="color:red;font-size:20px">* </label>									
+									       <label style="color:red;font-size:20px">* </label>
                                            <label for="KD_BRG" class="form-label">Kode</label></th>
                                         <th style="text-align: center;">Barcode</th>
                                         <th style="text-align: center;">Nama Barang</th>
@@ -201,24 +201,24 @@
 										<th style="text-align: center;">Ket</th>
 
                                         <th></th>
-                                       						
+
                                     </tr>
                                 </thead>
-        
+
 								<tbody>
 								<?php $no=0 ?>
-								@foreach ($detail as $detail)		
+								@foreach ($detail as $detail)
                                     <tr>
                                         <td>
-                                            <input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
+                                            <input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}"
                                             class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
-											
+
                                             <input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->rec}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
                                         </td>
-									
+
 
 										<td>
-                                            <input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG " 
+                                            <input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG "
 											value="{{$detail->KD_BRG}}" onblur="browseBarang({{$no}})">
                                         </td>
 
@@ -232,21 +232,21 @@
 										<td>
 											<input name="TGL_MULAI[]" id	="TGL_MULAI{{$no}}" type="text" class="date form-control text_input TGL_MULAI" data-date-format="dd-mm-yyyy" value="{{($detail->tgl_mulai=='0000-00-00')?'00-00-0000':date('d-m-Y',strtotime($detail->tgl_mulai));}}">
 										</td>
-										
-										<td><input name="QTYK[]" onclick="select()" onkeyup="hitung()" value="{{$detail->qtyk}}" id="QTYK{{$no}}" type="text" style="text-align: right"  class="form-control QTYK text-primary"></td>                         
+
+										<td><input name="QTYK[]" onclick="select()" onkeyup="hitung()" value="{{$detail->qtyk}}" id="QTYK{{$no}}" type="text" style="text-align: right"  class="form-control QTYK text-primary"></td>
 										<td><input name="HARGA[]" onclick="select()" onkeyup="hitung()" value="{{$detail->harga}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA text-primary"></td>
 										<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="{{$detail->qty}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY text-primary" readonly></td>
-                                        
+
 										<td>
                                             <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->ket}}" required>
                                         </td>
-				
+
 										<td>
 											<button type='button' id='DELETEX{{$no}}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
-										</td> 
+										</td>
 
                                     </tr>
-								
+
 								<?php $no++; ?>
 								@endforeach
                                 </tbody>
@@ -256,7 +256,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td> 
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td><input class="form-control TTOTAL_QTY  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td>
@@ -264,20 +264,20 @@
                                     <td></td>
                                 </tfoot>
                             </table>
-							
+
                             <div class="col-md-2 row">
                                <a type="button" id='PLUSX' onclick="tambah()" class="fas fa-plus fa-sm md-3" style="font-size: 20px" ></a>
-					
-							</div>		
-						
+
+							</div>
+
 					</div>
-                        </div> 
+                        </div>
 
                         <hr style="margin-top: 30px; margin-buttom: 30px">
 						<!-- dari sini shelvi-->
-						
+
 						<!-- sampai sini shelvi-->
-						   
+
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
 								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/retur/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
@@ -287,22 +287,22 @@
 							</div>
 							<div class="col-md-5">
 								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/retur/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
-								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>                    
-								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/retur/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
+								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>
+								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/retur/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>
 								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
 							<div class="col-md-3">
 								<button hidden type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
-								
+
 								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/retur?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
-							
+
 								<!-- tombol close sweet alert -->
 								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
 							</div>
 						</div>
-						
-						
+
+
                     </form>
                 </div>
             </div>
@@ -367,9 +367,9 @@
 		</div>
 	  </div>
 	</div>
-	
-	
-	
+
+
+
 
 @endsection
 
@@ -392,7 +392,7 @@
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	
+
     $(document).ready(function () {
 
 		setTimeout(function(){
@@ -426,19 +426,19 @@
 
 		$tipx = $('#tipx').val();
 		$searchx = $('#CARI').val();
-		
-		
+
+
         if ( $tipx == 'new' )
 		{
 			 baru();
-             tambah();				 
+             tambah();
 		}
 
         if ( $tipx != 'new' )
 		{
-			 ganti();			
-		}    
-		
+			 ganti();
+		}
+
 		$("#TTOTAL_QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 
 
@@ -447,29 +447,29 @@
 			$("#QTYK" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-		}	
-				
-		
+		}
+
+
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
 			hitung();
 			nomor();
-			
+
 		});
 
-		$('.date').datepicker({  
+		$('.date').datepicker({
             dateFormat: 'dd-mm-yy'
 		});
-		
+
 
 		//CHOOSE Counter
 		var dTableBCounter;
 		loadDataBCounter = function(){
-		
+
 			$.ajax(
 			{
-				type: 'GET', 		
+				type: 'GET',
 				url: '{{url('retur/browse_cnt')}}',
 
 				beforeSend: function(){
@@ -485,7 +485,7 @@
 						dTableBCounter.clear();
 					}
 					for(i=0; i<resp.length; i++){
-						
+
 						dTableBCounter.row.add([
 							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
 							resp[i].NCNT
@@ -495,24 +495,24 @@
 				}
 			});
 		}
-		
+
 		dTableBCounter = $("#table-bcounter").DataTable({
-			
+
 		});
-		
+
 		browseCounter = function(){
 			loadDataBCounter();
 			$("#browseCounterModal").modal("show");
 		}
-		
+
 		chooseCounter = function(CNT,NCNT){
 
 			$("#CNT").val(CNT);
-			$("#NCNT").val(NCNT);			
+			$("#NCNT").val(NCNT);
 			$("#browseCounterModal").modal("hide");
 			// getBelid(NO_BUKTI);
 		}
-		
+
 
 
 		//////////////////////////////////////////////////////
@@ -520,10 +520,10 @@
 		var dTableBBarang;
 		var rowidBarang;
 		loadDataBBarang = function(){
-		
+
 			$.ajax(
 			{
-				type: 'GET',    
+				type: 'GET',
 				url: "{{url('retur/browse_brg')}}",
 				async : false,
 				data: {
@@ -533,22 +533,22 @@
 
 				{
 					resp = response;
-					
-					
+
+
 					if ( resp.length > 1 )
-					{	
+					{
 							if(dTableBBarang){
 								dTableBBarang.clear();
 							}
 							for(i=0; i<resp.length; i++){
-								
+
 								dTableBBarang.row.add([
 									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\',\''+resp[i].BARCODE+'\',\''+resp[i].TGL_MULAI+'\',\''+resp[i].QTY+'\',\''+resp[i].HARGA+'\')">'+resp[i].KD_BRG+'</a>',
 									resp[i].NA_BRG,
 								]);
 							}
 							dTableBBarang.draw();
-					
+
 					}
 					else
 					{
@@ -558,29 +558,29 @@
 				}
 			});
 		}
-		
+
 		dTableBBarang = $("#table-bbarang").DataTable({
-			
+
 		});
 
 		browseBarang = function(rid){
 			rowidBarang = rid;
-			$("#NA_BRG"+rowidBarang).val("");			
+			$("#NA_BRG"+rowidBarang).val("");
 			loadDataBBarang();
-	
-			
-			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {				
+
+
+			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {
 					$("#browseBarangModal").modal("show");
-			}	
+			}
 		}
-		
+
 		chooseBarang = function(KD_BRG,NA_BRG,BARCODE,TGL_MULAI,QTY,HARGA){
 			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
+			$("#NA_BRG"+rowidBarang).val(NA_BRG);
 			$("#BARCODE"+rowidBarang).val(BARCODE);
 			$("#TGL_MULAI"+rowidBarang).val(TGL_MULAI);
 			$("#QTY"+rowidBarang).val(QTY);
-			$("#HARGA"+rowidBarang).val(HARGA);	
+			$("#HARGA"+rowidBarang).val(HARGA);
 			$("#browseBarangModal").modal("hide");
 		}
 
@@ -589,41 +589,41 @@
 
 
 
-///////////////////////////////////////		
-    
+///////////////////////////////////////
+
 
 
 
 	function cekDetail(){
 		var cekBarang = '';
 		$(".KD_BRG").each(function() {
-			
+
 			let z = $(this).closest('tr');
 			var KD_BRGX = z.find('.KD_BRG').val();
-			
+
 			if( KD_BRGX =="" )
 			{
 					cekBarang = '1';
-					
-			}	
+
+			}
 		});
-		
+
 		return cekBarang;
 	}
 
 
  	function simpan() {
 		hitung();
-		
+
 		var tgl = $('#TGL').val();
 		var bulanPer = {{session()->get('periode')['bulan']}};
 		var tahunPer = {{session()->get('periode')['tahun']}};
-		
+
         var check = '0';
-		
-			if ( tgl.substring(3,5) != bulanPer ) 
+
+			if ( tgl.substring(3,5) != bulanPer )
 			{
-				
+
 				check = '1';
 				Swal.fire({
 					icon: 'warning',
@@ -632,8 +632,8 @@
 				});
 				return; // Stop function execution
 				alert("Bulan tidak sama dengan Periode");
-			}	
-			
+			}
+
 
 			if ( tgl.substring(tgl.length-4) != tahunPer )
 			{
@@ -644,8 +644,8 @@
 					text: 'Tahun tidak sama dengan Periode'
 				});
 				return; // Stop function execution
-				
-		    }	 
+
+		    }
 
 			if (baris==0)
 			{
@@ -658,8 +658,8 @@
 				return; // Stop function execution
 			}
 
-			// if ( $('#KD_BHN').val()=='' ) 
-            // {				
+			// if ( $('#KD_BHN').val()=='' )
+            // {
 			//     check = '1';
 			// 	Swal.fire({
 			// 		icon: 'warning',
@@ -669,9 +669,9 @@
 			// 	return; // Stop function execution
 			// }
 
-        
-			// if ( $('#NO_BUKTI').val()=='' ) 
-            // {				
+
+			// if ( $('#NO_BUKTI').val()=='' )
+            // {
 			//     check = '1';
 			// 	Swal.fire({
 			// 		icon: 'warning',
@@ -680,7 +680,7 @@
 			// 	});
 			// 	return; // Stop function execution
 			// }
-		
+
 			if (check == '0') {
 				Swal.fire({
 					title: 'Are you sure?',
@@ -708,19 +708,19 @@
 				});
 			}
 
-		// tutupannya	
-	
+		// tutupannya
+
 			$("#LOADX").hide();
 	}
-		
+
     function nomor() {
 		var i = 1;
 		$(".REC").each(function() {
 			$(this).val(i++);
 		});
-		
+
 	//	hitung();
-	
+
 	}
 
 	function hitung() {
@@ -728,56 +728,56 @@
 
 
 		$(".QTY").each(function() {
-			
+
 			let z = $(this).closest('tr');
 			var QTYKX = parseFloat(z.find('.QTYK').val().replace(/,/g, ''));
 			var QTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
-		
-            TTOTAL_QTY +=QTYX;				
-		
+
+            TTOTAL_QTY +=QTYX;
+
 		});
-		
-		
+
+
 		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
 
-		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));		
+		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));
 		$("#TTOTAL_QTY").autoNumeric('update');
-		
-	}
-	
 
-	
-  
+	}
+
+
+
+
 	function baru() {
-		
+
 		 kosong();
 		 hidup();
-	
+
 	}
-	
+
 	function ganti() {
-		
+
 // 		 mati();
 		 hidup();
-	
-	}
-	
-	function batal() {
-		
-		// alert($header[0]->NO_BUKTI);
-		
-		 //$('#NO_BUKTI').val($header[0]->NO_BUKTI);	
-		 mati();
-	
-	}
-	
- 
 
-	
-	
+	}
+
+	function batal() {
+
+		// alert($header[0]->NO_BUKTI);
+
+		 //$('#NO_BUKTI').val($header[0]->NO_BUKTI);
+		 mati();
+
+	}
+
+
+
+
+
 	function hidup() {
 
-		
+
 		$("#TOPX").attr("disabled", true);
 	    $("#PREVX").attr("disabled", true);
 	    $("#NEXTX").attr("disabled", true);
@@ -787,22 +787,22 @@
 	    $("#EDITX").attr("disabled", true);
 	    $("#UNDOX").attr("disabled", false);
 	    $("#SAVEX").attr("disabled", false);
-		
+
 	    $("#HAPUSX").attr("disabled", true);
 	    $("#CLOSEX").attr("disabled", false);
 
-		$("#CARI").attr("readonly", true);	
+		$("#CARI").attr("readonly", true);
 	    $("#SEARCHX").attr("disabled", true);
-		
+
 	    $("#PLUSX").attr("hidden", false)
-		   
-			$("#NO_BUKTI").attr("readonly", true);		   
+
+			$("#NO_BUKTI").attr("readonly", true);
 			$("#TGL").attr("readonly", false);
 			$("#NOTES").attr("readonly", false);
 			$("#CNT").attr("readonly", false);
 			$("#NCNT").attr("readonly", false);
 			$("#TTOTAL_QTY").attr("readonly", true);
-				
+
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -818,22 +818,22 @@
 			$("#DELETEX" + i.toString()).attr("hidden", false);
 
 			$tipx = $('#tipx').val();
-		
-			
+
+
 			if ( $tipx != 'new' )
 			{
-				$("#KD_BRG" + i.toString()).attr("readonly", true);	
+				$("#KD_BRG" + i.toString()).attr("readonly", true);
 				$("#KD_BRG" + i.toString()).removeAttr('onblur');
-			} 
+			}
 		}
 
-		
+
 	}
 
 
 	function mati() {
 
-		
+
 	    $("#TOPX").attr("disabled", false);
 	    $("#PREVX").attr("disabled", false);
 	    $("#NEXTX").attr("disabled", false);
@@ -847,12 +847,12 @@
 	    $("#HAPUSX").attr("disabled", false);
 	    $("#CLOSEX").attr("disabled", false);
 
-		$("#CARI").attr("readonly", false);	
+		$("#CARI").attr("readonly", false);
 	    $("#SEARCHX").attr("disabled", false);
-		
-		
+
+
 	    $("#PLUSX").attr("hidden", true)
-		
+
 	    $(".NO_BUKTI").attr("readonly", true);
 		$("#TGL").attr("readonly", true);
 		$("#NOTES").attr("readonly", true);
@@ -860,7 +860,7 @@
 		$("#NCNT").attr("readonly", true);
 		$("#TTOTAL_QTY").attr("readonly", true);
 
-		
+
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
@@ -872,44 +872,44 @@
 			$("#HARGA" + i.toString()).attr("readonly", true);
 			$("#QTY" + i.toString()).attr("readonly", true);
 			$("#KET" + i.toString()).attr("readonly", true);
-			
+
 			$("#DELETEX" + i.toString()).attr("hidden", true);
 		}
 
 
-		
+
 	}
 
 
 	function kosong() {
-				
-		 $('#NO_BUKTI').val("+");	
-		 $('#NOTES').val("");	
-		 $('#TTOTAL_QTY').val("0.00");	
-		 
+
+		 $('#NO_BUKTI').val("+");
+		 $('#NOTES').val("");
+		 $('#TTOTAL_QTY').val("0.00");
+
 		var html = '';
-		$('#detailx').html(html);	
-		
+		$('#detailx').html(html);
+
 	}
-	
+
 	// function hapusTrans() {
 	// 	let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
-	// 	if (confirm(text) == true) 
+	// 	if (confirm(text) == true)
 	// 	{
 	// 		window.location ="{{url('/retur/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
 	// 		//return true;
-	// 	} 
+	// 	}
 	// 	return false;
 	// }
 
 	// sweetalert untuk tombol hapus dan close
-	
+
 	function hapusTrans() {
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
 
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		
+
 		Swal.fire({
 			title: 'Are you sure?',
 			text: text,
@@ -933,17 +933,17 @@
 
 		            // alert(loc);
 	            	window.location = loc;
-		
+
 				});
 			}
 		});
 	}
-	
+
 	function closeTrans() {
 		console.log("masuk");
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		
+
 		Swal.fire({
 			title: 'Are you sure?',
 			text: 'Do you really want to close this page? Unsaved changes will be lost.',
@@ -966,29 +966,29 @@
 	}
 
 	// tutupannya
-	
+
 
 	function CariBukti() {
-		
+
 		var flagz = "{{ $flagz }}";
 		var cari = $("#CARI").val();
 		var loc = "{{ url('/retur/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
 		window.location = loc;
-		
+
 	}
 
 
     function tambah() {
 
         var x = document.getElementById('datatable').insertRow(baris + 1);
- 
+
 		html=`<tr>
 
                 <td>
- 					<input name='NO_ID[]' id='NO_ID${idrow}' type='hidden' class='form-control NO_ID' value='new' readonly> 
+ 					<input name='NO_ID[]' id='NO_ID${idrow}' type='hidden' class='form-control NO_ID' value='new' readonly>
 					<input name='REC[]' id='REC${idrow}' type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly>
 	            </td>
-				
+
                 <td>
 				    <input name='KD_BRG[]' data-rowid=${idrow} onblur='browseBarang(${idrow})' id='KD_BRG${idrow}' type='text' class='form-control  KD_BRG' >
                 </td>
@@ -1014,22 +1014,22 @@
 
 				<td>
 		            <input name='QTY[]' onclick='select()' onblur='hitung()' value='0' id='QTY${idrow}' type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-                </td>		
-					
+                </td>
+
                 <td>
 				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET' required>
                 </td>
-				
+
                 <td>
 					<button type='button' id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
-                </td>				
+                </td>
          </tr>`;
-				
+
         x.innerHTML = html;
         var html='';
-		
-		
-		
+
+
+
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#QTYK" + i.toString()).autoNumeric('init', {
@@ -1044,23 +1044,23 @@
 			$("#QTY" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
-			});			 
+			});
 
-					
+
 		}
 
 
         idrow++;
         baris++;
         nomor();
-		
+
 		$(".ronly").on('keydown paste', function(e) {
              e.preventDefault();
              e.currentTarget.blur();
          });
      }
 </script>
-<!-- 
+<!--
 <script src="autonumeric.min.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
 <script src="https://unpkg.com/autonumeric"></script> -->
