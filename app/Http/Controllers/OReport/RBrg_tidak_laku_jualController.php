@@ -51,17 +51,17 @@ class RBrg_tidak_laku_jualController extends Controller
 				$filterbrg = "WHERE a.KDBAR between '".$request->brg1."' and '".$request->brg2."' ";
 			}
 
-            $filternopiu = "";
-			if (!empty($request->nopiu1) && !empty($request->nopiu2))
-			{
-				$filternopiu = "WHERE a.NO_PIU between '".$request->nopiu1."' and '".$request->nopiu2."' ";
-			}
+            // $filternopiu = "";
+			// if (!empty($request->nopiu1) && !empty($request->nopiu2))
+			// {
+			// 	$filternopiu = "WHERE a.NO_PIU between '".$request->nopiu1."' and '".$request->nopiu2."' ";
+			// }
 
 			session()->put('filter_brg1', $request->brg1);
-			session()->put('filter_nopiu1', $request->nopiu1);
+			// session()->put('filter_nopiu1', $request->nopiu1);
 			// session()->put('filter_nabrg1', $request->nabrg1);
 			session()->put('filter_brg2', $request->brg2);
-			session()->put('filter_nopiu2', $request->nopiu2);
+			// session()->put('filter_nopiu2', $request->nopiu2);
 			// session()->put('filter_nabrg2', $request->nabrg2);
 
 		$query = DB::SELECT("
@@ -71,7 +71,7 @@ class RBrg_tidak_laku_jualController extends Controller
 				a.NMBAR,
 				a.SA,
 				a.BL,
-				a.RT,
+				a.RJ,
 				a.JL,
 				a.KR1,
 				a.KR2,

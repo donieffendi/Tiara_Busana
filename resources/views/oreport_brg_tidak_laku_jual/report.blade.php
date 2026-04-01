@@ -94,7 +94,7 @@
 							<label class="form-label">Sampai Piu</label>
 							<input type="text" class="form-control nopiu2" onclick = "browseNopiu2();" id="nopiu2" name="nopiu2" placeholder="Pilih No Piu# 2" value="{{ session()->get('filter_nopiu2') }}" readonly>
 						</div> --}}
-					</div>
+					{{-- </div> --}}
 
 					<div class="form-group row">
 
@@ -163,7 +163,7 @@
 								"decimalPoint" => ".",
 								"thousandSeparator" => ",",
 							),
-							"RT" => array(
+							"RJ" => array(
 								"label" => "RT",
 								"type" => "number",
 								"decimals" => 2,

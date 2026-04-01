@@ -341,7 +341,7 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="0" width="30" height="20" uuid="3b0377ef-0e6f-4a5d-a778-5cc3c24f8b25"/>
+				<reportElement x="1" y="0" width="30" height="20" printWhenGroupChanges="Suplier Group" uuid="3b0377ef-0e6f-4a5d-a778-5cc3c24f8b25"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
