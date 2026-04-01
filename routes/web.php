@@ -1436,6 +1436,11 @@ Route::get('/get-brg_tidak_laku_jual-post', 'App\Http\Controllers\OTransaksi\Brg
 Route::get('/rbrg_tidak_laku_jual', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@report')->middleware(['auth'])->name('rbrg_tidak_laku_jual');
 Route::post('jasper-brg_tidak_laku_jual-report', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@jasperBrg_tidak_laku_jualReport')->middleware(['auth']);
 
+// Report Pemantauan Barang Laku
+Route::get('/get-brglaku-post', 'App\Http\Controllers\OTransaksi\BrglakuController@getBrglaku_posting')->middleware(['auth'])->name('get-brglaku-post');
+Route::get('/rbrglaku', 'App\Http\Controllers\OReport\RBrglakuController@report')->middleware(['auth'])->name('rbrglaku');
+Route::post('jasper-brglaku-report', 'App\Http\Controllers\OReport\RBrglakuController@jasperBrglakuReport')->middleware(['auth']);
+
 
 // Report Laporan Perubahan Harga Beli Disc Budget
 
