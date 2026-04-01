@@ -851,7 +851,7 @@
 				<textFieldExpression><![CDATA["Distribusi :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="426" y="69" width="96" height="15" uuid="e466af61-a270-45bd-bfac-0878e23a96fc">
+				<reportElement x="427" y="67" width="96" height="15" uuid="e466af61-a270-45bd-bfac-0878e23a96fc">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -893,7 +893,7 @@
 				<textFieldExpression><![CDATA["TGZ-PBK2-088.1"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="426" y="39" width="96" height="15" uuid="2126f077-a0d1-4c60-bb55-acc7750c0bb9">
+				<reportElement x="427" y="37" width="96" height="15" uuid="2126f077-a0d1-4c60-bb55-acc7750c0bb9">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -902,7 +902,7 @@
 				<textFieldExpression><![CDATA["DPP"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="426" y="54" width="96" height="15" uuid="b828083e-1ae7-466d-8311-5700695894c9">
+				<reportElement x="427" y="52" width="96" height="15" uuid="b828083e-1ae7-466d-8311-5700695894c9">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -1092,6 +1092,42 @@
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Busana & Sty"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="523" y="22" width="62" height="15" uuid="a95c33ad-40f3-4b24-817f-769e9c80d32c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DPP"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="523" y="37" width="62" height="15" uuid="bd5a560a-8334-4289-bacf-97fd6d164fcc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DPP"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="523" y="52" width="62" height="15" uuid="dd12c116-c742-4cbf-a4b2-fb7eb3fbb32f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DPP"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="523" y="67" width="62" height="15" uuid="3fe1609a-89d7-45ff-9900-26ceb69747c0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DPP"]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
