@@ -1573,7 +1573,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
-                      <a href="javascript:addTab('Lap. Brg. Datang', '{{url('rjual')}}')" >
+                      <a href="javascript:addTab('Lap. SP per PLU', '{{url('rjual')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
                         <h6>Laporan SP</h6>
