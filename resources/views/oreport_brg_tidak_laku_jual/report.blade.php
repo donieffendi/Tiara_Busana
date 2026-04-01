@@ -163,8 +163,8 @@
 								"decimalPoint" => ".",
 								"thousandSeparator" => ",",
 							),
-							"RJ" => array(
-								"label" => "RJ",
+							"RT" => array(
+								"label" => "RT",
 								"type" => "number",
 								"decimals" => 2,
 								"decimalPoint" => ".",

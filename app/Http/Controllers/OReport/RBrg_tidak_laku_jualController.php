@@ -71,7 +71,7 @@ class RBrg_tidak_laku_jualController extends Controller
 				a.NMBAR,
 				a.SA,
 				a.BL,
-				a.RJ,
+				a.RT,
 				a.JL,
 				a.KR1,
 				a.KR2,
