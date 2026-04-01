@@ -163,6 +163,13 @@
 
 									<div class="col-md-1">
 									</div>
+									
+									<div class="col-md-3 form-group row special-input-label">
+
+										<input type="text" class="DEPT" id="DEPT" name="DEPT"
+											value="{{$header->DEPT}}" placeholder=" " >
+										<label for="DEPT">Dept</label>
+									</div>
 
 									<!-- code text box baru -->
 									{{-- <div class="col-md-3 form-group row special-input-label">
@@ -321,14 +328,10 @@
 								<div class="form-group row">
 
 									<!-- code text box baru -->
-									<div class="col-md-3">
-										<label for="GOL_BRG" class="form-label">Gol. Barang Yang Diperdagangkan</label>
-									</div>
-									<div class="col-md-1">
-										<select id="GOL_BRG" class="form-control"  name="GOL_BRG">
-											<option value="A" {{ ($header->GOL_BRG == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->GOL_BRG == 'N') ? 'selected' : '' }}>N</option>
-										</select>
+									<div class="col-md-3 form-group row special-input-label">
+										<input type="text" class="GOL_BRG" id="GOL_BRG" name="GOL_BRG"
+											value="{{$header->GOL_BRG}}" placeholder=" " >
+										<label for="GOL_BRG">Gol. Barang Yang Diperdagangkan</label>
 									</div>
 									<!-- tutupannya -->
 
@@ -336,14 +339,10 @@
 									</div>
 
                                     <!-- code text box baru -->
-									<div class="col-md-1" align="right">
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="JEN_BRG1" id="JEN_BRG1" name="JEN_BRG1"
+											value="{{$header->JEN_BRG1}}" placeholder=" " >
 										<label for="JEN_BRG1" class="form-label">Jenis Barang</label>
-									</div>
-									<div class="col-md-1">
-										<select id="JEN_BRG1" class="form-control"  name="JEN_BRG1">
-											<option value="A" {{ ($header->JEN_BRG1 == 'A') ? 'selected' : '' }}>A</option>
-											<option value="N" {{ ($header->JEN_BRG1 == 'N') ? 'selected' : '' }}>N</option>
-										</select>
 									</div>
 									<!-- tutupannya -->
 
@@ -425,8 +424,12 @@
 
 									<!-- code text box baru -->
 									<div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="STM_PEMBL" id="STM_PEMBL" name="STM_PEMBL"
-											value="{{$header->STM_PEMBL}}" placeholder=" " >
+										<select class="form-control STM_PEMBL" id="STM_PEMBL" name="STM_PEMBL" style="text-align: right">
+											<option value="LKB" {{ ($header->STM_PEMBL ?? '') == 'LKB' ? 'selected' : '' }}>LKB</option>
+											<option value="LNB" {{ ($header->STM_PEMBL ?? '') == 'LNB' ? 'selected' : '' }}>LNB</option>
+											<option value="LKJ" {{ ($header->STM_PEMBL ?? '') == 'LKJ' ? 'selected' : '' }}>LKJ</option>
+											<option value="LNJ" {{ ($header->STM_PEMBL ?? '') == 'LNJ' ? 'selected' : '' }}>LNJ</option>
+										</select>
 										<label for="STM_PEMBL">Stm Pmbl</label>
 									</div>
 
@@ -446,9 +449,13 @@
 								<div class="form-group row">
 
 									<!-- code text box baru -->
-									<div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="CARA" id="CARA" name="CARA"
-											value="{{$header->CARA}}" placeholder=" " >
+									<div class="col-md-3 form-group row special-input-label">
+										<select class="form-control CARA" id="CARA" name="CARA" style="text-align: right">
+											<option value="BG" {{ ($header->CARA ?? '') == 'BG' ? 'selected' : '' }}>BG</option>
+											<option value="TRF" {{ ($header->CARA ?? '') == 'TRF' ? 'selected' : '' }}>TRF</option>
+											<option value="Tunai" {{ ($header->CARA ?? '') == 'Tunai' ? 'selected' : '' }}>Tunai</option>
+											<option value="Ambil" {{ ($header->CARA ?? '') == 'Ambil' ? 'selected' : '' }}>Ambil</option>
+										</select>
 										<label for="CARA">Cara Pembayaran</label>
 									</div>
 								</div>
@@ -580,10 +587,13 @@
 
 									<!-- code text box baru -->
 									<div class="col-md-3 form-group row special-input-label">
-
-                                        <input type="text" onclick="select()" class="form-control PPN" id="PPN" name="PPN" placeholder="Masukkan PPN" value="{{ $header->PPN }}" style="text-align: right" >
-                                        <label for="PPN">PPN</label>
-
+										<select class="form-control PPN" id="PPN" name="PPN" style="text-align: right">
+											<option value="P0" {{ ($header->PPN ?? '') == 'P0' ? 'selected' : '' }}>P0</option>
+											<option value="P1" {{ ($header->PPN ?? '') == 'P1' ? 'selected' : '' }}>P1</option>
+											<option value="P2" {{ ($header->PPN ?? '') == 'P2' ? 'selected' : '' }}>P2</option>
+											<option value="P3" {{ ($header->PPN ?? '') == 'P3' ? 'selected' : '' }}>P3</option>
+										</select>
+										<label for="PPN">PPN</label>
 									</div>
 									<!-- tutupannya -->
 								</div>

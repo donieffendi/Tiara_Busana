@@ -1124,6 +1124,7 @@ Route::get('/piu/delete/{piu}', 'App\Http\Controllers\OTransaksi\PiuController@d
 Route::post('piu/posting', 'App\Http\Controllers\OTransaksi\PiuController@posting')->middleware(['auth']);
 Route::get('piu/index-posting', 'App\Http\Controllers\OTransaksi\PiuController@index_posting')->middleware(['auth']);
 Route::get('/piu/browse_piud', 'App\Http\Controllers\OTransaksi\PiuController@browse_piud')->middleware(['auth'])->name('piu/browse_piud');
+Route::get('/piu/browse', 'App\Http\Controllers\OTransaksi\PiuController@browse')->middleware(['auth'])->name('piu/browse');
 Route::get('/piu/cetak/{piu:NO_ID}','App\Http\Controllers\OTransaksi\PiuController@cetak')->middleware(['auth']);
 
 
@@ -1435,5 +1436,11 @@ Route::get('/get-brg_tidak_laku_jual-post', 'App\Http\Controllers\OTransaksi\Brg
 Route::get('/rbrg_tidak_laku_jual', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@report')->middleware(['auth'])->name('rbrg_tidak_laku_jual');
 Route::post('jasper-brg_tidak_laku_jual-report', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@jasperBrg_tidak_laku_jualReport')->middleware(['auth']);
 
+
+// Report Laporan Perubahan Harga Beli Disc Budget
+
+Route::get('/rrubahharga_discbudget', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@report')->middleware(['auth'])->name('rrubahharga_discbudget');
+Route::get('/get-rubahharga_discbudget-report', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@getRubahharga_discbudgetReport')->middleware(['auth'])->name('get-rubahharga_discbudget-report');
+Route::post('jasper-rubahharga_discbudget-report', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@jasperRubahharga_discbudgetReport')->middleware(['auth']);
 
 require __DIR__.'/auth.php';
