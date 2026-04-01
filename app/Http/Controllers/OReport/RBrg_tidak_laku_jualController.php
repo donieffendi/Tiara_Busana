@@ -21,19 +21,13 @@ class RBrg_tidak_laku_jualController extends Controller
 {
     public function report()
     {
-		$cbg = Cbg::groupBy('CBG')->get();
-		session()->put('filter_cbg', '');
-
-		session()->put('filter_gol', '');
-		session()->put('filter_kodes1', '');
-		session()->put('filter_kodes2', 'ZZZ');
-		session()->put('filter_namas1', '');
 		session()->put('filter_brg1', '');
-		session()->put('filter_nabrg1', '');
-		session()->put('filter_tglDari', date("d-m-Y"));
-		session()->put('filter_tglSampai', date("d-m-Y"));
+		// session()->put('filter_nabrg1', '');
 
-        return view('oreport_brg_tidak_laku_jual.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
+		session()->put('filter_brg2', '');
+		// session()->put('filter_nabrg2', '');
+
+        return view('oreport_brg_tidak_laku_jual.report')->with(['hasil' => []]);
     }
 
 
@@ -43,92 +37,54 @@ class RBrg_tidak_laku_jualController extends Controller
 		$file 	= 'rbrg_tidak_laku_jual';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
+		$params = [
+			"TGL_CTK" => date('d/m/Y')
+		];
+		$PHPJasperXML->arrayParameter = $params;
 
 			// Check Filter
 
 
-			if (!empty($request->kodes) && !empty($request->kodes2))
+			$filterbrg = "";
+			if (!empty($request->brg1) && !empty($request->brg2))
 			{
-				$filterkodes = " and brg.KODES between '".$request->kodes."' and '".$request->kodes2."' ";
+				$filterbrg = "WHERE a.KDBAR between '".$request->brg1."' and '".$request->brg2."' ";
 			}
-
-			if (!empty($request->tglDr) && !empty($request->tglSmp))
-			{
-				$tglDrD = date("Y-m-d", strtotime($request->tglDr));
-				$tglSmpD = date("Y-m-d", strtotime($request->tglSmp));
-				$filtertgl = " and brg.TGL between '".$tglDrD."' and '".$tglSmpD."' ";
-			}
-
-			if($request['cbg'])
-			{
-				$cbg = $request['cbg'];
-			}
-
-			if (!empty($request->cbg))
-			{
-				$filtercbg = " and po.CBG='".$request->cbg."' ";
-			}
-
-			$tgl_1 = date("Y-m-d", strtotime($request->tglDr));
-			$tgl_2 = date("Y-m-d", strtotime($request->tglSmp));
-			$kodes_1 = $request->kodes;
-			$kodes_2 = $request->kodes2;
-
-			session()->put('filter_gol', $request->gol);
-			session()->put('filter_kodes1', $request->kodes);
-			session()->put('filter_kodes2', $request->kodes2);
-			session()->put('filter_namas1', $request->NAMAS);
-			session()->put('filter_tglDari', $request->tglDr);
-			session()->put('filter_tglSampai', $request->tglSmp);
 			session()->put('filter_brg1', $request->brg1);
-			session()->put('filter_nabrg1', $request->nabrg1);
-			session()->put('filter_cbg', $request->cbg);
+			// session()->put('filter_nabrg1', $request->nabrg1);
+			session()->put('filter_brg2', $request->brg2);
+			// session()->put('filter_nabrg2', $request->nabrg2);
 
-		if( $filtergol == 'A' ){
-
-			$query = DB::SELECT("SELECT NO_SUPL, NAMANYA, J_SUB, BRS, DET
-                                from brg
-                                $filtertgl $filterkodes
-                                ORDER BY NO_SUPL;
-			");
-		} if ($filtergol == 'B') {
-			$query = DB::SELECT("SELECT NO_SUPL, NAMANYA, J_SUB, BRS, DET
-                                from brg
-                                $filtertgl $filterkodes
-                                ORDER BY NO_SUPL;
-			");
-		} if ($filtergol == 'C') {
-            $query = DB::SELECT("SELECT NO_SUPL, NAMANYA, J_SUB, BRS, DET
-                                from brg
-                                $filtertgl $filterkodes
-                                ORDER BY NO_SUPL;
-			");
-		}
+		$query = DB::SELECT("
+			SELECT 
+				(@rownum := @rownum + 1) AS ROWNUM,
+				a.KDBAR,
+				a.NMBAR,
+				a.SA,
+				a.BL,
+				a.RJ,
+				a.JL,
+				a.KR1,
+				a.KR2,
+				0 AS SALDO,
+				0 AS STOKR,
+				a.SUPP,
+				b.NAMA
+			FROM nwmasbar a
+			JOIN nwmassup b ON a.SUPP = b.NO_SUPL
+			CROSS JOIN (SELECT @rownum := 0) r
+			$filterbrg
+		");
 
 
 
 		if($request->has('filter'))
 		{
-			$cbg = Cbg::groupBy('CBG')->get();
-
-			return view('oreport_brg_tidak_laku_jual.report')->with(['cbg' => $cbg])->with(['hasil' => $query]);
+			return view('oreport_brg_tidak_laku_jual.report')->with(['hasil' => $query]);
 		}
 
 		$data=[];
-		foreach ($query as $key => $value)
-		{
-			array_push($data, array(
-				'NO_SUPL' => $query[$key]->NO_SUPL,
-				'NAMANYA' => $query[$key]->NAMANYA,
-				'J_SUB' => $query[$key]->J_SUB,
-				'BRS' => $query[$key]->BRS,
-				'DET' => $query[$key]->DET,
-				'TGL_1' => $tgl_1,
-				'TGL_2' => $tgl_2,
-				'KODES_1' => $kodes_1,
-				'KODES_2' => $kodes_2,
-			));
-		}
+		$data = json_decode(json_encode($query), true);
 		$PHPJasperXML->setData($data);
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");
