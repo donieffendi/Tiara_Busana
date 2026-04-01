@@ -126,5 +126,6 @@ class Sup extends Model
         "PMSR_PROD",
         "VA_TD",
         "ANB_VA_TD",
+        "DEPT"
     ];
 }
