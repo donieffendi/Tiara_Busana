@@ -27,13 +27,13 @@
         border-right: solid 2px #000;
         border-left: solid 2px #000;
     }
-	
- 
+
+
     .btn-secondary {
         background-color: #42047e !important;
     }
-    
-      
+
+
     th { font-size: 12px; }
     td { font-size: 12px; }
 
@@ -154,24 +154,45 @@
                         </div>
                     </div>
                 </div>
-            
+
              <!-- batas filter -->
-			  
+
+              <div class="row mb-3">
+                <div class="col-md-5 col-lg-4">
+                    <label for="jenis_laporan" class="form-label"><strong>Filter Pemantauan</strong></label>
+                    <select name="jenis_laporan" id="jenis_laporan" class="form-control">
+                        <option value="">-- Pilih Filter --</option>
+                        <option value="kurang_laku_senin" {{ request('jenis_laporan') == 'kurang_laku_senin' ? 'selected' : '' }}>
+                            Pemantauan barang kurang laku setiap senin
+                        </option>
+                        <option value="laku_senin" {{ request('jenis_laporan') == 'laku_senin' ? 'selected' : '' }}>
+                            Pemantauan barang laku setiap senin
+                        </option>
+                        <option value="tidak_laku" {{ request('jenis_laporan') == 'tidak_laku' ? 'selected' : '' }}>
+                            Barang tidak laku
+                        </option>
+                        <option value="laku" {{ request('jenis_laporan') == 'laku' ? 'selected' : '' }}>
+                            Barang Laku
+                        </option>
+                    </select>
+                </div>
+              </div>
+
               <form method="POST" id="entri" action="{{url('po/posting')}}">
 
               <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
               <input name="golz"  class="form-control golz" id="golz" value="{{$golz}}" hidden >
- 
+
                 <!-- <button class="btn btn-danger" type="button"  onclick="simpan()">Posting</button> -->
 
                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
-                   
+
 
                     <thead class="table-dark">
                         <tr>
                             <th scope="col" style="text-align: center"></th>
                             <th scope="col" style="text-align: center">#</th>
-                            <th scope="col" style="text-align: center">-</th>							
+                            <th scope="col" style="text-align: center">-</th>
                             <th scope="col" style="text-align: left">No. Bukti</th>
                             <th scope="col" style="text-align: center">Tgl</th>
                             <th scope="col" style="text-align: left">Kode</th>
@@ -180,9 +201,9 @@
                             <th scope="col" style="text-align: center">Posted</th>
                         </tr>
                     </thead>
-    
+
                     <tbody>
-                    </tbody> 
+                    </tbody>
                 </table>
               </div>
             </div>
@@ -191,7 +212,7 @@
       </div>
     </div>
   </div>
-  
+
 @endsection
 
 @section('javascripts')
@@ -223,22 +244,22 @@
             // 'scrollX': true,
             // 'scrollY': '400px',
             "order": [[ 0, "asc" ]],
-            ajax: 
+            ajax:
             {
                 url: "{{ route('get-po') }}",
-				        data: 
+				        data: function(d)
                 {
-                    flagz : $('#flagz').val(),
-                    golz : $('#golz').val(),
-				   
+                    d.flagz = $('#flagz').val();
+                    d.golz = $('#golz').val();
+                    d.jenis_laporan = $('#jenis_laporan').val();
                 }
             },
 
-            columns: 
+            columns:
             [
-                //add tombol + 
-                { 
-                   
+                //add tombol +
+                {
+
                     data: null, // Column for the button
                     orderable: false,
                     searchable: false,
@@ -274,26 +295,26 @@
                     }
                 },
             ],
-            columnDefs: 
+            columnDefs:
             [
                 // {
-                //     "className": "dt-center", 
+                //     "className": "dt-center",
                 //     "targets": [0,10]
-                // },			
+                // },
                 {
                   targets: 4,
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
                 },
-                
+
 		        // {
-                //     "className": "dt-right", 
+                //     "className": "dt-right",
                 //     "targets": 7
                 // },
-			
-                
-                
+
+
+
             ],
-            lengthMenu: 
+            lengthMenu:
             [
                 [8, 10, 20, 50, 100, -1],
                 [8, 10, 20, 50, 100, "All"]
@@ -320,16 +341,20 @@
             var column = dataTable.column($(this).val());
             column.visible($(this).is(':checked'));
         });
-        
+
+        $('#jenis_laporan').on('change', function() {
+            dataTable.ajax.reload();
+        });
+
         // batas filter
-		
+
         $("div.test_btn").html(
         '<a class="btn btn-lg btn-md btn-success" href="{{url('po/edit?flagz='.$flagz.'&golz='.$golz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
 
         );
-        
 
-        
+
+
         // function buat ganti tombol + onclick
         window.toggleButton = function(button) {
             const no_bukti = $(button).data('no_bukti'); // Get the no_bukti from data attribute
@@ -403,9 +428,9 @@
                                         <td>
                                             <div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalTotal.toFixed(2)}</div>
                                         </td>
-                                        
+
                                     </tr>
-                                    
+
                                     </tbody>
                                 </table>
                             </div>
@@ -449,19 +474,19 @@
             }
         });
     }
-	
-	
+
+
 	function simpan() {
     var check = '0';
     var min = '0';
-		
-	
+
+
 	document.getElementById("entri").submit();
 
 	}
-	
-	
-	
-	
+
+
+
+
 </script>
 @endsection
