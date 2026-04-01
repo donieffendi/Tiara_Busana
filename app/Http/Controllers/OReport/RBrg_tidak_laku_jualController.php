@@ -69,7 +69,8 @@ class RBrg_tidak_laku_jualController extends Controller
 				0 AS SALDO,
 				0 AS STOKR,
 				a.SUPP,
-				b.NAMA
+				b.NAMA,
+				'___________________' AS RETUR
 			FROM nwmasbar a
 			JOIN nwmassup b ON a.SUPP = b.NO_SUPL
 			CROSS JOIN (SELECT @rownum := 0) r

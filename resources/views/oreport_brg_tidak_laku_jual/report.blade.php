@@ -193,6 +193,9 @@
 								"decimalPoint" => ".",
 								"thousandSeparator" => ",",
 							),
+							"RETUR" => array(
+								"label" => "Retur",
+							),
 						),
 						"cssClass" => array(
 							"table" => "table table-hover table-striped table-bordered compact",
