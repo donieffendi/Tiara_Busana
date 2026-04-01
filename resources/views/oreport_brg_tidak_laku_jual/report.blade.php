@@ -84,8 +84,20 @@
 						</div> --}}
 					</div>
 
+                    <div class="form-group row">
+						<div class="col-md-2">
+							<label class="form-label"> No Piu</label>
+							<input type="text" class="form-control nopiu1" id="nopiu1" name="nopiu1" placeholder="Pilih No Piu# 1" value="{{ session()->get('filter_nopiu1') }}" readonly>
+						</div>
+
+						<div class="col-md-2">
+							<label class="form-label">Sampai Piu</label>
+							<input type="text" class="form-control nopiu2" id="nopiu2" name="nopiu2" placeholder="Pilih No Piu# 2" value="{{ session()->get('filter_nopiu2') }}" readonly>
+						</div>
+					</div>
+
 					<div class="form-group row">
-						
+
 						{{-- <div class="col-md-3">
 							<label class="form-label">Nama</label>
 							<input type="text" class="form-control nabrg2" id="nabrg2" name="nabrg2" placeholder="Nama" value="{{ session()->get('filter_nabrg2') }}" readonly>
@@ -110,7 +122,7 @@
 					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>
-					
+
 
 				<!-- PASTE DIBAWAH INI -->
 				<!-- DISINI BATAS AWAL KOOLREPORT-->
@@ -297,6 +309,65 @@
 		</div>
 	</div>
 </div>
+
+
+
+<div class="modal fade" id="browseNopiu1Modal" tabindex="-1" role="dialog" aria-labelledby="browseNopiu1ModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="browseNopiu1ModalLabel">Cari Piutang</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bnopiu1">
+				<thead>
+					<tr>
+						<th>Piutang#</th>
+						<th>Tanggal</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="browseNopiu2Modal" tabindex="-1" role="dialog" aria-labelledby="browseNopiu2ModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="browseNopiu2ModalLabel">Cari Piutang</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bnopiu2">
+				<thead>
+					<tr>
+						<th>Piutang#</th>
+						<th>Tanggal</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+</div>
 @endsection
 
 @section('javascripts')
@@ -401,12 +472,107 @@
 				browseBarang2();
 			}
 		});
-	});
-
 
 //////////////////////////////////////////////////////////////////////
 
-	
+        var dTableBNopiu1;
+		loadDataBNopiu1 = function(){
+			$.ajax(
+			{
+				type: 'GET',
+				url: "{{url('piu/browse')}}",
+				success: function( response )
+				{
+					resp = response;
+					if(dTableBNopiu1){
+						dTableBNopiu1.clear();
+					}
+					for(i=0; i<resp.length; i++){
+
+					dTableBNopiu1.row.add([
+							'<a href="javascript:void(0);" onclick="chooseNopiu1(\''+resp[i].NO_BUKTI+'\')">'+resp[i].NO_BUKTI+'</a>',
+							resp[i].TGL,
+						]);
+
+					}
+					dTableBNopiu1.draw();
+				}
+			});
+		}
+
+		dTableBNopiu1 = $("#table-bnopiu1").DataTable({
+
+		});
+
+		browseNopiu1 = function(){
+			loadDataBNopiu1();
+			$("#browseNopiu1Modal").modal("show");
+		}
+
+		chooseNopiu1 = function(NO_BUKTI){
+			$("#nopiu1").val(NO_BUKTI);
+			$("#browseNopiu1Modal").modal("hide");
+		}
+
+
+		$("#nopiu1").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseNopiu1();
+			}
+		});
+
+
+
+        var dTableBNopiu2;
+		loadDataBNopiu2 = function(){
+			$.ajax(
+			{
+				type: 'GET',
+				url: "{{url('piu/browse')}}",
+				success: function( response )
+				{
+					resp = response;
+					if(dTableBNopiu2){
+						dTableBNopiu2.clear();
+					}
+					for(i=0; i<resp.length; i++){
+
+					dTableBNopiu2.row.add([
+							'<a href="javascript:void(0);" onclick="chooseNopiu2(\''+resp[i].NO_BUKTI+'\')">'+resp[i].NO_BUKTI+'</a>',
+							resp[i].TGL,
+						]);
+
+					}
+					dTableBNopiu2.draw();
+				}
+			});
+		}
+
+		dTableBNopiu2 = $("#table-bnopiu2").DataTable({
+
+		});
+
+		browseNopiu2 = function(){
+			loadDataBNopiu2();
+			$("#browseNopiu2Modal").modal("show");
+		}
+
+		chooseNopiu2 = function(NO_BUKTI){
+			$("#nopiu2").val(NO_BUKTI);
+			$("#browseNopiu2Modal").modal("hide");
+		}
+
+
+		$("#nopiu2").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseNopiu2();
+			}
+		});
+	});
+
+
 
 //////////////////////////////////////////////
 

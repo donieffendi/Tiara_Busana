@@ -1124,6 +1124,7 @@ Route::get('/piu/delete/{piu}', 'App\Http\Controllers\OTransaksi\PiuController@d
 Route::post('piu/posting', 'App\Http\Controllers\OTransaksi\PiuController@posting')->middleware(['auth']);
 Route::get('piu/index-posting', 'App\Http\Controllers\OTransaksi\PiuController@index_posting')->middleware(['auth']);
 Route::get('/piu/browse_piud', 'App\Http\Controllers\OTransaksi\PiuController@browse_piud')->middleware(['auth'])->name('piu/browse_piud');
+Route::get('/piu/browse', 'App\Http\Controllers\OTransaksi\PiuController@browse')->middleware(['auth'])->name('piu/browse');
 Route::get('/piu/cetak/{piu:NO_ID}','App\Http\Controllers\OTransaksi\PiuController@cetak')->middleware(['auth']);
 
 
