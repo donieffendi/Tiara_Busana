@@ -163,8 +163,8 @@
 								"decimalPoint" => ".",
 								"thousandSeparator" => ",",
 							),
-							"RJ" => array(
-								"label" => "RJ",
+							"RT" => array(
+								"label" => "RT",
 								"type" => "number",
 								"decimals" => 2,
 								"decimalPoint" => ".",
@@ -200,6 +200,13 @@
 							),
 							"STOKR" => array(
 								"label" => "Koreksi",
+								"type" => "number",
+								"decimals" => 2,
+								"decimalPoint" => ".",
+								"thousandSeparator" => ",",
+							),
+							"STOKR" => array(
+								"label" => "Retur",
 								"type" => "number",
 								"decimals" => 2,
 								"decimalPoint" => ".",
