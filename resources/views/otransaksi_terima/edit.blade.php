@@ -127,10 +127,10 @@
 							<div class="form-group row">
 
 								<div class="col-md-1" align="left">
-                                    <label for="NO_PO" class="form-label">No Retur</label>
+                                    <label for="NO_RETUR" class="form-label">No Retur</label>
                                 </div>
                                	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" >
+                                  <input type="text" class="form-control NO_RETUR" id="NO_RETUR" name="NO_RETUR" placeholder="Pilih "value="{{$header->NO_RETUR}}" style="text-align: left" >
         						  {{-- <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button> --}}
                                 </div>
 
@@ -619,6 +619,34 @@
 	  </div>
 	</div>
 
+    <div class="modal fade" id="browseReturModal" tabindex="-1" role="dialog" aria-labelledby="browseReturModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseReturModalLabel">Cari Retur</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bretur">
+				<thead>
+					<tr>
+						<th>Bukti#</th>
+						<th>Tgl</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
 
 
 
@@ -808,6 +836,61 @@
 			$("#NAMAS").val(NAMAS);
 			$("#browseSupModal").modal("hide");
 			// getPod(NO_BUKTI);
+		}
+
+////////////////////////////////////////////////////////////////////
+
+
+
+//		CHOOSE Retur
+ 		var dTableBRetur;
+		loadDataBRetur = function(){
+
+			$.ajax(
+			{
+				type: 'GET',
+				url: '{{url('retur/browse')}}',
+
+				beforeSend: function(){
+					$("#LOADX").show();
+				},
+
+				success: function( response )
+				{
+					$("#LOADX").hide();
+
+					resp = response;
+					if(dTableBRetur){
+						dTableBRetur.clear();
+					}
+					for(i=0; i<resp.length; i++){
+
+						dTableBRetur.row.add([
+							'<a href="javascript:void(0);" onclick="chooseRetur(\''+resp[i].NO_BUKTI+'\')">'+resp[i].NO_BUKTI+'</a>',
+							resp[i].TGL,
+
+						]);
+					}
+					dTableBRetur.draw();
+				}
+			});
+		}
+
+		dTableBRetur = $("#table-bretur").DataTable({
+
+		});
+
+		browseRetur = function(){
+			loadDataBRetur();
+			$("#browseReturModal").modal("show");
+
+		}
+
+		chooseRetur = function(NO_BUKTI){
+
+			$("#NO_BUKTI").val(NO_BUKTI);
+			$("#browseReturModal").modal("hide");
+			// getReturd(NO_BUKTI);
 		}
 
 ////////////////////////////////////////////////////////////////////
