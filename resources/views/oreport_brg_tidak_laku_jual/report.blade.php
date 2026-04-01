@@ -205,6 +205,13 @@
 								"decimalPoint" => ".",
 								"thousandSeparator" => ",",
 							),
+							"STOKR" => array(
+								"label" => "Retur",
+								"type" => "number",
+								"decimals" => 2,
+								"decimalPoint" => ".",
+								"thousandSeparator" => ",",
+							),
 						),
 						"cssClass" => array(
 							"table" => "table table-hover table-striped table-bordered compact",
