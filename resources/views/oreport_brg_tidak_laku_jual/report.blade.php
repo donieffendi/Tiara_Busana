@@ -84,7 +84,7 @@
 						</div> --}}
 					</div>
 
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
 						<div class="col-md-2">
 							<label class="form-label"> No Piu</label>
 							<input type="text" class="form-control nopiu1" onclick = "browseNopiu1();" id="nopiu1" name="nopiu1" placeholder="Pilih No Piu# 1" value="{{ session()->get('filter_nopiu1') }}" readonly>
@@ -93,7 +93,7 @@
 						<div class="col-md-2">
 							<label class="form-label">Sampai Piu</label>
 							<input type="text" class="form-control nopiu2" onclick = "browseNopiu2();" id="nopiu2" name="nopiu2" placeholder="Pilih No Piu# 2" value="{{ session()->get('filter_nopiu2') }}" readonly>
-						</div>
+						</div> --}}
 					</div>
 
 					<div class="form-group row">
@@ -204,6 +204,9 @@
 								"decimals" => 2,
 								"decimalPoint" => ".",
 								"thousandSeparator" => ",",
+							),
+							"RETUR" => array(
+								"label" => "RETUR",
 							),
 						),
 						"cssClass" => array(
