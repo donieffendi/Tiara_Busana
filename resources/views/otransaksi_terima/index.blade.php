@@ -24,12 +24,12 @@
         border-right: solid 2px #000;
         border-left: solid 2px #000;
     }
-	
+
 
     .btn-secondary {
         background-color: #42047e !important;
     }
-    
+
     th { font-size: 13px; }
     td { font-size: 13px; }
 
@@ -79,7 +79,7 @@
                     Filter Columns
                 </button>
                 <!-- Modal -->
-                
+
                 <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
@@ -94,58 +94,73 @@
                                 <form id="columnToggleForm">
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="0" id="columnNo" checked>
+                                            value="0" id="columnPlus" checked>
+                                        <label class="form-check-label" for="columnPlus"></label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                            value="1" id="columnNo" checked>
                                         <label class="form-check-label" for="columnNo">No</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="1" id="columnAction" checked>
+                                            value="2" id="columnAction" checked>
                                         <label class="form-check-label" for="columnAction">Action</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="2" id="columnBukti" checked>
+                                            value="3" id="columnBukti" checked>
                                         <label class="form-check-label" for="columnBukti">Bukti#</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="3" id="columnRef" checked>
+                                            value="4" id="columnRef" checked>
                                         <label class="form-check-label" for="columnRef">Ref</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="4" id="columnTgl" checked>
+                                            value="5" id="columnTgl" checked>
                                         <label class="form-check-label" for="columnTgl">Tgl</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="5" id="columnSup" checked>
+                                            value="6" id="columnSup" checked>
                                         <label class="form-check-label" for="columnSup">Suplier#</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="6" id="columnNama" checked>
+                                            value="7" id="columnNama" checked>
                                         <label class="form-check-label" for="columnNama">No PO</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="7" id="columnTqty">
+                                            value="8" id="columnTqty">
                                         <label class="form-check-label" for="columnTqty">Total-QTY</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="8" id="columnTotal">
+                                            value="9" id="columnTotal">
                                         <label class="form-check-label" for="columnTotal">Total</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="9" id="columnNett">
+                                            value="10" id="columnNett">
                                         <label class="form-check-label" for="columnNett">Nett</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="10" id="columnUser">
+                                            value="11" id="columnUser">
                                         <label class="form-check-label" for="columnUser">User</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                            value="12" id="columnNotes">
+                                        <label class="form-check-label" for="columnNotes">Notes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                            value="13" id="columnPosted">
+                                        <label class="form-check-label" for="columnPosted">Posted</label>
                                     </div>
                                 </form>
                             </div>
@@ -158,11 +173,11 @@
                         </div>
                     </div>
                 </div>
-            
+
              <!-- batas filter -->
 
 				        <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
-            
+
             <form method="POST" action="{{ url('terima/batal_post?flagz='.$flagz.'') }}" id="form-batal-post">
             @csrf
 
@@ -172,7 +187,7 @@
                         <tr>
                             <th scope="col" style="text-align: center"></th>
                             <th scope="col" style="text-align: center">#</th>
-                            <th scope="col" style="text-align: center">-</th>							
+                            <th scope="col" style="text-align: center">-</th>
                             <th scope="col" style="text-align: center">No Bukti</th>
                             <th scope="col" style="text-align: center">Tgl</th>
                             <th scope="col" style="text-align: center">Outlet</th>
@@ -182,12 +197,13 @@
                             <th scope="col" style="text-align: center">Total</th>
                             <th scope="col" style="text-align: center">Nett</th>
                             <th scope="col" style="text-align: center">User</th>
-                            <th scope="col" style="text-align: center">Pst</th>
+                            <th scope="col" style="text-align: center">Notes</th>
+                            <th scope="col" style="text-align: center">Status Posted</th>
                         </tr>
                     </thead>
-    
+
                     <tbody>
-                    </tbody> 
+                    </tbody>
                 </table>
 
             </form>
@@ -199,7 +215,7 @@
       </div>
     </div>
   </div>
-  
+
 @endsection
 
 @section('javascripts')
@@ -223,9 +239,9 @@
     // batas filter
 
   $(document).ready(function() {
-	  
 
-			  
+
+
         var dataTable = $('.datatable').DataTable({
             processing: true,
             serverSide: true,
@@ -233,20 +249,20 @@
             // 'scrollX': true,
             // 'scrollY': '400px',
             "order": [[ 0, "asc" ]],
-            ajax: 
+            ajax:
             {
                 url: "{{ route('get-terima') }}",
-				        data: 
+				        data:
                 {
                     flagz : $('#flagz').val(),
-				   
+
                 }
             },
 
-            columns: 
+            columns:
             [
-                  //add tombol + 
-                { 
+                  //add tombol +
+                {
                     data: null, // Column for the button
                     orderable: false,
                     searchable: false,
@@ -280,10 +296,11 @@
                   }
                 },
                 { data: 'NO_PO', name: 'NO_PO'},
-                { data: 'total_qty', name: 'total_qty', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'total', name: 'total', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'nett', name: 'nett', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                { data: 'total_qty', name: 'total_qty', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                { data: 'total', name: 'total', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                { data: 'nett', name: 'nett', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                 { data: 'usrnm', name: 'usrnm'},
+                { data: 'notes', name: 'notes'},
                 { data: 'POSTED', name: 'POSTED',
                   render : function(data, type, row, meta) {
                     if(row['POSTED']=="0"){
@@ -294,18 +311,18 @@
                   }
                 },
             ],
-            columnDefs: 
+            columnDefs:
             [
                 {
-                    "className": "dt-center", 
+                    "className": "dt-center",
                     "targets": [8,9,10],
-                },			
+                },
                 {
                   targets: 5,
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
                 }
             ],
-            lengthMenu: 
+            lengthMenu:
             [
                 [8, 10, 20, 50, 100, -1],
                 [8, 10, 20, 50, 100, "All"]
@@ -331,9 +348,9 @@
             var column = dataTable.column($(this).val());
             column.visible($(this).is(':checked'));
         });
-        
+
         // batas filter
-		
+
         // $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('terima/edit?flagz='.$flagz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
         $("div.test_btn").html(`
             <div class="d-flex align-items-center" style="gap: 1rem;">
@@ -348,7 +365,7 @@
 
 
 
-    
+
         // function buat ganti tombol + onclick
         window.toggleButton = function(button) {
             const no_bukti = $(button).data('no_bukti'); // Get the no_bukti from data attribute
@@ -462,6 +479,6 @@
             }
         });
     }
-	
+
 </script>
 @endsection

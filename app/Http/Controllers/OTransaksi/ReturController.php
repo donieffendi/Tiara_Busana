@@ -224,11 +224,15 @@ class ReturController extends Controller
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a>
+                                <a class="dropdown-item btn btn-danger" href="cetak/' . $row->NO_ID . '">
+                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                    Print Ulang
+                                </a>
                                 <hr></hr>
                                 <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
 
                                     <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Delete
+                                    Hapus
                                 </a>
                         ';
                 } else {
