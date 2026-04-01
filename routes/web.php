@@ -1437,4 +1437,10 @@ Route::get('/rbrg_tidak_laku_jual', 'App\Http\Controllers\OReport\RBrg_tidak_lak
 Route::post('jasper-brg_tidak_laku_jual-report', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@jasperBrg_tidak_laku_jualReport')->middleware(['auth']);
 
 
+// Report Laporan Perubahan Harga Beli Disc Budget
+
+Route::get('/rrubahharga_discbudget', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@report')->middleware(['auth'])->name('rrubahharga_discbudget');
+Route::get('/get-rubahharga_discbudget-report', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@getRubahharga_discbudgetReport')->middleware(['auth'])->name('get-rubahharga_discbudget-report');
+Route::post('jasper-rubahharga_discbudget-report', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@jasperRubahharga_discbudgetReport')->middleware(['auth']);
+
 require __DIR__.'/auth.php';
