@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Suplier</h1>
+			<h1 class="m-0">Laporan Barang Yang Di Order Per Suplier</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Laporan Suplier</li>
+				<li class="breadcrumb-item active">Laporan Barang Yang Di Order Per Suplier</li>
 			</ol>
 		</div>
 		</div>
@@ -25,6 +25,20 @@
 				<div class="card-body">
 					<form method="POST" action="{{url('jasper-sup-report')}}">
 					@csrf
+					
+					{{-- <div class="form-group row">
+						<div class="col-md-1" align	="right">
+							<label><strong>Periode :</strong></label>
+						</div>
+						<div class="col-md-2">
+							<select name="per" id="per" class="form-control per" style="width: 200px">
+								<option value="">--Pilih Periode--</option>
+								@foreach($per as $perD)
+									<option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
+								@endforeach
+							</select>
+						</div>
+					</div> --}}
 
 					<div class="form-group row">
 						<div class="col-md-1" align="right">
@@ -39,30 +53,18 @@
 						</div>
 					</div>
 
-					<div class="form-group row">
+					{{-- <div class="form-group row">
 						<div class="col-md-1" align="right">
 							<label class="form-label">Budget</label>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="form-control budget" id="budget" name="budget" placeholder="Masukkan Jenis" value="{{ session()->get('filter_budget') }}">
 						</div>
-					</div>
+					</div> --}}
 
-					<div class="form-group row">
-						<div class="col-md-1" align	="right">
-							<label><strong>Periode :</strong></label>
-						</div>
-						<div class="col-md-2">
-							<select name="per" id="per" class="form-control per" style="width: 200px">
-								<option value="">--Pilih Periode--</option>
-								@foreach($per as $perD)
-									<option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
+					
 
-					<div class="form-group row">
+					{{-- <div class="form-group row">
 						<div class="col-md-1" align="right">
 							<label><strong>Tanggal :</strong></label>
 						</div>
@@ -75,7 +77,7 @@
 							<input class="form-control date tglSmp" id="tglSmp" name="tglSmp"
 							type="text" autocomplete="off" value="{{ session()->get('filter_tglSampai') }}">
 						</div>
-					</div>
+					</div> --}}
 
 					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
 					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rsup")}}'">Reset</button>
@@ -89,107 +91,114 @@
 					<?php
 					use \koolreport\datagrid\DataTables;
 
-					if($hasil)
-					{
-						DataTables::create(array(
-							"dataSource" => $hasil,
-							"name" => "example",
-							"fastRender" => true,
-							"fixedHeader" => true,
-							'scrollX' => true,
-							"showFooter" => true,
-							"showFooter" => "bottom",
-							"columns" => array(
-								"KODES" => array(
-									"label" => "Suplier#",
+					$data = $hasil ?? [];
+					DataTables::create(array(
+						"dataSource" => $hasil,
+						"name" => "example",
+						"fastRender" => true,
+						"fixedHeader" => true,
+						'scrollX' => true,
+						"showFooter" => true,
+						"showFooter" => "bottom",
+						"columns" => array(
+							"ROWNUM" => array(
+								"label" => "No",
+							),
+							"SUB" => array(
+								"label" => "Sub",
+							),
+							"KDBAR" => array(
+								"label" => "P.L.U",
+							),
+							"NMBAR" => array(
+								"label" => "Nama Barang",
+							),
+							"HB" => array(
+								"label" => "Harga Beli",
+								"type" => "number",
+								"decimals" => 2,
+								"decimalPoint" => ".",
+								"thousandSeparator" => ",",
+								"footer" => "sum",
+								"footerText" => "<b>@value</b>",
+							),
+							"QTY_BELI1" => array(
+								"label" => "Beli AKhir",
+								"type" => "number",
+								"decimals" => 2,
+								"decimalPoint" => ".",
+								"thousandSeparator" => ",",
+								"footer" => "sum",
+								"footerText" => "<b>@value</b>",
+							),
+							"TG_BELI1" => array(
+								"label" => "Tg Beli AKhir",
+								"type" => "date",
+								"format" => "Y-m-d",
+								"displayFormat" => "d-m-Y",
+							),
+							"STOCKR" => array(
+								"label" => "Stokr",
+								"type" => "number",
+								"decimals" => 2,
+								"decimalPoint" => ".",
+								"thousandSeparator" => ",",
+								"footer" => "sum",
+								"footerText" => "<b>@value</b>",
+							),
+							"QTY" => array(
+								"label" => "Jumlah Order",
+								"type" => "number",
+								"decimals" => 2,
+								"decimalPoint" => ".",
+								"thousandSeparator" => ",",
+								"footer" => "sum",
+								"footerText" => "<b>@value</b>",
+							),
+							"KET" => array(
+								"label" => "Keterangan",
+							),
+						),
+						"cssClass" => array(
+							"table" => "table table-hover table-striped table-bordered compact",
+							"th" => "label-title",
+							"td" => "detail",
+							"tf" => "footerCss"
+						),
+						"options" => array(
+							"columnDefs"=>array(
+								array(
+									"className" => "dt-right", 
+									"targets" => [4,5,7,8],
 								),
-								"NAMAS" => array(
-									"label" => "-",
-									"footerText" => "<b>Grand Total :</b>",
-								),
-								"AW" => array(
-									"label" => "Awal",
-									"type" => "number",
-									"decimals" => 2,
-									"decimalPoint" => ".",
-									"thousandSeparator" => ",",
-									"footer" => "sum",
-									"footerText" => "<b>@value</b>",
-								),
-								"MA" => array(
-									"label" => "Beli",
-									"type" => "number",
-									"decimals" => 2,
-									"decimalPoint" => ".",
-									"thousandSeparator" => ",",
-									"footer" => "sum",
-									"footerText" => "<b>@value</b>",
-								),
-								"KE" => array(
-									"label" => "Bayar",
-									"type" => "number",
-									"decimals" => 2,
-									"decimalPoint" => ".",
-									"thousandSeparator" => ",",
-									"footer" => "sum",
-									"footerText" => "<b>@value</b>",
-								),
-								"LN" => array(
-									"label" => "Lain",
-									"type" => "number",
-									"decimals" => 2,
-									"decimalPoint" => ".",
-									"thousandSeparator" => ",",
-									"footer" => "sum",
-									"footerText" => "<b>@value</b>",
-								),
-								"AK" => array(
-									"label" => "Akhir",
-									"type" => "number",
-									"decimals" => 2,
-									"decimalPoint" => ".",
-									"thousandSeparator" => ",",
-									"footer" => "sum",
-									"footerText" => "<b>@value</b>",
+								array(
+									"className" => "dt-center", 
+									"targets" => [0],
 								),
 							),
-							"cssClass" => array(
-								"table" => "table table-hover table-striped table-bordered compact",
-								"th" => "label-title",
-								"td" => "detail",
-								"tf" => "footerCss"
-							),
-							"options" => array(
-								"columnDefs"=>array(
-									array(
-										"className" => "dt-right", 
-										"targets" => [2,3,4,5,6],
-									),
-								),
-								"order" => [],
-								"paging" => true,
-								// "pageLength" => 12,
-								"searching" => true,
-								"colReorder" => true,
-								"select" => true,
-								"dom" => 'Blfrtip', // B e dilangi
-								// "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
-								"buttons" => array(
-									array(
-										"extend" => 'collection',
-										"text" => 'Export',
-										"buttons" => [
-											'copy',
-											'excel',
-											'csv',
-											'pdf',
-											'print'
-										],
-									),
+							"order" => [],
+							"paging" => true,
+							// "pageLength" => 12,
+							"searching" => true,
+							"colReorder" => true,
+							"select" => true,
+							"dom" => 'Blfrtip', // B e dilangi
+							// "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
+							"buttons" => array(
+								array(
+									"extend" => 'collection',
+									"text" => 'Export',
+									"buttons" => [
+										'copy',
+										'excel',
+										'csv',
+										'pdf',
+										'print'
+									],
 								),
 							),
-						));
-					}
+						),
+					));
 					?>
 				</div>
 				<!-- DISINI BATAS AKHIR KOOLREPORT-->
@@ -279,7 +288,7 @@
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: "{{url('sup/browse_amplop')}}",
+				url: "{{url('sup/browse_stegur')}}",
 				success: function( response )
 				{
 					resp = response;
@@ -329,7 +338,7 @@
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: "{{url('sup/browse_amplop')}}",
+				url: "{{url('sup/browse_stegur')}}",
 				success: function( response )
 				{
 					resp = response;
