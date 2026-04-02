@@ -130,7 +130,7 @@
                                     <label for="NO_PO" class="form-label">No PO</label>
                                 </div>
                                	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" >
+                                  <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->SP}}" style="text-align: left" >
         						  <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button>
                                 </div>
 
@@ -158,10 +158,10 @@
         						</div>
 
 								<div class="col-md-1" align="left">
-									<label class="form-label">Margin</label>
+									<label class="form-label">Sts. Pajak</label>
 								</div>
 								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control HMARGIN" id="HMARGIN" name="HMARGIN" placeholder="" value="{{$header->MARGIN}}" style="text-align: right" readonly >
+									<input type="text" class="form-control ST_PJK" id="ST_PJK" name="ST_PJK" placeholder="" value="{{$header->ST_PJK}}" style="text-align: left" readonly >
 								</div>
 
 								<div class="col-md-1" align="left">
@@ -171,12 +171,6 @@
 									<input type="text" class="form-control ST_NOTA" id="ST_NOTA" name="ST_NOTA" placeholder="" value="{{$header->ST_NOTA}}" style="text-align: left" readonly >
 								</div>
 
-								<div class="col-md-1" align="left">
-									<label class="form-label">Sistem</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control ST_CNT" id="ST_CNT" name="ST_CNT" placeholder="" value="{{$header->ST_CNT}}" style="text-align: left" readonly >
-								</div>
 
                             </div>
 
@@ -188,27 +182,7 @@
 									<input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
 								</div>
 
-								<div class="col-md-1" align="left">
-									<label class="form-label">Dis. Promosi</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control POT_PROM" id="POT_PROM" name="POT_PROM" placeholder="" value="{{$header->POT_PROM}}" style="text-align: right" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Kupon krd</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control KK_STS" id="KK_STS" name="KK_STS" placeholder="" value="{{$header->KK_STS}}" style="text-align: left" readonly >
-								</div>
-
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Basic</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control BASIC" id="BASIC" name="BASIC" placeholder="" value="{{$header->BASIC}}" style="text-align: left" readonly >
-								</div>
+								
                             </div>
 
 							<div class="form-group row">
@@ -219,26 +193,7 @@
 									<input class="form-control date" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->JTEMPO))}}">
 								</div>
 
-								<div class="col-md-1" align="left">
-									<label class="form-label">Sts. Pajak</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control ST_PJK" id="ST_PJK" name="ST_PJK" placeholder="" value="{{$header->ST_PJK}}" style="text-align: left" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Formalitas</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control FORMAL" id="FORMAL" name="FORMAL" placeholder="" value="{{$header->FORMAL}}" style="text-align: left" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Nota Khs</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control NOTA_KHS" id="NOTA_KHS" name="NOTA_KHS" placeholder="" value="{{$header->NOTA_KHS}}" style="text-align: left" readonly >
-								</div>
+								
                             </div>
 
 							<div class="form-group row">
@@ -255,10 +210,10 @@
 									<input type="text" hidden class="form-control ZBAYAR" id="ZBAYAR" name="ZBAYAR" value="{{$header->BAYAR}}" placeholder="" >
 								</div> -->
 
-								<div class="col-md-1">
+								<!-- <div class="col-md-1">
 									<input type="checkbox" class="form-check-input" id="BAYAR" name="BAYAR" value="1" {{ ($header->BAYAR == 1) ? 'checked' : '' }}>
 									<label for="BAYAR"></label>
-								</div>
+								</div> -->
                             </div>
 
 						<!-- loader tampil di modal  -->
@@ -353,7 +308,7 @@
 												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}"
 												class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
 
-												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->rec}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
+												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
 											</td>
 
 											<td>
@@ -362,7 +317,7 @@
 											</td>
 
 											<td>
-												<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->barcode}}">
+												<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->BARCODE}}">
 											</td>
 
 											<td>
@@ -373,11 +328,11 @@
 												<input name="JNS[]" id="JNS{{$no}}" type="text" class="form-control JNS" value="{{$detail->JNS}}">
 											</td>
 											<td>
-												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->qty}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
+												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
 											</td>
 
 											<td >
-												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->harga}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
+												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
 											</td>
 
 											<td >
@@ -396,7 +351,7 @@
 												<input name="DISKON4[]" onblur="hitung()"  value="{{$detail->DISKON4}}" id="DISKON4{{$no}}" type="text" style="text-align: right"  class="form-control DISKON4" readonly>
 											</td>
 											<td>
-												<input name="TOTAL[]" onblur="hitung()"  value="{{$detail->total}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
+												<input name="TOTAL[]" onblur="hitung()"  value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
 											</td>
 											<td>
 												<input name="HARGA_JL[]" onblur="hitung()"  value="{{$detail->HARGA_JL}}" id="HARGA_JL{{$no}}" type="text" style="text-align: right"  class="form-control HARGA_JL" readonly>
@@ -450,7 +405,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TJUMLAH" id="TJUMLAH" name="TJUMLAH" placeholder="" value="{{$header->JUMLAH}}" style="text-align: right" readonly>
+                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TJUMLAH" id="TJUMLAH" name="TJUMLAH" placeholder="" value="{{$header->TOTAL}}" style="text-align: right" readonly>
                                 </div>
 
                                 <div class="col-md-1" align="right">
@@ -703,7 +658,7 @@
         if ( $tipx == 'new' )
 		{
 			 baru();
-             tambah();
+            //  tambah();
 		}
 
         if ( $tipx != 'new' )
@@ -804,7 +759,7 @@
 					for(i=0; i<resp.length; i++){
 
 						dTableBSup.row.add([
-							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\')">'+resp[i].KODES+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\', \''+resp[i].GOLONGAN+'\')">'+resp[i].KODES+'</a>',
 							resp[i].KODES,
 							resp[i].NAMAS,
 							resp[i].ALAMAT,
@@ -826,10 +781,11 @@
 
 		}
 
-		chooseSup = function(KODES,NAMAS){
+		chooseSup = function(KODES,NAMAS, ALAMAT, KOTA, GOLONGAN){
 
 			$("#KODES").val(KODES);
 			$("#NAMAS").val(NAMAS);
+			$("#ST_PJK").val(GOLONGAN);
 			$("#browseSupModal").modal("hide");
 			//getPod(NO_BUKTI);
 		}
@@ -942,7 +898,7 @@
 
 
 									<td >
-										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG'>
+										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" onblur='browsebarang()' type='text' class='form-control KD_BRG'>
 						            </td>
 						            <td >
 						 			    <input name='BARCODE[]' id='BARCODE${i}' value="${resp[i].BARCODE}" type='text' class='form-control  BARCODE' readonly>
@@ -951,7 +907,7 @@
 						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
 						            </td>
 
-									<td><input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly></td>
+									<td><input name='JNS[]' id='JNS${i}' value="${resp[i].JNS}" type='text' class='form-control  JNS' readonly></td>
                                     <td>
 										<input name='QTY[]' onclick='select()' onblur='prosesHitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' >
 									</td>
@@ -960,7 +916,7 @@
 										<input type="hidden" id="PPNX_GLOBAL">
 									</td>
 									<td >
-										<input name='MARGIN[]' onclick='select()' onblur='prosesHitung()' id='MARGIN${i}' value="0" type='text' style='text-align: right' class='form-control MARGIN text-primary' >
+										<input name='MARGIN[]' onclick='select()' onblur='prosesHitung()' id='MARGIN${i}' value="${resp[i].MARGIN}" type='text' style='text-align: right' class='form-control MARGIN text-primary' >
 									</td>
 									<td >
 										<input name='DISKON1[]' onclick='select()' onblur='prosesHitung()' id='DISKON1${i}' value="0" type='text' style='text-align: right' class='form-control DISKON1 text-primary' >
@@ -1200,13 +1156,13 @@
 				url: "{{url('beli/browse_brg')}}",
 				async : false,
 				data: {
-						'KODES': $("#KODES").val(),
+						'KD_BRG': $("#KD_BRG").val(),
 				},
 				success: function( response )
 
 				{
 					resp = response;
-
+					console.log('res barang : ', resp);
 
 					if ( resp.length > 1 )
 					{
@@ -1572,6 +1528,7 @@
 
 				z.find('.HARGA_JL').val(harga_jl).autoNumeric('update');
 				console.log('harga : ',harga_jl);
+				console.log('margin : ',margin);
 			});
 		}
 	}
@@ -1616,6 +1573,7 @@
 		$('#TTOTAL_QTY').val(numberWithCommas(x1)).autoNumeric('update');
 		$('#TJUMLAH').val(numberWithCommas(x2)).autoNumeric('update');
 
+		// PROMOSI BELUM TAHU AMBIL DARIMANA
 		let PROM = parseFloat($('#TPOT_PROM').val() || 0);
 
 		let txtprom = Math.round(x2 * PROM / 100);

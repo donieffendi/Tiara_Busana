@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\OTransaksi\Beli;
 use App\Models\OTransaksi\BeliDetail;
+use App\Models\OTransaksi\Nwagend;
+use App\Models\OTransaksi\NwagendDetail;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
@@ -145,18 +147,24 @@ class BeliController extends Controller
 
     public function browse_brg(Request $request)
     {
-        // $KD_BRG = $request->KD_BRG;
+        $KD_BRG = $request->KD_BRG;
 		$SUPP = $request->KODES;
         $beli = DB::SELECT("SELECT CONCAT(SUB,KDBAR) AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN
                             FROM nwmasbar
                             WHERE SUPP = '$SUPP'");
+
+        if(!empty($KD_BRG)) {
+            $beli = DB::SELECT("SELECT KDBAR AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN
+                            FROM nwmasbar
+                            WHERE KDBAR = '$KD_BRG'");
+        }
         return response()->json($beli);
     }
 
     public function browse_sup(Request $request)
     {
 
-    	$beli = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA
+    	$beli = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA, PPN, GOLONGAN
                             FROM nwmassup");
 
         return response()->json($beli);
@@ -188,13 +196,9 @@ class BeliController extends Controller
         $FLAG = $this->FLAGZ;
 		$CBG = Auth::user()->CBG;
 
-        $beli = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, REF, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, flag
-                                    FROM BELIBSN
+        $beli = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, KODES, NAMAS, SP AS NO_PO, TOTAL, NETT, USRNM, POSTED, FLAG
+                                    FROM nwagend
                                     where PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG'
-                            union all
-                            SELECT NO_ID, NO_BUKTI, TGL, REF, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, flag
-                                    FROM BELIBSNZ
-                                    where PER = '$periode' AND CBG='$CBG' AND FLAG= '$FLAG'
                                     order by NO_BUKTI ");
 
 
@@ -208,10 +212,10 @@ class BeliController extends Controller
                     //CEK POSTED di index dan edit
 
                     // url untuk delete di index
-                    $url = "'".url("beli/delete/" . $row->NO_ID . "/?flagz=" . $row->flag)."'";
+                    $url = "'".url("beli/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
                     // batas
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="beli/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
+                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="beli/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
 
 
@@ -315,7 +319,7 @@ class BeliController extends Controller
         $bulan = session()->get('periode')['bulan'];
         $tahun = substr(session()->get('periode')['tahun'], -2);
 
-        $last = DB::table('belibsn')
+        $last = DB::table('nwagend')
             ->where('PER', $periode)
             ->where('FLAG', $FLAGZ)
             ->where('CBG', $CBG)
@@ -339,38 +343,28 @@ class BeliController extends Controller
 
         // ganti 10
 
-        $beli = Beli::create(
+        $beli = Nwagend::create(
             [
                 'NO_BUKTI'         => $no_bukti,
                 'PER'              => $periode,
-				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
                 'POSTED'           => (float) str_replace(',', '', $request['POSTED']),
-				'NO_PO'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
+				'SP'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'REF'              => ($request['REF'] == null) ? "" : $request['REF'],
-                'MARGIN'           => (float) str_replace(',', '', $request['HMARGIN']),
                 'ST_NOTA'          => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
-                'ST_CNT'           => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'POT_PROM'         => (float) str_replace(',', '', $request['POT_PROM']),
-                'KK_STS'           => ($request['KK_STS'] == null) ? "" : $request['KK_STS'],
-                'BASIC'            => ($request['BASIC'] == null) ? "" : $request['BASIC'],
-                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
+                // 'POT_PROM'         => (float) str_replace(',', '', $request['POT_PROM']),
+                'JT'           => date('Y-m-d', strtotime($request['JTEMPO'])),
                 'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
-                'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
-                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
-                'flag'             => $FLAGZ,
+                'FLAG'             => $FLAGZ,
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
-                'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
+                'TOTAL'           => (float) str_replace(',', '', $request['TJUMLAH']),
                 'DPP'              => (float) str_replace(',', '', $request['TDPP']),
-                'ppn'              => (float) str_replace(',', '', $request['TPPN']),
-                'nett'             => (float) str_replace(',', '', $request['TNETT']),
+                'PPN'              => (float) str_replace(',', '', $request['TPPN']),
+                'NETT'             => (float) str_replace(',', '', $request['TNETT']),
 				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
-                'usrnm'            => Auth::user()->username,
-                'tg_smp'           => Carbon::now(),
+                'USRNM'            => Auth::user()->username,
+                'TG_SMP'           => Carbon::now(),
                 'CBG'              => $CBG,
             ]
         );
@@ -396,7 +390,7 @@ class BeliController extends Controller
         if ($REC) {
             foreach ($REC as $key => $value) {
                 // Declare new data di Model
-                $detail    = new BeliDetail;
+                $detail    = new NwagendDetail();
 
                 // Insert ke Database
                 $detail->no_bukti    = $no_bukti;
@@ -428,11 +422,11 @@ class BeliController extends Controller
 
 		$no_buktix = $no_bukti;
 
-		$beli = Beli::where('NO_BUKTI', $no_buktix )->first();
+		$beli = Nwagend::where('NO_BUKTI', $no_buktix )->first();
 
-        DB::SELECT("UPDATE belibsn,  belibsnd
-                            SET  belibsnd.ID = belibsn.NO_ID  WHERE  belibsn.NO_BUKTI =  belibsnd.NO_BUKTI
-							AND  belibsn.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE nwagend,  nwagendd
+                            SET  nwagendd.ID = nwagend.NO_ID  WHERE  nwagend.NO_BUKTI =  nwagendd.NO_BUKTI
+							AND  nwagend.NO_BUKTI='$no_buktix';");
 
 
 
@@ -448,7 +442,7 @@ class BeliController extends Controller
     // ganti 15
 
 
-   public function edit( Request $request , Beli $beli)
+   public function edit( Request $request , Nwagend $beli)
     {
 
 
@@ -485,7 +479,7 @@ class BeliController extends Controller
 
     	   $buktix = $request->buktix;
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsn
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwagend
 		                 where PER ='$per' and flag ='$this->FLAGZ'
 						 and NO_BUKTI = '$buktix'
 		                 and CBG = '$CBG'
@@ -507,7 +501,7 @@ class BeliController extends Controller
 		if ($tipx=='top') {
 
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsn
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwagend
 		                 where PER ='$per'
 						 and flag ='$this->FLAGZ'
 		                 and CBG = '$CBG'
@@ -531,7 +525,7 @@ class BeliController extends Controller
 
     	   $buktix = $request->buktix;
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsn
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwagend
 		             where PER ='$per'
 					 and flag ='$this->FLAGZ'   and NO_BUKTI <
 					'$buktix' and CBG = '$CBG'
@@ -555,7 +549,7 @@ class BeliController extends Controller
 
       	   $buktix = $request->buktix;
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsn
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwagend
 		             where PER ='$per'
 					 and flag ='$this->FLAGZ'  and NO_BUKTI >
 					 '$buktix' and CBG = '$CBG'
@@ -575,7 +569,7 @@ class BeliController extends Controller
 
 		if ($tipx=='bottom') {
 
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsn
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwagend
 						where PER ='$per'
 						and flag ='$this->FLAGZ'
 		                and CBG = '$CBG'
@@ -605,11 +599,11 @@ class BeliController extends Controller
 
        	if ( $idx != 0 )
 		{
-			$beli = Beli::where('NO_ID', $idx )->first();
+			$beli = Nwagend::where('NO_ID', $idx )->first();
 	     }
 		 else
 		 {
-				$beli = new Beli;
+				$beli = new Nwagend;
                 $beli->TGL = Carbon::now();
                 $beli->JTEMPO = Carbon::now();
 
@@ -617,7 +611,7 @@ class BeliController extends Controller
 		 }
 
         $no_bukti = $beli->NO_BUKTI;
-        $belidetail = DB::table('belibsnd')->where('NO_BUKTI', $no_bukti)->orderBy('rec')->get();
+        $belidetail = DB::table('nwagendd')->where('NO_BUKTI', $no_bukti)->orderBy('rec')->get();
 
 		$data = [
             'header'        => $beli,
@@ -681,7 +675,7 @@ class BeliController extends Controller
 				'NO_PO'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'REF'              => ($request['REF'] == null) ? "" : $request['REF'],
+                // 'REF'              => ($request['REF'] == null) ? "" : $request['REF'],
                 'MARGIN'           => (float) str_replace(',', '', $request['MARGIN']),
                 'ST_NOTA'          => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
                 'ST_CNT'           => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],

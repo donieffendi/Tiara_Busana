@@ -129,7 +129,7 @@ class PoController extends Controller
 
 
             $pod = DB::SELECT("SELECT a.REC, a.KD_BRG, a.BARCODE, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, a.TOTAL,
-                                a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.HJ
+                                a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.HJ, b.MARGIN, b.RAK AS JNS
                             from nwbudgetd a
                             LEFT JOIN nwmasbar b
                                 ON b.KDBAR = a.KD_BRG
