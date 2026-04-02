@@ -17,7 +17,7 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RBrg_tidak_laku_jualController extends Controller
+class RBrg_tidak_lakuController extends Controller
 {
     public function report()
     {
@@ -27,14 +27,14 @@ class RBrg_tidak_laku_jualController extends Controller
 		session()->put('filter_brg2', '');
 		// session()->put('filter_nabrg2', '');
 
-        return view('oreport_brg_tidak_laku_jual.report')->with(['hasil' => []]);
+        return view('oreport_brg_tidak_laku.report')->with(['hasil' => []]);
     }
 
 
 
-	public function jasperBrg_tidak_laku_jualReport(Request $request)
+	public function jasperBrg_tidak_lakuReport(Request $request)
 	{
-		$file 	= 'rbrg_tidak_laku_jual';
+		$file 	= 'rbrg_tidak_laku';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		$params = [
@@ -90,7 +90,7 @@ class RBrg_tidak_laku_jualController extends Controller
 
 		if($request->has('filter'))
 		{
-			return view('oreport_brg_tidak_laku_jual.report')->with(['hasil' => $query]);
+			return view('oreport_brg_tidak_laku.report')->with(['hasil' => $query]);
 		}
 
 		$data=[];

@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Barang Tidak Laku & Tidak Ada Transaksi Jual</h1>
+			<h1 class="m-0">Laporan Pemantauan Barang Kurang Laku</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Laporan Barang Tidak Laku & Tidak Ada Transaksi Jual</li>
+				<li class="breadcrumb-item active">Laporan Pemantauan Barang Kurang Laku</li>
 			</ol>
 		</div>
 		</div>
@@ -23,7 +23,7 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-brg_tidak_laku_jual-report')}}">
+					<form method="POST" action="{{url('jasper-brg_tidak_laku-report')}}">
 					@csrf
 					<div class="form-group row">
 						{{-- <div class="col-md-2">
@@ -118,7 +118,7 @@
 					</div> --}}
 
 					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
-					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rbrg_tidak_laku_jual")}}'">Reset</button>
+					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rbrg_tidak_laku")}}'">Reset</button>
 					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>

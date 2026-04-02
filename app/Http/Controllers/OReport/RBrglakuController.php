@@ -17,7 +17,7 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RBrg_tidak_laku_jualController extends Controller
+class RBrglakuController extends Controller
 {
     public function report()
     {
@@ -27,14 +27,14 @@ class RBrg_tidak_laku_jualController extends Controller
 		session()->put('filter_brg2', '');
 		// session()->put('filter_nabrg2', '');
 
-        return view('oreport_brg_tidak_laku_jual.report')->with(['hasil' => []]);
+        return view('oreport_brglaku.report')->with(['hasil' => []]);
     }
 
 
 
-	public function jasperBrg_tidak_laku_jualReport(Request $request)
+	public function jasperBrglakuReport(Request $request)
 	{
-		$file 	= 'rbrg_tidak_laku_jual';
+		$file 	= 'rbrglaku';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		$params = [
@@ -79,18 +79,19 @@ class RBrg_tidak_laku_jualController extends Controller
 				0 AS STOKR,
 				a.SUPP,
 				b.NAMA,
+				b.TLP_K,
 				'___________________' AS RETUR
 			FROM nwmasbar a
 			JOIN nwmassup b ON a.SUPP = b.NO_SUPL
 			CROSS JOIN (SELECT @rownum := 0) r
-			$filterbrg $filternopiu
+			$filterbrg
 		");
 
 
 
 		if($request->has('filter'))
 		{
-			return view('oreport_brg_tidak_laku_jual.report')->with(['hasil' => $query]);
+			return view('oreport_brglaku.report')->with(['hasil' => $query]);
 		}
 
 		$data=[];

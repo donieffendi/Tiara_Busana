@@ -1,0 +1,986 @@
+<?php
+
+namespace App\Http\Controllers\OTransaksi;
+
+use App\Http\Controllers\Controller;
+// ganti 1
+
+use App\Models\OTransaksi\Nwbudget;
+use App\Models\OTransaksi\NwbudgetDetail;
+use Illuminate\Http\Request;
+use DataTables;
+use Auth;
+use DB;
+use Carbon\Carbon;
+
+include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
+use PHPJasperXML;
+
+// ganti 2
+class PerubahanbudgetController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    var $judul = '';
+    var $FLAGZ = '';
+
+    function setFlag(Request $request)
+    {
+        if ( $request->flagz == 'NM') {
+            $this->judul = "Perubahan Min. Nilai Budget";
+        }
+
+        $this->FLAGZ = $request->flagz;
+
+
+
+    }
+
+    public function index(Request $request)
+    {
+
+
+	    $this->setFlag($request);
+        // ganti 3
+        return view('otransaksi_perubahanbudget.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
+
+
+    }
+
+
+	public function index_posting(Request $request)
+    {
+
+        return view('otransaksi_perubahanbudget.post');
+    }
+
+    public function browse(Request $request)
+    {
+        $golz = $request->GOL;
+
+		$CBG = Auth::user()->CBG;
+		$PPN = Auth::user()->PPN;
+
+        $perubahanbudget = DB::SELECT("SELECT distinct retur.NO_BUKTI , retur.KODES, retur.NAMAS,
+		                  retur.ALAMAT, retur.KOTA, retur.PKP, retur.NO_PO, retur.GUDANG from bretur, returd
+                          WHERE retur.NO_BUKTI = returd.NO_BUKTI AND retur.FLAG='BL'
+                          AND retur.GOL ='$golz'
+                          AND retur.CBG = '$CBG'
+                        --   AND retur.PKP = '$PPN'
+                          ");
+        return response()->json($perubahanbudget);
+    }
+
+    public function browse_perubahanbudgetd(Request $request)
+    {
+        $golx = $request->GOL;
+
+        $perubahanbudgetd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.SISA,
+                            a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, a.PPN, a.DPP, a.DISK,
+                            a.QTY2 AS XQTY, a.KALI
+                        from breturd a, brg b
+                        where a.NO_BUKTI='".$request->nobukti."' AND a.KD_BRG = b.KD_BRG");
+
+		return response()->json($perubahanbudgetd);
+	}
+
+
+    public function browseuang(Request $request)
+    {
+        //	$perubahanbudget = DB::table('perubahanbudget')->select('NO_BUKTI', 'TGL', 'KODES','NAMAS', 'ALAMAT','KOTA', 'PERB','PERBB', 'SISA' )->where('PERB', '<>' ,'PERBB')->where('LNS', '<>',1)->where('GOL', 'Y')->orderBy('KODES', 'ASC')->get();
+        $filterkodes = '';
+
+		$CBG = Auth::user()->CBG;
+
+		if($request->KODES)
+		{
+
+			// $filterkodes = " WHERE SISA <> 0 AND KODES='".$request->KODES."' ";
+			$filterkodes = " AND  KODES='".$request->KODES."' ";
+		}
+
+		$perubahanbudget = DB::SELECT("SELECT NO_BUKTI, TGL, KODES,
+		            NAMAS, NETT as TOTAL, BAYAR, SISA from bretur  WHERE perubahanbudget.CBG = '$CBG' and SISA <> 0
+		            $filterkodes
+                    ORDER BY NO_BUKTI ");
+
+        return response()->json($perubahanbudget);
+    }
+
+    public function browse_brg(Request $request)
+    {
+        // $KD_BRG = $request->KD_BRG;
+		$SUPP = $request->KODES;
+        $beli = DB::SELECT("SELECT CONCAT(SUB,KDBAR) AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, KET_KEM AS SATUAN, MARGIN
+                            FROM nwmasbar
+                            WHERE SUPP = '$SUPP'");
+        return response()->json($beli);
+    }
+
+    public function browse_sup(Request $request)
+    {
+
+    	$beli = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA
+                            FROM nwmassup");
+
+        return response()->json($beli);
+    }
+
+
+    public function browse_cnt(Request $request)
+    {
+
+    	$beli = DB::SELECT("SELECT CNT, NA_CNT AS NCNT
+                            FROM cntbsn");
+
+        return response()->json($beli);
+    }
+    // ganti 4
+
+
+
+    public function getPerubahanbudget(Request $request)
+    {
+        // ganti 5
+
+       if ($request->session()->has('periode')) {
+            $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+        } else {
+            $periode = '';
+        }
+
+		$this->setFlag($request);
+
+        $FLAG = $this->FLAGZ;
+		$CBG = Auth::user()->CBG;
+
+        $perubahanbudget = DB::SELECT("SELECT NO_BUKTI, TGL, KODES, NAMAS, NO_PO, total_qty, total, nett, usrnm, POSTED, OUTLET, flag
+                            FROM BRETUR
+                            where PER = '$periode' AND CBG='$CBG' AND FLAG= '$FLAG'
+                            order by NO_BUKTI
+                          ");
+
+
+        // ganti 6
+
+        return Datatables::of($perubahanbudget)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                if ( (Auth::user()->divisi=="programmer" ) || (Auth::user()->divisi=="gudang" ))
+				{
+                    //CEK POSTED di index dan edit
+                    $url = "'".url("perubahanbudget/delete/" . $row->NO_ID . "/?flagz=" . $row->flag)."'";
+
+                    // $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="perubahanbudget/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
+                    if (Auth::user()->divisi == 'gudang') {
+                        // khusus gudang, cek CETAK
+                        $btnEdit = ($row->CETAK == 1)
+                            ? ' onclick="alert(\'LPB ini sudah dicetak, tidak bisa edit.\')" href="#" '
+                            : ' href="perubahanbudget/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
+                    } else {
+                        // user lain, tetap cek POSTED
+                        $btnEdit = ($row->POSTED == 1)
+                            ? ' onclick="alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" '
+                            : ' href="perubahanbudget/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
+                    }
+
+
+                    // $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="perubahanbudget/delete/' . $row->NO_ID . '/?flagz=' . $row->FLAG . '&golz=' . $row->GOL .'" ';
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')"';
+
+
+                    $btnPrivilege = '
+                            <a class="dropdown-item" ' . $btnEdit . '>
+                                <i class="fas fa-edit"></i> Edit
+                            </a>';
+
+                        if (Auth::user()->divisi != 'gudang') {
+                            $btnPrivilege .= '
+                                <a class="dropdown-item btn btn-danger" href="perubahanbudget/cetak/' . $row->NO_ID . '">
+                                    <i class="fa fa-print" aria-hidden="true"></i> Print
+                                </a>';
+                        }
+
+                        if (Auth::user()->divisi == 'gudang') {
+                            $btnPrivilege .= '
+                                <a class="dropdown-item btn btn-danger" href="perubahanbudget/cetak2/' . $row->NO_ID . '">
+                                    <i class="fa fa-print" aria-hidden="true"></i> Print SPB
+                                </a>';
+                        }
+
+                        $btnPrivilege .= '
+                            <hr></hr>
+                            <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
+                                <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                            </a>';
+                } else {
+                    $btnPrivilege = '';
+                }
+
+
+
+
+
+                $actionBtn =
+                    '
+                    <div class="dropdown show" style="text-align: center">
+                        <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+
+                            ' . $btnPrivilege . '
+                        </div>
+                    </div>
+                    ';
+
+                return $actionBtn;
+            })
+
+
+			->addColumn('cek', function ($row) {
+                return
+                    '
+                    <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->POSTED == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->POSTED == 2) ? "disabled" : "") . '></input>
+                    ';
+
+            })
+
+            ->rawColumns(['action','cek'])
+            ->make(true);
+    }
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+///            ->rawColumns(['action'])
+ //           ->make(true);
+//    }
+
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+
+        $this->validate(
+            $request,
+            // GANTI 9
+
+            [
+                'TGL'      => 'required',
+
+            ]
+        );
+
+        //////     nomer otomatis
+		$this->setFlag($request);
+        $FLAGZ = $this->FLAGZ;
+        $judul = $this->judul;
+
+        $CBG = Auth::user()->CBG;
+
+        $CBG_KODE = DB::table('toko')
+            ->where('KODE', $CBG)
+            ->value('TYPE');
+
+        $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+
+        $bulan    = session()->get('periode')['bulan'];
+        $tahun    = substr(session()->get('periode')['tahun'], -2);
+
+        $query = DB::table('bretur')->select('NO_BUKTI')->where('PER', $periode)->where('flag', $FLAGZ)->where('CBG', $CBG)
+                ->orderByDesc('NO_BUKTI')->limit(1)->get();
+
+        if ($query != '[]') {
+            $query = substr($query[0]->NO_BUKTI, -4);
+            $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+            $no_bukti = $FLAGZ . $tahun . $bulan . '-' . $query . $CBG_KODE;
+        } else {
+            $no_bukti = $FLAGZ . $tahun . $bulan . '-0001' . $CBG_KODE;
+        }
+//////////////////////////////////////////////////////////////////////////
+
+
+        // Insert Header
+
+        // ganti 10
+
+        $perubahanbudget = Nwbudget::create(
+            [
+                'NO_BUKTI'         => $no_bukti,
+                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
+                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
+                'PER'              => $periode,
+				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
+				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
+                'POSTED'           => (float) str_replace(',', '', $request['POSTED']),
+				'NO_PO'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
+				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
+                'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
+                'REF'              => ($request['REF'] == null) ? "" : $request['REF'],
+                'MARGIN'           => (float) str_replace(',', '', $request['MARGIN']),
+                'ST_NOTA'          => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
+                'ST_CNT'           => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],
+                'POT_PROM'         => (float) str_replace(',', '', $request['POT_PROM']),
+                'KK_STS'           => ($request['KK_STS'] == null) ? "" : $request['KK_STS'],
+                'BASIC'            => ($request['BASIC'] == null) ? "" : $request['BASIC'],
+                'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
+                'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
+                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
+                'flag'             => $FLAGZ,
+                'notes'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
+                'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
+                'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
+                'DPP'              => (float) str_replace(',', '', $request['TDPP']),
+                'ppn'              => (float) str_replace(',', '', $request['TPPN']),
+                'nett'             => (float) str_replace(',', '', $request['TNETT']),
+				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
+                'CBG'              => $CBG,
+
+            ]
+        );
+
+
+		$REC        = $request->input('REC');
+		$KD_BRG     = $request->input('KD_BRG');
+        $BARCODE    = $request->input('BARCODE');
+        $NA_BRG     = $request->input('NA_BRG');
+        $SATUAN     = $request->input('SATUAN');
+        $QTYK        = $request->input('QTYK');
+        $QTY        = $request->input('QTY');
+        $HARGA      = $request->input('HARGA');
+        $MARGIN     = $request->input('MARGIN');
+        $DISKON1    = $request->input('DISKON1');
+        $DISKON2    = $request->input('DISKON2');
+        $DISKON3    = $request->input('DISKON3');
+        $DISKON4    = $request->input('DISKON4');
+        $TOTAL      = $request->input('TOTAL');
+        $HARGA_JL   = $request->input('HARGA_JL');
+        $BLT        = $request->input('BLT');
+        $KET        = $request->input('KET');
+
+        // Check jika value detail ada/tidak
+        if ($REC) {
+            foreach ($REC as $key => $value) {
+                // Declare new data di Model
+                $detail    = new nwbudgetdetail;
+
+                // Insert ke Database
+                $detail->no_bukti    = $no_bukti;
+                $detail->rec         = $REC[$key];
+                $detail->per         = $periode;
+                $detail->flag        = $FLAGZ;
+                $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
+                $detail->BARCODE     = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
+                $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
+                $detail->satuan      = ($SATUAN[$key] == null) ? "" :  $SATUAN[$key];
+                $detail->qtyk         = (float) str_replace(',', '', $QTYK[$key]);
+                $detail->qty         = (float) str_replace(',', '', $QTY[$key]);
+                $detail->harga       = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->MARGIN      = (float) str_replace(',', '', $MARGIN[$key]);
+                $detail->DISKON1     = (float) str_replace(',', '', $DISKON1[$key]);
+                $detail->DISKON2     = (float) str_replace(',', '', $DISKON2[$key]);
+                $detail->DISKON3     = (float) str_replace(',', '', $DISKON3X[$key]);
+                $detail->DISKON4     = (float) str_replace(',', '', $DISKON4[$key]);
+                $detail->total       = (float) str_replace(',', '', $TOTAL[$key]);
+                $detail->HARGA_JL    = (float) str_replace(',', '', $HARGA_JL[$key]);
+                $detail->BLT         = (float) str_replace(',', '', $BLT[$key]);
+				$detail->ket         = ($KET[$key] == null) ? "" :  $KET[$key];
+                $detail->save();
+            }
+        }
+        //  ganti 11
+
+		$no_buktix = $no_bukti;
+
+		$perubahanbudget = Nwbudget::where('NO_BUKTI', $no_buktix )->first();
+
+        DB::SELECT("UPDATE bretur,  breturd
+                            SET  breturd.ID = bretur.NO_ID  WHERE  bretur.NO_BUKTI =  breturd.no_bukti
+							AND  bretur.NO_BUKTI='$no_buktix';");
+
+
+
+        $variablell = DB::select('call terimains(?)', array($no_buktix));
+
+        // return redirect('/perubahanbudget/edit/?idx=' . $perubahanbudget->NO_ID . '&tipx=edit&flagz=' . $FLAGZ . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '');
+        return redirect('/perubahanbudget?flagz='.$FLAGZ)->with(['status' => 'Data berhasil disimpan!', 'flagz' => $FLAGZ ]);
+
+
+    }
+
+
+    // ganti 15
+
+
+   public function edit( Request $request , Nwbudget $perubahanbudget)
+    {
+
+
+		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
+
+
+        // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
+        // if ($cekperid[0]->POSTED==1)
+        // {
+        //     return redirect('/perubahanbudget')
+		// 	       ->with('status', 'Maaf Periode sudah ditutup!')
+        //            ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ]);
+        // }
+
+		$this->setFlag($request);
+
+        $tipx = $request->tipx;
+
+		$idx = $request->idx;
+
+        $CBG = Auth::user()->CBG;
+        $PPN = Auth::user()->PPN;
+
+		if ( $idx =='0' && $tipx=='undo'  )
+	    {
+			$tipx ='top';
+
+		}
+
+
+
+		if ($tipx=='search') {
+
+
+    	   $buktix = $request->buktix;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+		                 where PER ='$per' and flag ='$this->FLAGZ'
+
+						 and NO_BUKTI = '$buktix'
+		                 and CBG = '$CBG'
+
+                         ORDER BY NO_BUKTI ASC  LIMIT 1" );
+
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = 0;
+			  }
+
+
+		}
+
+		if ($tipx=='top') {
+
+
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+		                 where PER ='$per'
+						 and flag ='$this->FLAGZ'
+		                 and CBG = '$CBG'
+
+                         ORDER BY NO_BUKTI ASC  LIMIT 1" );
+
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = 0;
+			  }
+
+
+		}
+
+
+		if ($tipx=='prev' ) {
+
+    	   $buktix = $request->buktix;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+		             where PER ='$per'
+					 and flag ='$this->FLAGZ'   and NO_BUKTI <
+					'$buktix' and CBG = '$CBG'
+
+                    ORDER BY NO_BUKTI DESC LIMIT 1" );
+
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = $idx;
+			  }
+
+		}
+
+
+		if ($tipx=='next' ) {
+
+
+      	   $buktix = $request->buktix;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+		             where PER ='$per'
+					 and flag ='$this->FLAGZ'  and NO_BUKTI >
+					 '$buktix' and CBG = '$CBG'
+
+                          ORDER BY NO_BUKTI ASC LIMIT 1" );
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = $idx;
+			  }
+
+
+		}
+
+		if ($tipx=='bottom') {
+
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+						where PER ='$per'
+						and flag ='$this->FLAGZ'
+		                and CBG = '$CBG'
+
+                         ORDER BY NO_BUKTI DESC  LIMIT 1" );
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = 0;
+			  }
+
+
+		}
+
+
+		if ( $tipx=='undo' || $tipx=='search' )
+	    {
+
+			$tipx ='edit';
+
+		   }
+
+
+
+       	if ( $idx != 0 )
+		{
+			$perubahanbudget = Nwbudget::where('NO_ID', $idx )->first();
+	     }
+		 else
+		 {
+				$perubahanbudget = new Nwbudget;
+                $perubahanbudget->TGL = Carbon::now();
+                $perubahanbudget->JTEMPO = Carbon::now();
+
+
+		 }
+
+        $no_bukti = $perubahanbudget->NO_BUKTI;
+        $perubahanbudgetdetail = DB::table('breturd')->where('no_bukti', $no_bukti)->orderBy('REC')->get();
+
+		$data = [
+            'header'        => $perubahanbudget,
+			'detail'        => $perubahanbudgetdetail
+
+        ];
+
+
+         return view('otransaksi_perubahanbudget.edit', $data)
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
+
+    }
+
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Master\Rute  $rute
+     * @return \Illuminate\Http\Response
+     */
+
+    // ganti 18
+
+    public function update(Request $request, Nwbudget $perubahanbudget)
+    {
+
+        $this->validate(
+            $request,
+            [
+
+                // ganti 19
+                'TGL'      => 'required',
+            ]
+        );
+
+        // ganti 20
+        $variablell = DB::select('call terimadel(?)', array($perubahanbudget['NO_BUKTI']));
+
+		$this->setFlag($request);
+        $FLAGZ = $this->FLAGZ;
+        $GOLZ = $this->GOLZ;
+        $judul = $this->judul;
+
+        $CBG = Auth::user()->CBG;
+
+        $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+
+        // ganti 20
+
+        $perubahanbudget->update(
+            [
+                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
+                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
+                'PER'              => $periode,
+				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
+				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
+                'POSTED'           => (float) str_replace(',', '', $request['POSTED']),
+				'NO_PO'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
+				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
+                'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
+                'REF'              => ($request['REF'] == null) ? "" : $request['REF'],
+                'MARGIN'           => (float) str_replace(',', '', $request['MARGIN']),
+                'ST_NOTA'          => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
+                'ST_CNT'           => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],
+                'POT_PROM'         => (float) str_replace(',', '', $request['POT_PROM']),
+                'KK_STS'           => ($request['KK_STS'] == null) ? "" : $request['KK_STS'],
+                'BASIC'            => ($request['BASIC'] == null) ? "" : $request['BASIC'],
+                'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
+                'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
+                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
+                'notes'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
+                'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
+                'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
+                'DPP'              => (float) str_replace(',', '', $request['TDPP']),
+                'ppn'              => (float) str_replace(',', '', $request['TPPN']),
+                'nett'             => (float) str_replace(',', '', $request['TNETT']),
+				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
+            ]
+        );
+
+		$no_buktix = $perubahanbudget->NO_BUKTI;
+
+        // Update Detail
+        $length = sizeof($request->input('REC'));
+        $NO_ID  = $request->input('NO_ID');
+
+        $REC    = $request->input('REC');
+
+        $REC        = $request->input('REC');
+		$KD_BRG     = $request->input('KD_BRG');
+        $BARCODE    = $request->input('BARCODE');
+        $NA_BRG     = $request->input('NA_BRG');
+        $SATUAN     = $request->input('SATUAN');
+        $QTYK       = $request->input('QTYK');
+        $QTY        = $request->input('QTY');
+        $HARGA      = $request->input('HARGA');
+        $MARGIN     = $request->input('MARGIN');
+        $DISKON1    = $request->input('DISKON1');
+        $DISKON2    = $request->input('DISKON2');
+        $DISKON3    = $request->input('DISKON3');
+        $DISKON4    = $request->input('DISKON4');
+        $TOTAL      = $request->input('TOTAL');
+        $HARGA_JL   = $request->input('HARGA_JL');
+        $BLT        = $request->input('BLT');
+        $KET = $request->input('KET');
+
+        $query = DB::table('breturd')->where('no_bukti', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
+
+        // Update / Insert
+        for ($i = 0; $i < $length; $i++) {
+            // Insert jika NO_ID baru
+            if ($NO_ID[$i] == 'new') {
+                $insert = NwbudgetDetail::create(
+                    [
+                        'no_bukti'   => $request->NO_BUKTI,
+                        'rec'        => $REC[$i],
+                        'per'        => $periode,
+                        'flag'       => $this->FLAGZ,
+                        'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
+                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
+                        'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
+                        'satuan'     => ($SATUAN[$i] == null) ? "" :  $SATUAN[$i],
+                        'qtyk'        => (float) str_replace(',', '', $QTYK[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
+                        'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
+                        'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
+                        'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
+                        'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
+                        'BLT'        => (float) str_replace(',', '', $BLT[$i]),
+                        'ket'        => ($KET[$i] == null) ? "" :  $KET[$i],
+
+                    ]
+                );
+            } else {
+                // Update jika NO_ID sudah ada
+                $upsert = NwbudgetDetail::updateOrCreate(
+                    [
+                        'no_bukti'  => $request->NO_BUKTI,
+                        'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
+                    ],
+
+                    [
+                        'rec'        => $REC[$i],
+
+                        'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
+                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
+                        'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
+                        'satuan'     => ($SATUAN[$i] == null) ? "" :  $SATUAN[$i],
+                        'qtyk'       => (float) str_replace(',', '', $QTYK[$i]),
+                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
+                        'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
+                        'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
+                        'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
+                        'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),
+                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
+                        'BLT'        => (float) str_replace(',', '', $BLT[$i]),
+                        'ket'        => ($KET[$i] == null) ? "" :  $KET[$i],
+                    ]
+                );
+            }
+        }
+
+
+        //  ganti 21
+
+ 		$perubahanbudget = Nwbudget::where('NO_BUKTI', $no_buktix )->first();
+
+        $no_bukti = $perubahanbudget->NO_BUKTI;
+
+        DB::SELECT("UPDATE bretur,  breturd
+                    SET  breturd.ID =  bretur.NO_ID  WHERE  bretur.NO_BUKTI =  breturd.no_bukti
+                    AND  bretur.NO_BUKTI='$no_bukti';");
+
+        $variablell = DB::select('call terimains(?)', array($perubahanbudget['NO_BUKTI']));
+
+        // return redirect('/perubahanbudget/edit/?idx=' . $perubahanbudget->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul .  '&golz=' . $this->GOLZ . '');
+        return redirect('/perubahanbudget?flagz='.$FLAGZ)->with(['status' => 'Data berhasil disimpan', 'flagz' => $FLAGZ ]);
+
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Master\Rute  $rute
+     * @return \Illuminate\Http\Response
+     */
+
+    // ganti 22
+
+    public function destroy(Request $request, Nwbudget $perubahanbudget)
+    {
+
+		$this->setFlag($request);
+        $FLAGZ = $this->FLAGZ;
+        $GOLZ = $this->GOLZ;
+        $judul = $this->judul;
+
+		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
+        // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
+        // if ($cekperid[0]->POSTED==1)
+        // {
+        //     return redirect()->route('perubahanbudget')
+        //         ->with('status', 'Maaf Periode sudah ditutup!')
+        //         ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
+        // }
+
+
+       $variablell = DB::select('call terimadel(?)', array($perubahanbudget['NO_BUKTI']));//
+
+
+        // ganti 23
+
+        $deleteperubahanbudget = Nwbudget::find($perubahanbudget->NO_ID);
+
+        // ganti 24
+
+        $deleteperubahanbudget->delete();
+
+        // ganti
+
+       return redirect('/perubahanbudget?flagz='.$FLAGZ)->with(['flagz' => $FLAGZ])->with('statusHapus', 'Data '.$perubahanbudget->NO_BUKTI.' berhasil dihapus');
+
+
+    }
+
+    public function batal_post(Request $request)
+    {
+        $this->setFlag($request);
+        $FLAGZ = $this->FLAGZ;
+        $GOLZ = $this->GOLZ;
+        $judul = $this->judul;
+
+        // Ambil array dari checkbox
+        $ids = $request->input('batal_post');
+
+        // Cek apakah ada ID yang dipilih
+        if (!$ids || count($ids) === 0) {
+            return redirect('/perubahanbudget?flagz='.$FLAGZ.'&golz='.$GOLZ)
+                ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ])
+                ->with('status', 'Tidak ada data yang dipilih.');
+        }
+
+        // Ambil data yang sesuai ID dan masih POSTED = 1
+        $postedData = DB::table('retur')
+            ->whereIn('NO_ID', $ids)
+            ->where('POSTED', 1)
+            ->get();
+
+        // Jika semua data belum diposting (POSTED = 0), tampilkan pesan
+        if ($postedData->isEmpty()) {
+            return redirect('/perubahanbudget?flagz='.$FLAGZ.'&golz='.$GOLZ)
+                ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ])
+                ->with('status', 'No Bukti yang dipilih belum terposting.');
+        }
+
+        // Ambil hanya ID yang POSTED = 1 untuk update
+        $idsToUpdate = $postedData->pluck('NO_ID')->toArray();
+
+        // Update ke database
+        DB::table('retur')
+            ->whereIn('NO_ID', $idsToUpdate)
+            ->update(['POSTED' => 0]);
+
+        return redirect('/perubahanbudget?flagz='.$FLAGZ.'&golz='.$GOLZ)
+            ->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ])
+            ->with('status', 'Berhasil batal posting.');
+    }
+
+
+
+    public function cetak(Nwbudget $perubahanbudget)
+    {
+        $no_perubahanbudget = $perubahanbudget->NO_BUKTI;
+
+        $file     = 'perubahanbudgetc';
+
+        $flagz1 = $perubahanbudget->FLAG;
+        $judul ='';
+
+        if ( $flagz1 =='BL')
+        {
+                $judul ='Order Pemkiriman';
+
+        }
+
+        if ( $flagz1 =='RB')
+        {
+                $judul ='Retur Pemkiriman';
+        }
+
+        $PHPJasperXML = new PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+        $query = DB::SELECT("SELECT retur.NO_BUKTI, retur.TGL, retur.KODES, retur.NAMAS, retur.TOTAL_QTY, retur.NOTES, retur.ALAMAT,
+                                    retur.KOTA, returd.KD_BRG, returd.NA_BRG, returd.SATUAN, returd.QTY2 AS QTY, returd.DISK,
+                                    returd.HARGA, returd.TOTAL, returd.KET, retur.TPPN, retur.NETT,
+                                    retur.NO_PO, retur.USRNM, returd.KALI, retur.TDISK, retur.TDPP, returd.PPN, returd.DPP
+                            FROM retur, returd
+                            WHERE retur.NO_BUKTI='$no_retur' AND retur.NO_BUKTI = returd.NO_BUKTI
+                            ;
+		");
+
+                DB::SELECT("UPDATE retur SET POSTED = 1 WHERE NO_BUKTI='$no_kirim';");
+
+        $data = [];
+
+        foreach ($query as $key => $value) {
+            array_push($data, array(
+                'NO_BUKTI' => $query[$key]->NO_BUKTI,
+                'TGL'      => $query[$key]->TGL,
+                'KODES'    => $query[$key]->KODES,
+                'NAMAS'    => $query[$key]->NAMAS,
+                'ALAMAT'    => $query[$key]->ALAMAT,
+                'KOTA'    => $query[$key]->KOTA,
+                'KG'       => $query[$key]->KG,
+                'HARGA'    => $query[$key]->HARGA,
+                'TOTAL'    => $query[$key]->TOTAL,
+                'BAYAR'    => $query[$key]->BAYAR,
+                'NOTES'    => $query[$key]->NOTES,
+                'KD_BRG'    => $query[$key]->KD_BRG,
+                'NA_BRG'    => $query[$key]->NA_BRG,
+                'SATUAN'    => $query[$key]->SATUAN,
+                'QTY'    => $query[$key]->QTY,
+                'DISK'    => $query[$key]->DISK,
+                'NETT'    => $query[$key]->NETT,
+                'KET'    => $query[$key]->KET,
+                'NO_PO'    => $query[$key]->NO_PO,
+                'JUDUL'    => $judul,
+                'USRNM'    => $query[$key]->USRNM,
+                'KALI'    => $query[$key]->KALI,
+                'TPPN'    => $query[$key]->TPPN,
+                'TDISK'    => $query[$key]->TDISK,
+                'TDPP'    => $query[$key]->TDPP,
+                'PPN'    => $query[$key]->PPN,
+                'DPP'    => $query[$key]->DPP
+            ));
+        }
+
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
+
+    }
+
+	 public function posting(Request $request)
+    {
+
+
+    }
+
+
+	public function getDetailperubahanbudget(){
+
+        $no_bukti = $_GET['no_bukti'];
+        $result = DB::table('returd')->where('NO_BUKTI', $no_bukti)->get();
+
+        return response()->json($result);;
+    }
+
+
+
+
+}

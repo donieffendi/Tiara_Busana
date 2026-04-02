@@ -827,7 +827,7 @@
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
                 {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=NM')}}')"> --}}
-                <a href="javascript:addTab('Perubahan Min. Nilai Budget', '{{url('terima?flagz=NM')}}')">
+                <a href="javascript:addTab('Perubahan Min. Nilai Budget', '{{url('perubahanbudget?flagz=NM')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Perubahan Min. Nilai Budget</h6>
@@ -1540,6 +1540,29 @@
                 </div>
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Laporan Barang Laku', '{{url('rbrglaku')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Pemantauan</h6>
+                        <h6>Barang Laku</h6>
+                      </a>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Laporan Barang TL', '{{url('rbrg_tidak_laku')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Pemantauan</h6>
+                        <h6>Brg. Kurang Laku</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
                       <a href="javascript:addTab('Laporan Barang Belum Dilayani', '{{url('rodcbelum')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
@@ -1548,9 +1571,6 @@
                       </a>
                     </div>
                 </div>
-              </div>
-
-              <div class="row">
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
                       <a href="javascript:addTab('Lap. Brg. yang Diorder', '{{url('rrcnorder9')}}')" >
@@ -1571,6 +1591,8 @@
                       </a>
                     </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
                       <a href="javascript:addTab('Lap. SP per PLU', '{{url('rjual')}}')" >
@@ -1578,6 +1600,16 @@
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
                         <h6>Laporan SP</h6>
                         <h6>per PLU</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Lap. SP per PLU', '{{url('rrubahharga_discbudget')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Laporan Perubahan Harga</h6>
+                        <h6>Beli Disc Budget</h6>
                       </a>
                     </div>
                 </div>

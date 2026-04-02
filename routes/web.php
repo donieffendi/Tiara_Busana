@@ -1436,5 +1436,42 @@ Route::get('/get-brg_tidak_laku_jual-post', 'App\Http\Controllers\OTransaksi\Brg
 Route::get('/rbrg_tidak_laku_jual', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@report')->middleware(['auth'])->name('rbrg_tidak_laku_jual');
 Route::post('jasper-brg_tidak_laku_jual-report', 'App\Http\Controllers\OReport\RBrg_tidak_laku_jualController@jasperBrg_tidak_laku_jualReport')->middleware(['auth']);
 
+// Report Pemantauan Barang Laku
+Route::get('/get-brglaku-post', 'App\Http\Controllers\OTransaksi\BrglakuController@getBrglaku_posting')->middleware(['auth'])->name('get-brglaku-post');
+Route::get('/rbrglaku', 'App\Http\Controllers\OReport\RBrglakuController@report')->middleware(['auth'])->name('rbrglaku');
+Route::post('jasper-brglaku-report', 'App\Http\Controllers\OReport\RBrglakuController@jasperBrglakuReport')->middleware(['auth']);
+
+// Report Pemantauan Barang Kurang Laku
+Route::get('/get-brg_tidak_laku-post', 'App\Http\Controllers\OTransaksi\Brg_tidak_lakuController@getBrg_tidak_laku_posting')->middleware(['auth'])->name('get-brg_tidak_laku-post');
+Route::get('/rbrg_tidak_laku', 'App\Http\Controllers\OReport\RBrg_tidak_lakuController@report')->middleware(['auth'])->name('rbrg_tidak_laku');
+Route::post('jasper-brg_tidak_laku-report', 'App\Http\Controllers\OReport\RBrg_tidak_lakuController@jasperBrg_tidak_lakuReport')->middleware(['auth']);
+
+// Report Laporan Perubahan Harga Beli Disc Budget
+
+Route::get('/rrubahharga_discbudget', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@report')->middleware(['auth'])->name('rrubahharga_discbudget');
+Route::get('/get-rubahharga_discbudget-report', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@getRubahharga_discbudgetReport')->middleware(['auth'])->name('get-rubahharga_discbudget-report');
+Route::post('jasper-rubahharga_discbudget-report', 'App\Http\Controllers\OReport\RRubahharga_discbudgetController@jasperRubahharga_discbudgetReport')->middleware(['auth']);
+
+
+// Operational Perubahan Min. Nilai Budget
+Route::get('/perubahanbudget', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@index')->middleware(['auth'])->name('perubahanbudget');
+Route::post('/perubahanbudget/store', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@store')->middleware(['auth'])->name('perubahanbudget/store');
+Route::get('/perubahanbudget/create', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@create')->middleware(['auth'])->name('perubahanbudget/create');
+Route::get('/get-perubahanbudget', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@getPerubahanbudget')->middleware(['auth'])->name('get-perubahanbudget');
+Route::get('/perubahanbudget/browse_cnt', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@browse_cnt')->middleware(['auth'])->name('perubahanbudget/browse_cnt');
+Route::get('/perubahanbudget/browse_brg', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@browse_brg')->middleware(['auth'])->name('perubahanbudget/browse_brg');
+Route::get('/perubahanbudget/browse_sup', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@browse_sup')->middleware(['auth'])->name('perubahanbudget/browse_sup');
+Route::get('/rperubahanbudget', 'App\Http\Controllers\OReport\RPerubahanbudgetController@report')->middleware(['auth'])->name('rperubahanbudget');
+Route::get('/get-perubahanbudget-report', 'App\Http\Controllers\OReport\RPerubahanbudgetController@getPerubahanbudgetReport')->middleware(['auth'])->name('get-perubahanbudget-report');
+
+Route::get('/perubahanbudget/show/{perubahanbudget}', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@show')->name('perubahanbudgetid');
+Route::get('/perubahanbudget/edit', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@edit')->name('perubahanbudget.edit');
+Route::post('/perubahanbudget/update/{perubahanbudget}', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@update')->name('perubahanbudget.update');
+Route::get('/perubahanbudget/delete/{perubahanbudget}', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@destroy')->name('perubahanbudget.delete');
+
+Route::post('/jasper-perubahanbudget-report', 'App\Http\Controllers\OReport\RPerubahanbudgetController@jasperPerubahanbudgetReport')->middleware(['auth']);
+Route::get('/jsperubahanbudgetc/{perubahanbudget:NO_ID}', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@jsperubahanbudgetc')->middleware(['auth']);
+Route::get('/get-detail-perubahanbudget', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@getDetailPerubahanbudget')->middleware(['auth'])->name('get-detail-perubahanbudget');
+
 
 require __DIR__.'/auth.php';
