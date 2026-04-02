@@ -119,12 +119,12 @@
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="5" id="columnNotes">
+                                            value="5" id="columnNotes" checked>
                                         <label class="form-check-label" for="columnNotes">Notes</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="6" id="columnPosted">
+                                            value="6" id="columnPosted" checked>
                                         <label class="form-check-label" for="columnPosted">Posted</label>
                                     </div>
                                 </form>
