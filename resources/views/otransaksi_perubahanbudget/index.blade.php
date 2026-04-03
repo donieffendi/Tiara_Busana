@@ -6,11 +6,9 @@
 @endsection
 
 <style>
-
     .card {
         padding: 5px 10px !important;
     }
-
 
     .table thead {
         background-color: #FFFFFF;
@@ -20,7 +18,6 @@
 
     .datatable tbody td {
         padding: 5px !important;
-        background-color: #FFFFFF;
     }
 
     .datatable {
@@ -33,9 +30,8 @@
         background-color: #42047e !important;
     }
 
-
-    th { font-size: 12px; }
-    td { font-size: 12px; }
+    th { font-size: 13px; }
+    td { font-size: 13px; }
 
     /* menghilangkan padding */
     .content-header {
@@ -57,16 +53,14 @@
             {{session('status')}}
         </div>
 
-        <!-- tambahan notifikasinya untuk delete di index -->
         <script>
             Swal.fire({
-					title: 'Deleted!',
-					text: 'Data has been deleted. {{session('status')}}',
-					icon: 'success',
-					confirmButtonText: 'OK'
-				})
+                    title: 'Berhasil !',
+                    text: '{{session('status')}}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
         </script>
-        <!-- tutupannya -->
 
     @endif
 
@@ -85,6 +79,7 @@
                     Filter Columns
                 </button>
                 <!-- Modal -->
+
                 <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
@@ -99,8 +94,8 @@
                                 <form id="columnToggleForm">
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="0" id="columnDetail" checked>
-                                        <label class="form-check-label" for="columnDetail">Detail</label>
+                                            value="0" id="columnPlus" checked>
+                                        <label class="form-check-label" for="columnPlus"></label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
@@ -115,7 +110,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
                                             value="3" id="columnBukti" checked>
-                                        <label class="form-check-label" for="columnBukti">No. Bukti</label>
+                                        <label class="form-check-label" for="columnBukti">Bukti#</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
@@ -124,23 +119,12 @@
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="5" id="columnKode" checked>
-                                        <label class="form-check-label" for="columnKode">Kode#</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="6" id="columnSup" checked>
-                                        <label class="form-check-label" for="columnSup">Suplier</label>
-                                    </div>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="7" id="columnNotes">
+                                            value="5" id="columnNotes" checked>
                                         <label class="form-check-label" for="columnNotes">Notes</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="8" id="columnPosted">
+                                            value="6" id="columnPosted" checked>
                                         <label class="form-check-label" for="columnPosted">Posted</label>
                                     </div>
                                 </form>
@@ -157,54 +141,31 @@
 
              <!-- batas filter -->
 
-              <div class="row mb-3">
-                <div class="col-md-5 col-lg-4">
-                    <label for="jenis_laporan" class="form-label"><strong>Filter Pemantauan</strong></label>
-                    <select name="jenis_laporan" id="jenis_laporan" class="form-control">
-                        <option value="">-- Pilih Filter --</option>
-                        <option value="kurang_laku_senin" {{ request('jenis_laporan') == 'kurang_laku_senin' ? 'selected' : '' }}>
-                            Pemantauan barang kurang laku setiap senin
-                        </option>
-                        <option value="laku_senin" {{ request('jenis_laporan') == 'laku_senin' ? 'selected' : '' }}>
-                            Pemantauan barang laku setiap senin
-                        </option>
-                        <option value="tidak_laku" {{ request('jenis_laporan') == 'tidak_laku' ? 'selected' : '' }}>
-                            Barang tidak laku
-                        </option>
-                        <option value="laku" {{ request('jenis_laporan') == 'laku' ? 'selected' : '' }}>
-                            Barang Laku
-                        </option>
-                    </select>
-                </div>
-              </div>
+				        <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
 
-              <form method="POST" id="entri" action="{{url('po/posting')}}">
+            <form method="POST" action="{{ url('perubahanbudget/batal_post?flagz='.$flagz.'') }}" id="form-batal-post">
+            @csrf
 
-              <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
-              <input name="golz"  class="form-control golz" id="golz" value="{{$golz}}" hidden >
-
-                <!-- <button class="btn btn-danger" type="button"  onclick="simpan()">Posting</button> -->
 
                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
-
-
                     <thead class="table-dark">
                         <tr>
                             <th scope="col" style="text-align: center"></th>
                             <th scope="col" style="text-align: center">#</th>
                             <th scope="col" style="text-align: center">-</th>
-                            <th scope="col" style="text-align: left">No. Bukti</th>
+                            <th scope="col" style="text-align: center">No Bukti</th>
                             <th scope="col" style="text-align: center">Tgl</th>
-                            <th scope="col" style="text-align: left">Kode</th>
-                            <th scope="col" style="text-align: left">Suplier</th>
-                            <th scope="col" style="text-align: left">Notes</th>
-                            <th scope="col" style="text-align: center">Posted</th>
+                            <th scope="col" style="text-align: center">Notes</th>
+                            <th scope="col" style="text-align: center">Status Posted</th>
                         </tr>
                     </thead>
 
                     <tbody>
                     </tbody>
                 </table>
+
+            </form>
+
               </div>
             </div>
           </div>
@@ -237,6 +198,8 @@
 
   $(document).ready(function() {
 
+
+
         var dataTable = $('.datatable').DataTable({
             processing: true,
             serverSide: true,
@@ -246,73 +209,64 @@
             "order": [[ 0, "asc" ]],
             ajax:
             {
-                url: "{{ route('get-po') }}",
-				        data: function(d)
+                url: "{{ route('get-perubahanbudget') }}",
+				        data:
                 {
-                    d.flagz = $('#flagz').val();
-                    d.golz = $('#golz').val();
-                    d.jenis_laporan = $('#jenis_laporan').val();
+                    flagz : $('#flagz').val(),
+
                 }
             },
 
             columns:
             [
-                //add tombol +
+                  //add tombol +
                 {
-
                     data: null, // Column for the button
                     orderable: false,
                     searchable: false,
-                    render: function(data, type, row, meta) {
 
-                        // kalau ada query POST di bagian paling atas, pada onclick perlu di tambah "event.preventDefault()"
-                        return `<button class="btn btn-success btn-sm toggle-button" data-no_bukti="${row.NO_BUKTI}" onclick="event.preventDefault();toggleButton(this)">+</button>`;
+                    render: function(data, type, row, meta) {
+                        return `<button type="button" class="btn btn-success btn-sm toggle-button" data-no_bukti="${row.NO_BUKTI}" onclick="toggleButton(this)">+</button>`;
                     }
+
                 },
-                // tutupannya
+                  // tutupannya
 
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
-                { data: 'action', name: 'action'},
+
+                {
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        return `<input type="checkbox" name="batal_post[]" value="${row.NO_ID}" class="form-control batal-post">`;
+                    }
+                },
+
+			    { data: 'action', name: 'action'},
                 { data: 'NO_BUKTI', name: 'NO_BUKTI'},
                 { data: 'TGL', name: 'TGL'},
-                { data: 'KODES', name: 'KODES'},
-                { data: 'NAMAS', name: 'NAMAS',
-                  render : function ( data, type, row, meta )
-                  {
-                    return ' <h5><span class="badge badge-pill badge-warning">' + data + '</span></h5>';
-                  }
-                },
-                { data: 'NOTES', name: 'NOTES'},
-                {
-                    data: 'POSTED',
-                    name: 'POSTED',
-                    render: function(data, type, row, meta) {
-                         if (row['POSTED'] == "0") {
-                            return '';
-                        } else {
-                            return '<input type="checkbox" checked style="pointer-events: none;">';
-                        }
+                { data: 'notes', name: 'notes'},
+                { data: 'POSTED', name: 'POSTED',
+                  render : function(data, type, row, meta) {
+                    if(row['POSTED']=="0"){
+                        return '';
+                    }else{
+                        return '<input type="checkbox" checked style="pointer-events: none;">';
                     }
+                  }
                 },
             ],
             columnDefs:
             [
                 // {
                 //     "className": "dt-center",
-                //     "targets": [0,10]
+                //     "targets": [8,9,10],
                 // },
                 {
-                  targets: 4,
+                  targets: 5,
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
-                },
-
-		        // {
-                //     "className": "dt-right",
-                //     "targets": 7
-                // },
-
-
-
+                }
             ],
             lengthMenu:
             [
@@ -322,7 +276,6 @@
             dom: "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-            stateSave: true,
 
         });
 
@@ -342,16 +295,20 @@
             column.visible($(this).is(':checked'));
         });
 
-        $('#jenis_laporan').on('change', function() {
-            dataTable.ajax.reload();
-        });
-
         // batas filter
 
-        $("div.test_btn").html(
-        '<a class="btn btn-lg btn-md btn-success" href="{{url('po/edit?flagz='.$flagz.'&golz='.$golz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
+        // $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('perubahanbudget/edit?flagz='.$flagz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
+        $("div.test_btn").html(`
+            <div class="d-flex align-items-center" style="gap: 1rem;">
+                <a class="btn btn-success btn-md" href="{{ url('perubahanbudget/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
+                    <i class="fas fa-plus fa-sm"></i>
+                </a>
+                <button hidden type="submit" form="form-batal-post" class="btn btn-danger btn-md">
+                    <i class="fa fa-ban"></i> BATAL POST
+                </button>
+            </div>
+        `);
 
-        );
 
 
 
@@ -366,7 +323,7 @@
 
                 // Fetch and show detail data using no_bukti
                 $.ajax({
-                    url: '{{ route('get-detail-po') }}', // Define the route to fetch detail data
+                    url: '{{ route('get-detail-perubahanbudget') }}', // Define the route to fetch detail data
                     method: 'GET',
                     data: {
                         no_bukti: no_bukti
@@ -374,12 +331,7 @@
                     success: function(response) {
                         console.log(response);
 
-                        // jangan lupa untuk menjumlah tambah di sini
                         let totalQty = 0;
-                        let totalTotal = 0;
-                        // tutupannya
-
-
                         let detailHtml = `
                             <div class="p-3">
                                 <table class="table table-bordered table-sm">
@@ -388,29 +340,39 @@
                                             <th>No.</th>
                                             <th>Barang</th>
                                             <th>Nama</th>
+                                            <th>Satuan PO</th>
+                                            <th>QTY PO</th>
+                                            <th>X</th>
                                             <th>Satuan</th>
-                                            <th>QTY</th>
+                                            <th>Qty</th>
                                             <th>Harga</th>
                                             <th>Total</th>
+                                            <th>PPN</th>
+                                            <th>DPP</th>
+                                            <th>Diskon</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                         `;
 
                         response.forEach((item, index) => {
-                            // untuk menjumlah
-                            totalQty += parseFloat(item.qty);
-                            totalTotal += parseFloat(item.total);
+                            totalQty += parseFloat(item.QTY);
 
                             detailHtml += `
                                 <tr>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${index + 1}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.KD_BRG}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.NA_BRG}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.SATUAN}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.qty).toFixed(2)}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.harga).toFixed(2)}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.total).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: center">${index + 1}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: center">${item.KD_BRG}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: center">${item.NA_BRG}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: center">${item.SATUAN_PO}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTY_PO).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.KALI).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: center">${item.SATUAN}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTY).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.HARGA).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.TOTAL).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.PPN).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.DPP).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.DISK).toFixed(2)}</div></td>
                                 </tr>
                             `;
                         });
@@ -418,19 +380,8 @@
                         detailHtml += `
                                     <tr>
                                         <td colspan="4" style="text-align: right;"><strong>Total:</strong></td>
-                                        <td>
-                                            <div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalQty.toFixed(2)}</div>
-                                        </td>
-
-                                        <td>
-                                        </td>
-
-                                        <td>
-                                            <div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalTotal.toFixed(2)}</div>
-                                        </td>
-
+                                        <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalQty.toFixed(2)}</div></td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -439,23 +390,23 @@
                         // Insert the detail row below the clicked row
                         var detailRow = `<tr class="detail-row">
                                 <td colspan="11">${detailHtml}</td>
-                                </tr>`;
+                              </tr>`;
 
                         $(button).closest('tr').after(detailRow);
                     }
                 });
-            } else {
-                button.innerText = '+';
-                button.classList.remove('btn-danger');
-                button.classList.add('btn-success');
+                } else {
+                    button.innerText = '+';
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-success');
 
-                // Remove the detail row if it exists
-                $(button).closest('tr').next('.detail-row').remove();
-            }
-        };
+                    // Remove the detail row if it exists
+                    $(button).closest('tr').next('.detail-row').remove();
+                }
+            };
 
-        // tutupanya
-    });
+          // tutupannya
+      });
 
     function deleteRow(link) {
         console.log('Masuk');
@@ -474,19 +425,6 @@
             }
         });
     }
-
-
-	function simpan() {
-    var check = '0';
-    var min = '0';
-
-
-	document.getElementById("entri").submit();
-
-	}
-
-
-
 
 </script>
 @endsection

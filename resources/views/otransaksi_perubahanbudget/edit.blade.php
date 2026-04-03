@@ -81,7 +81,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{($tipx=='new')? url('/terima/store?flagz='.$flagz.'') : url('/terima/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
+                    <form action="{{($tipx=='new')? url('/perubahanbudget/store?flagz='.$flagz.'') : url('/perubahanbudget/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
 
                         @csrf
                         <div class="tab-content mt-3">
@@ -104,81 +104,9 @@
                                     placeholder="Masukkan Bukti#" value="{{$header->NO_BUKTI}}" readonly>
                                 </div>
 
-								<div class="col-md-1" align="left" hidden>
-                                    <label for="CNT" class="form-label">Counter</label>
-                                </div>
-                               	<div class="col-md-2" hidden>
-                                  <input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih Counter"value="{{$header->CNT}}" style="text-align: left" >
-                                </div>
-
-                               	<div class="col-md-4 input-group" hidden>
-                                  <input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""value="{{$header->NCNT}}" style="text-align: left" >
-        						  <button type="button" class="btn btn-primary" onclick="browseCounter()"><i class="fa fa-search"></i></button>
-                                </div>
-
-								<div class="col-md-1">
-									<input type="checkbox" class="form-check-input" id="POSTED" name="POSTED" value="1" {{ ($header->POSTED == 1) ? 'checked' : '' }}>
-									<label for="POSTED">Posted</label>
-								</div>
-
 
                             </div>
 
-							<div class="form-group row">
-
-								<div class="col-md-1" align="left">
-                                    <label for="NO_RETUR" class="form-label">No Retur</label>
-                                </div>
-                               	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_RETUR" id="NO_RETUR" name="NO_RETUR" placeholder="Pilih "value="{{$header->NO_RETUR}}" style="text-align: left" >
-        						  {{-- <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button> --}}
-                                </div>
-
-								<div class="col-md-1" align="left">
-                                    <label for="KODES" class="form-label">Supplier</label>
-                                </div>
-                               	<div class="col-md-2">
-                                  <input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Pilih Supplier"value="{{$header->KODES}}" style="text-align: left" >
-                                </div>
-
-                               	<div class="col-md-4 input-group" >
-                                  <input type="text" class="form-control NAMAS" id="NAMAS" name="NAMAS" placeholder=""value="{{$header->NAMAS}}" style="text-align: left" >
-        						  <button type="button" class="btn btn-primary" onclick="browseSup()"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row">
-
-								<div class="col-md-1" align="left">
-                                    <label class="form-label">Referensi</label>
-                                </div>
-                               	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control REF" id="REF" name="REF" placeholder="" value="{{$header->REF}}" style="text-align: left" readonly >
-        						</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Margin</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control HMARGIN" id="HMARGIN" name="HMARGIN" placeholder="" value="{{$header->MARGIN}}" style="text-align: right" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Sts. Nota</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control ST_NOTA" id="ST_NOTA" name="ST_NOTA" placeholder="" value="{{$header->ST_NOTA}}" style="text-align: left" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Sistem</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control ST_CNT" id="ST_CNT" name="ST_CNT" placeholder="" value="{{$header->ST_CNT}}" style="text-align: left" readonly >
-								</div>
-
-                            </div>
 
                             <div class="form-group row">
 								<div class="col-md-1" align="left">
@@ -186,58 +114,6 @@
 								</div>
 								<div class="col-md-2">
 									<input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Dis. Promosi</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control POT_PROM" id="POT_PROM" name="POT_PROM" placeholder="" value="{{$header->POT_PROM}}" style="text-align: right" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Kupon krd</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control KK_STS" id="KK_STS" name="KK_STS" placeholder="" value="{{$header->KK_STS}}" style="text-align: left" readonly >
-								</div>
-
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Basic</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control BASIC" id="BASIC" name="BASIC" placeholder="" value="{{$header->BASIC}}" style="text-align: left" readonly >
-								</div>
-                            </div>
-
-							<div class="form-group row">
-								<div class="col-md-1" align="left">
-									<label for="JTEMPO" class="form-label">Jtempo</label>
-								</div>
-								<div class="col-md-2">
-									<input class="form-control date" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->JTEMPO))}}">
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Sts. Pajak</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control ST_PJK" id="ST_PJK" name="ST_PJK" placeholder="" value="{{$header->ST_PJK}}" style="text-align: left" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Formalitas</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control FORMAL" id="FORMAL" name="FORMAL" placeholder="" value="{{$header->FORMAL}}" style="text-align: left" readonly >
-								</div>
-
-								<div class="col-md-1" align="left">
-									<label class="form-label">Nota Khs</label>
-								</div>
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control NOTA_KHS" id="NOTA_KHS" name="NOTA_KHS" placeholder="" value="{{$header->NOTA_KHS}}" style="text-align: left" readonly >
 								</div>
                             </div>
 
@@ -249,16 +125,6 @@
                                 <div class="col-md-2">
                                     <input type="text" class="form-control NOTES" id="NOTES" name="NOTES" placeholder=""  value="{{$header->NOTES}}"  readonly >
                                 </div>
-
-								<!-- <div class="col-md-2" >
-									<input type="checkbox" class="form-check-input" id="BAYAR" name="BAYAR" readonly  value="{{$header->BAYAR}}" {{ ($header->BAYAR == 1) ? 'checked' : '' }}>
-									<input type="text" hidden class="form-control ZBAYAR" id="ZBAYAR" name="ZBAYAR" value="{{$header->BAYAR}}" placeholder="" >
-								</div> -->
-
-								<div class="col-md-1">
-									<input type="checkbox" class="form-check-input" id="BAYAR" name="BAYAR" value="1" {{ ($header->BAYAR == 1) ? 'checked' : '' }}>
-									<label for="BAYAR"></label>
-								</div>
                             </div>
 
 						<!-- loader tampil di modal  -->
@@ -325,27 +191,15 @@
 									<thead>
 										<tr>
 											<th width="100px" style="text-align:center">No.</th>
-											<th width="100px" style="text-align:center">Kode</th>
-											<th width="200px" style="text-align:center">Barcode</th>
-											<th width="120px" style="text-align:center">Uraian</th>
-											<th width="100px" style="text-align:center">Satuan</th>
-											<th width="100px" style="text-align:center">Qty Kirim</th>
-											<th width="100px" style="text-align:center">Qty Terima</th>
-											<th width="150px" style="text-align:center">Harga Beli</th>
-											<th width="150px" style="text-align:center">Margin</th>
-											<th width="150px" style="text-align:center">Diskon 1</th>
-											<th width="150px" style="text-align:center">Diskon 2</th>
-											<th width="150px" style="text-align:center">Diskon 3</th>
-											<th width="150px" style="text-align:center">Diskon 4</th>
-											<th width="150px" style="text-align:center">Total</th>
-											<th width="150px" style="text-align:center">Harga Jual</th>
-											<th width="150px" style="text-align:center">+ / -</th>
+											<th width="100px" style="text-align:center">Supplier</th>
+											<th width="200px" style="text-align:center">-</th>
+											<th width="120px" style="text-align:center">Budget Pokok</th>
+											<th width="100px" style="text-align:center">Budget Usulan</th>
 											<th width="150px" style="text-align:center">Ket</th>
-
 											<th></th>
 
 										</tr>
-									<tbody id="detailPod">
+									<tbody>
 
 									<tbody>
 									<?php $no=0 ?>
@@ -359,58 +213,21 @@
 											</td>
 
 											<td>
-												<input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG "
-												value="{{$detail->KD_BRG}}" onblur="browseBarang({{$no}})">
+												<input name="SUPP[]" id="SUPP{{$no}}" type="text" class="form-control SUPP "
+												value="{{$detail->SUPP}}" onblur="browseBarang({{$no}})">
 											</td>
 
 											<td>
-												<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->BARCODE}}">
-											</td>
-
-											<td>
-												<input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}">
-											</td>
-
-											<td>
-												<input name="SATUAN[]" id="SATUAN{{$no}}" type="text" class="form-control SATUAN" value="{{$detail->satuan}}">
+												<input name="NAMAS[]" id="NAMAS{{$no}}" type="text" class="form-control NAMAS " value="{{$detail->NAMAS}}">
 											</td>
 											<td>
-												<input name="QTYK[]" onclick="select()" onblur="hitung()" value="{{$detail->qtyk}}" id="QTYK{{$no}}" type="text" style="text-align: right"  class="form-control QTYK" >
+												<input name="Q_BUDGET[]" onclick="select()" onblur="hitung()" value="{{$detail->Q_BUDGET}}" id="Q_BUDGET{{$no}}" type="text" style="text-align: right"  class="form-control Q_BUDGET" >
 											</td>
 											<td>
-												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->qty}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
-											</td>
-
-											<td >
-												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->harga}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
-											</td>
-
-											<td >
-												<input name="MARGIN[]" onblur="hitung()"  value="{{$detail->MARGIN}}" id="MARGIN{{$no}}" type="text" style="text-align: right"  class="form-control MARGIN" readonly>
-											</td>
-											<td >
-												<input name="DIKSON1[]" onblur="hitung()"  value="{{$detail->DISKON1}}" id="DIKSON1{{$no}}" type="text" style="text-align: right"  class="form-control DIKSON1" readonly>
-											</td>
-											<td >
-												<input name="DISKON2[]" onblur="hitung()"  value="{{$detail->DISKON2}}" id="DISKON2{{$no}}" type="text" style="text-align: right"  class="form-control DISKON2" readonly>
+												<input name="R_BUDGET[]" onclick="select()" onblur="hitung()" value="{{$detail->R_BUDGET}}" id="R_BUDGET{{$no}}" type="text" style="text-align: right"  class="form-control R_BUDGET" >
 											</td>
 											<td>
-												<input name="DISKON3[]" onblur="hitung()"  value="{{$detail->DISKON3}}" id="DISKON3{{$no}}" type="text" style="text-align: right"  class="form-control DISKON3" readonly>
-											</td>
-											<td>
-												<input name="DISKON4[]" onblur="hitung()"  value="{{$detail->DISKON4}}" id="DISKON4{{$no}}" type="text" style="text-align: right"  class="form-control DISKON4" readonly>
-											</td>
-											<td>
-												<input name="TOTAL[]" onblur="hitung()"  value="{{$detail->total}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
-											</td>
-											<td>
-												<input name="HARGA_JL[]" onblur="hitung()"  value="{{$detail->HARGA_JL}}" id="HARGA_JL{{$no}}" type="text" style="text-align: right"  class="form-control HARGA_JL" readonly>
-											</td>
-											<td>
-												<input name="BLT[]" onblur="hitung()"  value="{{$detail->BLT}}" id="BLT{{$no}}" type="text" style="text-align: right"  class="form-control BLT" readonly>
-											</td>
-											<td>
-												<input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->ket}}">
+												<input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->KET}}">
 											</td>
 
 											<td>
@@ -431,11 +248,6 @@
 										<td></td>
 										<td></td>
 										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<!-- <td><input class="form-control TTOTAL  text-primary" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> -->
-										<td></td>
 									</tfoot>
 								</table>
 							</div>
@@ -449,7 +261,7 @@
 
                         <hr style="margin-top: 30px; margin-buttom: 30px">
 
-                        <div class="tab-content mt-6">
+                        {{-- <div class="tab-content mt-6">
 
 							<div class="form-group row">
 
@@ -498,20 +310,20 @@
                                 </div>
 							</div>
 
-						</div>
+						</div> --}}
 
 
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
-								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/terima/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
-								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/terima/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
-								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/terima/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
-								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/terima/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
+								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/perubahanbudget/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
+								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/perubahanbudget/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
+								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/perubahanbudget/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
+								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/perubahanbudget/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">
-								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/terima/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
+								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/perubahanbudget/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
 								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>
-								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/terima/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>
+								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/perubahanbudget/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>
 								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
@@ -531,21 +343,21 @@
     </div>
 
 
- 	<div class="modal fade" id="browseCounterModal" tabindex="-1" role="dialog" aria-labelledby="browseCounterModalLabel" aria-hidden="true">
+ 	<div class="modal fade" id="browseSupplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSupplierModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseCounterModalLabel">Cari Counter</h5>
+			<h5 class="modal-title" id="browseSupplierModalLabel">Cari Supplier</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bcounter">
+			<table class="table table-stripped table-bordered" id="table-bsupplier">
 				<thead>
 					<tr>
-						<th>Counter</th>
-						<th>Nama Counter</th>
+						<th>Supplier</th>
+						<th>Nama</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -791,7 +603,7 @@
 			$.ajax(
 			{
 				type: 'GET',
-				url: '{{url('terima/browse_sup')}}',
+				url: '{{url('perubahanbudget/browse_sup')}}',
 
 				beforeSend: function(){
 					$("#LOADX").show();
@@ -1003,14 +815,14 @@
 
 //////////////////////////////////////////////////////////////////
 
-//		CHOOSE Counter
-		var dTableBCounter;
-		loadDataBCounter = function(){
+//		CHOOSE Supplier
+		var dTableBSupplier;
+		loadDataBSupplier = function(){
 
 			$.ajax(
 			{
 				type: 'GET',
-				url: '{{url('terima/browse_cnt')}}',
+				url: '{{url('sup/browse')}}',
 
 				beforeSend: function(){
 					$("#LOADX").show();
@@ -1021,35 +833,35 @@
 					$("#LOADX").hide();
 
 					resp = response;
-					if(dTableBCounter){
-						dTableBCounter.clear();
+					if(dTableBSupplier){
+						dTableBSupplier.clear();
 					}
 					for(i=0; i<resp.length; i++){
 
-						dTableBCounter.row.add([
-							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
-							resp[i].NCNT
+						dTableBSupplier.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSupplier(\''+resp[i].NO_SUPL+'\', \''+resp[i].NAMA+'\')">'+resp[i].NO_SUPL+'</a>',
+							resp[i].NAMA
 						]);
 					}
-					dTableBCounter.draw();
+					dTableBSupplier.draw();
 				}
 			});
 		}
 
-		dTableBCounter = $("#table-bcounter").DataTable({
+		dTableBSupplier = $("#table-bsupplier").DataTable({
 
 		});
 
-		browseCounter = function(){
-			loadDataBCounter();
-			$("#browseCounterModal").modal("show");
+		browseSupplier = function(){
+			loadDataBSupplier();
+			$("#browseSupplierModal").modal("show");
 		}
 
-		chooseCounter = function(CNT,NCNT){
+		chooseSupplier = function(NO_SUPL,NAMA){
 
-			$("#CNT").val(CNT);
-			$("#NCNT").val(NCNT);
-			$("#browseCounterModal").modal("hide");
+			$("#SUPP").val(NO_SUPL);
+			$("#NAMAS").val(NAMA);
+			$("#browseSupplierModal").modal("hide");
 			// getBelid(NO_BUKTI);
 		}
 //////////////////////////////////////////////////////////////////////
@@ -1064,7 +876,7 @@
 	// 	$.ajax(
 	// 		{
 	// 			type: 'GET',
-	// 			url: "{{url('terima/browse_terimad')}}",
+	// 			url: "{{url('perubahanbudget/browse_perubahanbudgetd')}}",
 	// 			data: {
 	// 				nobukti: bukti,
 	// 			},
@@ -1169,7 +981,7 @@
 			$.ajax(
 			{
 				type: 'GET',
-				url: "{{url('terima/browse_brg')}}",
+				url: "{{url('perubahanbudget/browse_brg')}}",
 				async : false,
 				data: {
 						'KODES': $("#KODES").val(),
@@ -1710,7 +1522,7 @@
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
 		if (confirm(text) == true)
 		{
-			window.location ="{{url('/terima/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
+			window.location ="{{url('/perubahanbudget/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
 			//return true;
 		}
 		return false;
@@ -1743,7 +1555,7 @@
 					confirmButtonText: 'OK'
 				}).then(() => {
 					// Redirect to delete the data after user confirms the success message
-	            	loc = "{{ url('/terima/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz);
+	            	loc = "{{ url('/perubahanbudget/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz);
 
 		            // alert(loc);
 	            	window.location = loc;
@@ -1766,7 +1578,7 @@
 			cancelButtonText: 'No, stay here'
 		}).then((result) => {
 			if (result.isConfirmed) {
-	        	loc = "{{ url('/terima/') }}" + '?flagz=' + encodeURIComponent(flagz);
+	        	loc = "{{ url('/perubahanbudget/') }}" + '?flagz=' + encodeURIComponent(flagz);
 				window.location = loc ;
 			} else {
 				Swal.fire({
@@ -1785,7 +1597,7 @@
 
 		var flagz = "{{ $flagz }}";
 		var cari = $("#CARI").val();
-		var loc = "{{ url('/terima/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
+		var loc = "{{ url('/perubahanbudget/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
 		window.location = loc;
 
 	}

@@ -107,49 +107,49 @@
                                             value="2" id="columnBukti" checked>
                                         <label class="form-check-label" for="columnBukti">Bukti#</label>
                                     </div>
-                                    <div class="form-check">
+                                    <!-- <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
                                             value="3" id="columnRef" checked>
                                         <label class="form-check-label" for="columnRef">Ref</label>
-                                    </div>
+                                    </div> -->
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="4" id="columnTgl" checked>
+                                            value="3" id="columnTgl" checked>
                                         <label class="form-check-label" for="columnTgl">Tgl</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="5" id="columnSup" checked>
+                                            value="4" id="columnSup" checked>
                                         <label class="form-check-label" for="columnSup">Suplier#</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="6" id="columnNama" checked>
+                                            value="5" id="columnNama" checked>
                                         <label class="form-check-label" for="columnNama">No PO</label>
                                     </div>
-                                    <div class="form-check">
+                                    <!-- <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="7" id="columnTqty">
+                                            value="6" id="columnTqty">
                                         <label class="form-check-label" for="columnTqty">Total-QTY</label>
-                                    </div>
+                                    </div> -->
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="8" id="columnTotal">
+                                            value="6" id="columnTotal">
                                         <label class="form-check-label" for="columnTotal">Total</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="9" id="columnNett">
+                                            value="7" id="columnNett">
                                         <label class="form-check-label" for="columnNett">Nett</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="10" id="columnUser">
+                                            value="8" id="columnUser">
                                         <label class="form-check-label" for="columnUser">User</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="11" id="columnPosted">
+                                            value="9" id="columnPosted">
                                         <label class="form-check-label" for="columnPosted">User</label>
                                     </div>
                                 </form>
@@ -179,11 +179,11 @@
                             <th scope="col" style="text-align: center">#</th>
                             <th scope="col" style="text-align: center">-</th>							
                             <th scope="col" style="text-align: center">No Bukti</th>
-                            <th scope="col" style="text-align: center">Ref</th>
+                            <!-- <th scope="col" style="text-align: center">Ref</th> -->
                             <th scope="col" style="text-align: center">Tgl</th>
                             <th scope="col" style="text-align: center">Suplier#</th>
                             <th scope="col" style="text-align: center">No PO</th>
-                            <th scope="col" style="text-align: center">Total-Qty</th>
+                            <!-- <th scope="col" style="text-align: center">Total-Qty</th> -->
                             <th scope="col" style="text-align: center">Total</th>
                             <th scope="col" style="text-align: center">Nett</th>
                             <th scope="col" style="text-align: center">User</th>
@@ -276,7 +276,7 @@
 
 			    { data: 'action', name: 'action'},
                 { data: 'NO_BUKTI', name: 'NO_BUKTI'},
-                { data: 'REF', name: 'REF'},
+                // { data: 'REF', name: 'REF'},
                 { data: 'TGL', name: 'TGL'},
                 { data: 'NAMAS', name: 'NAMAS',
                   render : function ( data, type, row, meta )
@@ -285,10 +285,10 @@
                   }
                 },
                 { data: 'NO_PO', name: 'NO_PO'},
-                { data: 'total_qty', name: 'total_qty', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'total', name: 'total', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'nett', name: 'nett', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                { data: 'usrnm', name: 'usrnm'},
+                // { data: 'total_qty', name: 'total_qty', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                { data: 'TOTAL', name: 'TOTAL', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                { data: 'NETT', name: 'NETT', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
+                { data: 'USRNM', name: 'USRNM'},
                 {
                     data: 'POSTED',
                     name: 'POSTED',

@@ -27,13 +27,13 @@ class PiuController extends Controller
      */
     var $judul = '';
     var $FLAGZ = '';
-	
+
     function setFlag(Request $request)
     {
         if ( $request->flagz == 'P' ) {
             $this->judul = "Pembayaran piutang";
-        } 
-		
+        }
+
         $this->FLAGZ = $request->flagz;
 
 
@@ -45,17 +45,24 @@ class PiuController extends Controller
 	    $this->setFlag($request);
         // ganti 3
         return view('otransaksi_piu.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ ]);
-	
-	
+
+
     }
-	
+
+    public function browse(Request $request)
+    {
+        $piu = DB::SELECT("SELECT NO_BUKTI, TGL FROM piu ORDER BY NO_BUKTI ASC");
+
+        return response()->json($piu);
+    }
+
 // ganti 4
 
     public function getPiu(Request $request)
     {
 // ganti 5
 
-	if ($request->session()->has('periode')) 
+	if ($request->session()->has('periode'))
 		{
 			$periode = $request->session()->get('periode')['bulan']. '/' . $request->session()->get('periode')['tahun'];
 		} else
@@ -63,58 +70,58 @@ class PiuController extends Controller
 			$periode = '';
 		}
 
-		$this->setFlag($request);	
-		
+		$this->setFlag($request);
+
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
-		
-        $piu = DB::SELECT("SELECT NO_ID, NO_BUKTI, 
-                                TGL, KODEC, NAMAC, KOTA, TOTAL, BAYAR, NOTES, FLAG, POSTED, 
-                                USRNM from piu 
-                           where PER = '$periode' AND CBG = '$CBG' 
+
+        $piu = DB::SELECT("SELECT NO_ID, NO_BUKTI,
+                                TGL, KODEC, NAMAC, KOTA, TOTAL, BAYAR, NOTES, FLAG, POSTED,
+                                USRNM from piu
+                           where PER = '$periode' AND CBG = '$CBG'
                            ORDER BY NO_BUKTI ");
-	   	
-		
+
+
 // ganti 6
-		
+
         return Datatables::of($piu)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    if ( Auth::user()->divisi=="programmer" ) 
+                    if ( Auth::user()->divisi=="programmer" )
                     {
                         // url untuk delete di index
                         $url = "'".url("piu/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
                         // batas
 
-                        $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="piu/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';					
+                        $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="piu/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';
                         $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')"';
 
 
- 						 												 
-                        $btnPrivilege = 
+
+                        $btnPrivilege =
                         '
                                 <a class="dropdown-item" '.$btnEdit.'>
                                 <i class="fas fa-edit"></i>
                                     Edit
-                                </a>	
+                                </a>
                                 <a class="dropdown-item btn btn-danger" href="piu/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
-                                </a> 									
+                                </a>
                                 <hr></hr>
                                 <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
-   
+
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Delete
-                                </a> 
+                                </a>
                         ';
-                    } 
+                    }
                     else
                     {
                         $btnPrivilege = '';
                     }
 
-                    $actionBtn = 
+                    $actionBtn =
                     '
                     <div class="dropdown show" style="text-align: center">
                         <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -122,13 +129,13 @@ class PiuController extends Controller
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            
+
 
                             '.$btnPrivilege.'
                         </div>
                     </div>
                     ';
-                    
+
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -146,12 +153,12 @@ class PiuController extends Controller
     public function store(Request $request)
     {
 
-        
+
         $this->validate($request,
 // GANTI 9
 
         [
- 
+
                 'TGL'      => 'required',
 
             ]
@@ -160,21 +167,21 @@ class PiuController extends Controller
 //////     nomer otomatis
 
         $kodecx = $request->KODEC;
-        
+
         $xxx= DB::table('cust')->select('PKP')->where('KODEC', $kodecx)->get();
 
         $PPN = $xxx[0]->PKP ;
-        
-        
+
+
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
-		
+
         $CBG = Auth::user()->CBG;
 
-		
+
         $periode = $request->session()->get('periode')['bulan']. '/' . $request->session()->get('periode')['tahun'];
-		
+
         $bulan	= session()->get('periode')['bulan'];
 		$tahun	= substr(session()->get('periode')['tahun'],-2);
 
@@ -199,7 +206,7 @@ class PiuController extends Controller
             } else {
                 $no_bukti = 'PZ' . $CBG . $tahun . $bulan . '-0001';
             }
-        } 
+        }
 
         /////////////////////////////////////////////////////////////////
 
@@ -208,13 +215,13 @@ class PiuController extends Controller
         if( $PPN == '1' ){
 
             if ( $type1 == 'KAS' )
-            {          
+            {
                         $bulan    = session()->get('periode')['bulan'];
                         $tahun    = substr(session()->get('periode')['tahun'], -2);
                         $query2 = DB::table('kas')->select('NO_BUKTI')->where('PER', $periode)
                                         ->where('TYPE', 'BKM')->where('CBG', $CBG)->where('PKP', $PPN)
                                         ->orderByDesc('NO_BUKTI')->limit(1)->get();
-                
+
                         if ($query2 != '[]') {
                             $query2 = substr($query2[0]->NO_BUKTI, -4);
                             $query2 = str_pad($query2 + 1, 4, 0, STR_PAD_LEFT);
@@ -222,16 +229,16 @@ class PiuController extends Controller
                         } else {
                             $no_bukti2 = 'BKMY' . $CBG . $tahun . $bulan . '-0001';
                         }
-                        
+
             }
             else
             {
-    
+
                         $bulan    = session()->get('periode')['bulan'];
                         $tahun    = substr(session()->get('periode')['tahun'], -2);
                         $query2 = DB::table('bank')->select('NO_BUKTI')->where('PER', $periode)
                                 ->where('TYPE', 'BBM')->where('CBG', $CBG)->where('PKP', $PPN)->orderByDesc('NO_BUKTI')->limit(1)->get();
-                
+
                         if ($query2 != '[]') {
                             $query2 = substr($query2[0]->NO_BUKTI, -4);
                             $query2 = str_pad($query2 + 1, 4, 0, STR_PAD_LEFT);
@@ -239,19 +246,19 @@ class PiuController extends Controller
                         } else {
                             $no_bukti2 = 'BBMY' . $CBG . $tahun . $bulan . '-0001';
                         }
-                        
-                
+
+
             }
 
         } else {
 
             if ( $type1 == 'KAS' )
-            {          
+            {
                         $bulan    = session()->get('periode')['bulan'];
                         $tahun    = substr(session()->get('periode')['tahun'], -2);
                         $query2 = DB::table('kas')->select('NO_BUKTI')->where('PER', $periode)
                         ->where('TYPE', 'BKM')->where('CBG', $CBG)->where('PKP', $PPN)->orderByDesc('NO_BUKTI')->limit(1)->get();
-                
+
                         if ($query2 != '[]') {
                             $query2 = substr($query2[0]->NO_BUKTI, -4);
                             $query2 = str_pad($query2 + 1, 4, 0, STR_PAD_LEFT);
@@ -259,16 +266,16 @@ class PiuController extends Controller
                         } else {
                             $no_bukti2 = 'BKMZ' . $CBG . $tahun . $bulan . '-0001';
                         }
-                        
+
             }
             else
             {
-    
+
                         $bulan    = session()->get('periode')['bulan'];
                         $tahun    = substr(session()->get('periode')['tahun'], -2);
                         $query2 = DB::table('bank')->select('NO_BUKTI')->where('PER', $periode)
                                     ->where('TYPE', 'BBM')->where('CBG', $CBG)->where('PKP', $PPN)->orderByDesc('NO_BUKTI')->limit(1)->get();
-                
+
                         if ($query2 != '[]') {
                             $query2 = substr($query2[0]->NO_BUKTI, -4);
                             $query2 = str_pad($query2 + 1, 4, 0, STR_PAD_LEFT);
@@ -276,32 +283,32 @@ class PiuController extends Controller
                         } else {
                             $no_bukti2 = 'BBMZ' . $CBG . $tahun . $bulan . '-0001';
                         }
-                        
-                
+
+
             }
 
         }
-        
-    
-		
+
+
+
         // Insert Header
 
 // ganti 10
-		
+
         $piu = Piu::create(
             [
-                'NO_BUKTI'         => $no_bukti,	
-				'TGL'              => date('Y-m-d', strtotime($request['TGL'])),		
+                'NO_BUKTI'         => $no_bukti,
+				'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'PER'              => $periode,
-                'KODEC'            => ($request['KODEC']==null) ? "" : $request['KODEC'],			
+                'KODEC'            => ($request['KODEC']==null) ? "" : $request['KODEC'],
                 'NAMAC'            => ($request['NAMAC']==null) ? "" : $request['NAMAC'],
-                'BACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],			
+                'BACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],
                 'BNAMA'            => ($request['BNAMA']==null) ? "" : $request['BNAMA'],
 				'FLAG'             => $FLAGZ,
 				'NOTES'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
                 'BAYAR'            => (float) str_replace(',', '', $request['TBAYAR']),
                 'LAIN'             => (float) str_replace(',', '', $request['TLAIN']),
-                
+
 				'KODEP'            => ($request['KODEP']==null) ? "" : $request['KODEP'],
 				'NAMAP'            => ($request['NAMAP']==null) ? "" : $request['NAMAP'],
                 'KOM'             => (float) str_replace(',', '', $request['KOM']),
@@ -320,60 +327,60 @@ class PiuController extends Controller
 		$REC	    = $request->input('REC');
 		$NO_FAKTUR	= $request->input('NO_FAKTUR');
 		$TOTAL	= $request->input('TOTAL');
-		$BAYAR	= $request->input('BAYAR');		
+		$BAYAR	= $request->input('BAYAR');
 		$SISA	= $request->input('SISA');
 
 		$TGL_FAKTUR	= $request->input('TGL_FAKTUR');
 		$LAIN	= $request->input('LAIN');
-		
+
 		// Check jika value detail ada/tidak
 		if ($REC) {
 			foreach ($REC as $key => $value) {
 				// Declare new data di Model
 				$detail	= new Piudetail;
-				
+
 				// Insert ke Database
-				$detail->NO_BUKTI = $no_bukti;			
+				$detail->NO_BUKTI = $no_bukti;
 				$detail->REC	= $REC[$key];
 				$detail->PER	= $periode;
 				$detail->FLAG	= $FLAGZ;
 				$detail->NO_FAKTUR = ($NO_FAKTUR[$key]==null) ? "" :  $NO_FAKTUR[$key];
 				$detail->TOTAL	= (float) str_replace(',', '', $TOTAL[$key]);
-				$detail->BAYAR	= (float) str_replace(',', '', $BAYAR[$key]);					
-				$detail->SISA	= (float) str_replace(',', '', $SISA[$key]);	
+				$detail->BAYAR	= (float) str_replace(',', '', $BAYAR[$key]);
+				$detail->SISA	= (float) str_replace(',', '', $SISA[$key]);
 
                 $detail->TGL_FAKTUR   = date('Y-m-d', strtotime($TGL_FAKTUR[$key]));
-				$detail->LAIN	= (float) str_replace(',', '', $LAIN[$key]);	
+				$detail->LAIN	= (float) str_replace(',', '', $LAIN[$key]);
 				$detail->save();
 			}
 		}
-		
+
 
 //  ganti 11
 
 
        $no_buktix = $no_bukti;
-		
+
 		$piu = Piu::where('NO_BUKTI', $no_buktix )->first();
 
         DB::SELECT("UPDATE piu, cust
-                    SET piu.NAMAC = cust.NAMAC, piu.ALAMAT = cust.ALAMAT, piu.KOTA = cust.KOTA, piu.PKP=cust.PKP, piu.HARI = cust.HARI  WHERE piu.KODEC = cust.KODEC 
+                    SET piu.NAMAC = cust.NAMAC, piu.ALAMAT = cust.ALAMAT, piu.KOTA = cust.KOTA, piu.PKP=cust.PKP, piu.HARI = cust.HARI  WHERE piu.KODEC = cust.KODEC
                     AND piu.NO_BUKTI='$no_buktix';");
-                    
+
 
         DB::SELECT("UPDATE piu, account
-                            SET piu.BNAMA = account.NAMA  WHERE piu.BACNO = account.ACNO 
+                            SET piu.BNAMA = account.NAMA  WHERE piu.BACNO = account.ACNO
 							AND piu.NO_BUKTI='$no_buktix';");
-							
+
 
         DB::SELECT("UPDATE piu, piud
                             SET piud.ID = piu.NO_ID  WHERE piu.NO_BUKTI =
-							piud.NO_BUKTI 
+							piud.NO_BUKTI
 							AND piu.NO_BUKTI='$no_buktix';");
 
-		
+
         $variablell = DB::select('call piuins(?,?)', array($no_bukti, $no_bukti2));
-					 
+
         // return redirect('/piu/edit/?idx=' . $piu->NO_ID . '&tipx=edit&flagz=' . $FLAGZ . '&judul=' . $this->judul . '');
         return redirect('/piu?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
 
@@ -386,17 +393,17 @@ class PiuController extends Controller
      * @param  \App\Models\Master\Rute  $rute
      * @return \Illuminate\Http\Response
      */
-	 
+
 // ganti 12
-	 
-   
+
+
    public function edit( Request $request , Piu $piu )
     {
 
 
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
-		
-				
+
+
         $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
         if ($cekperid[0]->POSTED==1)
         {
@@ -404,171 +411,171 @@ class PiuController extends Controller
 			       ->with('status', 'Maaf Periode sudah ditutup!')
                    ->with(['judul' => $judul, 'flagz' => $FLAGZ]);
         }
-		
+
 		$this->setFlag($request);
-		
+
         $tipx = $request->tipx;
 
 		$idx = $request->idx;
-		
+
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
-		
+
 		if ( $idx =='0' && $tipx=='undo'  )
 	    {
 			$tipx ='top';
-			
+
 		   }
-		   
-		 
-		   
+
+
+
 		if ($tipx=='search') {
-			
-		   	
+
+
     	   $buktix = $request->buktix;
-		   
+
 		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from piu
 		                 where PER ='$per' and NO_BUKTI = '$buktix'
-                         AND CBG = '$CBG'						 
-                         AND PKP = '$PPN'						 
+                         AND CBG = '$CBG'
+                         AND PKP = '$PPN'
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
-						 
-			
-			if(!empty($bingco)) 
+
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = 0; 
+				$idx = 0;
 			  }
-		
-					
+
+
 		}
-		
+
 		if ($tipx=='top') {
-			
+
 
 		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from piu
-		                 where PER ='$per' AND CBG = '$CBG'   
-                         AND PKP = '$PPN'						 
+		                 where PER ='$per' AND CBG = '$CBG'
+                         AND PKP = '$PPN'
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
-						 
-		
-			if(!empty($bingco)) 
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0; 
-			  }
-		
-					
-		}
-		
-		
-		if ($tipx=='prev' ) {
-			
-    	   $buktix = $request->buktix;
-			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from piu     
-		             where PER ='$per' AND CBG = '$CBG'
-                     AND PKP = '$PPN'						 
-                     and NO_BUKTI < 
-					 '$buktix' ORDER BY NO_BUKTI DESC LIMIT 1" );
-			
 
-			if(!empty($bingco)) 
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = $idx; 
+				$idx = 0;
 			  }
-			  
+
+
 		}
-		
-		
-		if ($tipx=='next' ) {
-			
-				
-      	   $buktix = $request->buktix;
-	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from piu    
+
+
+		if ($tipx=='prev' ) {
+
+    	   $buktix = $request->buktix;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from piu
 		             where PER ='$per' AND CBG = '$CBG'
-                     AND PKP = '$PPN'						 
-                     and NO_BUKTI > 
-					 '$buktix' ORDER BY NO_BUKTI ASC LIMIT 1" );
-					 
-			if(!empty($bingco)) 
+                     AND PKP = '$PPN'
+                     and NO_BUKTI <
+					 '$buktix' ORDER BY NO_BUKTI DESC LIMIT 1" );
+
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = $idx; 
+				$idx = $idx;
 			  }
-			  
-			
+
+		}
+
+
+		if ($tipx=='next' ) {
+
+
+      	   $buktix = $request->buktix;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from piu
+		             where PER ='$per' AND CBG = '$CBG'
+                     AND PKP = '$PPN'
+                     and NO_BUKTI >
+					 '$buktix' ORDER BY NO_BUKTI ASC LIMIT 1" );
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = $idx;
+			  }
+
+
 		}
 
 		if ($tipx=='bottom') {
-		  
+
     		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from piu
 						where PER ='$per' AND CBG = '$CBG'
-                        AND PKP = '$PPN'						 
+                        AND PKP = '$PPN'
 		                ORDER BY NO_BUKTI DESC  LIMIT 1" );
-					 
-			if(!empty($bingco)) 
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = 0; 
+				$idx = 0;
 			  }
-			  
-			
+
+
 		}
 
-        
+
 		if ( $tipx=='undo' || $tipx=='search' )
 	    {
-        
-			$tipx ='edit';
-			
-		   }
-		
-		
 
-       	if ( $idx != 0 ) 
+			$tipx ='edit';
+
+		   }
+
+
+
+       	if ( $idx != 0 )
 		{
-			$piu = Piu::where('NO_ID', $idx )->first();	
+			$piu = Piu::where('NO_ID', $idx )->first();
 	     }
 		 else
 		 {
 				$piu = new Piu;
                 $piu->TGL = Carbon::now();
-      
-				
+
+
 		 }
 
         $no_bukti = $piu->NO_BUKTI;
-	    $piudetail = DB::table('piud')->where('NO_BUKTI', $no_bukti)->get();	
-		
-		
+	    $piudetail = DB::table('piud')->where('NO_BUKTI', $no_bukti)->get();
+
+
 		$data = [
             'header'        => $piu,
             'detail'        => $piudetail,
-			
+
         ];
- 
-         
+
+
          return view('otransaksi_piu.edit', $data)
 		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul'=> $this->judul ]);
-      
+
     }
 
 
@@ -576,42 +583,42 @@ class PiuController extends Controller
 
     public function update(Request $request, Piu $piu )
     {
-		
+
         $this->validate($request,
         [
-		
+
 // ganti 19
   //              'NO_PO'       => 'required',
                 'TGL'      => 'required'
 
             ]
         );
-		
+
 // ganti 20
 
-        $variablell = DB::select('call piudel(?,?)', array($piu['NO_BUKTI'], '0'));		
+        $variablell = DB::select('call piudel(?,?)', array($piu['NO_BUKTI'], '0'));
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
-		
+
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
-		
+
         // ganti 20
         $periode = $request->session()->get('periode')['bulan']. '/' . $request->session()->get('periode')['tahun'];
-	
-	
+
+
         $piu->update(
             [
 				'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'KODEC'            => ($request['KODEC']==null) ? "" : $request['KODEC'],	
+                'KODEC'            => ($request['KODEC']==null) ? "" : $request['KODEC'],
 				'NAMAC'			   =>($request['NAMAC']==null) ? "" : $request['NAMAC'],
 				'NOTES'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
                 'BAYAR'            => (float) str_replace(',', '', $request['TBAYAR']),
                 'LAIN'             => (float) str_replace(',', '', $request['TLAIN']),
-                'BACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],			
-                'BNAMA'            => ($request['BNAMA']==null) ? "" : $request['BNAMA'],                
+                'BACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],
+                'BNAMA'            => ($request['BNAMA']==null) ? "" : $request['BNAMA'],
 				'KODEP'            => ($request['KODEP']==null) ? "" : $request['KODEP'],
 				'NAMAP'            => ($request['NAMAP']==null) ? "" : $request['NAMAP'],
                 'KOM'             => (float) str_replace(',', '', $request['KOM']),
@@ -622,18 +629,18 @@ class PiuController extends Controller
 				'TG_SMP'           => Carbon::now(),
 				'CBG'              => $CBG,
 				'PKP'             => ($request['PKP']==null) ? "" : $request['PKP'],
-				'FLAG'              => $FLAGZ	
+				'FLAG'              => $FLAGZ
             ]
         );
 
 
 
 		$no_buktix = $piu->NO_BUKTI;
-		
+
         // Update Detail
         $length = sizeof($request->input('REC'));
         $NO_ID  = $request->input('NO_ID');
-		
+
         $REC	= $request->input('REC');
 		$NO_FAKTUR = $request->input('NO_FAKTUR');
 		$BAYAR	= $request->input('BAYAR');
@@ -654,12 +661,12 @@ class PiuController extends Controller
                         'NO_BUKTI'   => $request->NO_BUKTI,
                         'REC'        => $REC[$i],
 				        'PER'        => $periode,
-                        'FLAG'       => $FLAGZ,	  							
+                        'FLAG'       => $FLAGZ,
                         'NO_FAKTUR'  => ($NO_FAKTUR[$i]==null) ? "" :  $NO_FAKTUR[$i],
                         'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'BAYAR'      => (float) str_replace(',', '', $BAYAR[$i]),
                         'SISA'      => (float) str_replace(',', '', $SISA[$i]),
-           
+
                         'TGL_FAKTUR'   => ($TGL_FAKTUR[$i] != '') ? date("Y-m-d", strtotime($TGL_FAKTUR[$i])) : "",
                         'LAIN'      => (float) str_replace(',', '', $LAIN[$i]),
 
@@ -672,17 +679,17 @@ class PiuController extends Controller
                         'NO_BUKTI'  => $request->NO_BUKTI,
                         'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
                     ],
-    
+
                     [
                         'REC'        => $REC[$i],
-                        'NO_FAKTUR'  => ($NO_FAKTUR[$i]==null) ? "" :  $NO_FAKTUR[$i],	
+                        'NO_FAKTUR'  => ($NO_FAKTUR[$i]==null) ? "" :  $NO_FAKTUR[$i],
                         'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'BAYAR'      => (float) str_replace(',', '', $BAYAR[$i]),
                         'SISA'      => (float) str_replace(',', '', $SISA[$i]),
-           
+
                         'TGL_FAKTUR'   => ($TGL_FAKTUR[$i] != '') ? date("Y-m-d", strtotime($TGL_FAKTUR[$i])) : "",
                         'LAIN'      => (float) str_replace(',', '', $LAIN[$i]),
-                        
+
                     ]
                 );
             }
@@ -693,32 +700,32 @@ class PiuController extends Controller
 
 //  ganti 21
 
-		
+
         DB::SELECT("UPDATE piu, cust
-                    SET piu.NAMAC = cust.NAMAC, piu.ALAMAT = cust.ALAMAT, piu.KOTA = cust.KOTA, piu.PKP=cust.PKP, piu.HARI = cust.HARI  WHERE piu.KODEC = cust.KODEC 
+                    SET piu.NAMAC = cust.NAMAC, piu.ALAMAT = cust.ALAMAT, piu.KOTA = cust.KOTA, piu.PKP=cust.PKP, piu.HARI = cust.HARI  WHERE piu.KODEC = cust.KODEC
                     AND piu.NO_BUKTI='$no_buktix';");
 
 
         DB::SELECT("UPDATE piu, account
-                            SET piu.BNAMA = account.NAMA  WHERE piu.BACNO = account.ACNO 
+                            SET piu.BNAMA = account.NAMA  WHERE piu.BACNO = account.ACNO
 							AND piu.NO_BUKTI='$no_buktix';");
-							
+
 
         DB::SELECT("UPDATE piu, piud
                             SET piud.ID = piu.NO_ID  WHERE piu.NO_BUKTI =
-							piud.NO_BUKTI 
+							piud.NO_BUKTI
 							AND piu.NO_BUKTI='$no_buktix';");
-							
+
         $variablell = DB::select('call piuins(?,?)', array($piu['NO_BUKTI'], 'X'));
-		
+
 
  		$piu = piu::where('NO_BUKTI', $no_buktix )->first();
-					 
-        // return redirect('/piu/edit/?idx=' . $piu->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');	
+
+        // return redirect('/piu/edit/?idx=' . $piu->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');
         return redirect('/piu?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
-	
-	
-		
+
+
+
     }
 
     /**
@@ -727,16 +734,16 @@ class PiuController extends Controller
      * @param  \App\Models\Master\Rute  $rute
      * @return \Illuminate\Http\Response
      */
-	 
+
 // ganti 22
-	 
+
     public function destroy(Request $request,  Piu $piu)
     {
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
-		
+
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
         $cekperid = DB::SELECT("SELECT POSTED AS POSTED from perid WHERE PERIO='$per'");
         if ($cekperid[0]->POSTED==1)
@@ -745,10 +752,10 @@ class PiuController extends Controller
                 ->with('status', 'Maaf Periode sudah ditutup!')
                 ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
         }
-		
+
         $variablell = DB::select('call piudel(?,?)', array($piu['NO_BUKTI'], '1'));
-		
-		
+
+
 // ganti 23
         $deletepiu = piu::find($piu->NO_ID);
 
@@ -756,14 +763,14 @@ class PiuController extends Controller
 
         $deletepiu->delete();
 
-// ganti 
+// ganti
        return redirect('/piu?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ])->with('statusHapus', 'Data '.$piu->NO_BUKTI.' berhasil dihapus');
 
-	
-		
+
+
     }
-    
-   
+
+
     public function cetak (Piu $piu)
     {
         $no_piu = $piu->NO_BUKTI;
@@ -772,11 +779,11 @@ class PiuController extends Controller
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-        $query = DB::SELECT("SELECT piu.NO_BUKTI, piu.TGL, piu.KODEC, piu.NAMAC, piu.ALAMAT, piu.KOTA, 
+        $query = DB::SELECT("SELECT piu.NO_BUKTI, piu.TGL, piu.KODEC, piu.NAMAC, piu.ALAMAT, piu.KOTA,
                                     piu.BACNO, piu.NOTES,
                                     piud.NO_FAKTUR, piud.TOTAL, piud.BAYAR, piud.SISA, piu.USRNM
-                            FROM piu, piud 
-                            WHERE piu.NO_BUKTI='$no_piu' AND piu.NO_BUKTI = piud.NO_BUKTI 
+                            FROM piu, piud
+                            WHERE piu.NO_BUKTI='$no_piu' AND piu.NO_BUKTI = piud.NO_BUKTI
                             ;
 		");
 
@@ -802,19 +809,19 @@ class PiuController extends Controller
                 'USRNM'    => $query[$key]->USRNM
             ));
         }
-		
+
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
     }
- 
+
     public function getDetailpiu(){
 
         $no_bukti = $_GET['no_bukti'];
         $result = DB::table('piud')->where('NO_BUKTI', $no_bukti)->get();
-        
+
         return response()->json($result);;
     }
-	
-    
+
+
 }

@@ -17,25 +17,25 @@ use PHPJasperXML;
 use \koolreport\laravel\Friendship;
 use \koolreport\bootstrap4\Theme;
 
-class RBudgetpkController extends Controller
+class RBrgnonbudController extends Controller
 {
     public function report()
     {	
 		$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 		session()->put('filter_periode', '');
-		session()->put('filter_kodes1', '');
-		session()->put('filter_namas1', '');
-		session()->put('filter_kodes2', '');
-		session()->put('filter_namas2', '');
+		session()->put('filter_sub1', '');
+		session()->put('filter_sub2', '');
+		session()->put('filter_kdbar1', '');
+		session()->put('filter_kdbar2', '');
 
-        return view('oreport_budgetpk.report')->with(['per' => $per])->with(['hasil' => []]);
+        return view('oreport_brgnonbud.report')->with(['per' => $per])->with(['hasil' => []]);
     }
 	
 	
 	 
-	public function jasperBudgetpkReport(Request $request) 
+	public function jasperBrgnonbudReport(Request $request) 
 	{
-		$file 	= 'Laporan_Suplier_Punya_Budget_Pokok';
+		$file 	= 'Laporan_Data_Barang_Non_Budget';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		$params = [
@@ -44,36 +44,46 @@ class RBudgetpkController extends Controller
 		$PHPJasperXML->arrayParameter = $params;
 		
 			
-		$filterkodes = "";
-
-		if (!empty($request->kodes1) && !empty($request->kodes2)) {
-			$filterkodes .= " WHERE NO_SUPL BETWEEN '".$request->kodes1."' AND '".$request->kodes2."'";
+		$filtersub = "";
+		if (!empty($request->sub1) && !empty($request->sub2)) {
+			$filtersub .= " WHERE SUB BETWEEN '".$request->sub1."' AND '".$request->sub2."'";
 		}
 
-		session()->put('filter_kodes1', $request->kodes1);
-		session()->put('filter_namas1', $request->namas1);
-		session()->put('filter_kodes2', $request->kodes2);
-		session()->put('filter_namas2', $request->namas2);
+		$filterkode = "";
+		if (!empty($request->kdbar1) && !empty($request->kdbar2)) {
+			$filterkode .= " AND KDBAR BETWEEN '".$request->kdbar1."' AND '".$request->kdbar2."'";
+		}
+
+		session()->put('filter_sub1', $request->sub1);
+		session()->put('filter_sub2', $request->sub2);
+		session()->put('filter_kdbar1', $request->kdbar1);
+		session()->put('filter_kdbar2', $request->kdbar2);
 		session()->put('filter_periode', $request->per);
 		
 
 		$query = DB::select("
 			SELECT 
 				(@rownum := @rownum + 1) AS ROWNUM,
-				NO_SUPL,
-				NAMA,
-				BUDGET,
-				BUDGET_LL AS QTY,
+				SUB,
+				KDBAR,
+				NMBAR,
+				KET_UK,
+				HB,
+				DIS_A,
+				DIS_B,
+				DIS_C,
+				SUPP,
 				CAT
-			FROM nwmassup, (SELECT @rownum := 0) r
-			$filterkodes AND BUDGET <> 0
+			FROM nwmasbar, (SELECT @rownum := 0) r
+			$filtersub 
+			$filterkode
 		");
 
 		if($request->has('filter'))
 		{	
 			$per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
 
-			return view('oreport_budgetpk.report')->with(['per' => $per])->with(['hasil' => $query]);
+			return view('oreport_brgnonbud.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 
 		$data=[];

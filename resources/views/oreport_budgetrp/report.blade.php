@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Suplier Yang Punya Budget Pokok</h1>
+			<h1 class="m-0">Suplier Yang Punya Budget Repeat</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Laporan Suplier Yang Punya Budget Pokok</li>
+				<li class="breadcrumb-item active">Suplier Yang Punya Budget Repeat</li>
 			</ol>
 		</div>
 		</div>
@@ -23,7 +23,7 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-budgetpk-report')}}">
+					<form method="POST" action="{{url('jasper-budgetrp-report')}}">
 					@csrf
 					<div class="form-group row">
 						<div class="col-md-1" align="right">
@@ -66,7 +66,7 @@
 					</div>
 					
 					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
-					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rbudgetpk")}}'">Reset</button>
+					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rbudgetrp")}}'">Reset</button>
 					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
 					</form>
 					<div style="margin-bottom: 15px;"></div>
