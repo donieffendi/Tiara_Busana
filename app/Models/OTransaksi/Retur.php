@@ -17,9 +17,10 @@ class Retur extends Model
     public $timestamps = false;
 
 //ganti 3
-    protected $fillable = 
+    protected $fillable =
     [
         "NO_BUKTI",
+        "OUTLET",
         "BKTK",
         "NO_TGZ",
         "REF",
