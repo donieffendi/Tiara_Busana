@@ -49,7 +49,11 @@ class RJualController extends Controller
 			$bulan = substr($per,0,2);
 			$tahun = substr($per,3,4);
 
-			$plu = $request->kode1;
+			$filterplu = '';
+			if(!empty($request->kode1))
+			{
+				$filterplu = " AND b.KDBAR = '$request->kode1'";
+			}
 			
 
 			session()->put('filter_cbg', $request->cbg);
@@ -57,12 +61,16 @@ class RJualController extends Controller
 			session()->put('filter_kode1', $request->kode1);
 			session()->put('filter_nama1', $request->nama1);
 			
-		$query = DB::SELECT(" SELECT NO_BUKTI, TGL, JTEMPO, KODEC, NAMAC, 
-									TOTAL_QTY, TOTAL, TDPP AS DPP, TPPN AS PPN, NETT
-							FROM jual
-							WHERE FLAG = 'JL' AND PER = '$per' AND CBG = '$cbg'
-							ORDER BY NO_BUKTI;
-
+		$query = DB::SELECT("
+			SELECT a.NO_BUKTI, a.TGL, a.JTEMPO, a.KODEC, a.NAMAC, 
+				a.TOTAL_QTY, a.TOTAL, a.TDPP AS DPP, a.TPPN AS PPN, 
+				a.NETT, b.KDBAR, b.NMBAR 
+			FROM jual a, juald b
+			WHERE a.NO_BUKTI = b.NO_BUKTI
+			AND a.PER = '$per' 
+			AND a.CBG = '$cbg'
+			$filterplu
+			ORDER BY b.KDBAR
 		");
       
 		if($request->has('filter'))

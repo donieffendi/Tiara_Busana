@@ -262,10 +262,11 @@
 					if(dTableBrg){
 						dTableBrg.clear();
 					}
-					for(i=0; i<resp.length; i++){
-						
+					for (let i = 0; i < resp.length; i++) {
+
 						dTableBrg.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBrg(\''+resp[i].KDBAR+'\',  \''+resp[i].NMBAR+'\')">'+resp[i].KDBAR+'</a>',
+							'<a href="#" class="pilih-brg" data-kd="'+resp[i].KDBAR+'" data-nm="'+resp[i].NMBAR+'">'
+							+ resp[i].KDBAR + '</a>',
 							resp[i].NMBAR,
 						]);
 					}
@@ -294,6 +295,16 @@
 				e.preventDefault();
 				browseBrg(1);
 			}
+		});
+
+		//event untuk escape choose barang yang NMBAR mengandung tanda petik 1 / 2
+		$(document).on('click', '.pilih-brg', function(e){
+			e.preventDefault();
+
+			let kd = $(this).data('kd');
+			let nm = $(this).data('nm');
+
+			chooseBrg(kd, nm);
 		});
 	});
 
