@@ -47,7 +47,7 @@
             <div class="card">
                 <div class="card-body">
 				
-				<form id="entri" action="{{url('beli/posting')}}" method="POST">																					
+				<form id="postingForm" method="POST">																					
                         @csrf
         
                         	<div class="tab-content mt-3">
@@ -82,7 +82,6 @@
 											<th scope="col" style="text-align: center">Total/Bruto</th>
 											<th scope="col" style="text-align: center">Total Nett</th>
 											<th scope="col" style="text-align: center">Notes</th>
-											<th scope="col" style="text-align: center">Type</th>
 											<th scope="col" style="text-align: center">Cek</th>
 								
 										</tr>
@@ -133,20 +132,14 @@
 											</td>
 
 											<td>
-												<input name="TYPEX[]" id="TYPEX0" type="text" value=""
-												class="form-control TYPEX" readonly >
-											</td>
-
-											<td>
 												<input name="CEKX[]" hidden value="0" id="CEKX0" type="text" style="text-align: right"  class="form-control CEKX text-primary">
-												<input name="CEK[]" onchange="rubah(0)" id="CEK0" type="checkbox" value="1" class="form-control CEK"  >
+												<input name='CEK[]' onchange="rubah(0)" id='CEK0' type='checkbox' value="1" class='form-control cek'>
 											</td>
 											
 										</tr>
 										
 									</tbody>
 									<tfoot>
-										<td></td>
 										<td></td>
 										<td></td>
 									</tfoot>
@@ -160,6 +153,7 @@
                             <div class="col-md-2 row">
 									<button type="button" id='simpan'  onclick="simpanx()" class="btn btn-outline-primary"></i>Proses</button>
 							</div>
+							
 						
 						
                     </form>
@@ -182,6 +176,7 @@
 <script src="{{ asset('js/autoNumerics/autoNumeric.min.js') }}"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="{{asset('foxie_js_css/bootstrap.bundle.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 
@@ -200,8 +195,69 @@
 	function simpanx()
     { 
 	        
-		
-			document.getElementById("entri").submit();
+		const checkedBoxes = $('.cek:checked');
+			if (checkedBoxes.length === 0) {
+				Swal.fire({
+					title: 'Warning!',
+					text: 'Pilih data yang akan diposting!',
+					icon: 'warning',
+					confirmButtonText: 'OK'
+				});
+				return;
+			}
+
+			
+			Swal.fire({
+				title: 'Konfirmasi Posting',
+				text: `Apakah Anda yakin akan posting ${checkedBoxes.length} data?`,
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Ya, Posting!',
+				cancelButtonText: 'Batal'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Collect checked IDs
+					const checkedIds = [];
+					checkedBoxes.each(function() {
+						checkedIds.push($(this).val());
+					});
+
+					$.ajax({
+						url: '{{ route('post_terimaTGZ') }}',
+						method: 'POST',
+						data: {
+							_token: '{{ csrf_token() }}',
+							cek: checkedIds,
+							flagg: "{{ $flagz }}"
+						},
+						success: function(response) {
+							Swal.fire({
+								title: 'Success!',
+								text: 'Data berhasil diposting',
+								icon: 'success',
+								confirmButtonText: 'OK'
+							}).then(() => {
+								window.location.reload();
+							});
+						},
+						error: function(xhr) {
+							let errorMessage = 'Terjadi kesalahan saat posting';
+							if (xhr.responseJSON && xhr.responseJSON.message) {
+								errorMessage = xhr.responseJSON.message;
+							}
+
+							Swal.fire({
+								title: 'Error!',
+								text: errorMessage,
+								icon: 'error',
+								confirmButtonText: 'OK'
+							});
+						}
+					});
+				}
+			});
 		
 	}
 		
@@ -217,10 +273,11 @@
 				url: "{{url('beli/browse_posting')}}",
 				data: {
 					CARI: $('#CARI').val(),	
+					FLAGZ: "{{ $flagz }}"
 				},
 				success: function( resp )
 				{
-///////////////////////////////////////
+					///////////////////////////////////////
                    
 					var html = '';
 					for(i=0; i<resp.length; i++){
@@ -236,11 +293,15 @@
                                     <td><input name='TOTALX[]' onblur="hitung()" id='TOTALX${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTALX text-primary' readonly required></td>
                                     <td><input name='NETTX[]' onblur="hitung()" id='NETTX${i}' value="${resp[i].NETT}" type='text' style='text-align: right' class='form-control NETTX text-primary' readonly required></td>
                                     <td><input name='NOTESX[]' data-rowid=${i} id='NOTESX${i}' value="${resp[i].NOTES}" type='text' class='form-control  NOTESX' required readonly></td>
-                                    <td><input name='TYPEX[]' data-rowid=${i} id='TYPEX${i}' value="${resp[i].TYPE}" type='text' class='form-control  TYPEX' required readonly></td>
-                                    
                                     <td>
 										<input name='CEKX[]' hidden id='CEKX${i}' type='text' value='0' class='form-control  CEKX' required>
-										<input name='CEK[]' onchange="rubah(${i})" id='CEK${i}' type='checkbox' value='0' class='form-control  CEK' required>
+										
+										<input name='CEK[]' onchange="rubah(${i})" 
+											id='CEK${i}' 
+											type='checkbox' 
+											value="${resp[i].NO_BUKTI}" 
+											class='form-control cek'>
+
 									</td>
 								</tr>`;
 					}
@@ -274,7 +335,6 @@
 						$("#TOTALX" + i.toString()).attr("readonly", true);
 						$("#NETTX" + i.toString()).attr("readonly", true);
 						$("#NOTESX" + i.toString()).attr("readonly", true);
-						$("#TYPEX" + i.toString()).attr("readonly", true);
 						
 					}
 

@@ -1005,13 +1005,14 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Retur ke TGZ', '{{url('retur/post')}}')">
+              <a href="javascript:addTab('Posting Retur ke TGZ', '{{url('retur?flagz=ROP')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Post Retur ke TGZ</h6>
               </a>
           </div>
         </div>
+
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
@@ -1039,7 +1040,7 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Retur', '{{url('beli/post')}}')">
+              <a href="javascript:addTab('Posting Retur', '{{url('beli/post?flagz=RX')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Retur</h6>
@@ -1057,9 +1058,9 @@
           </div>
         </div>
 
-        <div class="col-md-3">
+         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Order Outlet', '{{url('stockb/post')}}')">
+              <a href="javascript:addTab('Posting Order Outlet', '{{url('stockb?flagz=POU')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Order Outlet</h6>
@@ -1067,9 +1068,10 @@
           </div>
         </div>
 
+
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Terima TGZ', '{{url('beli/post')}}')">
+              <a href="javascript:addTab('Posting Terima TGZ', '{{url('beli/post?flagz=BO')}}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Terima TGZ</h6>
