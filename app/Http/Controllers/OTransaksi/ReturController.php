@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\OTransaksi;
 
 use App\Http\Controllers\Controller;
@@ -7,12 +6,11 @@ use App\Http\Controllers\Controller;
 
 use App\Models\OTransaksi\Retur;
 use App\Models\OTransaksi\ReturDetail;
-use App\Models\Master\Sup;
-use Illuminate\Http\Request;
-use DataTables;
 use Auth;
-use DB;
 use Carbon\Carbon;
+use DataTables;
+use DB;
+use Illuminate\Http\Request;
 
 include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
 use PHPJasperXML;
@@ -25,40 +23,49 @@ class ReturController extends Controller
      *
      * @return \Illuminate\Http\Resbelinse
      */
-    var $judul = '';
-    var $FLAGZ = '';
+    public $judul = '';
+    public $FLAGZ = '';
 
-    function setFlag(Request $request)
+    public function setFlag(Request $request)
     {
-        if ( $request->flagz == 'RS' ) {
+        if ($request->flagz == 'RS') {
             $this->judul = "Rencana Retur";
-        } else if ( $request->flagz == 'RO' ) {
+        } else if ($request->flagz == 'RO') {
             $this->judul = "Retur ke TGZ";
+        } else if ($request->flagz == 'ROP') {
+            $this->judul = "Posting Retur ke TGZ";
+        } else if ($request->flagz == 'RSP') {
+            $this->judul = "Posting Rencana Retur";
         }
 
         $this->FLAGZ = $request->flagz;
 
     }
-
     public function index(Request $request)
     {
+        $this->setFlag($request);
 
+        if (in_array($this->FLAGZ, ['ROP', 'RSP'])) {
+            return view('otransaksi_retur.post')->with([
+                'judul' => $this->judul,
+                'flagz' => $this->FLAGZ,
+            ]);
+        }
 
-	    $this->setFlag($request);
-        // ganti 3
-        return view('otransaksi_retur.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
-
-
+        return view('otransaksi_retur.index')->with([
+            'judul' => $this->judul,
+            'flagz' => $this->FLAGZ,
+        ]);
     }
 
-	// public function browse(Request $request)
+    // public function browse(Request $request)
     // {
     //     $golz = $request->GOL;
 
     //     $CBG = Auth::user()->CBG;
 
     //     $retur = DB::SELECT("SELECT distinct PO.NO_BUKTI , PO.KODES, PO.NAMAS,
-	// 	                  PO.ALAMAT, PO.KOTA from bretur, returd
+    // 	                  PO.ALAMAT, PO.KOTA from bretur, returd
     //                       WHERE PO.NO_BUKTI = POD.NO_BUKTI AND PO.GOL ='$golz' AND CBG = '$CBG'
     //                       AND POD.SISA > 0	");
     //     return resreturnse()->json($retur);
@@ -79,90 +86,78 @@ class ReturController extends Controller
     {
         $CBG = Auth::user()->CBG;
 
-		$retur = DB::SELECT("SELECT NO_BUKTI,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
+        $retur = DB::SELECT("SELECT NO_BUKTI,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
                         (TOTAL-BAYAR) AS SISA, ALAMAT, KOTA from bretur
 		                WHERE LNS <> 1 AND CBG = '$CBG' ORDER BY NO_BUKTI; ");
 
         return response()->json($retur);
     }
 
-
     public function browse_posting(Request $request)
     {
-        $this->setFlag($request);
-        $FLAGZ = $this->FLAGZ;
+        $FLAGZ = $request->FLAGZ;
+
         $CBG = Auth::user()->CBG;
 
-		$cari = $request->CARI;
+        $cari = $request->CARI;
 
-		if ($cari == ''){
+        if ($cari == '') {
 
             $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY,
                                             NOTES
-                                        FROM retur
+                                        FROM bretur
                                         WHERE NO_BUKTI =''AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
 
-
-        } else if ($cari != ''){
+        } else if ($cari != '') {
 
             $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY,
                                             NOTES
-                                        FROM retur
+                                        FROM bretur
                                         WHERE NO_BUKTI = '$cari'AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
         }
 
         return response()->json($posting);
     }
+    // public function post(Request $request)
+    // {
 
+    //     return view('otransaksi_retur.post');
+    // }
 
-
-
-	public function post(Request $request)
+    public function browse_detail(Request $request)
     {
+        $filterbukti = '';
+        if ($request->NO_PO) {
 
-        return view('otransaksi_retur.post');
-    }
-
-
-	public function browse_detail(Request $request)
-    {
-		$filterbukti = '';
-		if($request->NO_PO)
-		{
-
-			$filterbukti = " WHERE a.NO_BUKTI='".$request->NO_PO."' AND a.KD_BRG = b.KD_BRG ";
-		}
-		$returd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
+            $filterbukti = " WHERE a.NO_BUKTI='" . $request->NO_PO . "' AND a.KD_BRG = b.KD_BRG ";
+        }
+        $returd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X
                             from breturd a, brg b
                             $filterbukti ORDER BY NO_BUKTI ");
 
-
-		return response()->json($returd);
-	}
-
+        return response()->json($returd);
+    }
 
     public function browse_detail2(Request $request)
     {
-		$filterbukti = '';
-		if($request->NO_PO)
-		{
+        $filterbukti = '';
+        if ($request->NO_PO) {
 
-			$filterbukti = " WHERE NO_BUKTI='".$request->NO_PO."' AND a.KD_BRG = b.KD_BRG ";
-		}
-		$returd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
+            $filterbukti = " WHERE NO_BUKTI='" . $request->NO_PO . "' AND a.KD_BRG = b.KD_BRG ";
+        }
+        $returd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X
                             from breturd a, brg b
                             $filterbukti ORDER BY NO_BUKTI ");
 
-
-		return response()->json($returd);
-	}
+        return response()->json($returd);
+    }
 
     public function browse_cnt(Request $request)
     {
 
-    	$retur = DB::SELECT("SELECT CNT, NA_CNT AS NCNT
+        $retur = DB::SELECT("SELECT CNT, NA_CNT AS NCNT
                             FROM cntbsn");
 
         return response()->json($retur);
@@ -171,25 +166,23 @@ class ReturController extends Controller
     public function browse_brg(Request $request)
     {
         // $KD_BRG = $request->KD_BRG;
-		$CNT = $request->CNT;
+        $CNT   = $request->CNT;
         $retur = DB::SELECT("SELECT KD_BRG, NA_BRG, BARCODE, DATE_FORMAT(TG_BELI,'%d-%m-%Y') AS TGL_MULAI, BEL AS QTY, HBELI AS HARGA FROM brgbsn WHERE CNT = '$CNT'");
         return response()->json($retur);
     }
     // ganti 4
 
-
-
     public function getRetur(Request $request)
     {
         // ganti 5
 
-       if ($request->session()->has('periode')) {
+        if ($request->session()->has('periode')) {
             $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
         } else {
             $periode = '';
         }
 
-		$this->setFlag($request);
+        $this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
 
@@ -202,20 +195,18 @@ class ReturController extends Controller
         return Datatables::of($retur)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                if (Auth::user()->divisi=="programmer" )
-				{
+                if (Auth::user()->divisi == "programmer") {
                     //CEK POSTED di index dan edit
 
                     // url untuk delete di index
-                    $url = "'".url("retur/delete/" . $row->NO_ID . "/?flagz=" . $row->flag)."'";
+                    $url = "'" . url("retur/delete/" . $row->NO_ID . "/?flagz=" . $row->flag) . "'";
                     // batas
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="retur/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
-                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
-
+                    $btnEdit   = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="retur/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow(' . $url . ')" ';
 
                     $btnPrivilege =
-                        '
+                    '
                                 <a class="dropdown-item" ' . $btnEdit . '>
                                 <i class="fas fa-edit"></i>
                                     Edit
@@ -257,19 +248,17 @@ class ReturController extends Controller
                 return $actionBtn;
             })
 
-
-			->addColumn('cek', function ($row) {
-                return
-                    '
+            ->addColumn('cek', function ($row) {
+                return;
+                '
                     <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->POSTED == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->POSTED == 2) ? "disabled" : "") . '></input>
                     ';
 
             })
 
-            ->rawColumns(['action','cek'])
+            ->rawColumns(['action', 'cek'])
             ->make(true);
     }
-
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -282,19 +271,18 @@ class ReturController extends Controller
     public function store(Request $request)
     {
 
-
         $this->validate(
             $request,
             // GANTI 9
 
             [
-                'TGL'      => 'required'
+                'TGL' => 'required',
 
             ]
         );
 
         //////     nomer otomatis
-		$this->setFlag($request);
+        $this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
 
@@ -306,15 +294,15 @@ class ReturController extends Controller
 
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
-        $bulan    = session()->get('periode')['bulan'];
-        $tahun    = substr(session()->get('periode')['tahun'], -2);
+        $bulan = session()->get('periode')['bulan'];
+        $tahun = substr(session()->get('periode')['tahun'], -2);
 
         $query = DB::table('bretur')->select('NO_BUKTI')->where('PER', $periode)->where('flag', $FLAGZ)->where('CBG', $CBG)
-                ->orderByDesc('NO_BUKTI')->limit(1)->get();
+            ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
         if ($query != '[]') {
-            $query = substr($query[0]->NO_BUKTI, -4);
-            $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+            $query    = substr($query[0]->NO_BUKTI, -4);
+            $query    = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
             $no_bukti = $FLAGZ . $tahun . $bulan . '-' . $query . $CBG_KODE;
         } else {
             $no_bukti = $FLAGZ . $tahun . $bulan . '-0001' . $CBG_KODE;
@@ -322,251 +310,205 @@ class ReturController extends Controller
 
         $retur = Retur::create(
             [
-                'NO_BUKTI'         => $no_bukti,
-                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'PER'              => $periode,
-                'flag'             => $FLAGZ,
-                'CNT'              => ($request['CNT']==null) ? "" : $request['CNT'],
-                'NCNT'             => ($request['NCNT']==null) ? "" : $request['NCNT'],
-                'notes'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
-                'OUTLET'            => ($request['OUTLET']==null) ? "" : $request['OUTLET'],
-                'total_qty'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
-                'usrnm'            => Auth::user()->username,
-                'tg_smp'           => Carbon::now(),
-				'CBG'              => $CBG,
+                'NO_BUKTI'  => $no_bukti,
+                'TGL'       => date('Y-m-d', strtotime($request['TGL'])),
+                'PER'       => $periode,
+                'flag'      => $FLAGZ,
+                'CNT'       => ($request['CNT'] == null) ? "" : $request['CNT'],
+                'NCNT'      => ($request['NCNT'] == null) ? "" : $request['NCNT'],
+                'notes'     => ($request['NOTES'] == null) ? "" : $request['NOTES'],
+                'OUTLET'    => ($request['OUTLET'] == null) ? "" : $request['OUTLET'],
+                'total_qty' => (float) str_replace(',', '', $request['TTOTAL_QTY']),
+                'usrnm'     => Auth::user()->username,
+                'tg_smp'    => Carbon::now(),
+                'CBG'       => $CBG,
             ]
         );
 
-
-		$REC        = $request->input('REC');
-		$KD_BRG	    = $request->input('KD_BRG');
-		$BARCODE	= $request->input('BARCODE');
-		$NA_BRG	    = $request->input('NA_BRG');
-		$TGL_MULAI	= $request->input('TGL_MULAI');
-		$QTYK	    = $request->input('QTYK');
-		$HARGA	    = $request->input('HARGA');
-		$QTY	    = $request->input('QTY');
-		$KET	    = $request->input('KET');
+        $REC       = $request->input('REC');
+        $KD_BRG    = $request->input('KD_BRG');
+        $BARCODE   = $request->input('BARCODE');
+        $NA_BRG    = $request->input('NA_BRG');
+        $TGL_MULAI = $request->input('TGL_MULAI');
+        $QTYK      = $request->input('QTYK');
+        $HARGA     = $request->input('HARGA');
+        $QTY       = $request->input('QTY');
+        $KET       = $request->input('KET');
 
         // Check jika value detail ada/tidak
         if ($REC) {
             foreach ($REC as $key => $value) {
                 // Declare new data di Model
-                $detail    = new ReturDetail;
+                $detail = new ReturDetail;
 
                 // Insert ke Database
-                $detail->no_bukti    = $no_bukti;
-                $detail->rec         = $REC[$key];
-                $detail->per         = $periode;
-                $detail->flag        = $FLAGZ;
-				$detail->KD_BRG	     = ($KD_BRG[$key]==null) ? "" :  $KD_BRG[$key];
-				$detail->BARCODE	 = ($BARCODE[$key]==null) ? "" :  $BARCODE[$key];
-				$detail->NA_BRG	     = ($NA_BRG[$key]==null) ? "" :  $NA_BRG[$key];
-				$detail->tgl_mulai   = date('Y-m-d', strtotime($TGL_MULAI[$key]));
-				$detail->qtyk	     = (float) str_replace(',', '', $QTYK[$key]);
-				$detail->harga	     = (float) str_replace(',', '', $HARGA[$key]);
-				$detail->qty	     = (float) str_replace(',', '', $QTY[$key]);
-				$detail->ket	     = ($KET[$key]==null) ? "" :  $KET[$key];
+                $detail->no_bukti  = $no_bukti;
+                $detail->rec       = $REC[$key];
+                $detail->per       = $periode;
+                $detail->flag      = $FLAGZ;
+                $detail->KD_BRG    = ($KD_BRG[$key] == null) ? "" : $KD_BRG[$key];
+                $detail->BARCODE   = ($BARCODE[$key] == null) ? "" : $BARCODE[$key];
+                $detail->NA_BRG    = ($NA_BRG[$key] == null) ? "" : $NA_BRG[$key];
+                $detail->tgl_mulai = date('Y-m-d', strtotime($TGL_MULAI[$key]));
+                $detail->qtyk      = (float) str_replace(',', '', $QTYK[$key]);
+                $detail->harga     = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->qty       = (float) str_replace(',', '', $QTY[$key]);
+                $detail->ket       = ($KET[$key] == null) ? "" : $KET[$key];
                 $detail->save();
             }
         }
 
-		$no_buktix = $no_bukti;
+        $no_buktix = $no_bukti;
 
-		$retur = Retur::where('NO_BUKTI', $no_buktix )->first();
-
+        $retur = Retur::where('NO_BUKTI', $no_buktix)->first();
 
         DB::SELECT("UPDATE bretur,  breturd
                             SET  breturd.ID =  bretur.NO_ID  WHERE  bretur.NO_BUKTI =  breturd.no_bukti
 							AND  bretur.NO_BUKTI='$no_buktix';");
 
-
-
         // return redirect('/retur/edit/?idx=' . $retur->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');
-        return redirect('/retur?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
+        return redirect('/retur?flagz=' . $FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ]);
 
     }
 
-   public function edit( Request $request , Retur $retur)
+    public function edit(Request $request, Retur $retur)
     {
 
-
-		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
-
+        $per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
 
         // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
         // if ($cekperid[0]->POSTED==1)
         // {
         //     return redirect('/retur')
-		// 	       ->with('status', 'Maaf Periode sudah ditutup!')
+        // 	       ->with('status', 'Maaf Periode sudah ditutup!')
         //            ->with(['judul' => $judul, 'flagz' => $FLAGZ]);
         // }
 
-		$this->setFlag($request);
+        $this->setFlag($request);
 
         $tipx = $request->tipx;
 
-		$idx = $request->idx;
+        $idx = $request->idx;
 
         $CBG = Auth::user()->CBG;
 
-		if ( $idx =='0' && $tipx=='undo'  )
-	    {
-			$tipx ='top';
+        if ($idx == '0' && $tipx == 'undo') {
+            $tipx = 'top';
 
-		   }
+        }
 
+        if ($tipx == 'search') {
 
+            $buktix = $request->buktix;
 
-		if ($tipx=='search') {
-
-
-    	   $buktix = $request->buktix;
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
 						 and NO_BUKTI = '$buktix' AND CBG = '$CBG'
-		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
+		                 ORDER BY NO_BUKTI ASC  LIMIT 1");
 
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = 0;
+            }
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0;
-			  }
+        }
 
+        if ($tipx == 'top') {
 
-		}
-
-		if ($tipx=='top') {
-
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		                 where PER ='$per'
 						 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
-		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
+		                 ORDER BY NO_BUKTI ASC  LIMIT 1");
 
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = 0;
+            }
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0;
-			  }
+        }
 
+        if ($tipx == 'prev') {
 
-		}
+            $buktix = $request->buktix;
 
-
-		if ($tipx=='prev' ) {
-
-    	   $buktix = $request->buktix;
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		             where PER ='$per'
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI <
-					 '$buktix' ORDER BY NO_BUKTI DESC LIMIT 1" );
+					 '$buktix' ORDER BY NO_BUKTI DESC LIMIT 1");
 
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = $idx;
+            }
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = $idx;
-			  }
+        }
 
-		}
+        if ($tipx == 'next') {
 
+            $buktix = $request->buktix;
 
-		if ($tipx=='next' ) {
-
-
-      	   $buktix = $request->buktix;
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		             where PER ='$per'
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI >
-					 '$buktix' ORDER BY NO_BUKTI ASC LIMIT 1" );
+					 '$buktix' ORDER BY NO_BUKTI ASC LIMIT 1");
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = $idx;
-			  }
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = $idx;
+            }
 
+        }
 
-		}
+        if ($tipx == 'bottom') {
 
-		if ($tipx=='bottom') {
-
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 						where PER ='$per'
 						and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
-		              ORDER BY NO_BUKTI DESC  LIMIT 1" );
+		              ORDER BY NO_BUKTI DESC  LIMIT 1");
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0;
-			  }
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = 0;
+            }
 
+        }
 
-		}
+        if ($tipx == 'undo' || $tipx == 'search') {
 
+            $tipx = 'edit';
 
-		if ( $tipx=='undo' || $tipx=='search' )
-	    {
+        }
 
-			$tipx ='edit';
+        if ($idx != 0) {
+            $retur = Retur::where('NO_ID', $idx)->first();
+        } else {
+            $retur      = new Retur;
+            $retur->TGL = Carbon::now();
 
-		   }
+        }
 
-
-
-       	if ( $idx != 0 )
-		{
-			$retur = Retur::where('NO_ID', $idx )->first();
-	     }
-		 else
-		 {
-				$retur = new Retur;
-                $retur->TGL = Carbon::now();
-
-
-		 }
-
-        $no_bukti = $retur->NO_BUKTI;
+        $no_bukti    = $retur->NO_BUKTI;
         $returDetail = DB::table('breturd')->where('no_bukti', $no_bukti)->orderBy('rec')->get();
 
-		$data = [
-            'header'        => $retur,
-			'detail'        => $returDetail
+        $data = [
+            'header' => $retur,
+            'detail' => $returDetail,
 
         ];
 
-
-         return view('otransaksi_retur.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' => $this->FLAGZ, 'judul'=> $this->judul ]);
-
+        return view('otransaksi_retur.edit', $data)
+            ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' => $this->FLAGZ, 'judul' => $this->judul]);
 
     }
 
-  /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -583,11 +525,11 @@ class ReturController extends Controller
             $request,
             [
 
-                'TGL'      => 'required'
+                'TGL' => 'required',
             ]
         );
 
-		$this->setFlag($request);
+        $this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
 
@@ -595,37 +537,36 @@ class ReturController extends Controller
 
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
-
         $retur->update(
             [
-                'tgl'              => date('Y-m-d', strtotime($request['TGL'])),
-                'CNT'              => ($request['CNT']==null) ? "" : $request['CNT'],
-                'NCNT'             => ($request['NCNT']==null) ? "" : $request['NCNT'],
-                'notes'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
-                'OUTLET'            => ($request['OUTLET']==null) ? "" : $request['OUTLET'],
-                'total_qty'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
-                'usrnm'            => Auth::user()->username,
-                'tg_smp'           => Carbon::now()
+                'tgl'       => date('Y-m-d', strtotime($request['TGL'])),
+                'CNT'       => ($request['CNT'] == null) ? "" : $request['CNT'],
+                'NCNT'      => ($request['NCNT'] == null) ? "" : $request['NCNT'],
+                'notes'     => ($request['NOTES'] == null) ? "" : $request['NOTES'],
+                'OUTLET'    => ($request['OUTLET'] == null) ? "" : $request['OUTLET'],
+                'total_qty' => (float) str_replace(',', '', $request['TTOTAL_QTY']),
+                'usrnm'     => Auth::user()->username,
+                'tg_smp'    => Carbon::now(),
             ]
         );
 
-		$no_buktix = $retur->NO_BUKTI;
+        $no_buktix = $retur->NO_BUKTI;
 
         // Update Detail
         $length = sizeof($request->input('REC'));
         $NO_ID  = $request->input('NO_ID');
 
-        $REC        = $request->input('REC');
-		$KD_BRG	    = $request->input('KD_BRG');
-		$BARCODE	= $request->input('BARCODE');
-		$NA_BRG	    = $request->input('NA_BRG');
-		$TGL_CAIR	= $request->input('TGL_CAIR');
-		$QTYK	    = $request->input('QTYK');
-		$HARGA	    = $request->input('HARGA');
-		$QTY	    = $request->input('QTY');
-		$KET	    = $request->input('KET');
+        $REC      = $request->input('REC');
+        $KD_BRG   = $request->input('KD_BRG');
+        $BARCODE  = $request->input('BARCODE');
+        $NA_BRG   = $request->input('NA_BRG');
+        $TGL_CAIR = $request->input('TGL_CAIR');
+        $QTYK     = $request->input('QTYK');
+        $HARGA    = $request->input('HARGA');
+        $QTY      = $request->input('QTY');
+        $KET      = $request->input('KET');
 
-        $query = DB::table('breturd')->where('no_bukti', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
+        $query = DB::table('breturd')->where('no_bukti', $request->NO_BUKTI)->whereNotIn('NO_ID', $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
@@ -633,18 +574,18 @@ class ReturController extends Controller
             if ($NO_ID[$i] == 'new') {
                 $insert = ReturDetail::create(
                     [
-                        'no_bukti'   => $request->NO_BUKTI,
-                        'rec'        => $REC[$i],
-                        'per'        => $periode,
-                        'flag'       => $this->FLAGZ,
-                        'KD_BRG'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
-                        'BARCODE'    => ($BARCODE[$i]==null) ? "" : $BARCODE[$i],
-                        'NA_BRG'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],
-                        'tgl_mulai'  => ($TGL_MULAI[$i] != '') ? date("Y-m-d", strtotime($TGL_MULAI[$i])) : "",
-                        'qtyk'       => (float) str_replace(',', '', $QTYK[$i]),
-                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
-						'qty'        => (float) str_replace(',', '', $QTY[$i]),
-						'ket'     	 => ($KET[$i]==null) ? "" : $KET[$i],
+                        'no_bukti'  => $request->NO_BUKTI,
+                        'rec'       => $REC[$i],
+                        'per'       => $periode,
+                        'flag'      => $this->FLAGZ,
+                        'KD_BRG'    => ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i],
+                        'BARCODE'   => ($BARCODE[$i] == null) ? "" : $BARCODE[$i],
+                        'NA_BRG'    => ($NA_BRG[$i] == null) ? "" : $NA_BRG[$i],
+                        'tgl_mulai' => ($TGL_MULAI[$i] != '') ? date("Y-m-d", strtotime($TGL_MULAI[$i])) : "",
+                        'qtyk'      => (float) str_replace(',', '', $QTYK[$i]),
+                        'harga'     => (float) str_replace(',', '', $HARGA[$i]),
+                        'qty'       => (float) str_replace(',', '', $QTY[$i]),
+                        'ket'       => ($KET[$i] == null) ? "" : $KET[$i],
 
                     ]
                 );
@@ -652,27 +593,27 @@ class ReturController extends Controller
                 // Update jika NO_ID sudah ada
                 $upsert = ReturDetail::updateOrCreate(
                     [
-                        'no_bukti'  => $request->NO_BUKTI,
-                        'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
+                        'no_bukti' => $request->NO_BUKTI,
+                        'NO_ID'    => (int) str_replace(',', '', $NO_ID[$i]),
                     ],
 
                     [
-                        'rec'        => $REC[$i],
+                        'rec'       => $REC[$i],
 
-                        'KD_BRG'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
-                        'BARCODE'    => ($BARCODE[$i]==null) ? "" : $BARCODE[$i],
-                        'NA_BRG'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],
-                        'tgl_mulai'  => ($TGL_MULAI[$i] != '') ? date("Y-m-d", strtotime($TGL_MULAI[$i])) : "",
-                        'qtyk'       => (float) str_replace(',', '', $QTYK[$i]),
-                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
-						'qty'        => (float) str_replace(',', '', $QTY[$i]),
-						'ket'     	 => ($KET[$i]==null) ? "" : $KET[$i]
+                        'KD_BRG'    => ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i],
+                        'BARCODE'   => ($BARCODE[$i] == null) ? "" : $BARCODE[$i],
+                        'NA_BRG'    => ($NA_BRG[$i] == null) ? "" : $NA_BRG[$i],
+                        'tgl_mulai' => ($TGL_MULAI[$i] != '') ? date("Y-m-d", strtotime($TGL_MULAI[$i])) : "",
+                        'qtyk'      => (float) str_replace(',', '', $QTYK[$i]),
+                        'harga'     => (float) str_replace(',', '', $HARGA[$i]),
+                        'qty'       => (float) str_replace(',', '', $QTY[$i]),
+                        'ket'       => ($KET[$i] == null) ? "" : $KET[$i],
                     ]
                 );
             }
         }
 
- 		$retur = Retur::where('NO_BUKTI', $no_buktix )->first();
+        $retur = Retur::where('NO_BUKTI', $no_buktix)->first();
 
         $no_bukti = $retur->NO_BUKTI;
 
@@ -681,8 +622,7 @@ class ReturController extends Controller
                     AND  bertur.NO_BUKTI='$no_bukti';");
 
         // return redirect('/retur/edit/?idx=' . $retur->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');
-        return redirect('/retur?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
-
+        return redirect('/retur?flagz=' . $FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ]);
 
     }
 
@@ -698,11 +638,11 @@ class ReturController extends Controller
     public function destroy(Request $request, Retur $retur)
     {
 
-		$this->setFlag($request);
+        $this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
         $judul = $this->judul;
 
-		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
+        $per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
         // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
         // if ($cekperid[0]->POSTED==1)
         // {
@@ -715,8 +655,7 @@ class ReturController extends Controller
 
         $deleteRetur->delete();
 
-       return redirect('/retur?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ])->with('statusHapus', 'Data '.$retur->NO_BUKTI.' berhasil dihapus');
-
+        return redirect('/retur?flagz=' . $FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ])->with('statusHapus', 'Data ' . $retur->NO_BUKTI . ' berhasil dihapus');
 
     }
 
@@ -724,7 +663,7 @@ class ReturController extends Controller
     {
         $no_retur = $retur->NO_BUKTI;
 
-        $file     = 'returc';
+        $file         = 'returc';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
@@ -735,20 +674,19 @@ class ReturController extends Controller
 			ORDER BY NO_BUKTI;
 		");
 
-        $xno_retur1       = $query[0]->NO_BUKTI;
-        $xtgl1         = $query[0]->TGL;
-        $xkodes1       = $query[0]->KODES;
-        $xnamas1       = $query[0]->NAMAS;
-        $xtotal1       = $query[0]->TOTAL_QTY;
-        $xnotes1       = $query[0]->NOTES;
-        $xharga1       = $query[0]->TOTAL;
-        $xalamat1      = $query[0]->ALAMAT;
-        $xkota1        = $query[0]->KOTA;
+        $xno_retur1 = $query[0]->NO_BUKTI;
+        $xtgl1      = $query[0]->TGL;
+        $xkodes1    = $query[0]->KODES;
+        $xnamas1    = $query[0]->NAMAS;
+        $xtotal1    = $query[0]->TOTAL_QTY;
+        $xnotes1    = $query[0]->NOTES;
+        $xharga1    = $query[0]->TOTAL;
+        $xalamat1   = $query[0]->ALAMAT;
+        $xkota1     = $query[0]->KOTA;
 
-        $PHPJasperXML->arrayParameter = array("HARGA1" => (float) $xharga1, "TOTAL1" => (float) $xtotal1, "NO_PO1" => (string) $xno_retur1,
-                                     "TGL1" => (string) $xtgl1,  "KODES1" => (string) $xkodes1,  "NAMAS1" => (string) $xnamas1, "NOTES1" => (string) $xnotes1, "ALAMAT1" => (string) $xalamat1, "KOTA1" => (string) $xkota1 );
-        $PHPJasperXML->arraysqltable = array();
-
+        $PHPJasperXML->arrayParameter = ["HARGA1" => (float) $xharga1, "TOTAL1" => (float) $xtotal1, "NO_PO1"  => (string) $xno_retur1,
+            "TGL1"                                    => (string) $xtgl1, "KODES1"  => (string) $xkodes1, "NAMAS1" => (string) $xnamas1, "NOTES1" => (string) $xnotes1, "ALAMAT1" => (string) $xalamat1, "KOTA1" => (string) $xkota1];
+        $PHPJasperXML->arraysqltable = [];
 
         $query2 = DB::SELECT("
 			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT, NO_PO,  IF ( FLAG='BL' , 'A','B' ) AS FLAG, AJU, BL, EMKL, KD_BRG, NA_BRG, KG, RPHARGA AS HARGA, RPTOTAL AS TOTAL, 0 AS BAYAR,  NOTES
@@ -764,21 +702,21 @@ class ReturController extends Controller
         $data = [];
 
         foreach ($query2 as $key => $value) {
-            array_push($data, array(
+            array_push($data, [
                 'NO_BUKTI' => $query2[$key]->NO_BUKTI,
                 'TGL'      => $query2[$key]->TGL,
                 'KODES'    => $query2[$key]->KODES,
                 'NAMAS'    => $query2[$key]->NAMAS,
-                'ALAMAT'    => $query2[$key]->ALAMAT,
-                'AJU'    => $query2[$key]->AJU,
+                'ALAMAT'   => $query2[$key]->ALAMAT,
+                'AJU'      => $query2[$key]->AJU,
                 'BL'       => $query2[$key]->BL,
-                'EMKL'    => $query2[$key]->EMKL,
+                'EMKL'     => $query2[$key]->EMKL,
                 'KG'       => $query2[$key]->KG,
                 'HARGA'    => $query2[$key]->HARGA,
                 'TOTAL'    => $query2[$key]->TOTAL,
                 'BAYAR'    => $query2[$key]->BAYAR,
-                'NOTES'    => $query2[$key]->NOTES
-            ));
+                'NOTES'    => $query2[$key]->NOTES,
+            ]);
         }
 
         $PHPJasperXML->setData($data);
@@ -787,97 +725,100 @@ class ReturController extends Controller
 
     }
 
+    public function posting(Request $request, Retur $retur)
+    {
+        $flagz = $request->flagz;
+        $flagg = ($flagz == 'ROP') ? 'RO' : $flagz;
 
+        $cbg = Auth::user()->CBG;
 
-	function posting (Request $request, Retur $retur)
-	{
+        $no_bukti_arr = $request->NO_BUKTIX ?? [];
+        $cek_arr      = $request->CEKX ?? [];
 
-        $REC = $request->input('REC');
-		$CEKX = $request->input('CEKX');
-        $NO_IDX = $request->input('NO_ID');
-        $NO_BUKTIX = $request->input('NO_BUKTI');
-        $TGLX = $request->input('TGL');
-        $NO_SURATSX = $request->input('NO_SURATS');
-        $NAMACX = $request->input('NAMAC');
-        $NETTX = $request->input('NETT');
-        $NO_FPX = $request->input('NO_FPX');
-        $TGL_FPX = $request->input('TGL_FPX');
+        $hasil = [];
 
-        $USRNMX = Auth::user()->USERNAME;
+        DB::beginTransaction();
 
-        session()->put('posttimer', time());
+        try {
 
-        $hasil = "";
-        // ddd($TGL_FPX);
-        if ($REC) {
-            foreach ($REC as $key => $value) {
+            for ($i = 0; $i < count($no_bukti_arr); $i++) {
 
-					$periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
-					$bulan    = session()->get('periode')['bulan'];
-					$tahun    = substr(session()->get('periode')['tahun'], -2);
+                if (! isset($cek_arr[$i]) || $cek_arr[$i] != 1) {
+                    continue;
+                }
 
+                $no_bukti = trim($no_bukti_arr[$i]);
 
-				// $NETTXZ = (float) str_replace(',', '', $NETTX[$key]);
+                $details = DB::table('breturd')
+                    ->where('no_bukti', $no_bukti)
+                    ->get();
 
-				$NO_IDXZ = $NO_IDX[$key];
+                foreach ($details as $d) {
 
+                    if ($flagg == 'RO') {
 
-				// $HUTHGXZ = $HUTHGX[$key];
+                        DB::table('brgbsnd')
+                            ->where('KD_BRG', $d->KD_BRG)
+                            ->where('CBG', $cbg)
+                            ->update([
+                                'ln00' => DB::raw("ln00 - {$d->qty}"),
+                                'ak00' => DB::raw("aw00 + ma00 - ke00 + (ln00 - {$d->qty})"),
+                            ]);
+                    }
 
+                    if ($flagg == 'RM') {
 
-				$CEK11 = $CEKX[$key];
+                        DB::table('brgbsnd')
+                            ->where('KD_BRG', $d->KD_BRG)
+                            ->where('CBG', $cbg)
+                            ->update([
+                                'ln00' => DB::raw("ln00 + {$d->qty}"),
+                                'ak00' => DB::raw("aw00 + ma00 - ke00 + (ln00 + {$d->qty})"),
+                            ]);
+                    }
+                }
 
+                DB::table('bretur')
+                    ->where('no_bukti', $no_bukti)
+                    ->update([
+                        'POSTED'     => 1,
+                        'tgl_posted' => now(),
+                    ]);
 
-				// $NO_BUKTIXZ = ($NO_BUKTIX[$key] == null) ? "" :  $NO_BUKTIX[$key];
-				// $TGLXZ = ($TGLX[$key] == null) ? "" :  $TGLX[$key];
+                $hasil[] = $no_bukti;
+            }
 
-				// $NO_SURATSXZ = ($NO_SURATSX[$key] == null) ? "" :  $NO_SURATSX[$key];
-				// $NAMACXZ = ($NAMACX[$key] == null) ? "" :  $NAMACX[$key];
+            DB::commit();
 
-				$NO_FPXZ = ($NO_FPX[$key] == null) ? "" :  $NO_FPX[$key];
-				$TGL_FPXZ = ($TGL_FPX[$key] == null) ? "" :  date('Y-m-d', strtotime($TGL_FPX[$key]));
+        } catch (\Exception $e) {
 
+            DB::rollback();
 
-				if ( $CEK11 == 1 )
-			    {
-
-                    DB::SELECT("UPDATE jual
-                                SET NO_FP = '$NO_FPXZ',
-                                    TGL_FP = '$TGL_FPXZ'
-                                WHERE NO_ID ='$NO_IDXZ' ");
-
-
-				}
-
-					// IF CEK
-
-            } // FOR
-
-
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
         }
-        else
-        {
-            $hasil = $hasil ."Tidak ada No Bukti yang dipilih! ; ";
+
+        if (count($hasil) == 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ada No Bukti yang dipilih!',
+            ]);
         }
 
-
-		return redirect('/retur/post')->with('statusInsert', 'No Bukti berhasil diupdate');
-
-
-
-	}
-
-
-	public function getDetailRetur(){
+        return response()->json([
+            'success' => true,
+            'message' => implode(', ', $hasil) . ' berhasil diposting',
+        ]);
+    }
+    public function getDetailRetur()
+    {
 
         $no_bukti = $_GET['no_bukti'];
-        $result = DB::table('returd')->where('NO_BUKTI', $no_bukti)->get();
+        $result   = DB::table('returd')->where('NO_BUKTI', $no_bukti)->get();
 
-        return response()->json($result);;
+        return response()->json($result);
     }
-
-
-
-
 
 }
