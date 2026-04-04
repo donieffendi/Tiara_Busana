@@ -37,7 +37,7 @@ class RRubahharga_discbudgetController extends Controller
 
 	public function jasperRubahharga_discbudgetReport(Request $request)
 	{
-		$file 	= 'Laporan_SP_Per_PLU';
+		$file 	= 'Laporan_Diskon_Budget';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 
