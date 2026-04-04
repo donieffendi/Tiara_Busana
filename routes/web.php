@@ -263,6 +263,26 @@ Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->mi
 Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
 
 
+// Operational Pemantauan Surat Pernyataan
+
+Route::get('/pantau', 'App\Http\Controllers\OTransaksi\PantauController@index')->middleware(['auth'])->name('pantau');
+Route::post('/pantau/store', 'App\Http\Controllers\OTransaksi\PantauController@store')->middleware(['auth'])->name('pantau/store');
+    // GET PANTAU
+    Route::get('/pantau/browse', 'App\Http\Controllers\OTransaksi\PantauController@browse')->middleware(['auth'])->name('pantau/browse');
+    Route::get('/get-pantau', 'App\Http\Controllers\OTransaksi\PantauController@getPo')->middleware(['auth'])->name('get-pantau');
+    Route::get('/get-pantau-post', 'App\Http\Controllers\OTransaksi\PantauController@getPo_posting')->middleware(['auth'])->name('get-pantau-post');
+	Route::get('/pantau/cetak/{pantau:NO_ID}','App\Http\Controllers\OTransaksi\PantauController@cetak')->middleware(['auth']);
+
+// Dynamic Pantau
+Route::get('/pantau/edit', 'App\Http\Controllers\OTransaksi\PantauController@edit')->middleware(['auth'])->name('pantau.edit');
+Route::post('/pantau/update/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@update')->middleware(['auth'])->name('pantau.update');
+Route::get('/pantau/delete/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@destroy')->middleware(['auth'])->name('pantau.delete');
+Route::get('/pantau/repost/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@repost')->middleware(['auth'])->name('pantau.repost');
+
+Route::post('pantau/posting', 'App\Http\Controllers\OTransaksi\PantauController@posting')->middleware(['auth']);
+Route::get('pantau/index-posting', 'App\Http\Controllers\OTransaksi\PantauController@index_posting')->middleware(['auth']);
+
+
 
 // Operational Transaksi Orderk
 Route::get('/orderk', 'App\Http\Controllers\OTransaksi\OrderkController@index')->middleware(['auth'])->name('orderk');

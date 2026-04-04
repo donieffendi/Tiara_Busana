@@ -611,7 +611,7 @@
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
                 {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
-                <a href="javascript:addTab('Pantau Surat', '{{url('po?flagz=PO&golz=PP')}}')">
+                <a href="javascript:addTab('Pantau Surat', '{{url('pantau')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Pemantauan Surat Pernyataan</h6>
