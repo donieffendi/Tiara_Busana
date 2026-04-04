@@ -66,7 +66,8 @@ class BeliController extends Controller
 
 	public function post (Request $request)
     {
-        return view('otransaksi_beli.post');
+        $this->setFlag($request);
+        return view('otransaksi_beli.post')->with(['flagz' => $this->FLAGZ]);
     }
 
     public function browse(Request $request)
@@ -122,24 +123,26 @@ class BeliController extends Controller
     public function browse_posting(Request $request)
     {
         $this->setFlag($request);
-        $FLAGZ = $this->FLAGZ;
+        $FLAGZ = $request->FLAGZ;
         $CBG = Auth::user()->CBG;
 
 		$cari = $request->CARI;
 
 		if ($cari == ''){
 
-            $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY, TOTAL, NETT,
-                                            NOTES, TYP
-                                        FROM BELIBSN
-                                        WHERE CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
+            $posting = DB::SELECT("SELECT a.NO_ID, a.NO_BUKTI, a.TGL, a.NAMAS, SUM(b.QTY) AS TOTAL_QTY, a.TOTAL, a.NETT,
+                                            a.NOTES
+                                        FROM NWAGEND a
+                                        JOIN NWAGENDD b ON a.NO_BUKTI = b.NO_BUKTI
+                                        WHERE a.CBG = '$CBG' AND a.FLAG = '$FLAGZ' AND a.POSTED = '0' ");
 
         } else if ($cari != ''){
 
-            $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY, TOTAL, NETT,
-                                            NOTES, TYP
-                                        FROM BELIBSN
-                                        WHERE NO_BUKTI = '$cari' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
+            $posting = DB::SELECT("SELECT a.NO_ID, a.NO_BUKTI, a.TGL, a.NAMAS, SUM(b.QTY) AS TOTAL_QTY, a.TOTAL, a.NETT,
+                                            a.NOTES
+                                        FROM NWAGEND a
+                                        JOIN NWAGENDD b ON a.NO_BUKTI = b.NO_BUKTI
+                                        WHERE a.NO_BUKTI = '$cari' AND a.CBG = '$CBG' AND a.FLAG = '$FLAGZ' AND a.POSTED = '0' ");
         }
 
         return response()->json($posting);
@@ -164,7 +167,7 @@ class BeliController extends Controller
     public function browse_sup(Request $request)
     {
 
-    	$beli = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA, PPN, GOLONGAN
+    	$beli = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA, PPN, GOLONGAN, DISC_PS
                             FROM nwmassup");
 
         return response()->json($beli);
@@ -225,7 +228,7 @@ class BeliController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a target="_blank" class="dropdown-item btn btn-danger" href="beli/cetak/' . $row->NO_ID . '">
+                                <a target="_blank" class="dropdown-item btn btn-danger" href="beli/cetak/?buktix=' . $row->NO_BUKTI . '&flagz=' . $row->FLAG . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a>
@@ -294,7 +297,6 @@ class BeliController extends Controller
     public function store(Request $request)
     {
 
-
         $this->validate(
             $request,
             // GANTI 9
@@ -334,8 +336,6 @@ class BeliController extends Controller
 
         $no_bukti = $FLAGZ.$tahun.$bulan.'-'.$urut.$CBG_KODE;
 
-
-
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -353,7 +353,7 @@ class BeliController extends Controller
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
                 'ST_NOTA'          => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                // 'POT_PROM'         => (float) str_replace(',', '', $request['POT_PROM']),
+                'PROM'         => (float) str_replace(',', '', $request['TPROM']),
                 'JT'           => date('Y-m-d', strtotime($request['JTEMPO'])),
                 'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
                 'FLAG'             => $FLAGZ,
@@ -362,7 +362,6 @@ class BeliController extends Controller
                 'DPP'              => (float) str_replace(',', '', $request['TDPP']),
                 'PPN'              => (float) str_replace(',', '', $request['TPPN']),
                 'NETT'             => (float) str_replace(',', '', $request['TNETT']),
-				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
                 'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
                 'CBG'              => $CBG,
@@ -393,22 +392,22 @@ class BeliController extends Controller
                 $detail    = new NwagendDetail();
 
                 // Insert ke Database
-                $detail->no_bukti    = $no_bukti;
-                $detail->rec         = $REC[$key];
-                $detail->per         = $periode;
-                $detail->flag        = $FLAGZ;
+                $detail->NO_BUKTI    = $no_bukti;
+                $detail->REC         = $REC[$key];
+                $detail->PER         = $periode;
+                $detail->FLAG        = $FLAGZ;
                 $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
-                $detail->barcode      = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
+                $detail->BARCODE      = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
                 $detail->JNS      = ($JNS[$key] == null) ? "" :  $JNS[$key];
-                $detail->qty         = (float) str_replace(',', '', $QTY[$key]);
-                $detail->harga         = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);
+                $detail->HARGA         = (float) str_replace(',', '', $HARGA[$key]);
                 $detail->MARGIN           = (float) str_replace(',', '', $MARGIN[$key]);
                 $detail->DISKON1      = (float) str_replace(',', '', $DISKON1[$key]);
                 $detail->DISKON2       = (float) str_replace(',', '', $DISKON2[$key]);
                 $detail->DISKON3       = (float) str_replace(',', '', $DISKON3[$key]);
                 $detail->DISKON4       = (float) str_replace(',', '', $DISKON4[$key]);
-                $detail->total       = (float) str_replace(',', '', $TOTAL[$key]);
+                $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]);
                 $detail->HARGA_JL       = (float) str_replace(',', '', $HARGA_JL[$key]);
                 $detail->BLT       = (float) str_replace(',', '', $BLT[$key]);
                 $detail->save();
@@ -600,6 +599,7 @@ class BeliController extends Controller
        	if ( $idx != 0 )
 		{
 			$beli = Nwagend::where('NO_ID', $idx )->first();
+
 	     }
 		 else
 		 {
@@ -611,7 +611,17 @@ class BeliController extends Controller
 		 }
 
         $no_bukti = $beli->NO_BUKTI;
-        $belidetail = DB::table('nwagendd')->where('NO_BUKTI', $no_bukti)->orderBy('rec')->get();
+        // $belidetail = DB::table('nwagendd')->where('NO_BUKTI', $no_bukti)->orderBy('rec')->get();
+        
+        $belidetail = NwagendDetail::select('nwagendd.*',
+                                    'nwmasbar.HB as HARGALAMA',
+                                    'nwmasbar.DIS_A as DISKLAMA1',
+                                    'nwmasbar.DIS_B as DISKLAMA2',
+                                    'nwmasbar.DIS_C as DISKLAMA3'
+                                )
+                                ->leftJoin('nwmasbar', 'nwagendd.KD_BRG', '=', 'nwmasbar.KDBAR')
+                                ->where('nwagendd.NO_BUKTI', $no_bukti)
+                                ->get();
 
 		$data = [
             'header'        => $beli,
@@ -637,7 +647,7 @@ class BeliController extends Controller
 
     // ganti 18
 
-    public function update(Request $request, beli $beli)
+    public function update(Request $request, Nwagend $beli)
     {
 
         $this->validate(
@@ -652,7 +662,7 @@ class BeliController extends Controller
         );
 
         // ganti 20
-        $variablell = DB::select('call belidel(?)', array($beli['NO_BUKTI']));
+        // $variablell = DB::select('call belidel(?)', array($beli['NO_BUKTI']));
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
@@ -666,34 +676,24 @@ class BeliController extends Controller
 
         $beli->update(
             [
-
-                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
-				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
+                'PER'              => $periode,
                 'POSTED'           => (float) str_replace(',', '', $request['POSTED']),
-				'NO_PO'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
+				'SP'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                // 'REF'              => ($request['REF'] == null) ? "" : $request['REF'],
-                'MARGIN'           => (float) str_replace(',', '', $request['MARGIN']),
                 'ST_NOTA'          => ($request['ST_NOTA'] == null) ? "" : $request['ST_NOTA'],
-                'ST_CNT'           => ($request['ST_CNT'] == null) ? "" : $request['ST_CNT'],
-                'POT_PROM'         => (float) str_replace(',', '', $request['POT_PROM']),
-                'KK_STS'           => ($request['KK_STS'] == null) ? "" : $request['KK_STS'],
-                'BASIC'            => ($request['BASIC'] == null) ? "" : $request['BASIC'],
+                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
+                'PROM'         => (float) str_replace(',', '', $request['TPROM']),
+                'JT'           => date('Y-m-d', strtotime($request['JTEMPO'])),
                 'ST_PJK'           => ($request['ST_PJK'] == null) ? "" : $request['ST_PJK'],
-                'FORMAL'           => ($request['FORMAL'] == null) ? "" : $request['FORMAL'],
-                'NOTA_KHS'         => ($request['NOTA_KHS'] == null) ? "" : $request['NOTA_KHS'],
+                'FLAG'             => $FLAGZ,
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'BAYAR'            => (float) str_replace(',', '', $request['BAYAR']),
-                'JUMLAH'           => (float) str_replace(',', '', $request['TJUMLAH']),
+                'TOTAL'           => (float) str_replace(',', '', $request['TJUMLAH']),
                 'DPP'              => (float) str_replace(',', '', $request['TDPP']),
                 'PPN'              => (float) str_replace(',', '', $request['TPPN']),
                 'NETT'             => (float) str_replace(',', '', $request['TNETT']),
-				'PROM'             => (float) str_replace(',', '', $request['TPROM']),
-                'usrnm'            => Auth::user()->username,
-                'tg_smp'           => Carbon::now(),
+                'USRNM'            => Auth::user()->username,
+                'TG_SMP'           => Carbon::now(),
                 'CBG'              => $CBG,
             ]
         );
@@ -721,30 +721,30 @@ class BeliController extends Controller
         $BLT        = $request->input('BLT');
 
 
-        $query = DB::table('belibsnd')->where('no_bukti', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
+        $query = DB::table('nwagendd')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
             // Insert jika NO_ID baru
             if ($NO_ID[$i] == 'new') {
-                $insert = belidetail::create(
+                $insert = NwagendDetail::create(
                     [
-                        'no_bukti'   => $request->NO_BUKTI,
-                        'rec'        => $REC[$i],
-                        'per'        => $periode,
-                        'flag'       => $this->FLAGZ,
+                        'NO_BUKTI'   => $request->NO_BUKTI,
+                        'REC'        => $REC[$i],
+                        'PER'        => $periode,
+                        'FLAG'       => $this->FLAGZ,
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'barcode'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
+                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],
-                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
-                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
+                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
                         'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
                         'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
                         'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
                         'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
                         'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),
-                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
                         'BLT'        => (float) str_replace(',', '', $BLT[$i]),
 
@@ -752,27 +752,27 @@ class BeliController extends Controller
                 );
             } else {
                 // Update jika NO_ID sudah ada
-                $upsert = BeliDetail::updateOrCreate(
+                $upsert = NwagendDetail::updateOrCreate(
                     [
-                        'no_bukti'  => $request->NO_BUKTI,
+                        'NO_BUKTI'  => $request->NO_BUKTI,
                         'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
                     ],
 
                     [
-                        'rec'        => $REC[$i],
+                        'REC'        => $REC[$i],
 
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'barcode'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
+                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],
-                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
-                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
+                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
                         'MARGIN'     => (float) str_replace(',', '', $MARGIN[$i]),
                         'DISKON1'    => (float) str_replace(',', '', $DISKON1[$i]),
                         'DISKON2'    => (float) str_replace(',', '', $DISKON2[$i]),
                         'DISKON3'    => (float) str_replace(',', '', $DISKON3[$i]),
                         'DISKON4'    => (float) str_replace(',', '', $DISKON4[$i]),
-                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'HARGA_JL'   => (float) str_replace(',', '', $HARGA_JL[$i]),
                         'BLT'        => (float) str_replace(',', '', $BLT[$i]),
                     ]
@@ -783,15 +783,15 @@ class BeliController extends Controller
 
         //  ganti 21
 
- 		$beli = beli::where('NO_BUKTI', $no_buktix )->first();
+ 		$beli = Nwagend::where('NO_BUKTI', $no_buktix )->first();
 
         $no_bukti = $beli->NO_BUKTI;
 
-        DB::SELECT("UPDATE belibsn,  belibsnd
-                    SET  belibsnd.ID =  belibsn.NO_ID  WHERE  belibsn.NO_BUKTI =  belibsnd.NO_BUKTI
-                    AND  belibsn.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE nwagend,  nwagendd
+                            SET  nwagendd.ID = nwagend.NO_ID  WHERE  nwagend.NO_BUKTI =  nwagendd.NO_BUKTI
+							AND  nwagend.NO_BUKTI='$no_buktix';");
 
-        $variablell = DB::select('call beliins(?)', array($beli['NO_BUKTI']));
+        // $variablell = DB::select('call beliins(?)', array($beli['NO_BUKTI']));
 
         // return redirect('/beli/edit/?idx=' . $beli->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul .  '&golz=' . $this->GOLZ . '');
         return redirect('/beli?flagz='.$FLAGZ)->with(['flagz' => $FLAGZ ]);
@@ -888,13 +888,13 @@ class BeliController extends Controller
 
 
 
-    public function cetak(Beli $beli)
+    public function cetak(Request $request)
     {
-        $no_beli = $beli->NO_BUKTI;
+        $no_beli = $request->buktix;
 
-        $file     = 'belic';
+        $file     = 'nota-beli';
 
-        $flagz1 = $beli->FLAG;
+        $flagz1 = $request->flagz;
         $judul ='';
 
         if ( $flagz1 =='BL')
@@ -911,52 +911,25 @@ class BeliController extends Controller
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-        $query = DB::SELECT("SELECT beli.NO_BUKTI, beli.TGL, beli.KODES, beli.NAMAS, beli.TOTAL_QTY, beli.NOTES, beli.ALAMAT,
-                                    beli.KOTA, belid.KD_BRG, belid.NA_BRG, belid.SATUAN, belid.QTY2 AS QTY, belid.DISK,
-                                    belid.HARGA, belid.TOTAL, belid.KET, beli.TPPN, beli.NETT,
-                                    beli.NO_PO, beli.USRNM, belid.KALI, beli.TDISK, beli.TDPP, belid.PPN, belid.DPP
-                            FROM beli, belid
-                            WHERE beli.NO_BUKTI='$no_beli' AND beli.NO_BUKTI = belid.NO_BUKTI
-                            ;
-		");
+        $query = DB::SELECT("SELECT 
+                                nwagend.NO_BUKTI, nwagend.TGL, nwagend.NO_BUKTI, nwagend.CBG,
+                                nwagend.ST_PJK, nwagend.ST_NOTA, nwagend.NAMAS, nwagend.JT AS JTEMPO,
+                                nwagend.TOTAL AS BRUTO, nwagend.PROM, nwagend.PPN, nwagend.DPP, nwagend.NETT,
+                                nwagendd.KD_BRG, nwagendd.NA_BRG, nwagendd.BARCODE, nwagendd.QTY, nwagendd.HARGA,
+                                nwagendd.DISKON1, nwagendd.DISKON2, nwagendd.DISKON3, nwagendd.DISKON4, nwagendd.TOTAL, nwagendd.HARGA_JL,
+                                nwmassup.DISC_PS
+                            FROM nwagend
+                            JOIN nwagendd 
+                                ON nwagend.NO_BUKTI = nwagendd.NO_BUKTI
+                            LEFT JOIN nwmassup 
+                                ON nwagend.KODES = nwmassup.NO_SUPL
+                            WHERE nwagend.NO_BUKTI = '$no_beli'
+                        ");
+        // dd($query);
+        DB::SELECT("UPDATE nwagend SET POSTED = 1 WHERE NO_BUKTI='$no_beli';");
 
-                DB::SELECT("UPDATE beli SET POSTED = 1 WHERE NO_BUKTI='$no_beli';");
-
-        $data = [];
-
-        foreach ($query as $key => $value) {
-            array_push($data, array(
-                'NO_BUKTI' => $query[$key]->NO_BUKTI,
-                'TGL'      => $query[$key]->TGL,
-                'KODES'    => $query[$key]->KODES,
-                'NAMAS'    => $query[$key]->NAMAS,
-                'ALAMAT'    => $query[$key]->ALAMAT,
-                'KOTA'    => $query[$key]->KOTA,
-                'KG'       => $query[$key]->KG,
-                'HARGA'    => $query[$key]->HARGA,
-                'TOTAL'    => $query[$key]->TOTAL,
-                'BAYAR'    => $query[$key]->BAYAR,
-                'NOTES'    => $query[$key]->NOTES,
-                'KD_BRG'    => $query[$key]->KD_BRG,
-                'NA_BRG'    => $query[$key]->NA_BRG,
-                'SATUAN'    => $query[$key]->SATUAN,
-                'QTY'    => $query[$key]->QTY,
-                'DISK'    => $query[$key]->DISK,
-                'NETT'    => $query[$key]->NETT,
-                'KET'    => $query[$key]->KET,
-                'NO_PO'    => $query[$key]->NO_PO,
-                'JUDUL'    => $judul,
-                'USRNM'    => $query[$key]->USRNM,
-                'KALI'    => $query[$key]->KALI,
-                'TPPN'    => $query[$key]->TPPN,
-                'TDISK'    => $query[$key]->TDISK,
-                'TDPP'    => $query[$key]->TDPP,
-                'PPN'    => $query[$key]->PPN,
-                'DPP'    => $query[$key]->DPP
-            ));
-        }
-
-        $PHPJasperXML->setData($data);
+        $cleanData = json_decode(json_encode($query), true);
+        $PHPJasperXML->setData($cleanData);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
 
@@ -1036,83 +1009,83 @@ class BeliController extends Controller
 
     }
 
-	function posting (Request $request, Beli $beli)
-	{
+	// function posting (Request $request, Beli $beli)
+	// {
 
-        $REC = $request->input('REC');
-		$CEKX = $request->input('CEKX');
-        $NO_IDX = $request->input('NO_ID');
-        $NO_BUKTIX = $request->input('NO_BUKTI');
-        $TGLX = $request->input('TGL');
-        $NO_SURATSX = $request->input('NO_SURATS');
-        $NAMACX = $request->input('NAMAC');
-        $NETTX = $request->input('NETT');
-        $NO_FPX = $request->input('NO_FPX');
-        $TGL_FPX = $request->input('TGL_FPX');
+    //     $REC = $request->input('REC');
+	// 	$CEKX = $request->input('CEKX');
+    //     $NO_IDX = $request->input('NO_ID');
+    //     $NO_BUKTIX = $request->input('NO_BUKTI');
+    //     $TGLX = $request->input('TGL');
+    //     $NO_SURATSX = $request->input('NO_SURATS');
+    //     $NAMACX = $request->input('NAMAC');
+    //     $NETTX = $request->input('NETT');
+    //     $NO_FPX = $request->input('NO_FPX');
+    //     $TGL_FPX = $request->input('TGL_FPX');
 
-        $USRNMX = Auth::user()->USERNAME;
+    //     $USRNMX = Auth::user()->USERNAME;
 
-        session()->put('posttimer', time());
+    //     session()->put('posttimer', time());
 
-        $hasil = "";
-        // ddd($TGL_FPX);
-        if ($REC) {
-            foreach ($REC as $key => $value) {
+    //     $hasil = "";
+    //     // ddd($TGL_FPX);
+    //     if ($REC) {
+    //         foreach ($REC as $key => $value) {
 
-					$periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
-					$bulan    = session()->get('periode')['bulan'];
-					$tahun    = substr(session()->get('periode')['tahun'], -2);
-
-
-				// $NETTXZ = (float) str_replace(',', '', $NETTX[$key]);
-
-				$NO_IDXZ = $NO_IDX[$key];
+	// 				$periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+	// 				$bulan    = session()->get('periode')['bulan'];
+	// 				$tahun    = substr(session()->get('periode')['tahun'], -2);
 
 
-				// $HUTHGXZ = $HUTHGX[$key];
+	// 			// $NETTXZ = (float) str_replace(',', '', $NETTX[$key]);
+
+	// 			$NO_IDXZ = $NO_IDX[$key];
 
 
-				$CEK11 = $CEKX[$key];
+	// 			// $HUTHGXZ = $HUTHGX[$key];
 
 
-				// $NO_BUKTIXZ = ($NO_BUKTIX[$key] == null) ? "" :  $NO_BUKTIX[$key];
-				// $TGLXZ = ($TGLX[$key] == null) ? "" :  $TGLX[$key];
-
-				// $NO_SURATSXZ = ($NO_SURATSX[$key] == null) ? "" :  $NO_SURATSX[$key];
-				// $NAMACXZ = ($NAMACX[$key] == null) ? "" :  $NAMACX[$key];
-
-				$NO_FPXZ = ($NO_FPX[$key] == null) ? "" :  $NO_FPX[$key];
-				$TGL_FPXZ = ($TGL_FPX[$key] == null) ? "" :  date('Y-m-d', strtotime($TGL_FPX[$key]));
+	// 			$CEK11 = $CEKX[$key];
 
 
-				if ( $CEK11 == 1 )
-			    {
+	// 			// $NO_BUKTIXZ = ($NO_BUKTIX[$key] == null) ? "" :  $NO_BUKTIX[$key];
+	// 			// $TGLXZ = ($TGLX[$key] == null) ? "" :  $TGLX[$key];
 
-                    DB::SELECT("UPDATE jual
-                                SET NO_FP = '$NO_FPXZ',
-                                    TGL_FP = '$TGL_FPXZ'
-                                WHERE NO_ID ='$NO_IDXZ' ");
+	// 			// $NO_SURATSXZ = ($NO_SURATSX[$key] == null) ? "" :  $NO_SURATSX[$key];
+	// 			// $NAMACXZ = ($NAMACX[$key] == null) ? "" :  $NAMACX[$key];
 
-
-				}
-
-					// IF CEK
-
-            } // FOR
+	// 			$NO_FPXZ = ($NO_FPX[$key] == null) ? "" :  $NO_FPX[$key];
+	// 			$TGL_FPXZ = ($TGL_FPX[$key] == null) ? "" :  date('Y-m-d', strtotime($TGL_FPX[$key]));
 
 
-        }
-        else
-        {
-            $hasil = $hasil ."Tidak ada No Bukti yang dipilih! ; ";
-        }
+	// 			if ( $CEK11 == 1 )
+	// 		    {
+
+    //                 DB::SELECT("UPDATE jual
+    //                             SET NO_FP = '$NO_FPXZ',
+    //                                 TGL_FP = '$TGL_FPXZ'
+    //                             WHERE NO_ID ='$NO_IDXZ' ");
 
 
-		return redirect('/beli/post')->with('statusInsert', 'No Bukti berhasil diupdate');
+	// 			}
+
+	// 				// IF CEK
+
+    //         } // FOR
+
+
+    //     }
+    //     else
+    //     {
+    //         $hasil = $hasil ."Tidak ada No Bukti yang dipilih! ; ";
+    //     }
+
+
+	// 	return redirect('/beli/post')->with('statusInsert', 'No Bukti berhasil diupdate');
 
 
 
-	}
+	// }
 
 
 	public function getDetailbeli(){
@@ -1147,6 +1120,141 @@ class BeliController extends Controller
             ->first();
 
         return response()->json($data);
+    }
+
+    // POSTING TERIMA BARANG TGZ
+    public function postingTerimaTGZ(Request $request)
+    {
+        $request->validate([
+            'cek' => 'required'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $flagg = $request->flagg; 
+
+            // 
+            $cabangs = DB::table('toko')
+                ->where('kode', '!=', '')
+                ->pluck('kode');
+
+            foreach ($request->cek as $no_bukti) {
+
+                $header = DB::table('nwagend')
+                    ->where('NO_BUKTI', $no_bukti)
+                    ->first();
+
+                $CBG = $header->CBG;
+
+                if (!$header || $header->POSTED == 1) continue;
+
+                    // 
+                    $details = DB::table('nwagendd') 
+                        ->where('NO_BUKTI', $no_bukti)
+                        ->get();
+
+                    foreach ($details as $row) {
+
+                        if ($flagg == 'RX') {
+
+                            DB::update("
+                                UPDATE nwmasbard 
+                                SET MA00 = MA00 - ?, 
+                                    AK00 = AW00 + MA00 - KE00 + LN00
+                                WHERE KD_BRG = ? AND CBG = ?
+                            ", [
+                                $row->QTY,
+                                $row->KD_BRG,
+                                $CBG 
+                            ]);
+                        }
+
+                        // BS / BO 
+                        if (in_array($flagg, ['BS', 'BO'])) {
+
+                            if ($flagg == 'BS') {
+
+                                // update barang master
+                                DB::update("
+                                    UPDATE nwmasbar 
+                                    SET TOT_TRM = TOT_TRM + QTY_TRM,
+                                        QTY_TRM = ?,
+                                        BKT_TRM = ?,
+                                        TGL_TRM = ?,
+                                        TG_BELI = ?,
+                                        HJ = ?
+                                    WHERE KDBAR = ?
+                                ", [
+                                    $row->QTY,
+                                    $row->NO_BUKTI,
+                                    $header->TGL,
+                                    $header->TGL,
+                                    $row->HARGA_JL ?? 0,
+                                    $row->KD_BRG
+                                ]);
+
+                                // update harga ke semua cabang
+                                foreach ($cabangs as $cbg) {
+                                    DB::update("
+                                        UPDATE {$cbg}.masks
+                                        SET hj = ?, hjgz = ?, hjmm = ?, hjsp = ?
+                                        WHERE kd_brg = ?
+                                    ", [
+                                        $row->HARGA_JL ?? 0,
+                                        $row->HARGA_JL ?? 0,
+                                        $row->HARGA_JL ?? 0,
+                                        $row->HARGA_JL ?? 0,
+                                        $row->KD_BRG
+                                    ]);
+                                }
+                            }
+
+                            // update stok masuk
+                            DB::update("
+                                UPDATE NWMASBARD 
+                                SET MA00 = MA00 - ?, 
+                                    AK00 = AW00 + MA00 - KE00 + LN00
+                                WHERE KDBAR = ? AND CBG = ?
+                            ", [
+                                $row->QTY,
+                                $row->KD_BRG,
+                                $CBG
+                            ]);
+                        }
+                    }
+
+                    // 
+                    // DB::statement("CALL postbs(?, ?)", [
+                    //     $no_bukti,
+                    //     $usr
+                    // ]);
+
+                    // 
+                    DB::table('nwagend')
+                        ->where('NO_BUKTI', $no_bukti)
+                        ->update([
+                            'POSTED' => 1
+                        ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Posting berhasil dilakukan'
+            ]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 	
 }

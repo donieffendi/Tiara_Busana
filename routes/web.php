@@ -950,6 +950,7 @@ Route::post('/beli/update/{beli}', 'App\Http\Controllers\OTransaksi\BeliControll
 Route::get('/beli/delete/{beli}', 'App\Http\Controllers\OTransaksi\BeliController@destroy')->middleware(['auth'])->name('beli.delete');
 Route::get('/beli/repost/{beli}', 'App\Http\Controllers\OTransaksi\BeliController@repost')->middleware(['auth'])->name('beli.repost');
 
+Route::post('/beli/post_terimaTGZ', 'App\Http\Controllers\OTransaksi\BeliController@postingTerimaTGZ')->middleware(['auth'])->name('post_terimaTGZ');
 Route::post('beli/posting', 'App\Http\Controllers\OTransaksi\BeliController@posting')->middleware(['auth']);
 Route::post('beli/batal_post', 'App\Http\Controllers\OTransaksi\BeliController@batal_post')->middleware(['auth']);
 Route::get('beli/index-posting', 'App\Http\Controllers\OTransaksi\BeliController@index_posting')->middleware(['auth']);

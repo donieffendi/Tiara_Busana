@@ -40,7 +40,6 @@ class Nwagend extends Model
         "NETT",
         "TG_SMP",
         "CBG",
-        // "POT_PROM",
         "ST_PJK",
         "ST_NOTA"
     ];

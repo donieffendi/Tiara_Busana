@@ -303,7 +303,7 @@
 									<tbody>
 									<?php $no=0 ?>
 									@foreach ($detail as $detail)
-										<tr>
+										<tr onclick="rowClick('{{$detail->KD_BRG}}', '{{$detail->HARGALAMA}}', '{{$detail->DISKLAMA}}', '{{$detail->DISKLAMA2}}', '{{$detail->DISKLAMA3}}')">
 											<td>
 												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}"
 												class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
@@ -387,6 +387,46 @@
 								</table>
 							</div>
 
+							<!-- TAMBAHAN SHOW HARGA DISKON LAMA -->
+							<div hidden class="mt-3 p-3 bg-light border rounded-5 shadow-sm" id="detailBrg">
+										<div class="row mb-2 text-center">
+											<div class="col-md-2">
+												<label class="form-label mb-0">Kode Barang</label>
+											</div>
+											<div class="col-md-2">
+												<label class="form-label mb-0">Harga Lama</label>
+											</div>
+											<div class="col-md-2">
+												<label class="form-label mb-0">Diskon Lama</label>
+											</div>
+											<div class="col-md-2">
+												<label class="form-label mb-0">Diskon Lama 2</label>
+											</div>
+											<div class="col-md-2">
+												<label class="form-label mb-0">Diskon Lama 3</label>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-2">
+												<input type=" text" class="form-control KD_BRGL text-center" id="KD_BRGL" name="KD_BRGL" readonly>
+											</div>
+											<div class="col-md-2">
+												<input type="text" style="text-align: right" class="form-control HARGAL" id="HARGAL" name="HARGAL" readonly>
+											</div>
+											<div class="col-md-2">
+												<input type="text" style="text-align: right" class="form-control DISKL" id="DISKL" name="DISKL" readonly>
+											</div>
+											<div class="col-md-2">
+												<input type="text" style="text-align: right" class="form-control DISKL2" id="DISKL2" name="DISKL2" readonly>
+											</div>
+											<div class="col-md-2">
+												<input type="text" style="text-align: right" class="form-control DISKL3" id="DISKL3" name="DISKL3" readonly>
+											</div>
+										</div>
+									</div>
+									<!-- BATAS  -->
+
                             <div class="col-md-2 row">
                                <a type="button" id='PLUSX' onclick="tambah()" class="fas fa-plus fa-sm md-3" style="font-size: 20px" ></a>
 
@@ -405,14 +445,15 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TJUMLAH" id="TJUMLAH" name="TJUMLAH" placeholder="" value="{{$header->TOTAL}}" style="text-align: right" readonly>
+                                    <input type="text"  onclick="select()" onkeyup="prosesHitung()" class="form-control TJUMLAH" id="TJUMLAH" name="TJUMLAH" placeholder="" value="{{$header->TOTAL}}" style="text-align: right" readonly>
                                 </div>
 
                                 <div class="col-md-1" align="right">
                                     <label for="TPROM" class="form-label">Promosi</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TPROM" id="TPROM" name="TPROM" placeholder="" value="{{$header->PROM}}" style="text-align: right" readonly>
+									<input type="hidden" class="form-control TPOT_PROM" id="TPOT_PROM" name="TPOT_PROM" readonly>
+                                    <input type="text"  onclick="select()" onkeyup="prosesHitung()" class="form-control TPROM" id="TPROM" name="TPROM" placeholder="" value="{{$header->PROM}}" style="text-align: right" readonly>
                                 </div>
 							</div>
 
@@ -422,7 +463,7 @@
 									<label for="TDPP" class="form-label">Netto (DPP)</label>
 								</div>
 								<div class="col-md-2">
-									<input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TDPP" id="TDPP" name="TDPP" placeholder="" value="{{$header->DPP}}" style="text-align: right" readonly>
+									<input type="text"  onclick="select()" onkeyup="prosesHitung()" class="form-control TDPP" id="TDPP" name="TDPP" placeholder="" value="{{$header->DPP}}" style="text-align: right" readonly>
 								</div>
 							</div>
 
@@ -432,7 +473,7 @@
                                     <label for="TPPN" class="form-label">Ppn</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TPPN" id="TPPN" name="TPPN" placeholder="" value="{{$header->PPN}}" style="text-align: right" readonly>
+                                    <input type="text"  onclick="select()" onkeyup="prosesHitung()" class="form-control TPPN" id="TPPN" name="TPPN" placeholder="" value="{{$header->PPN}}" style="text-align: right" readonly>
                                 </div>
 							</div>
 
@@ -441,7 +482,7 @@
                                     <label for="TNETT" class="form-label">Nett</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TNETT" id="TNETT" name="TNETT" placeholder="" value="{{$header->NETT}}" style="text-align: right" readonly>
+                                    <input type="text"  onclick="select()" onkeyup="prosesHitung()" class="form-control TNETT" id="TNETT" name="TNETT" placeholder="" value="{{$header->NETT}}" style="text-align: right" readonly>
                                 </div>
 							</div>
 
@@ -759,7 +800,7 @@
 					for(i=0; i<resp.length; i++){
 
 						dTableBSup.row.add([
-							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\', \''+resp[i].GOLONGAN+'\')">'+resp[i].KODES+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\', \''+resp[i].GOLONGAN+'\', \''+resp[i].DISC_PS+'\')">'+resp[i].KODES+'</a>',
 							resp[i].KODES,
 							resp[i].NAMAS,
 							resp[i].ALAMAT,
@@ -781,11 +822,13 @@
 
 		}
 
-		chooseSup = function(KODES,NAMAS, ALAMAT, KOTA, GOLONGAN){
+		chooseSup = function(KODES,NAMAS, ALAMAT, KOTA, GOLONGAN, DISC_PS){
 
 			$("#KODES").val(KODES);
 			$("#NAMAS").val(NAMAS);
 			$("#ST_PJK").val(GOLONGAN);
+			$("#TPOT_PROM").val(DISC_PS);
+			console.log(DISC_PS);
 			$("#browseSupModal").modal("hide");
 			//getPod(NO_BUKTI);
 		}
@@ -879,6 +922,9 @@
 
 	function getPod(bukti)
 	{
+
+	
+		$("#detailBrg").attr("hidden", true);
 
 		var mulai = (idrow==baris) ? idrow-1 : idrow;
 
@@ -1040,109 +1086,7 @@
 
 //////////////////////////////////////////////////////////////////
 
-	// function getBelid(bukti)
-	// {
 
-	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
-
-	// 	$.ajax(
-	// 		{
-	// 			type: 'GET',
-	// 			url: "{{url('beli/browse_belid')}}",
-	// 			data: {
-	// 				nobukti: bukti,
-	// 			},
-	// 			success: function( resp )
-	// 			{
-	// 				var html = '';
-	// 				for(i=0; i<resp.length; i++){
-	// 					html+=`<tr>
-    //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-
-
-	// 								<td >
-	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-	// 					            </td>
-	// 					            <td >
-	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-	// 					            </td>
-
-	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-    //                                 <td>
-	// 									<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
-	// 								</td>
-	// 								<td>
-	// 									<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
-	// 								</td>
-	// 								<td>
-	// 									<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
-	// 									<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
-	// 								</td>
-	// 								<td>
-	// 									<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
-	// 								</td>
-    //                                 <td>
-	// 									<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-	// 								</td>
-	// 								<td >
-	// 									<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
-	// 								</td>
-	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-
-
-	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-    //                             </tr>`;
-	// 				}
-	// 				$('#detailPod').html(html);
-
-	// 				$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".XQTY").autoNumeric('update');
-
-	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY_PO").autoNumeric('update');
-
-	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY").autoNumeric('update');
-
-	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".HARGA").autoNumeric('update');
-
-	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".KALI").autoNumeric('update');
-
-	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".TOTAL").autoNumeric('update');
-
-	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".PPNX").autoNumeric('update');
-
-	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".DPP").autoNumeric('update');
-
-	// 				$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".DISK").autoNumeric('update');
-
-
-	// 				idrow=resp.length;
-	// 				baris=resp.length;
-
-	// 				nomor();
-	// 				hitung();
-	// 			}
-	// 		});
-	// }
 
 //////////////////////////////////////////////////////////////////
 
@@ -1217,8 +1161,38 @@
 	});
 
 
-///////////////////////////////////////
+	///////////////////////////////////////
 
+	function rowClick(KD_BRG, HARGA, DISK, DISK2, DISK3) {
+			$("#KD_BRGL").val(KD_BRG);
+			$("#HARGAL").val(HARGA);
+			$("#DISKL").val(DISK);
+			$("#DISKL2").val(DISK2);
+			$("#DISKL3").val(DISK3);
+			$(".HARGAL").autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$(".HARGAL").autoNumeric('update');
+			$(".DISKL").autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$(".DISKL").autoNumeric('update');
+			$(".DISKL2").autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$(".DISKL2").autoNumeric('update');
+			$(".DISKL3").autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$(".DISKL3").autoNumeric('update');
+			$("#detailBrg").removeAttr("hidden");
+	}
+
+	///////////////////////////////////////
 
     function cekDetail(){
 		var cekBarang = '';
@@ -1239,7 +1213,7 @@
 
 
  	function simpan() {
-		hitung();
+		prosesHitung();
 
 		var tgl = $('#TGL').val();
 		var bulanPer = {{session()->get('periode')['bulan']}};
@@ -1571,7 +1545,7 @@
 		});
 
 		$('#TTOTAL_QTY').val(numberWithCommas(x1)).autoNumeric('update');
-		$('#TJUMLAH').val(numberWithCommas(x2)).autoNumeric('update');
+		$('#TJUMLAH').val(numberWithCommas(x2)).autoNumeric('update'); // bruto
 
 		// PROMOSI BELUM TAHU AMBIL DARIMANA
 		let PROM = parseFloat($('#TPOT_PROM').val() || 0);
