@@ -302,7 +302,7 @@
                                     <div class="form-group row">
                                         <div class="col-md-3">
                                             <label>Kode</label>
-                                            <input type="text" name="kode_card" class="form-control">
+                                            <input type="text" name="kode_card" value="{{ session('kode_card') }}"" class="form-control">
                                         </div>
 
                                         <div class="col-md-3">
@@ -321,49 +321,103 @@
                                     <!-- TABLE CARD -->
                                     <div style="overflow-x:auto;">
                                         <?php
-                                        if ($hasil2) {
-                                            \koolreport\datagrid\DataTables::create([
+                                       if ($hasil2) {
+                                            DataTables::create([
                                                 'dataSource' => $hasil2,
+                                                'name' => 'example2',
+                                                'fastRender' => true,
+                                                'fixedHeader' => true,
+                                                'scrollX' => true,
+                                                'showFooter' => true,
+                                                'showFooter' => 'bottom',
                                                 'columns' => [
-                                                    'cnt' => 'Sub',
-                                                    'kd_brg' => 'Kode Barang',
-                                                    'barcode' => 'Barcode',
-                                                    'NA_brg' => 'Nama Barang',
-
-                                                    'tgl_trm' => 'Tgl Beli',
-                                                    'tgl_jual' => 'Tgl Jual',
-
-                                                    'aw' => [
+                                                    'kd_brg' => [
+                                                        'label' => 'Kode',
+                                                    ],
+                                                    'NA_BRG' => [
+                                                        'label' => 'Nama',
+                                                    ],
+                                                    'tgl' => [
+                                                        'label' => 'Tanggal',
+                                                    ],
+                                                    'no_bukti' => [
+                                                        'label' => 'Faktur',
+                                                    ],
+                                                    'awal' => [
                                                         'label' => 'Awal',
                                                         'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
                                                         'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
                                                     ],
-                                                    'ma' => [
+                                                    'masuk' => [
                                                         'label' => 'Masuk',
                                                         'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
                                                         'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
                                                     ],
-                                                    'ke' => [
+                                                    'keluar' => [
                                                         'label' => 'Keluar',
                                                         'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
                                                         'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
                                                     ],
-                                                    'ln' => [
+
+                                                    'lain' => [
                                                         'label' => 'Lain',
                                                         'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
                                                         'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
                                                     ],
-                                                    'ak' => [
-                                                        'label' => 'Akhir',
+                                                    'SALDO' => [
+                                                        'label' => 'Saldo',
                                                         'type' => 'number',
+                                                        'decimals' => 2,
+                                                        'decimalPoint' => '.',
+                                                        'thousandSeparator' => ',',
                                                         'footer' => 'sum',
+                                                        'footerText' => '<b>@value</b>',
                                                     ],
                                                 ],
+                                                'cssClass' => [
+                                                    'table' => 'table table-hover table-striped table-bordered compact',
+                                                    'th' => 'label-title',
+                                                    'td' => 'detail',
+                                                    'tf' => 'footerCss',
+                                                ],
                                                 'options' => [
+                                                    'columnDefs' => [
+                                                        [
+                                                            'className' => 'dt-right',
+                                                            'targets' => [8, 9, 10],
+                                                        ],
+                                                    ],
+                                                    'order' => [],
                                                     'paging' => true,
+                                                    // "pageLength" => 12,
                                                     'searching' => true,
-                                                    'dom' => 'Blfrtip',
-                                                    'buttons' => ['copy', 'excel', 'csv', 'pdf', 'print'],
+                                                    'colReorder' => true,
+                                                    'select' => true,
+                                                    'dom' => 'Blfrtip', // B e dilangi
+                                                    // "dom" => '<"row"<col-md-6"B><"col-md-6"f>> <"row"<"col-md-12"t>><"row"<"col-md-12">>',
+                                                    'buttons' => [
+                                                        [
+                                                            'extend' => 'collection',
+                                                            'text' => 'Export',
+                                                            'buttons' => ['copy', 'excel', 'csv', 'pdf', 'print'],
+                                                        ],
+                                                    ],
                                                 ],
                                             ]);
                                         }
