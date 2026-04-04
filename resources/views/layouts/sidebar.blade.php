@@ -885,6 +885,15 @@
                 </a>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffbaba;">
+                <a href="javascript:addTab('Proses Stok Ideal', '{{url('stokideal')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-red"></i>
+                  <h6>Proses Stok Ideal</h6>
+                </a>
+            </div>
+        </div>
       </div>
     </div>
 

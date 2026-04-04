@@ -524,6 +524,11 @@ Route::get('/rbudgetll', 'App\Http\Controllers\OReport\RBudgetllController@repor
 Route::get('/get-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@getBudgetllReport')->middleware(['auth'])->name('get-budgetll-report');
 Route::post('jasper-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@jasperBudgetllReport')->middleware(['auth']);
 
+// Operational Proses Budget Ideal
+
+Route::get('/stokideal', 'App\Http\Controllers\OReport\RStokidealController@report')->middleware(['auth'])->name('stokideal');
+Route::post('proses-stokideal', 'App\Http\Controllers\OReport\RStokidealController@proses')->middleware(['auth']);
+
 // Operational Surat Teguran Budget Minus
 
 Route::get('/rtegur', 'App\Http\Controllers\OReport\RTegurController@report')->middleware(['auth'])->name('rtegur');
