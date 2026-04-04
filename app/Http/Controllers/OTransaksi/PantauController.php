@@ -20,7 +20,7 @@ include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJaspe
 use PHPJasperXML;
 
 // ganti 2
-class PoController extends Controller
+class PantauController extends Controller
 {
     /**
      * Display a listing of the resource.

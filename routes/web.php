@@ -269,8 +269,8 @@ Route::get('/pantau', 'App\Http\Controllers\OTransaksi\PantauController@index')-
 Route::post('/pantau/store', 'App\Http\Controllers\OTransaksi\PantauController@store')->middleware(['auth'])->name('pantau/store');
     // GET PANTAU
     Route::get('/pantau/browse', 'App\Http\Controllers\OTransaksi\PantauController@browse')->middleware(['auth'])->name('pantau/browse');
-    Route::get('/get-pantau', 'App\Http\Controllers\OTransaksi\PantauController@getPo')->middleware(['auth'])->name('get-pantau');
-    Route::get('/get-pantau-post', 'App\Http\Controllers\OTransaksi\PantauController@getPo_posting')->middleware(['auth'])->name('get-pantau-post');
+    Route::get('/get-pantau', 'App\Http\Controllers\OTransaksi\PantauController@getPantau')->middleware(['auth'])->name('get-pantau');
+    Route::get('/get-pantau-post', 'App\Http\Controllers\OTransaksi\PantauController@getPantau_posting')->middleware(['auth'])->name('get-pantau-post');
 	Route::get('/pantau/cetak/{pantau:NO_ID}','App\Http\Controllers\OTransaksi\PantauController@cetak')->middleware(['auth']);
 
 // Dynamic Pantau
