@@ -40,6 +40,14 @@ class BrgController extends Controller
         return response()->json($brg);
     }
 
+    public function get_sub(Request $request)
+    {
+        $SUB = $request->SUB;
+        $brg = DB::SELECT("SELECT SUB, KELOMPOK, DEPT FROM nwaotprice where SUB = '$SUB' ORDER BY SUB ");
+		
+        return response()->json($brg);
+    }
+
     public function browse_event(Request $request)
     {
         $brg = DB::SELECT("SELECT KODE, NAMA FROM hraya ORDER BY KODE ");
@@ -143,7 +151,6 @@ class BrgController extends Controller
         $sub = $request->SUB;
 
         $last = DB::table('nwmasbar')
-                ->where('SUB', $sub)
                 ->orderByDesc('KDBAR')
                 ->first();
 
@@ -161,7 +168,11 @@ class BrgController extends Controller
 
         $urutbarcode = str_pad($count,5,'0',STR_PAD_LEFT);
 
-        $BARCODE = $KDBAR.$urutbarcode;
+        if(!empty($request->input('BARCODE'))) {
+            $BARCODE = $request->BARCODE;
+        } else {
+            $BARCODE = $KDBAR.$urutbarcode;
+        }
 
 		
         $brg = Brg::create(

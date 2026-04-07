@@ -12,7 +12,7 @@ class Diskon extends Model
     use HasFactory;
 
 // ganti 2
-    protected $table = 'diskon';
+    protected $table = 'disbsn';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
@@ -20,6 +20,6 @@ class Diskon extends Model
     protected $fillable = 
     [
         "NO_BUKTI", "TGL", "PER", "FLAG", "NOTES",
-		"USRNM", "TG_SMP", "CBG"
+		"USRNM", "TG_SMP", "TGLM", "TGLS", "DIS", "PAR", "TYPE"
     ];
 }

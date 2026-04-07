@@ -155,8 +155,8 @@
                             <th scope="col" style="text-align: left">Type</th>
                             <th scope="col" style="text-align: left">Start</th>
                             <th scope="col" style="text-align: left">End</th>
-                            <th scope="col" style="text-align: left">Notes</th>
                             <th scope="col" style="text-align: left">Tgl Entri</th>
+                            <th scope="col" style="text-align: left">Notes</th>
                             <th scope="col" style="text-align: left">Operator</th>
                         </tr>
                     </thead>
@@ -228,10 +228,10 @@
                 },
                 {data: 'TGL', name: 'TGL'},
                 {data: 'CNT', name: 'CNT'},
-                {data: 'NCNT', name: 'NCNT'},
+                {data: 'NA_CNT', name: 'NA_CNT'},
                 {
-                  data: 'DSIKON',
-                  name: 'DSIKON',
+                  data: 'DIS',
+                  name: 'DIS',
                   render: $.fn.dataTable.render.number( ',', '.', 0, '' )
 				},	
                 {
@@ -240,9 +240,10 @@
                   render: $.fn.dataTable.render.number( ',', '.', 0, '' )
 				},								
                 {data: 'TYPE', name: 'TYPE'},
-                {data: 'START', name: 'START'},
-                {data: 'END', name: 'END'},
-                {data: 'TGL1', name: 'TGL1'},
+                {data: 'TGLM', name: 'TGLM'},
+                {data: 'TGLS', name: 'TGLS'},
+                {data: 'TG_SMP', name: 'TG_SMP'},
+                {data: 'NOTES', name: 'NOTES'},
                 {data: 'USRNM', name: 'USRNM'},
             ],
             columnDefs: 
@@ -256,7 +257,7 @@
                     "targets": [6,7]
                 },			
                 {
-                  targets: [3,11],
+                  targets: [3,9,10],
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
                 }
             ],

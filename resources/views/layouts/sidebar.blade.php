@@ -1138,8 +1138,8 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              {{-- <a href="javascript:addTab('Diskon Penjualan', '{{url('diskon?flagz=DS')}}')" > --}}
-              <a href="javascript:addTab('Diskon Penjualan', '{{url('po?flagz=PO&golz=DP')}}')">
+              <a href="javascript:addTab('Diskon Penjualan', '{{url('diskon?flagz=DS')}}')" >
+              <!-- <a href="javascript:addTab('Diskon Penjualan', '{{url('po?flagz=PO&golz=DP')}}')"> -->
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-blue"></i>
                 <h6>Dikson</h6>

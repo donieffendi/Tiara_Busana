@@ -461,6 +461,7 @@ Route::get('/diskon/delete/{diskon}', 'App\Http\Controllers\OTransaksi\DiskonCon
 
 Route::post('/jasper-diskon-report', 'App\Http\Controllers\OReport\RDiskonController@jasperDiskonReport')->middleware(['auth']);
 Route::get('/jsdiskonc/{diskon:NO_ID}', 'App\Http\Controllers\OTransaksi\DiskonController@jsdiskonc')->middleware(['auth']);
+Route::get('/diskon/cetak/{diskon}', 'App\Http\Controllers\OTransaksi\DiskonController@cetak')->middleware(['auth'])->name('diskon.cetak');
 
 
 // Operational Transaksi Tagi

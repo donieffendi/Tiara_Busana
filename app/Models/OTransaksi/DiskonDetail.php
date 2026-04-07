@@ -9,13 +9,13 @@ class DiskonDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'diskond';
+    protected $table = 'disbsnd';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
     protected $fillable =
     [
         "REC", "NO_BUKTI", "ID", "KD_BRG", "NA_BRG", 
-        "DIS", "PAR", "QTY", "TGLMX", "TGLSX", "KET"
+        "DIS", "PAR", "QTY", "TGLM", "TGLS", "KET"
     ];
 }

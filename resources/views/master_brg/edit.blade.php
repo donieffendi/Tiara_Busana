@@ -148,7 +148,7 @@
 									<div class="col-md-2 form-group row special-input-label">
 
 										<input type="text" class="BARCODE" id="BARCODE" name="BARCODE" 
-											value="{{$header->BARCODE}}" placeholder=" " readonly>
+											value="{{$header->BARCODE}}" placeholder=" ">
 										<label for="BARCODE">Barcode</label>
 									</div>
 								</div>
@@ -277,8 +277,8 @@
 
 									<div class="col-md-4 form-group row special-input-label">
 
-										<input type="text" class="KDBAR" id="KDBAR" name="KDBAR" 
-											value="{{$header->KDBAR}}" placeholder=" " readonly>
+										<input type="text" class="NM_SUB" id="NM_SUB" name="NM_SUB" 
+											value="" placeholder=" " readonly>
 										{{-- <label for="NAMA">No. Supplier</label> --}}
 									</div>
 
@@ -305,9 +305,9 @@
 									</div>
 
 									<div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="KET" id="KET" name="KET" 
-											value="{{$header->KET}}" placeholder=" " >
-										<label for="KET">PLU Tiara</label>
+										<input type="text" class="KDBAR" id="KDBAR" name="KDBAR" 
+											value="{{$header->KDBAR}}" placeholder=" " >
+										<label for="KDBAR">PLU Tiara</label>
 									</div>
 								</div>
 
@@ -501,6 +501,7 @@
 			}
 		});
 
+		setSubFromEdit();
 		
 
 		$('.date').datepicker({  
@@ -593,7 +594,7 @@
 					for(i=0; i<resp.length; i++){
 						
 						dTableBSub.row.add([
-							'<a href="javascript:void(0);" onclick="chooseSub(\''+resp[i].SUB+'\')">'+resp[i].SUB+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseSub(\''+resp[i].SUB+'\', \''+resp[i].KELOMPOK+'\')">'+resp[i].SUB+'</a>',
 							resp[i].KELOMPOK,
 							resp[i].DEPT
 						]);
@@ -612,9 +613,28 @@
 			$("#browseSubModal").modal("show");
 		}
 		
-		chooseSub = function(SUB){
+		chooseSub = function(SUB, KELOMPOK){
 			$("#SUB").val(SUB);
+			$("#NM_SUB").val(KELOMPOK);
 			$("#browseSubModal").modal("hide");
+		}
+
+		function setSubFromEdit() {
+			let sub = $("#SUB").val();
+			console.log(sub);
+			if (sub) {
+				$.ajax({
+					url: '{{ url("brg/get_sub") }}',
+					type: 'GET',
+					data: { SUB: sub },
+					success: function (res) {
+						console.log(res);
+						if (res) {
+							$("#NM_SUB").val(res[0].KELOMPOK);
+						}
+					}
+				});
+			}
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////

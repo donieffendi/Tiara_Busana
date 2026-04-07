@@ -139,7 +139,7 @@ class DiskonController extends Controller
         $CBG = Auth::user()->CBG;
 		
         $diskon = DB::SELECT("SELECT * FROM DISBSN
-                            where flag=''DS''
+                            where flag='DS'
                             order by no_bukti DESC");
 
         // ganti 6
@@ -165,7 +165,7 @@ class DiskonController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" href="cetak/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="diskon/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a> 									
@@ -246,15 +246,15 @@ class DiskonController extends Controller
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('diskon')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'KZ')->where('CBG', $CBG)
+        $query = DB::table('disbsn')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'DS')
                 ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
         if ($query != '[]') {
             $query = substr($query[0]->NO_BUKTI, -4);
             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-            $no_bukti = 'KZ' . $CBG . $tahun . $bulan . '-' . $query;
+            $no_bukti = $FLAGZ . $tahun . $bulan . '-' . $query . 'Z';
         } else {
-            $no_bukti = 'KZ' . $CBG . $tahun . $bulan . '-0001';
+            $no_bukti = $FLAGZ . $tahun . $bulan . '-0001Z';
         }		
 
         $diskon = Diskon::create(
@@ -262,13 +262,15 @@ class DiskonController extends Controller
                 'NO_BUKTI'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'PER'              => $periode,
-                'FLAG'             => 'KZ',
+                'FLAG'             => 'DS',
+                'TYPE'            => ($request['TYPE']==null) ? "" : $request['TYPE'],
                 'NOTES'            => ($request['NOTES']==null) ? "" : $request['NOTES'],				
-                'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
+                'DIS'              => (float) str_replace(',', '', $request['DIS']),			
+                'PAR'              => (float) str_replace(',', '', $request['PAR']),
                 'USRNM'            => Auth::user()->username,
+                'TGLM'             => date('Y-m-d', strtotime($request['TGLM'])),
+                'TGLS'             => date('Y-m-d', strtotime($request['TGLS'])),
                 'TG_SMP'           => Carbon::now(),
-				'created_by'       => Auth::user()->username,
-				'CBG'              => $CBG,
             ]
         );
 
@@ -276,10 +278,10 @@ class DiskonController extends Controller
 		$REC        = $request->input('REC');
 		$KD_BRG	= $request->input('KD_BRG');
 		$NA_BRG	= $request->input('NA_BRG');
-		$SATUAN	= $request->input('SATUAN');
-		$QTYC	= $request->input('QTYC');
-		$QTYR	= $request->input('QTYR');
-		$QTY	= $request->input('QTY');
+		$TGLM	= $request->input('TGLM');
+		$TGLS	= $request->input('TGLS');
+		$DIS	= $request->input('DIS');
+		$PAR	= $request->input('PAR');
 		$KET	= $request->input('KET');
 
         // Check jika value detail ada/tidak
@@ -295,10 +297,10 @@ class DiskonController extends Controller
                 $detail->FLAG        = $FLAGZ;	
 				$detail->KD_BRG	     = ($KD_BRG[$key]==null) ? "" :  $KD_BRG[$key];
 				$detail->NA_BRG	     = ($NA_BRG[$key]==null) ? "" :  $NA_BRG[$key];
-				$detail->SATUAN	     = ($SATUAN[$key]==null) ? "" :  $SATUAN[$key];
-				$detail->QTYC	     = (float) str_replace(',', '', $QTYC[$key]);
-				$detail->QTYR	     = (float) str_replace(',', '', $QTYR[$key]);
-				$detail->QTY	     = (float) str_replace(',', '', $QTY[$key]);
+				$detail->DIS	     = (float) str_replace(',', '', $DIS[$key]);
+				$detail->PAR	     = (float) str_replace(',', '', $PAR[$key]);
+                $detail->TGLM        = date('Y-m-d', strtotime($TGLM[$key]));
+                $detail->TGLS        = date('Y-m-d', strtotime($TGLS[$key]));
 				$detail->KET	     = ($KET[$key]==null) ? "" :  $KET[$key];						
                 $detail->save();
             }
@@ -309,9 +311,9 @@ class DiskonController extends Controller
 		$diskon = Diskon::where('NO_BUKTI', $no_buktix )->first();
 
 
-        DB::SELECT("UPDATE diskon,  diskond
-                            SET  diskond.ID =  diskon.NO_ID  WHERE  diskon.NO_BUKTI =  diskond.NO_BUKTI 
-							AND  diskon.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE disbsn,  disbsnd
+                            SET  disbsnd.ID =  disbsn.NO_ID  WHERE  disbsn.NO_BUKTI =  disbsnd.NO_BUKTI 
+							AND  disbsn.NO_BUKTI='$no_buktix';");
 
 		
 					 
@@ -356,7 +358,7 @@ class DiskonController extends Controller
 		   	
     	   $buktix = $request->buktix;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from diskon
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from DISBSN
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
 						 and NO_BUKTI = '$buktix' AND CBG = '$CBG'					 
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
@@ -377,7 +379,7 @@ class DiskonController extends Controller
 		if ($tipx=='top') {
 			
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from diskon
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from DISBSN
 		                 where PER ='$per' 
 						 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'  
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
@@ -400,7 +402,7 @@ class DiskonController extends Controller
 			
     	   $buktix = $request->buktix;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from diskon     
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from DISBSN     
 		             where PER ='$per' 
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI < 
@@ -424,7 +426,7 @@ class DiskonController extends Controller
 				
       	   $buktix = $request->buktix;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from diskon    
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from DISBSN    
 		             where PER ='$per'  
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI > 
@@ -444,7 +446,7 @@ class DiskonController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from diskon
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from DISBSN
 						where PER ='$per'
 						and FLAG ='$this->FLAGZ' AND CBG = '$CBG'  
 		              ORDER BY NO_BUKTI DESC  LIMIT 1" );
@@ -484,7 +486,7 @@ class DiskonController extends Controller
 		 }
 
         $no_bukti = $diskon->NO_BUKTI;
-        $diskonDetail = DB::table('diskond')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
+        $diskonDetail = DB::table('disbsnd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
 		
 		$data = [
             'header'        => $diskon,
@@ -535,13 +537,16 @@ class DiskonController extends Controller
         $diskon->update(
             [
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
+                'PER'              => $periode,
+                'FLAG'             => 'DS',
+                'TYPE'            => ($request['TYPE']==null) ? "" : $request['TYPE'],
                 'NOTES'            => ($request['NOTES']==null) ? "" : $request['NOTES'],				
-                'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
-				'USRNM'            => Auth::user()->username,
+                'DIS'              => (float) str_replace(',', '', $request['DIS']),			
+                'PAR'              => (float) str_replace(',', '', $request['PAR']),
+                'USRNM'            => Auth::user()->username,
+                'TGLM'             => date('Y-m-d', strtotime($request['TGLM'])),
+                'TGLS'             => date('Y-m-d', strtotime($request['TGLS'])),
                 'TG_SMP'           => Carbon::now(),
-				'updated_by'       => Auth::user()->username,
-                'FLAG'             => 'KZ',	
-                'CBG'              => $CBG,	
             ]
         );
 
@@ -555,10 +560,10 @@ class DiskonController extends Controller
 
         $KD_BRG	= $request->input('KD_BRG');
 		$NA_BRG	= $request->input('NA_BRG');
-		$SATUAN	= $request->input('SATUAN');
-		$QTYC	= $request->input('QTYC');
-		$QTYR	= $request->input('QTYR');
-		$QTY	= $request->input('QTY');
+		$TGLM	= $request->input('TGLM');
+		$TGLS	= $request->input('TGLS');
+		$DIS	= $request->input('DIS');
+		$PAR	= $request->input('PAR');
 		$KET	= $request->input('KET');	
 
         $query = DB::table('diskond')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
@@ -575,11 +580,11 @@ class DiskonController extends Controller
                         'FLAG'       => $this->FLAGZ,
                         'KD_BRG'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
                         'NA_BRG'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],	
-                        'SATUAN'     => ($SATUAN[$i]==null) ? "" : $SATUAN[$i],
-						'KET'     	 => ($KET[$i]==null) ? "" : $KET[$i],
-                        'QTYC'      => (float) str_replace(',', '', $QTYC[$i]),
-                        'QTYR'      => (float) str_replace(',', '', $QTYR[$i]),
-						'QTY'        => (float) str_replace(',', '', $QTY[$i])	
+                        'DIS'        => (float) str_replace(',', '', $DIS[$i]),
+                        'PAR'	     => (float) str_replace(',', '', $PAR[$i]),
+                        'TGLM'       => date('Y-m-d', strtotime($TGLM[$i])),
+                        'TGLS'       => date('Y-m-d', strtotime($TGLS[$i])),
+                        'KET'	     => ($KET[$i]==null) ? "" :  $KET[$i],
 						
                     ]
                 );
@@ -596,11 +601,11 @@ class DiskonController extends Controller
 
                         'KD_BRG'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
                         'NA_BRG'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],	
-                        'SATUAN'     => ($SATUAN[$i]==null) ? "" : $SATUAN[$i],
-						'KET'     	 => ($KET[$i]==null) ? "" : $KET[$i],
-                        'QTYC'      => (float) str_replace(',', '', $QTYC[$i]),
-                        'QTYR'      => (float) str_replace(',', '', $QTYR[$i]),
-						'QTY'        => (float) str_replace(',', '', $QTY[$i]),
+                        'DIS'        => (float) str_replace(',', '', $DIS[$i]),
+                        'PAR'	     => (float) str_replace(',', '', $PAR[$i]),
+                        'TGLM'       => date('Y-m-d', strtotime($TGLM[$i])),
+                        'TGLS'       => date('Y-m-d', strtotime($TGLS[$i])),
+                        'KET'	     => ($KET[$i]==null) ? "" :  $KET[$i],
                         'FLAG'       => $this->FLAGZ,
                         'PER'        => $periode,					
                     ]
@@ -612,9 +617,9 @@ class DiskonController extends Controller
 
         $no_bukti = $diskon->NO_BUKTI;
 
-        DB::SELECT("UPDATE diskon,  diskond
-                    SET  diskond.ID =  diskon.NO_ID  WHERE  diskon.NO_BUKTI =  diskond.NO_BUKTI 
-                    AND  diskon.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE disbsn,  disbsnd
+                    SET  disbsnd.ID =  disbsn.NO_ID  WHERE  disbsn.NO_BUKTI =  disbsnd.NO_BUKTI 
+                    AND  disbsn.NO_BUKTI='$no_bukti';");
 					 
         // return redirect('/diskon/edit/?idx=' . $diskon->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');	
         return redirect('/diskon?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
@@ -660,60 +665,30 @@ class DiskonController extends Controller
     {
         $no_diskon = $diskon->NO_BUKTI;
 
-        $file     = 'diskonc';
+        $file     = 'diskon penjualan';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
         $query = DB::SELECT("
-			SELECT NO_BUKTI,  TGL, KODES, NAMAS, TOTAL_QTY, NOTES, TOTAL, ALAMAT, KOTA
-			FROM diskon 
-			WHERE diskon.NO_BUKTI='$no_diskon' 
-			ORDER BY NO_BUKTI;
+			SELECT disbsn.NO_BUKTI AS NO_BUKTI, disbsn.TGL AS TGL, disbsn.DIS, disbsn.PAR, disbsn.NOTES AS KET, disbsnd.KD_BRG, 
+                    disbsnd.NA_BRG, disbsnd.DIS AS DISX, disbsnd.PAR AS PARX, disbsnd.KET AS KETX
+			FROM disbsn 
+            LEFT JOIN disbsnd 
+			ON disbsn.NO_BUKTI = disbsnd.NO_BUKTI 
+            WHERE disbsn.NO_BUKTI='$no_diskon' 
+			ORDER BY disbsn.NO_BUKTI;
 		");
-
-        $xno_diskon1       = $query[0]->NO_BUKTI;
-        $xtgl1         = $query[0]->TGL;
-        $xkodes1       = $query[0]->KODES;
-        $xnamas1       = $query[0]->NAMAS;
-        $xtotal1       = $query[0]->TOTAL_QTY;
-        $xnotes1       = $query[0]->NOTES;
-        $xharga1       = $query[0]->TOTAL;
-        $xalamat1      = $query[0]->ALAMAT;
-        $xkota1        = $query[0]->KOTA;
-        
-        $PHPJasperXML->arrayParameter = array("HARGA1" => (float) $xharga1, "TOTAL1" => (float) $xtotal1, "NO_PO1" => (string) $xno_diskon1,
-                                     "TGL1" => (string) $xtgl1,  "KODES1" => (string) $xkodes1,  "NAMAS1" => (string) $xnamas1, "NOTES1" => (string) $xnotes1, "ALAMAT1" => (string) $xalamat1, "KOTA1" => (string) $xkota1 );
-        $PHPJasperXML->arraysqltable = array();
-
-
-        $query2 = DB::SELECT("
-			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT, NO_PO,  IF ( FLAG='BL' , 'A','B' ) AS FLAG, AJU, BL, EMKL, KD_BRG, NA_BRG, KG, RPHARGA AS HARGA, RPTOTAL AS TOTAL, 0 AS BAYAR,  NOTES
-			FROM beli 
-			WHERE beli.NO_PO='$no_diskon'  UNION ALL 
-			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT,  NO_PO,  'C' AS FLAG, '' AS AJU, '' AS BL, '' AS EMKL,  '' AS KD_BRG, '' AS NA_BRG, 0 AS KG, 
-			0 AS HARGA, 0 AS TOTAL, BAYAR, NOTES
-			FROM hut 
-			WHERE hut.NO_PO='$no_diskon' 
-			ORDER BY TGL, FLAG, NO_BUKTI;
-		");
-
+// dd($query);
         $data = [];
 
-        foreach ($query2 as $key => $value) {
+        foreach ($query as $key => $value) {
             array_push($data, array(
-                'NO_BUKTI' => $query2[$key]->NO_BUKTI,
-                'TGL'      => $query2[$key]->TGL,
-                'KODES'    => $query2[$key]->KODES,
-                'NAMAS'    => $query2[$key]->NAMAS,
-                'ALAMAT'    => $query2[$key]->ALAMAT,
-                'AJU'    => $query2[$key]->AJU,
-                'BL'       => $query2[$key]->BL,
-                'EMKL'    => $query2[$key]->EMKL,
-                'KG'       => $query2[$key]->KG,
-                'HARGA'    => $query2[$key]->HARGA,
-                'TOTAL'    => $query2[$key]->TOTAL,
-                'BAYAR'    => $query2[$key]->BAYAR,
-                'NOTES'    => $query2[$key]->NOTES
+                'NO_BUKTI' => $query[$key]->NO_BUKTI,
+                'TGL'      => $query[$key]->TGL,
+                'DIS' => $query[$key]->DIS == 0 ? $query[$key]->DISX : $query[$key]->DIS,
+                'PAR' => $query[$key]->PAR == 0 ? $query[$key]->PARX : $query[$key]->PAR,
+                'HARGA'    => $query[$key]->HARGA,
+                'NOTES'    => $query[$key]->NOTES
             ));
         }
 		

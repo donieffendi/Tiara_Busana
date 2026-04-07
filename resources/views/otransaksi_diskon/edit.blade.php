@@ -143,6 +143,30 @@
                                     <input type="text" class="form-control NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI"
                                     placeholder="Masukkan Bukti#" value="{{$header->NO_BUKTI}}" readonly>
                                 </div>
+
+								<div class="col-md-2"></div>
+
+								<div class="col-md-4 d-flex align-items-center gap-3">
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" id="ALL" name="TYPE[]" value="ALL"
+        									{{ ($header->TYPE ?? '') == 'ALL' ? 'checked' : '' }}>
+										<label class="form-check-label" for="ALL">
+											Semua
+										</label>
+									</div>
+									<div class="col-md-1"></div>
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" id="SATU" name="TYPE[]" value="SATU"
+        									{{ ($header->TYPE ?? '') == 'SATU' ? 'checked' : '' }}>
+										<label class="form-check-label" for="SATU">
+											Per Item
+										</label>
+									</div>
+
+								</div>
+
                             </div>
 
                             <div class="form-group row">
@@ -153,20 +177,77 @@
                                 <div class="col-md-2">
 								  <input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
                                 </div>
+
+								<div class="col-md-2"></div>
+								
+
+								<!-- Counter -->
+								<div class="form-group row">
+
+									<!-- CNT -->
+									<div class="col-md-3 form-group special-input-label">
+										<input type="text" id="CNT" name="CNT"
+											class="form-control" placeholder=" "
+											value="{{ $header->CNT }}">
+										<label for="CNT">Counter</label>
+									</div>
+
+									<!-- NA_CNT -->
+									<div class="col-md-8 form-group special-input-label">
+										<input type="text" id="NA_CNT" name="NA_CNT"
+											class="form-control" placeholder=" "
+											value="{{ $header->NA_CNT }}" readonly>
+										<label for="NA_CNT">Nama Counter</label>
+									</div>
+
+								</div>
 								
                             </div>
 
 							<div class="form-group row">
                                 <!-- code text box baru -->
-								<div class="col-md-5 form-group row special-input-label">
+								<div class="col-md-4 form-group row special-input-label">
 
 									<input type="text" class="NOTES" id="NOTES" name="NOTES" 
 										value="{{$header->NOTES}}" placeholder=" " >
 									<label for="NOTES">Notes</label>
 								</div>
 								<!-- tutupannya -->
+
+								<div class="col-md-1"></div>
+
+								<!-- Diskon -->
+								<div class="col-md-2 form-group special-input-label">
+									<input type="text" id="DIS" name="DIS"
+										class="form-control" value="{{ $header->DIS ?? 0 }}" placeholder=" ">
+									<label for="DIS">Diskon %</label>
+								</div>
+
+								<!-- PAR -->
+								<div class="col-md-2 form-group special-input-label">
+									<input type="text" id="PAR" name="PAR"
+										class="form-control" value="{{ $header->PAR ?? 0 }}" placeholder=" ">
+									<label for="PAR">Partisipasi</label>
+								</div>
+								
         
                             </div>
+
+							<div class="form-group row">
+								<div class="col-md-5"></div>
+								<!-- Periode -->
+								<div class="col-md-2 form-group row special-input-label">
+									<input type="text" id="TGLM" name="TGLM"
+										class="form-control date" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGLM))}}">
+									<label for="TGLM">Periode Dari</label>
+								</div>
+
+								<div class="col-md-2 form-group row special-input-label">
+									<input type="text" id="TGLS" name="TGLS"
+										class="form-control date" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGLS))}}">
+									<label for="TGLS">Periode Sampai</label>
+								</div>
+							</div>
 							
 							<!-- loader tampil di modal  -->
 							<div class="loader" style="z-index: 1055;" id='LOADX' ></div>
@@ -218,10 +299,10 @@
 										<td><input name="PAR[]" onclick="select()" onkeyup="hitung()" value="{{$detail->PAR}}" id="PAR{{$no}}" type="text" style="text-align: right"  class="form-control PAR text-primary"></td>
 										
 										<td>
-											<input name="TGLMX[]" id	="TGLMX{{$no}}" type="text" class="date form-control text_input TGLMX" data-date-format="dd-mm-yyyy" value="{{($detail->TGLMX=='0000-00-00')?'00-00-0000':date('d-m-Y',strtotime($detail->TGLMX));}}">
+											<input name="TGLMX[]" id	="TGLMX{{$no}}" type="text" class="date form-control text_input TGLMX" data-date-format="dd-mm-yyyy" value="{{($detail->TGLM=='0000-00-00')?'00-00-0000':date('d-m-Y',strtotime($detail->TGLM));}}">
 										</td>
 										<td>
-											<input name="TGLMX[]" id	="TGLMX{{$no}}" type="text" class="date form-control text_input TGLMX" data-date-format="dd-mm-yyyy" value="{{($detail->TGLMX=='0000-00-00')?'00-00-0000':date('d-m-Y',strtotime($detail->TGLMX));}}">
+											<input name="TGLMX[]" id	="TGLMX{{$no}}" type="text" class="date form-control text_input TGLMX" data-date-format="dd-mm-yyyy" value="{{($detail->TGLM=='0000-00-00')?'00-00-0000':date('d-m-Y',strtotime($detail->TGLM));}}">
 										</td>
 										<td>
                                             <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->KET}}" required>
