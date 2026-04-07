@@ -155,10 +155,10 @@ class StockbController extends Controller
         return response()->json($beli);
     }
 
-    public function browse_sup(Request $request)
+       public function browse_sup(Request $request)
     {
 
-        $kirim = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA
+        $kirim = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS, ALMT_K AS ALAMAT, KOTA, GOLONGAN, NAMA_B, NO_REK
                             FROM nwmassup");
 
         return response()->json($kirim);
