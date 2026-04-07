@@ -856,8 +856,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#bac2ff;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('budget?flagz=PB')}}')"> --}}
-                <a href="javascript:addTab('Proses Budget Repeat', '{{url('terima?flagz=PB')}}')">
+                <a href="javascript:addTab('Proses Budget Repeat', '{{url('budgetrep')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-blue"></i>
                   <h6>Proses Budget Repeat</h6>
@@ -882,6 +881,24 @@
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-red"></i>
                   <h6>Melihat Budget Periode Lalu</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffbaba;">
+                <a href="javascript:addTab('Proses Stok Ideal', '{{url('stokideal')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-red"></i>
+                  <h6>Proses Stok Ideal</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffbaba;">
+                <a href="javascript:addTab('Proses Budget Pokok', '{{url('budgetpk')}}')">
+                  <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-red"></i>
+                  <h6>Proses Budget Pokok</h6>
                 </a>
             </div>
         </div>

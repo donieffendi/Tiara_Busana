@@ -277,11 +277,38 @@ Route::post('/pantau/store', 'App\Http\Controllers\OTransaksi\PantauController@s
 Route::get('/pantau/edit', 'App\Http\Controllers\OTransaksi\PantauController@edit')->middleware(['auth'])->name('pantau.edit');
 Route::post('/pantau/update/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@update')->middleware(['auth'])->name('pantau.update');
 Route::get('/pantau/delete/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@destroy')->middleware(['auth'])->name('pantau.delete');
-Route::get('/pantau/repost/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@repost')->middleware(['auth'])->name('pantau.repost');
 
-Route::post('pantau/posting', 'App\Http\Controllers\OTransaksi\PantauController@posting')->middleware(['auth']);
-Route::get('pantau/index-posting', 'App\Http\Controllers\OTransaksi\PantauController@index_posting')->middleware(['auth']);
 
+// Operational Proses Budget Pokok
+
+Route::get('/budgetpk', 'App\Http\Controllers\OTransaksi\BudgetpkController@index')->middleware(['auth'])->name('budgetpk');
+Route::post('/budgetpk/store', 'App\Http\Controllers\OTransaksi\BudgetpkController@store')->middleware(['auth'])->name('budgetpk/store');
+    // GET PANTAU
+    Route::get('/budgetpk/browse', 'App\Http\Controllers\OTransaksi\BudgetpkController@browse')->middleware(['auth'])->name('budgetpk/browse');
+    Route::get('/get-budgetpk', 'App\Http\Controllers\OTransaksi\BudgetpkController@getBudgetpk')->middleware(['auth'])->name('get-budgetpk');
+    Route::get('/get-budgetpk-post', 'App\Http\Controllers\OTransaksi\BudgetpkController@getBudgetpk_posting')->middleware(['auth'])->name('get-budgetpk-post');
+	Route::get('/budgetpk/cetak/{budgetpk:NO_ID}','App\Http\Controllers\OTransaksi\BudgetpkController@cetak')->middleware(['auth']);
+
+// Dynamic Budget Pokok
+Route::get('/budgetpk/edit', 'App\Http\Controllers\OTransaksi\BudgetpkController@edit')->middleware(['auth'])->name('budgetpk.edit');
+Route::post('/budgetpk/update/{budgetpk}', 'App\Http\Controllers\OTransaksi\BudgetpkController@update')->middleware(['auth'])->name('budgetpk.update');
+Route::get('/budgetpk/delete/{budgetpk}', 'App\Http\Controllers\OTransaksi\BudgetpkController@destroy')->middleware(['auth'])->name('budgetpk.delete');
+
+
+// Operational Proses Budget Repeat
+
+Route::get('/budgetrep', 'App\Http\Controllers\OTransaksi\BudgetrepController@index')->middleware(['auth'])->name('budgetrep');
+Route::post('/budgetrep/store', 'App\Http\Controllers\OTransaksi\BudgetrepController@store')->middleware(['auth'])->name('budgetrep/store');
+    // GET PANTAU
+    Route::get('/budgetrep/browse', 'App\Http\Controllers\OTransaksi\BudgetrepController@browse')->middleware(['auth'])->name('budgetrep/browse');
+    Route::get('/get-budgetrep', 'App\Http\Controllers\OTransaksi\BudgetrepController@getBudgetrep')->middleware(['auth'])->name('get-budgetrep');
+    Route::get('/get-budgetrep-post', 'App\Http\Controllers\OTransaksi\BudgetrepController@getBudgetrep_posting')->middleware(['auth'])->name('get-budgetrep-post');
+	Route::get('/budgetrep/cetak/{budgetrep:NO_ID}','App\Http\Controllers\OTransaksi\BudgetrepController@cetak')->middleware(['auth']);
+
+// Dynamic Budget Repeat
+Route::get('/budgetrep/edit', 'App\Http\Controllers\OTransaksi\BudgetrepController@edit')->middleware(['auth'])->name('budgetrep.edit');
+Route::post('/budgetrep/update/{budgetrep}', 'App\Http\Controllers\OTransaksi\BudgetrepController@update')->middleware(['auth'])->name('budgetrep.update');
+Route::get('/budgetrep/delete/{budgetrep}', 'App\Http\Controllers\OTransaksi\BudgetrepController@destroy')->middleware(['auth'])->name('budgetrep.delete');
 
 
 // Operational Transaksi Orderk
@@ -523,6 +550,11 @@ Route::post('jasper-minus-report', 'App\Http\Controllers\OReport\RMinusControlle
 Route::get('/rbudgetll', 'App\Http\Controllers\OReport\RBudgetllController@report')->middleware(['auth'])->name('rbudgetll');
 Route::get('/get-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@getBudgetllReport')->middleware(['auth'])->name('get-budgetll-report');
 Route::post('jasper-budgetll-report', 'App\Http\Controllers\OReport\RBudgetllController@jasperBudgetllReport')->middleware(['auth']);
+
+// Operational Proses Budget Ideal
+
+Route::get('/stokideal', 'App\Http\Controllers\OReport\RStokidealController@report')->middleware(['auth'])->name('stokideal');
+Route::post('proses-stokideal', 'App\Http\Controllers\OReport\RStokidealController@proses')->middleware(['auth']);
 
 // Operational Surat Teguran Budget Minus
 

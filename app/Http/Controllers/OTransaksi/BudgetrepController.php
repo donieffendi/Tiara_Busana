@@ -20,7 +20,7 @@ include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJaspe
 use PHPJasperXML;
 
 // ganti 2
-class PantauController extends Controller
+class BudgetrepController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,9 +30,10 @@ class PantauController extends Controller
 
     
     public function index(Request $request)
-    {
+    {   
+        $per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
         // ganti 3
-        return view('otransaksi_pantau.index');
+        return view('otransaksi_budgetrep.index')->with(['per' => $per]);
     }
 
 	public function browse(Request $request)
@@ -42,21 +43,21 @@ class PantauController extends Controller
         $kodes = $request->kodes;
 
         //
-        $pantau = DB::SELECT("SELECT distinct PO.NO_SP , PO.KODES, PO.NAMAS,
+        $budgetrep = DB::SELECT("SELECT distinct PO.NO_SP , PO.KODES, PO.NAMAS,
 	                    PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
                         from nwbudget as po, nwbudgetd as pod
                         WHERE PO.NO_SP = POD.NO_SP AND po.KODES='$kodes'
                         AND POD.SISA > 0 AND po.POSTED = 1 AND po.JTEMPO > '$tanggal'
                         GROUP BY NO_SP ");
-        return response()->json($pantau);
+        return response()->json($budgetrep);
     }
 
     public function browse_brg(Request $request)
     {
         // $KD_BRG = $request->KD_BRG;
 		$sup = $request->sup;
-        $pantau = DB::SELECT("SELECT KDBAR, NMBAR, BARCODE, HB AS HARGA, 1 AS STOK FROM nwmasbar WHERE SUPP = '$sup'");
-        return response()->json($pantau);
+        $budgetrep = DB::SELECT("SELECT KDBAR, NMBAR, BARCODE, HB AS HARGA, 1 AS STOK FROM nwmasbar WHERE SUPP = '$sup'");
+        return response()->json($budgetrep);
     }
 
     public function browse_sup(Request $request)
@@ -66,38 +67,38 @@ class PantauController extends Controller
     	if (!empty(request('q'))) {
 
 
-                 $pantau = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
+                 $budgetrep = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
                             from nwmassup
                             WHERE  NAMA LIKE ('%$request->q%')
                             ORDER BY NAMA ");
 
 
         } else {
-			$pantau = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
+			$budgetrep = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
                             from nwmassup
 
                             ORDER BY NAMA ");
 		}
 
-        return response()->json($pantau);
+        return response()->json($budgetrep);
     }
 
     public function browseuang(Request $request)
     {
         $CBG = Auth::user()->CBG;
 
-		$pantau = DB::SELECT("SELECT NO_SP,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
+		$budgetrep = DB::SELECT("SELECT NO_SP,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
                                 TOTAL-BAYAR) AS SISA, ALAMAT, KOTA from po
 		                WHERE LNS <> 1 AND CBG = '$CBG' ORDER BY NO_SP; ");
 
-        return response()->json($pantau);
+        return response()->json($budgetrep);
     }
 
 
 	public function index_posting(Request $request)
     {
 
-        return view('otransaksi_pantau.post');
+        return view('otransaksi_budgetrep.post');
     }
 
 	public function browse_pod(Request $request)
@@ -106,7 +107,7 @@ class PantauController extends Controller
 
 
 
-            $pantaud = DB::SELECT("SELECT a.REC, a.KD_BRG, a.BARCODE, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, a.TOTAL,
+            $budgetrepd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.BARCODE, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, a.TOTAL,
                                 a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.HJ, b.MARGIN, b.RAK AS JNS
                             from nwbudgetd a
                             LEFT JOIN nwmasbar b
@@ -115,7 +116,7 @@ class PantauController extends Controller
 
 
 
-		return response()->json($pantaud);
+		return response()->json($budgetrepd);
 	}
 
 	public function browse_detail(Request $request)
@@ -126,13 +127,13 @@ class PantauController extends Controller
 
 			$filterbukti = " WHERE a.NO_SP='".$request->NO_PO."' AND a.KD_BHN = b.KD_BHN ";
 		}
-		$pantaud = DB::SELECT("SELECT a.REC, a.KD_BHN, a.NA_BHN, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
+		$budgetrepd = DB::SELECT("SELECT a.REC, a.KD_BHN, a.NA_BHN, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.KALI AS KALI
                             from pod a, bhn b
                             $filterbukti ORDER BY NO_SP ");
 
 
-		return response()->json($pantaud);
+		return response()->json($budgetrepd);
 	}
 
 
@@ -144,41 +145,37 @@ class PantauController extends Controller
 
 			$filterbukti = " WHERE NO_SP='".$request->NO_PO."' AND a.KD_BRG = b.KD_BRG ";
 		}
-		$pantaud = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
+		$budgetrepd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.KALI AS KALI
                             from pod a, brg b
                             $filterbukti ORDER BY NO_SP ");
 
 
-		return response()->json($pantaud);
+		return response()->json($budgetrepd);
 	}
     // ganti 4
 
 
 
-    public function getPantau(Request $request)
+    public function getBudgetrep(Request $request)
     {
         // ganti 5
 
-       if ($request->session()->has('periode')) {
-            $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
-        } else {
-            $periode = '';
-        }
+        $periode = $request->per;
 
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
 
-        $pantau = DB::SELECT("
+        $budgetrep = DB::SELECT("
             SELECT *
             FROM nwbudget
-            WHERE PER= '$periode'
+            WHERE PER= '$per'
             ORDER BY NO_SP
         ");
 
         // ganti 6
 
-        return Datatables::of($pantau)
+        return Datatables::of($budgetrep)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi=="programmer" )
@@ -186,10 +183,10 @@ class PantauController extends Controller
                     //CEK POSTED di index dan edit
 
                     // url untuk delete di index
-                    $url = "'".url("pantau/delete/" . $row->NO_ID)."'";
+                    $url = "'".url("budgetrep/delete/" . $row->NO_ID)."'";
                     // batas
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' href="pantau/edit/?idx=' . $row->NO_ID . '&tipx=edit';
+                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' href="budgetrep/edit/?idx=' . $row->NO_ID . '&tipx=edit';
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')"';
 
 
@@ -199,7 +196,7 @@ class PantauController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" target="_blank" href="pantau/cetak/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" target="_blank" href="budgetrep/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a>
@@ -301,7 +298,7 @@ class PantauController extends Controller
 
 
 
-        $pantau = Nwbudget::create(
+        $budgetrep = Nwbudget::create(
             [
                 'NO_SP'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
@@ -358,7 +355,7 @@ class PantauController extends Controller
 
 		$no_buktix = $no_bukti;
 
-		$pantau = Nwbudget::where('NO_SP', $no_buktix )->first();
+		$budgetrep = Nwbudget::where('NO_SP', $no_buktix )->first();
 
 
         DB::SELECT("UPDATE nwbudget, nwmassup
@@ -373,11 +370,11 @@ class PantauController extends Controller
                             SET  nwbudgetd.ID =  nwbudget.NO_ID  WHERE  nwbudget.NO_SP =  nwbudgetd.no_bukti
 							AND  nwbudget.NO_SP='$no_buktix';");
 
-        return redirect('/pantau')->with('statusInsert', 'Data baru berhasil ditambahkan');
+        return redirect('/budgetrep')->with('statusInsert', 'Data baru berhasil ditambahkan');
 
     }
 
-   public function edit( Request $request , Nwbudget $pantau)
+   public function edit( Request $request , Nwbudget $budgetrep)
     {
 
 
@@ -530,29 +527,29 @@ class PantauController extends Controller
 
        	if ( $idx != 0 )
 		{
-			$pantau = Nwbudget::where('NO_ID', $idx )->first();
+			$budgetrep = Nwbudget::where('NO_ID', $idx )->first();
 	     }
 		 else
 		 {
-				$pantau = new Nwbudget;
-                $pantau->TGL = Carbon::now();
-                $pantau->JTEMPO = Carbon::now();
+				$budgetrep = new Nwbudget;
+                $budgetrep->TGL = Carbon::now();
+                $budgetrep->JTEMPO = Carbon::now();
 
 
 		 }
 
-        $no_bukti = $pantau->NO_SP;
-        $pantauDetail = DB::table('nwbudgetd')->where('NO_SP', $no_bukti)->orderBy('REC')->get();
+        $no_bukti = $budgetrep->NO_SP;
+        $budgetrepDetail = DB::table('nwbudgetd')->where('NO_SP', $no_bukti)->orderBy('REC')->get();
 
 		$data = [
-            'header'        => $pantau,
-			'detail'        => $pantauDetail
+            'header'        => $budgetrep,
+			'detail'        => $budgetrepDetail
 
         ];
 
 
 
-        return view('otransaksi_pantau.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx]);
+        return view('otransaksi_budgetrep.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx]);
 
     }
 
@@ -566,7 +563,7 @@ class PantauController extends Controller
 
     // ganti 18
 
-    public function update(Request $request, Nwbudget $pantau)
+    public function update(Request $request, Nwbudget $budgetrep)
     {
 
         $this->validate(
@@ -577,7 +574,7 @@ class PantauController extends Controller
             ]
         );
 
-        // $variablell = DB::select('call podel(?)', array($pantau['NO_SP']));
+        // $variablell = DB::select('call podel(?)', array($budgetrep['NO_SP']));
 
         $CBG = Auth::user()->CBG;
 
@@ -585,7 +582,7 @@ class PantauController extends Controller
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
 
-        $pantau->update(
+        $budgetrep->update(
             [
 
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
@@ -602,7 +599,7 @@ class PantauController extends Controller
             ]
         );
 
-		$no_buktix = $pantau->NO_SP;
+		$no_buktix = $budgetrep->NO_SP;
 
         // Update Detail
         $length = sizeof($request->input('REC'));
@@ -669,9 +666,9 @@ class PantauController extends Controller
             }
         }
 
- 		$pantau = Nwbudget::where('NO_SP', $no_buktix )->first();
+ 		$budgetrep = Nwbudget::where('NO_SP', $no_buktix )->first();
 
-        $no_bukti = $pantau->NO_SP;
+        $no_bukti = $budgetrep->NO_SP;
 
         DB::SELECT("UPDATE nwbudget, nwmassup
                     SET nwbudget.NAMAS = nwmassup.NAMA WHERE nwbudget.KODES = nwmassup.NO_SUPL
@@ -685,9 +682,9 @@ class PantauController extends Controller
                     SET  nwbudgetd.ID =  pobsn.NO_ID  WHERE  nwbudget.NO_SP =  nwbudget.NO_SP
                     AND  nwbudget.NO_SP='$no_bukti';");
 
-        // $variablell = DB::select('call poins(?)', array($pantau['NO_SP']));
+        // $variablell = DB::select('call poins(?)', array($budgetrep['NO_SP']));
 
-        return redirect('/pantau')->with('statusInsert', 'Data baru berhasil diupdate');
+        return redirect('/budgetrep')->with('statusInsert', 'Data baru berhasil diupdate');
 
 
     }
@@ -701,21 +698,21 @@ class PantauController extends Controller
 
     // ganti 22
 
-    public function destroy(Request $request, Po $pantau)
+    public function destroy(Request $request, Po $budgetrep)
     {
 
         // hapus detail dulu
-        DB::table('nwbudgetd')->where('ID', $pantau->NO_ID)->delete();
+        DB::table('nwbudgetd')->where('ID', $budgetrep->NO_ID)->delete();
 
         // hapus header
-        DB::table('nwbudget')->where('NO_ID', $pantau->NO_ID)->delete();
+        DB::table('nwbudget')->where('NO_ID', $budgetrep->NO_ID)->delete();
 
-        return redirect('/po')->with('statusHapus','Data '.$pantau->NO_SP.' berhasil dihapus');
+        return redirect('/po')->with('statusHapus','Data '.$budgetrep->NO_SP.' berhasil dihapus');
     }
 
-    public function cetak(Nwbudget $pantau, Request $request)
+    public function cetak(Nwbudget $budgetrep, Request $request)
     {
-        $no_po = $pantau->NO_SP;
+        $no_po = $budgetrep->NO_SP;
         $tipe = $request->tipe;
 
         if ($tipe == 'lampiran') {
@@ -793,11 +790,11 @@ class PantauController extends Controller
 
             if($hasil!='')
             {
-                return redirect('/pantauindex-posting')->with('status', 'Proses Posting PO ..')->with('gagal', $hasil);
+                return redirect('/budgetrepindex-posting')->with('status', 'Proses Posting PO ..')->with('gagal', $hasil);
             }
             else
             {
-                return redirect('/pantauindex-posting')->with('status', 'Posting Posting PO selesai..');
+                return redirect('/budgetrepindex-posting')->with('status', 'Posting Posting PO selesai..');
             }
 
     }
