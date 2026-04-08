@@ -286,8 +286,7 @@
 
 												<th width="150px" style="text-align:center">Total</th>
 												<th width="150px" style="text-align:center">Ket</th>
-												<th width="150px" style="text-align:center">Sisa Stock</th>
-												<th width="150px" style="text-align:center">% laku</th>
+												<th width="150px" style="text-align:center">Budget</th>
 
 												<th></th>
 
@@ -302,7 +301,7 @@
 													<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}"
 													class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
 
-													<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->rec}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
+													<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
 												</td>
 
 
@@ -319,15 +318,15 @@
 													<input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}">
 												</td>
 												<td>
-													<input name="QTY[]"  onclick="select()" onblur="hitung()" value="{{$detail->qty}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
+													<input name="QTY[]"  onclick="select()" onblur="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
 												</td>
 
 												<td>
-													<input name="HARGA[]"  onclick="select()" onblur="hitung()" value="{{$detail->harga}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
+													<input name="HARGA[]"  onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
 												</td>
 
 												<td>
-													<input name="TOTAL[]" onclick="select()" onblur="hitung()"  value="{{$detail->total}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
+													<input name="TOTAL[]" onclick="select()" onblur="hitung()"  value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
 
 												</td>
 
@@ -336,12 +335,12 @@
 												</td>
 
 												<td>
-													<input name="SISA[]" onclick="select()" onblur="hitung()"  value="{{$detail->SISA}}"  id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA" >
+													<input name="SISA[]" onclick="select()" onblur="hitung()"  value="{{$detail->BUDGET_BRG}}"  id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA" >
 												</td>
 
-												<td>
+												{{-- <td>
 													<input name="KDLAKU[]"  id="KDLAKU{{$no}}" type="text" class="form-control KDLAKU" value="{{$detail->KDLAKU}}"  >
-												</td>
+												</td> --}}
 
 												<td>
 													<button type='button' id='DELETEX{{$no}}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
@@ -1750,7 +1749,7 @@
 
 
 	function CariBukti() {
-		
+
 		var cari = $("#CARI").val();
 		var loc = "{{ url('/pantau/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&buktix=' +encodeURIComponent(cari);
 		window.location = loc;

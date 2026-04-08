@@ -135,33 +135,35 @@ class KirimController extends Controller
     {
         $no_po = $request->no_po;
 
-        $dataDetail = DB::table('belibsnz')
-            ->join('belibsnzd', 'belibsnz.no_bukti', '=', 'belibsnzd.no_bukti')
-            ->where('belibsnz.no_bukti', $no_po)
+
+        $dataDetail = DB::table('nwagend')
+            ->join('nwagendd', 'nwagend.NO_BUKTI', '=', 'nwagendd.NO_BUKTI')
+            ->where('nwagend.NO_BUKTI', $no_po)
             ->select(
-                'belibsnz.no_bukti',
-                'belibsnz.tgl',
-                'belibsnz.kodes',
-                'belibsnz.namas',
-                'belibsnz.cnt',
-                'belibsnz.ncnt',
-                'belibsnzd.kd_brg',
-                'belibsnzd.na_brg',
-                'belibsnzd.satuan',
-                'belibsnzd.qty',
-                'belibsnzd.harga',
-                'belibsnzd.diskon1',
-                'belibsnzd.diskon2',
-                'belibsnzd.diskon3',
-                'belibsnzd.diskon4',
-                'belibsnzd.margin',
-                'belibsnzd.barcode'
+                'nwagend.NO_BUKTI',
+                'nwagend.tgl',
+                'nwagend.kodes',
+                'nwagend.namas',
+                // 'nwagend.cnt',
+                // 'nwagend.ncnt',
+                'nwagendd.kd_brg',
+                'nwagendd.na_brg',
+                'nwagendd.satuan',
+                'nwagendd.qty',
+                'nwagendd.harga',
+                'nwagendd.diskon1',
+                'nwagendd.diskon2',
+                'nwagendd.diskon3',
+                'nwagendd.diskon4',
+                'nwagendd.margin',
+                'nwagendd.barcode'
             )
             ->get();
 
+
         if ($dataDetail->count() > 0) {
 
-            $cnt = $dataDetail->first()->cnt;
+            $cnt = $dataDetail->first()->kodes;
 
             $items = [];
             foreach ($dataDetail as $row) {
@@ -180,29 +182,30 @@ class KirimController extends Controller
                 ];
 
             }
+            // dd($items);
 
-            $header = DB::table('cntbsn')
-                ->leftJoin('supbsn', 'cntbsn.sup', '=', 'supbsn.kodes')
-                ->where('cntbsn.cnt', trim($cnt))
+            $header = DB::table('nwagend')
+                ->join('nwagendd', 'nwagend.NO_BUKTI', '=', 'nwagendd.NO_BUKTI')
+            ->where('nwagend.NO_BUKTI', $no_po)
                 ->select(
-                    'cntbsn.cnt',
-                    'cntbsn.margin',
-                    'cntbsn.pot_prom',
-                    'cntbsn.st_pjk',
-                    'cntbsn.na_cnt',
-                    'cntbsn.st_nota',
-                    'cntbsn.kk_sts',
-                    'cntbsn.ctk_lap',
-                    'cntbsn.st_cnt',
-                    'cntbsn.basic',
-                    'cntbsn.cnt_khs',
-                    'cntbsn.lbayar',
-                    DB::raw('DATE(DATE_ADD(NOW(), INTERVAL cntbsn.lbayar DAY)) as jtempo'),
-                    'cntbsn.sup as kodes',
-                    'supbsn.namas'
+                    'nwagendd.margin',
+                    'nwagendd.pot_prom',
+                    'nwagend.st_pjk',
+                    'nwagend.st_nota',
+                    'nwagend.JT',
+                    'nwagend.KODES',
+                    'nwagend.NAMAS',
+                    'nwagend.PROM',
+                    'nwagend.PPN',
+                    // 'cntbsn.kk_sts',
+                    // 'cntbsn.ctk_lap',
+                    // 'cntbsn.st_cnt',
+                    // 'cntbsn.basic',
+                    // 'cntbsn.cnt_khs',
+                    // 'cntbsn.lbayar',
                 )
                 ->first();
-                //dd($cnt, $items, $header);
+                // dd($cnt, $items, $header);
 
             return response()->json([
                 'success' => true,
@@ -632,6 +635,7 @@ class KirimController extends Controller
             'detail' => $kirimdetail,
 
         ];
+        // dd($data);
 
         return view('otransaksi_kirim.edit', $data)
             ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' => $this->FLAGZ, 'judul' => $this->judul]);
@@ -662,7 +666,7 @@ class KirimController extends Controller
         );
 
         // ganti 20
-        $variablell = DB::select('call kirimdel(?)', [$kirim['NO_BUKTI']]);
+        // $variablell = DB::select('call kirimdel(?)', [$kirim['NO_BUKTI']]);
 
         $this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
@@ -801,7 +805,7 @@ class KirimController extends Controller
                     SET  bstockad.ID =  bstocka.NO_ID  WHERE  bstocka.NO_BUKTI =  bstockad.NO_BUKTI
                     AND  bstocka.NO_BUKTI='$no_bukti';");
 
-        $variablell = DB::select('call kirimins(?)', [$kirim['NO_BUKTI']]);
+        // $variablell = DB::select('call kirimins(?)', [$kirim['NO_BUKTI']]);
 
         // return redirect('/kirim/edit/?idx=' . $kirim->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul .  '&golz=' . $this->GOLZ . '');
         return redirect('/kirim?flagz=' . $FLAGZ)->with(['status' => 'Data berhasil Di Update', 'flagz' => $FLAGZ]);

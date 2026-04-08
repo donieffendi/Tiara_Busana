@@ -17,12 +17,12 @@ class Nwbudget extends Model
     public $timestamps = false;
 
 //ganti 3
-    protected $fillable = 
+    protected $fillable =
     [
-        "NO_BUKTI", "TGL", "JTEMPO", "PER","KODES", "NAMAS", "ALAMAT", "KOTA", "FLAG", "GOL", 
+        "NO_BUKTI", "TGL", "JTEMPO", "PER","KODES", "NAMAS", "ALAMAT", "KOTA", "FLAG", "GOL",
         "R_SALDO", "Q_SALDO", "NOTES", "USRNM", "TG_SMP",
-        "CBG", "POSTED", "CNT", "NA_CNT"
+        "CBG", "POSTED", "CNT", "NA_CNT", "BUDGET"
 
-        
+
     ];
 }

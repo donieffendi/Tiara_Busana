@@ -1,43 +1,34 @@
 <?php
-
 namespace App\Http\Controllers\OReport;
 
 use App\Http\Controllers\Controller;
-use App\Models\Master\Cbg;
 use Carbon\Carbon;
-
-use Illuminate\Http\Request;
-use DataTables;
-use Auth;
 use DB;
+use Illuminate\Http\Request;
 
-include_once base_path()."/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
-use PHPJasperXML;
-
-use \koolreport\laravel\Friendship;
-use \koolreport\bootstrap4\Theme;
+include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
 
 class RStokidealController extends Controller
 {
     public function report()
-    {	
+    {
         return view('oreport_stokideal.report');
     }
 
-	public function proses(Request $request)
-	{
-		DB::beginTransaction();
+    public function proses2(Request $request)
+    {
+        DB::beginTransaction();
 
-		try {
+        try {
 
-			$tglAwal = Carbon::now()->subMonths(3)->format('Y-m-d');
-			$tglAkhir = Carbon::now()->format('Y-m-d');
+            $tglAwal  = Carbon::now()->subMonths(3)->format('Y-m-d');
+            $tglAkhir = Carbon::now()->format('Y-m-d');
 
-			// Reset dulu
-			DB::table('nwmasbar')->update(['IDEAL' => 0]);
+            // Reset dulu
+            DB::table('nwmasbar')->update(['IDEAL' => 0]);
 
-			// Update dari penjualan
-			DB::statement("
+            // Update dari penjualan
+            DB::statement("
 				UPDATE nwmasbar m
 				JOIN (
 					SELECT d.KD_BRG, SUM(d.QTY) * 2 AS IDEAL
@@ -49,15 +40,112 @@ class RStokidealController extends Controller
 				SET m.IDEAL = x.IDEAL
 			", [$tglAwal, $tglAkhir]);
 
-			DB::commit();
+            DB::commit();
 
-			return back()->with('success', 'Proses Stock Ideal berhasil!');
+            return back()->with('success', 'Proses Stock Ideal berhasil!');
 
-		} catch (\Exception $e) {
+        } catch (\Exception $e) {
 
-			DB::rollBack();
+            DB::rollBack();
 
-			return back()->with('error', 'Proses gagal! '.$e->getMessage());
-		}
-	}
+            return back()->with('error', 'Proses gagal! ' . $e->getMessage());
+        }
+    }
+
+    public function proses(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            // QTY
+            $kolomQty = [
+                "COALESCE(JL_LL,0)",
+                "COALESCE(JL_LL2,0)",
+                "COALESCE(JL_LL3,0)",
+            ];
+
+            // RP
+            $kolomRp = [
+                "COALESCE(JLRP_LL,0)",
+                "COALESCE(JLRP_LL2,0)",
+                "COALESCE(JLRP_LL3,0)",
+            ];
+
+            $totalQty = implode(' + ', $kolomQty);
+            $totalRp  = implode(' + ', $kolomRp);
+
+            $jumlahBulan = count($kolomQty);
+
+            DB::table('nwmasbar')->update([
+                'IDEAL'      => 0,
+                'JLRATA_QTY' => 0,
+                'JLRATA_RP'  => 0,
+            ]);
+
+            DB::statement("
+            UPDATE nwmasbar
+            SET
+                JLRATA_QTY = ($totalQty) / $jumlahBulan,
+                JLRATA_RP  = ($totalRp) / $jumlahBulan,
+                IDEAL      = (($totalQty) / $jumlahBulan) * 2
+        ");
+
+            DB::commit();
+
+            return back()->with('success', 'Proses Stock Ideal & Rata-rata berhasil!');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with('error', 'Proses gagal! ' . $e->getMessage());
+        }
+    }
+
+    // public function proses(Request $request)
+    // {
+    //     DB::beginTransaction();
+
+    //     try {
+
+    //         $bulan   = date('m');
+    //         $tahun   = date('Y');
+    //         $periode = $bulan . '/' . $tahun;
+
+    //         $getKolom = function ($b) {
+    //             if ($b <= 0) {
+    //                 $b += 12;
+    //             }
+    //             return 'JLRP_LL' . ($b == 1 ? '' : $b);
+    //         };
+    //         $koloms = [];
+    //         for ($i = 1; $i < $bulan; $i++) {
+    //             $koloms[] = "COALESCE(" . $getKolom($bulan - $i) . ",0)";
+    //         }
+
+    //         $totalJl     = implode(' + ', $koloms);
+    //         $jumlahBulan = count($koloms);
+
+    //         // Reset dulu
+    //         DB::table('nwmasbar')->update(['IDEAL' => 0]);
+
+    //         if ($jumlahBulan > 0) {
+    //             DB::statement("
+    //             UPDATE nwmasbar
+    //             SET IDEAL = (($totalJl) / $jumlahBulan) * 2
+    //         ");
+    //         }
+
+    //         DB::commit();
+
+    //         return back()->with('success', 'Proses Stock Ideal berhasil!');
+
+    //     } catch (\Exception $e) {
+
+    //         DB::rollBack();
+
+    //         return back()->with('error', 'Proses gagal! ' . $e->getMessage());
+    //     }
+    // }
 }

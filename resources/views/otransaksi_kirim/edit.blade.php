@@ -135,10 +135,10 @@
                                                 <select id="OUTLET" class="form-control" name="OUTLET">
                                                     <option value="-" {{ $header->OUTLET == '-' ? 'selected' : '' }}
                                                         disable selected hidden>--Pilih Tipe--</option>
-                                                    <option value="TGZ"
-                                                        {{ $header->OUTLET == 'TGZ' ? 'selected' : '' }}>TGZ</option>
-                                                    <option value="TMM"
-                                                        {{ $header->OUTLET == 'TMM' ? 'selected' : '' }}>TMM</option>
+                                                    <option value="TGZ" {{ $header->OUTLET == 'TGZ' ? 'selected' : '' }}>
+                                                        TGZ</option>
+                                                    <option value="TMM" {{ $header->OUTLET == 'TMM' ? 'selected' : '' }}>
+                                                        TMM</option>
                                                     <option value="SOP"
                                                         {{ $header->OUTLET == 'SOP' ? 'selected' : '' }}>SOP</option>
                                                     <option value="FSA"
@@ -169,7 +169,7 @@
                                             </div>
                                             <div class="col-md-2 input-group">
                                                 <input type="text" class="form-control NO_PO" id="NO_PO"
-                                                    name="NO_PO" placeholder="Pilih No. Beli" style="text-align: left">
+                                                    name="NO_PO" placeholder="Pilih No. Beli" style="text-align: left" value="{{ $header->NO_PO }}">
                                                 {{-- <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button> --}}
                                             </div>
 
@@ -442,7 +442,7 @@
                                                             <td>
                                                                 <input name="BARCODE[]" id="BARCODE{{ $no }}"
                                                                     type="text" class="form-control BARCODE "
-                                                                    value="{{ $detail->barcode }}">
+                                                                    value="{{ $detail->BARCODE }}">
                                                             </td>
 
                                                             <td>
@@ -626,7 +626,7 @@
                                             <div class="col-md-2">
                                                 <input type="text" onclick="select()" onkeyup="hitung()"
                                                     class="form-control TNETT" id="TNETT" name="TNETT"
-                                                    placeholder="" value="{{ $header->NETT }}" style="text-align: right"
+                                                    placeholder="" value="{{ $header->nett }}" style="text-align: right"
                                                     readonly>
                                             </div>
                                         </div>
@@ -818,53 +818,56 @@
                             success: function(res) {
                                 let h = res.header;
                                 let d = res.items;
+                                // console.log(h,d);
 
                                 // isi field
-                                $('#CNT').val(h.cnt);
-                                $('#NCNT').val(h.na_cnt);
+                                // $('#CNT').val(h.cnt);
+                                // $('#NCNT').val(h.na_cnt);
 
-                                $('#KODES').val(h.kodes);
-                                $('#NAMAS').val(h.namas);
+                                $('#KODES').val(h.KODES);
+                                $('#NAMAS').val(h.NAMAS);
 
-                                $('#JTEMPO').val(formatTanggal(h.jtempo));
+                                $('#JTEMPO').val(formatTanggal(h.JT));
 
                                 $('#HMARGIN').val(h.margin);
+                                $('#TPROM').val(h.PROM);
+                                $('#TPPN').val(h.PPN);
                                 $('#ST_NOTA').val(h.st_nota);
                                 $('#ST_CNT').val(h.st_cnt);
 
                                 $('#POT_PROM').val(h.pot_prom);
-                                $('#KK_STS').val(h.kk_sts);
-                                $('#BASIC').val(h.basic);
+                                // $('#KK_STS').val(h.kk_sts);
+                                // $('#BASIC').val(h.basic);
                                 $('#ST_PJK').val(h.st_pjk);
 
                                 $('#NOTES').val(h.notes ?? '');
 
 
-                                 d.forEach(function (item) {
+                                d.forEach(function(item) {
 
-        tambah();
+                                    tambah();
 
-        let i = idrow - 1;
+                                    let i = idrow - 1;
 
-        $('#KD_BRG' + i).val(item.kd_brg);
-        $('#BARCODE' + i).val(item.barcode);
-        $('#NA_BRG' + i).val(item.na_brg);
+                                    $('#KD_BRG' + i).val(item.kd_brg);
+                                    $('#BARCODE' + i).val(item.barcode);
+                                    $('#NA_BRG' + i).val(item.na_brg);
 
-        $('#QTY' + i).val(item.qty);
-        $('#HARGA' + i).val(item.harga);
-        $('#MARGIN' + i).val(item.margin);
+                                    $('#QTY' + i).val(item.qty);
+                                    $('#HARGA' + i).val(item.harga);
+                                    $('#MARGIN' + i).val(item.margin);
 
-        $('#DISKON1' + i).val(item.diskon1);
-        $('#DISKON2' + i).val(item.diskon2);
-        $('#DISKON3' + i).val(item.diskon3);
-        $('#DISKON4' + i).val(item.diskon4);
+                                    $('#DISKON1' + i).val(item.diskon1);
+                                    $('#DISKON2' + i).val(item.diskon2);
+                                    $('#DISKON3' + i).val(item.diskon3);
+                                    $('#DISKON4' + i).val(item.diskon4);
 
-        $('#HARGA_JL' + i).val(item.harga);
-        $('#BLT' + i).val(0);
+                                    $('#HARGA_JL' + i).val(item.harga);
+                                    $('#BLT' + i).val(0);
 
-        $('#QTY' + i).autoNumeric('set', item.qty);
-        $('#HARGA' + i).autoNumeric('set', item.harga);
-    });
+                                    $('#QTY' + i).autoNumeric('set', item.qty);
+                                    $('#HARGA' + i).autoNumeric('set', item.harga);
+                                });
                             },
                             error: function(xhr) {
                                 console.log("ERROR:", xhr.responseText);
@@ -954,6 +957,10 @@
                 vMin: '-999999999.99'
             });
             $("#TPPN").autoNumeric('init', {
+                aSign: '<?php echo ''; ?>',
+                vMin: '-999999999.99'
+            });
+            $("#TJUMLAH").autoNumeric('init', {
                 aSign: '<?php echo ''; ?>',
                 vMin: '-999999999.99'
             });
@@ -1340,52 +1347,161 @@
 
         }
 
+        // function hitung() {
+        //     var TTOTAL_QTY = 0;
+        //     var TTOTAL = 0;
+        //     var TDISK = 0;
+        //     var TDPPX = 0;
+        //     var TPPNX = 0;
+        //     var NETTX = 0;
+
+
+        //     $(".QTY_PO").each(function() {
+
+        //         let z = $(this).closest('tr');
+        //         var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
+        //         var XQTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
+        //         var XX = parseFloat(z.find('.KALI').val().replace(/,/g, ''));
+        //         var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
+        //         var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
+        //         var DISKX = parseFloat(z.find('.DISK').val().replace(/,/g, ''));
+
+        //         var PKPX = $('#PKP').val();
+
+        //         var FLAGZ = $('#flagz').val();
+
+        //         if (FLAGZ == 'RB') {
+
+        //             var XQTYX = (XQTYX * -1);
+        //             var QTY_POX = (QTY_POX * -1);
+        //             var DISKX = (DISKX * -1);
+
+        //             z.find('.QTY_PO').autoNumeric('update');
+        //             z.find('.DISKX').autoNumeric('update');
+        //             z.find('.XQTY').autoNumeric('update');
+
+        //         }
+
+        //         var QTYX = (XQTYX * XX);
+        //         z.find('.QTY').val(QTYX);
+
+        //         z.find('.KALI').autoNumeric('update');
+        //         z.find('.QTY').autoNumeric('update');
+
+
+        //         var TOTALX = (XQTYX * HARGAX) - DISKX;
+
+        //         z.find('.TOTAL').val(TOTALX);
+
+
+        //         var DPPX = 0;
+        //         var PPNX = 0;
+
+        //         DPPX = TOTALX;
+        //         z.find('.DPP').val(DPPX);
+
+        //         if (PKPX == '0') {
+        //             PPNX = 0;
+
+        //         }
+
+
+        //         if (PKPX == '1') {
+        //             DPPX = TOTALX * 100 / 111;
+        //             PPNX = TOTALX - DPPX;
+        //             z.find('.DPP').val(DPPX);
+
+        //         }
+
+
+
+        //         z.find('.PPNX').val(PPNX);
+
+        //         z.find('.HARGA').autoNumeric('update');
+        //         z.find('.QTY').autoNumeric('update');
+        //         z.find('.TOTAL').autoNumeric('update');
+        //         z.find('.DPP').autoNumeric('update');
+        //         z.find('.DISK').autoNumeric('update');
+        //         z.find('.PPNX').autoNumeric('update');
+
+        //         TTOTAL_QTY += QTYX;
+        //         TTOTAL += TOTALX;
+        //         TPPNX += PPNX;
+        //         TDPPX += DPPX;
+
+        //         TDISK += DISKX;
+
+        //     });
+
+
+        //     NETTX = TTOTAL;
+
+
+        //     if (isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
+
+        //     $('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));
+        //     $("#TTOTAL_QTY").autoNumeric('update');
+
+        //     if (isNaN(TTOTAL)) TTOTAL = 0;
+
+        //     $('#TTOTAL').val(numberWithCommas(TTOTAL));
+        //     $("#TTOTAL").autoNumeric('update');
+
+        //     $('#TDISK').val(numberWithCommas(TDISK));
+        //     $("#TDISK").autoNumeric('update');
+
+
+        //     $('#TDPP').val(numberWithCommas(TDPPX));
+        //     $("#TDPP").autoNumeric('update');
+
+        //     $('#TPPN').val(numberWithCommas(TPPNX));
+        //     $("#TPPN").autoNumeric('update');
+
+        //     $('#NETT').val(numberWithCommas(NETTX));
+        //     $("#NETT").autoNumeric('update');
+
+
+        // }
+
         function hitung() {
             var TTOTAL_QTY = 0;
+            var TOTALX = 0;
             var TTOTAL = 0;
-            var TDISK = 0;
             var TDPPX = 0;
             var TPPNX = 0;
+            var TPPN_NILAI = 0;
+            var TDISC_PS_NILAI = 0;
             var NETTX = 0;
+            var BRUTO = 0
+            var PPN_NILAIX = parseFloat(($('#TPPN').val() || '0').replace(/,/g, '')) || 0;
+            var DISC_PSX = parseFloat(($('#TPROM').val() || '0').replace(/,/g, '')) || 0;
 
-
-            $(".QTY_PO").each(function() {
-
+            $(".QTY").each(function() {
                 let z = $(this).closest('tr');
-                var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
-                var XQTYX = parseFloat(z.find('.XQTY').val().replace(/,/g, ''));
-                var XX = parseFloat(z.find('.KALI').val().replace(/,/g, ''));
-                var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
-                var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
-                var DISKX = parseFloat(z.find('.DISK').val().replace(/,/g, ''));
 
-                var PKPX = $('#PKP').val();
+                // Tambahkan pengecekan untuk nilai undefined/null sebelum menggunakan .replace()
+                var QTYX = parseFloat((z.find('.QTY').val() || '0').replace(/,/g, '')) || 0;
+                var HARGAX = parseFloat((z.find('.HARGA').val() || '0').replace(/,/g, '')) || 0;
+                var QTYAWAL = parseFloat((z.find('.QTYAWAL').val() || '0').replace(/,/g, '')) || 0;
+                var PPN = parseFloat((z.find('.PPNX').val() || '0').replace(/,/g, '')) || 0;
+                var DISKX = parseFloat((z.find('.DISKON').val() || '0').replace(/,/g, '')) || 0;
+                var DISK2X = parseFloat(z.find('.DISKON2').val().replace(/,/g, ''));
+                var DISK3X = parseFloat(z.find('.DISKON3').val().replace(/,/g, ''));
+                var DISK4X = parseFloat(z.find('.DISKON4').val().replace(/,/g, ''));
+                var PKPX = $('#PKP').val() || '0';
 
-                var FLAGZ = $('#flagz').val();
 
-                if (FLAGZ == 'RB') {
 
-                    var XQTYX = (XQTYX * -1);
-                    var QTY_POX = (QTY_POX * -1);
-                    var DISKX = (DISKX * -1);
-
-                    z.find('.QTY_PO').autoNumeric('update');
-                    z.find('.DISKX').autoNumeric('update');
-                    z.find('.XQTY').autoNumeric('update');
-
+                if ("{{ $flagz }}" === "RB") {
+                    DISKX = QTYX / QTYAWAL * DISKX;
+                    QTYAWAL = QTYX;
                 }
 
-                var QTYX = (XQTYX * XX);
-                z.find('.QTY').val(QTYX);
-
-                z.find('.KALI').autoNumeric('update');
-                z.find('.QTY').autoNumeric('update');
-
-
-                var TOTALX = (XQTYX * HARGAX) - DISKX;
+                var TOTALX = ((((QTYX * HARGAX) * (100 - DISKX) / 100) * (100 - DISK2X) / 100) * (100 - DISK3X) /
+                    100) * (100 - DISK4X) / 100;
+                // console.log(TOTALX);
 
                 z.find('.TOTAL').val(TOTALX);
-
 
                 var DPPX = 0;
                 var PPNX = 0;
@@ -1395,68 +1511,89 @@
 
                 if (PKPX == '0') {
                     PPNX = 0;
-
                 }
 
-
-                if (PKPX == '1') {
-                    DPPX = TOTALX * 100 / 111;
-                    PPNX = TOTALX - DPPX;
-                    z.find('.DPP').val(DPPX);
-
-                }
-
-
+                // if (PKPX == '1') {
+                // 	DPPX = TOTALX * 100 / 111;
+                // 	PPNX = 0;
+                // 	z.find('.DPP').val(DPPX);
+                // }
 
                 z.find('.PPNX').val(PPNX);
+                z.find('.DISK').val(DISKX);
+                z.find('.QTYAWAL').val(QTYAWAL);
+                // Update autoNumeric fields dengan pengecekan yang lebih ketat
+                try {
+                    // Cek apakah element exist dan sudah diinisialisasi autoNumeric
+                    if (z.find('.HARGA').length && z.find('.HARGA').data('autoNumeric')) {
+                        z.find('.HARGA').autoNumeric('update');
+                    }
+                    if (z.find('.QTY').length && z.find('.QTY').data('autoNumeric')) {
+                        z.find('.QTY').autoNumeric('update');
+                    }
+                    if (z.find('.QTYAWAL').length && z.find('.QTYAWAL').data('autoNumeric')) {
+                        z.find('.QTYAWAL').autoNumeric('update');
+                    }
+                    if (z.find('.DISK').length && z.find('.DISK').data('autoNumeric')) {
+                        z.find('.DISK').autoNumeric('update');
+                    }
+                    if (z.find('.TOTAL').length && z.find('.TOTAL').data('autoNumeric')) {
+                        z.find('.TOTAL').autoNumeric('update');
+                    }
+                    if (z.find('.DPP').length && z.find('.DPP').data('autoNumeric')) {
+                        z.find('.DPP').autoNumeric('update');
+                    }
+                    if (z.find('.PPNX').length && z.find('.PPNX').data('autoNumeric')) {
+                        z.find('.PPNX').autoNumeric('update');
 
-                z.find('.HARGA').autoNumeric('update');
-                z.find('.QTY').autoNumeric('update');
-                z.find('.TOTAL').autoNumeric('update');
-                z.find('.DPP').autoNumeric('update');
-                z.find('.DISK').autoNumeric('update');
-                z.find('.PPNX').autoNumeric('update');
+                    }
 
-                TTOTAL_QTY += QTYX;
+                    if (z.find('.HARGALAMA').length && z.find('.HARGALAMA').data('autoNumeric')) {
+                        z.find('.HARGALAMA').autoNumeric('update');
+
+                    }
+                    if (z.find('.DISKLAMA').length && z.find('.DISKLAMA').data('autoNumeric')) {
+                        z.find('.DISKLAMA').autoNumeric('update');
+
+                    }
+                } catch (error) {
+                    console.log('AutoNumeric update error:', error);
+                    // Skip update jika error
+                }
+
+                // TTOTAL_QTY += QTYX;
                 TTOTAL += TOTALX;
-                TPPNX += PPNX;
-                TDPPX += DPPX;
-
-                TDISK += DISKX;
 
             });
+            TDPPX = TTOTAL - DISC_PSX;
+            console.log(TDPPX, PPN_NILAIX);
+            NETTX = TDPPX + PPN_NILAIX;
 
 
-            NETTX = TTOTAL;
 
-
-            if (isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
-
-            $('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));
-            $("#TTOTAL_QTY").autoNumeric('update');
 
             if (isNaN(TTOTAL)) TTOTAL = 0;
+            $('#TJUMLAH').val(numberWithCommas(TTOTAL));
+            if ($("#TJUMLAH").data('autoNumeric')) $("#TJUMLAH").autoNumeric('update');
 
+            if (isNaN(TTOTAL)) TTOTAL = 0;
             $('#TTOTAL').val(numberWithCommas(TTOTAL));
-            $("#TTOTAL").autoNumeric('update');
-
-            $('#TDISK').val(numberWithCommas(TDISK));
-            $("#TDISK").autoNumeric('update');
-
+            if ($("#TTOTAL").data('autoNumeric')) $("#TTOTAL").autoNumeric('update');
 
             $('#TDPP').val(numberWithCommas(TDPPX));
-            $("#TDPP").autoNumeric('update');
+            if ($("#TDPP").data('autoNumeric')) $("#TDPP").autoNumeric('update');
 
             $('#TPPN').val(numberWithCommas(TPPNX));
-            $("#TPPN").autoNumeric('update');
+            if ($("#TPPN").data('autoNumeric')) $("#TPPN").autoNumeric('update');
 
-            $('#NETT').val(numberWithCommas(NETTX));
-            $("#NETT").autoNumeric('update');
+            $('#TNETT').val(numberWithCommas(NETTX));
+            if ($("#TNETT").data('autoNumeric')) $("#TNETT").autoNumeric('update');
 
-
+            // $('#NETT').val(numberWithCommas(NETTX));
+            // if ($("#NETT").data('autoNumeric')) $("#NETT").autoNumeric('update');
+            // 	$('#BRUTO').val(numberWithCommas(BRUTO));
+            // if ($("#BRUTO").data('autoNumeric')) $("#BRUTO").autoNumeric('update');
         }
-
-
 
 
         function baru() {

@@ -293,7 +293,7 @@ Route::post('/budgetpk/store', 'App\Http\Controllers\OTransaksi\BudgetpkControll
 Route::get('/budgetpk/edit', 'App\Http\Controllers\OTransaksi\BudgetpkController@edit')->middleware(['auth'])->name('budgetpk.edit');
 Route::post('/budgetpk/update/{budgetpk}', 'App\Http\Controllers\OTransaksi\BudgetpkController@update')->middleware(['auth'])->name('budgetpk.update');
 Route::get('/budgetpk/delete/{budgetpk}', 'App\Http\Controllers\OTransaksi\BudgetpkController@destroy')->middleware(['auth'])->name('budgetpk.delete');
-
+Route::get('/budgetpk/budgetpk-otomatis', 'App\Http\Controllers\OTransaksi\BudgetpkController@budgetpkOtomatis')->middleware(['auth'])->name('budgetpk/budgetpk-otomatis');
 
 // Operational Proses Budget Repeat
 

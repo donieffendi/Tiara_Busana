@@ -99,7 +99,8 @@
                         <tr>
                             <th scope="col" style="text-align: center">#</th>
                             <th scope="col" style="text-align: center">-</th>
-                            <th scope="col" style="text-align: left">No. Bukti</th>
+                            <th scope="col" style="text-align: left">No. SP</th>
+                            <th scope="col" style="text-align: left">No. BUKTI</th>
                             <th scope="col" style="text-align: center">Budget</th>
                             <th scope="col" style="text-align: left">Keterangan</th>
                         </tr>
@@ -150,6 +151,7 @@
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'action', name: 'action'},
                 { data: 'NO_SP', name: 'NO_SP'},
+                 { data: 'NO_BUKTI', name: 'NO_BUKTI'},
                 { data: 'BUDGET', name: 'BUDGET', render: $.fn.dataTable.render.number( ',', '.', 2, '' )},
                 { data: 'CAT', name: 'KODES'},
             ],
@@ -189,10 +191,10 @@
             dataTable.ajax.reload();
         });
 
-        // $("div.test_btn").html(
-        // '<a class="btn btn-lg btn-md btn-success" href="{{url('.pantau/edit&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
+        $("div.test_btn").html(
+        '  <a class="btn btn-lg btn-md btn-warning" href="{{url('budgetpk/budgetpk-otomatis')}}">Otomatis</a>'
 
-        // );
+        );
     });
 
     function deleteRow(link) {
