@@ -15,7 +15,7 @@ class NwbudgetDetail extends Model
 
     protected $fillable =
     [
-        "rec", "no_bukti", "ID", "KD_BRG", "NA_BRG","BARCODE","qty", "harga", 
-        "total", "KET", "GOL", "flag", "per", "SISA", "KDLAKU"
+        "REC", "NO_BUKTI", "ID", "KD_BRG", "NA_BRG","BARCODE","QTY", "HARGA", 
+        "TOTAL", "KET", "GOL", "FLAG", "PER", "SISA", "KDLAKU"
     ];
 }

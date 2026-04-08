@@ -198,6 +198,8 @@ class PoController extends Controller
         $jenisLaporan = $request->jenis_laporan;
         $filterJenisLaporan = '';
 
+
+
         switch ($jenisLaporan) {
             case 'kurang_laku_senin':
                 $filterJenisLaporan = "
@@ -260,6 +262,7 @@ class PoController extends Controller
               $filterJenisLaporan
             ORDER BY NO_BUKTI
         ");
+
 
         // ganti 6
 
@@ -435,18 +438,18 @@ class PoController extends Controller
                 $detail    = new NwbudgetDetail;
 
                 // Insert ke Database
-                $detail->no_bukti    = $no_bukti;
-                $detail->rec         = $REC[$key];
-                $detail->per         = $periode;
-                $detail->flag        = $FLAGZ;
+                $detail->NO_BUKTI    = $no_bukti;
+                $detail->REC         = $REC[$key];
+                $detail->PER         = $periode;
+                $detail->FLAG        = $FLAGZ;
                 $detail->GOL 	     = $GOLZ;
                 $detail->CBG 	     = $CBG;
                 $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
                 $detail->BARCODE     = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
-                $detail->qty         = (float) str_replace(',', '', $QTY[$key]);
-                $detail->harga       = (float) str_replace(',', '', $HARGA[$key]);
-                $detail->total       = (float) str_replace(',', '', $TOTAL[$key]);
+                $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);
+                $detail->HARGA       = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]);
                 $detail->SISA        = (float) str_replace(',', '', $QTY[$key]);
                 $detail->KDLAKU      = ($KDLAKU[$key] == null) ? "" :  $KDLAKU[$key];
                 $detail->KET         = ($KET[$key] == null) ? "" :  $KET[$key];
@@ -651,7 +654,7 @@ class PoController extends Controller
 		 }
 
         $no_bukti = $po->NO_BUKTI;
-        $poDetail = DB::table('nwbudgetd')->where('no_bukti', $no_bukti)->orderBy('REC')->get();
+        $poDetail = DB::table('nwbudgetd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
 
 		$data = [
             'header'        => $po,
@@ -746,18 +749,18 @@ class PoController extends Controller
             if ($NO_ID[$i] == 'new') {
                 $insert = NwbudgetDetail::create(
                     [
-                        'no_bukti'   => $request->no_bukti,
-                        'rec'        => $REC[$i],
-                        'per'        => $periode,
+                        'NO_BUKTI'   => $request->no_bukti,
+                        'REC'        => $REC[$i],
+                        'PER'        => $periode,
                         'FLAG'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,
                         'CBG'        => $CBG,
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
-                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
+                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'SISA'       => (float) str_replace(',', '', $SISA[$i]),
                         'KDLAKU'     => ($KDLAKU[$i] == null) ? "" :  $KDLAKU[$i],
                         'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
@@ -774,16 +777,16 @@ class PoController extends Controller
                     [
                         'REC'        => $REC[$i],
 
-                        'flag'       => $this->FLAGZ,
+                        'FLAG'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,
                         'CBG'        => $CBG,
-                        'per'        => $periode,
+                        'PER'        => $periode,
                         'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
-                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
+                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
+                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
+                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'SISA'       => (float) str_replace(',', '', $SISA[$i]),
                         'KDLAKU'     => ($KDLAKU[$i] == null) ? "" :  $KDLAKU[$i],
                         'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
@@ -804,8 +807,8 @@ class PoController extends Controller
                     SET nwbudget.NA_CNT = cntbsn.NA_CNT  WHERE nwbudget.CNT = cntbsn.CNT
                     AND nwbudget.NO_BUKTI='$no_buktix';");
 
-        DB::SELECT("UPDATE pobsn,  nwbudgetd
-                    SET  nwbudgetd.ID =  pobsn.NO_ID  WHERE  nwbudget.NO_BUKTI =  nwbudget.NO_BUKTI
+        DB::SELECT("UPDATE nwbudget,  nwbudgetd
+                    SET  nwbudgetd.ID =  nwbudget.NO_ID  WHERE  nwbudget.NO_BUKTI =  nwbudget.NO_BUKTI
                     AND  nwbudget.NO_BUKTI='$no_bukti';");
 
         // $variablell = DB::select('call poins(?)', array($po['NO_BUKTI']));
@@ -825,7 +828,7 @@ class PoController extends Controller
 
     // ganti 22
 
-    public function destroy(Request $request, Po $po)
+    public function destroy(Request $request, Nwbudget $po)
     {
         $this->setFlag($request);
         $FLAGZ = $_GET['flagz'];
@@ -833,10 +836,10 @@ class PoController extends Controller
         $judul = $this->judul;
 
         // hapus detail dulu
-        DB::table('pobsnd')->where('ID', $po->NO_ID)->delete();
+        DB::table('nwbudgetd')->where('ID', $po->NO_ID)->delete();
 
         // hapus header
-        DB::table('pobsn')->where('NO_ID', $po->NO_ID)->delete();
+        DB::table('nwbudget')->where('NO_ID', $po->NO_ID)->delete();
 
         return redirect('/po?flagz='.$FLAGZ.'&golz='.$GOLZ)
             ->with(['judul'=>$judul,'flagz'=>$this->FLAGZ,'golz'=>$this->GOLZ])

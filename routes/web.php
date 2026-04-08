@@ -711,6 +711,7 @@ Route::get('/lain/create', 'App\Http\Controllers\OTransaksi\LainController@creat
 Route::get('/get-lain', 'App\Http\Controllers\OTransaksi\LainController@getLain')->middleware(['auth'])->name('get-lain');
 Route::get('/rlain', 'App\Http\Controllers\OReport\RLainController@report')->middleware(['auth'])->name('rlain');
 Route::get('/get-lain-report', 'App\Http\Controllers\OReport\RLainController@getLainReport')->middleware(['auth'])->name('get-lain-report');
+Route::get('/lain/cetak/{lain}', 'App\Http\Controllers\OTransaksi\LainController@cetak')->middleware(['auth'])->name('lain/cetak');
 
 Route::get('/lain/show/{lain}', 'App\Http\Controllers\OTransaksi\LainController@show')->name('lainid');
 Route::get('/lain/edit', 'App\Http\Controllers\OTransaksi\LainController@edit')->name('lain.edit');

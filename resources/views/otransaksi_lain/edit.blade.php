@@ -156,27 +156,12 @@
 
 							<div class="form-group row">
 								<div class="col-md-1" align="left">								
-									<label for="CNT" class="form-label">Conter</label>
-								</div>
-
-								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih"value="{{$header->CNT}}" style="text-align: left" readonly >
-									<button type="button" class="btn btn-primary" onclick="browseBeli()"><i class="fa fa-search"></i></button>
-								</div>
-								
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""  value="{{$header->NCNT}}"  readonly >
-                                </div>
-                            </div>
-
-							<div class="form-group row">
-								<div class="col-md-1" align="left">								
-									<label for="KODES" class="form-label">Kode</label>
+									<label for="KODES" class="form-label">Kode Supplier</label>
 								</div>
 
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Pilih"value="{{$header->KODES}}" style="text-align: left" readonly >
-									<button type="button" class="btn btn-primary" onclick="browseBeli()"><i class="fa fa-search"></i></button>
+									<button type="button" class="btn btn-primary" onclick="browseSupplier()"><i class="fa fa-search"></i></button>
 								</div>
 								
 								<div class="col-md-3">
@@ -191,12 +176,12 @@
 								</div>
 
 								<div class="col-md-2 input-group" >
-									<input type="text" class="form-control BACNO" id="BACNO" name="BACNO" placeholder="Pilih"value="{{$header->BACNO}}" style="text-align: left" readonly >
-									<button type="button" class="btn btn-primary" onclick="browseBeli()"><i class="fa fa-search"></i></button>
+									<input type="text" class="form-control BACNO" id="BACNO" name="BACNO" placeholder="Pilih"value="{{$header->ACNO}}" style="text-align: left" readonly >
+									<button type="button" class="btn btn-primary" onclick="browseAcno()"><i class="fa fa-search"></i></button>
 								</div>
 								
 								<div class="col-md-3">
-									<input type="text" class="form-control BNAMA" id="BNAMA" name="BNAMA" placeholder=""  value="{{$header->BNAMA}}"  readonly >
+									<input type="text" class="form-control BNAMA" id="BNAMA" name="BNAMA" placeholder=""  value="{{$header->NACNO}}"  readonly >
 								</div>
 							</div>
 
@@ -205,7 +190,7 @@
 									<label for="TOTAL" class="form-label">Total</label>
 								</div>
 								<div class="col-md-2">
-									<input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TOTAL" id="TOTAL" name="TOTAL" placeholder="" value="{{$header->TOTAL}}" style="text-align: right" readonly>
+									<input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TOTAL" id="TOTAL" name="TOTAL" placeholder="" value="{{$header->total}}" style="text-align: right" readonly>
 								</div>
 							</div>
 
@@ -276,23 +261,23 @@
     </div>
 
 
-	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
+	<div class="modal fade" id="browseSupplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSupplierModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBarangModalLabel">Cari Item</h5>
+			<h5 class="modal-title" id="browseSupplierModalLabel">Cari Supplier</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbarang">
+			<table class="table table-stripped table-bordered" id="table-bsupplier">
 				<thead>
 					<tr>
-						<th>Item#</th>
+						<th>Supplier#</th>
 						<th>Nama</th>
-						<th>Satuan</th>
-						
+						<th>Alamat</th>
+						<th>Kota</th>					
 					</tr>
 				</thead>
 				<tbody>
@@ -306,7 +291,33 @@
 	  </div>
 	</div>
 	
-	
+	<div class="modal fade" id="browseAcnoModal" tabindex="-1" role="dialog" aria-labelledby="browseAcnoModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseAcnoModalLabel">Cari Acno</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bacno">
+				<thead>
+					<tr>
+						<th>Acno#</th>
+						<th>Nama</th>				
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 	
 
 @endsection
@@ -406,91 +417,107 @@
 
 		//////////////////////////////////////////////////////
 
-		var dTableBBarang;
-		var rowidBarang;
-		loadDataBBarang = function(){
-		
+		var dTableBSupplier;
+		loadDataBSupplier = function(){
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('brg/browse_koreksi')}}",
-
-				beforeSend: function(){
-					$("#LOADX").show();
-				},
-
-				async : false,
-				data: {
-						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
-					
-				},
-
+				url: '{{url('sup/browse')}}',
 				success: function( response )
-
 				{
-
-					$("#LOADX").hide();
-
 					resp = response;
-					
-					
-					if ( resp.length > 1 )
-					{	
-							if(dTableBBarang){
-								dTableBBarang.clear();
-							}
-							for(i=0; i<resp.length; i++){
-								
-								dTableBBarang.row.add([
-									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\' , \''+resp[i].SATUAN+'\' )">'+resp[i].KD_BRG+'</a>',
-									resp[i].NA_BRG,
-									resp[i].SATUAN,
-								]);
-							}
-							dTableBBarang.draw();
-					
+					if(dTableBSupplier){
+						dTableBSupplier.clear();
 					}
-					else
-					{
-						$("#KD_BRG"+rowidBarang).val(resp[0].KD_BRG);
-						$("#NA_BRG"+rowidBarang).val(resp[0].NA_BRG);
-						$("#SATUAN"+rowidBarang).val(resp[0].SATUAN);
+					for(i=0; i<resp.length; i++){
+						
+						dTableBSupplier.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSupplier(\''+resp[i].NO_SUPL+'\',  \''+resp[i].NAMA+'\')">'+resp[i].NO_SUPL+'</a>',
+							resp[i].NAMA,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
+						]);
 					}
+					dTableBSupplier.draw();
 				}
 			});
 		}
 		
-		dTableBBarang = $("#table-bbarang").DataTable({
+		dTableBSupplier = $("#table-bsupplier").DataTable({
 			
 		});
+		
+		browseSupplier = function(){
+			loadDataBSupplier();
+			$("#browseSupplierModal").modal("show");
+		}
+		
+		chooseSupplier = function(NO_SUPL,NAMA){
+			$("#KODES").val(NO_SUPL);
+			$("#NAMAS").val(NAMA);
+			$("#browseSupplierModal").modal("hide");
 
-		browseBarang = function(rid){
-			rowidBarang = rid;
-			$("#NA_BRG"+rowidBarang).val("");			
-			loadDataBBarang();
-	
-			
-			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {				
-					$("#browseBarangModal").modal("show");
-			}	
 		}
 		
-		chooseBarang = function(KD_BRG,NA_BRG,SATUAN){
-			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
-			$("#SATUAN"+rowidBarang).val(SATUAN);
-			$("#browseBarangModal").modal("hide");
-		}
-		
-		
-		/* $("#RAK0").onblur(function(e){
+		$("#KODES").keypress(function(e){
 			if(e.keyCode == 46){
 				e.preventDefault();
-				browseRak(0);
+				browseSupplier();
 			}
-		});  */
-
+		}); 
+		
 		////////////////////////////////////////////////////
+
+		// BROWSE ACNO
+		var dTableBAcno;
+		loadDataBAcno = function(){
+			$.ajax(
+			{
+				type: 'GET',    
+				url: '{{url('account/browse')}}',
+				success: function( response )
+				{
+					resp = response;
+					if(dTableBAcno){
+						dTableBAcno.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBAcno.row.add([
+							'<a href="javascript:void(0);" onclick="chooseAcno(\''+resp[i].ACNO+'\',  \''+resp[i].NAMA+'\')">'+resp[i].ACNO+'</a>',
+							resp[i].NAMA,
+						]);
+					}
+					dTableBAcno.draw();
+				}
+			});
+		}
+		
+		dTableBAcno = $("#table-bacno").DataTable({
+			
+		});
+		
+		browseAcno = function(){
+			loadDataBAcno();
+			$("#browseAcnoModal").modal("show");
+		}
+		
+		chooseAcno = function(ACNO,NAMA){
+			$("#BACNO").val(ACNO);
+			$("#BNAMA").val(NAMA);
+			$("#browseAcnoModal").modal("hide");
+
+		}
+		
+		$("#BACNO").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseAcno();
+			}
+		}); 
+		
+		////////////////////////////////////////////////////
+
 	});
 
 
@@ -527,16 +554,16 @@
 		
         var check = '0';
 
-			if (baris==0)
-			{
-				check = '1';
-				Swal.fire({
-					icon: 'warning',
-					title: 'Warning',
-					text: 'Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)'
-				});
-				return; // Stop function execution
-			}
+			// if (baris==0)
+			// {
+			// 	check = '1';
+			// 	Swal.fire({
+			// 		icon: 'warning',
+			// 		title: 'Warning',
+			// 		text: 'Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)'
+			// 	});
+			// 	return; // Stop function execution
+			// }
 		
 		
 			if ( tgl.substring(3,5) != bulanPer ) 
@@ -565,16 +592,16 @@
 				
 		    }	 
 
-			if ( $('#KD_BRG').val()=='' ) 
-            {				
-			    check = '1';
-				Swal.fire({
-					icon: 'warning',
-					title: 'Warning',
-					text: 'Barang# Harus Diisi.'
-				});
-				return; // Stop function execution
-			}
+			// if ( $('#KD_BRG').val()=='' ) 
+            // {				
+			//     check = '1';
+			// 	Swal.fire({
+			// 		icon: 'warning',
+			// 		title: 'Warning',
+			// 		text: 'Barang# Harus Diisi.'
+			// 	});
+			// 	return; // Stop function execution
+			// }
 
 			// if ( $('#KD_BHN').val()=='' ) 
             // {				

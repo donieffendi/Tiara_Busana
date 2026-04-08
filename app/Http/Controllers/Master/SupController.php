@@ -34,16 +34,13 @@ class SupController extends Controller
     	if (!empty(request('q'))) {
 
 
-                 $sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
-                            PKP, HARI
-                            from nwmassup
+                 $sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA from nwmassup
                             WHERE  NAMA LIKE ('%$request->q%')
                             ORDER BY NAMA ");
 
 
         } else {
-			$sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
-                                PKP, HARI
+			$sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA
                             from nwmassup
 
                             ORDER BY NAMA ");

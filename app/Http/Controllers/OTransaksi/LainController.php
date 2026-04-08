@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\OTransaksi\Beli;
 use App\Models\OTransaksi\BeliDetail;
+use App\Models\OTransaksi\Belibsnz;
+use App\Models\OTransaksi\BelibsnzDetail;
 use App\Models\Master\Sup;
 use Illuminate\Http\Request;
 use DataTables;
@@ -138,9 +140,9 @@ class LainController extends Controller
 
         $CBG = Auth::user()->CBG;
 		
-        $lain = DB::SELECT("SELECT NO_BUKTI, TGL, TOTAL, KODES, NAMAS, CNT, NCNT, USRNM, POSTED 
-                            FROM beli
-                            WHERE PER = '$periode' and FLAG = '$FLAGZ'
+        $lain = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, total, KODES, NAMAS, usrnm, POSTED, flag, REF 
+                            FROM belibsnz 
+                            WHERE PER = '$periode' and flag = '$FLAGZ'
                             ORDER BY NO_BUKTI");
 
                              
@@ -155,10 +157,10 @@ class LainController extends Controller
                     //CEK POSTED di index dan edit
 
                     // url untuk delete di index
-                    $url = "'".url("lain/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
+                    $url = "'".url("lain/delete/" . $row->NO_ID . "/?flagz=" . $row->flag)."'";
                     // batas
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="lain/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';					
+                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="lain/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '"';					
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
 
 
@@ -168,7 +170,7 @@ class LainController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" href="cetak/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" target="_blank" href="lain/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a> 									
@@ -249,32 +251,30 @@ class LainController extends Controller
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('beli')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'TL')->where('CBG', $CBG)
+        $query = DB::table('belibsnz')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'LL')->where('CBG', $CBG)
                 ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
         if ($query != '[]') {
             $query = substr($query[0]->NO_BUKTI, -4);
             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-            $no_bukti = 'TL' . $CBG . $tahun . $bulan . '-' . $query;
+            $no_bukti = 'LL' . $CBG . $tahun . $bulan . '-' . $query;
         } else {
-            $no_bukti = 'TL' . $CBG . $tahun . $bulan . '-0001';
+            $no_bukti = 'LL' . $CBG . $tahun . $bulan . '-0001';
         }		
 
-        $lain = Beli::create(
+        $lain = Belibsnz::create(
             [
                 'NO_BUKTI'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'PER'              => $periode,
-                'FLAG'             => 'TL',
-                'CNT'              => ($request['CNT']==null) ? "" : $request['CNT'],				
-                'NCNT'             => ($request['NCNT']==null) ? "" : $request['NCNT'],				
+                'flag'             => 'LL',			
                 'KODES'            => ($request['KODES']==null) ? "" : $request['KODES'],				
                 'NAMAS'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],				
-                'BACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],				
-                'BNAMA'            => ($request['BNAMA']==null) ? "" : $request['BNAMA'],				
-                'TOTAL'            => (float) str_replace(',', '', $request['TOTAL']),
-                'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
+                'ACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],				
+                'NACNO'            => ($request['BNAMA']==null) ? "" : $request['BNAMA'],				
+                'total'            => (float) str_replace(',', '', $request['TOTAL']),
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
 				'created_by'       => Auth::user()->username,
 				'CBG'              => $CBG,
             ]
@@ -293,7 +293,7 @@ class LainController extends Controller
 		
     }
 
-   public function edit( Request $request , Beli $lain)
+   public function edit( Request $request , Belibsnz $lain)
     {
 
 
@@ -329,7 +329,7 @@ class LainController extends Controller
 		   	
     	   $buktix = $request->buktix;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from beli
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from Belibsnz
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
 						 and NO_BUKTI = '$buktix' AND CBG = '$CBG'					 
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
@@ -350,7 +350,7 @@ class LainController extends Controller
 		if ($tipx=='top') {
 			
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from beli
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from Belibsnz
 		                 where PER ='$per' 
 						 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'  
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1" );
@@ -373,7 +373,7 @@ class LainController extends Controller
 			
     	   $buktix = $request->buktix;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from beli     
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from Belibsnz     
 		             where PER ='$per' 
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI < 
@@ -397,7 +397,7 @@ class LainController extends Controller
 				
       	   $buktix = $request->buktix;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from beli    
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from Belibsnz    
 		             where PER ='$per'  
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI > 
@@ -417,7 +417,7 @@ class LainController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from beli
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from Belibsnz
 						where PER ='$per'
 						and FLAG ='$this->FLAGZ' AND CBG = '$CBG'  
 		              ORDER BY NO_BUKTI DESC  LIMIT 1" );
@@ -446,30 +446,27 @@ class LainController extends Controller
 
        	if ( $idx != 0 ) 
 		{
-			$lain = Beli::where('NO_ID', $idx )->first();	
+			$lain = Belibsnz::where('NO_ID', $idx )->first();	
 	     }
 		 else
 		 {
-				$lain = new Beli;
+				$lain = new Belibsnz;
                 $lain->TGL = Carbon::now();
 				
 				
 		 }
 
         $no_bukti = $lain->NO_BUKTI;
-        $lainDetail = DB::table('belid')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
+        $lainDetail = DB::table('belibsnzd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
 		
 		$data = [
             'header'        => $lain,
 			'detail'        => $lainDetail
 
         ];
- 
- 		$sup = DB::SELECT("SELECT KODES, CONCAT(NAMAS,'-',KOTA) AS NAMAS FROM sup 
-		                 ORDER BY NAMAS ASC" );
 		
          
-         return view('otransaksi_lain.edit', $data)->with(['sup' => $sup])
+         return view('otransaksi_lain.edit', $data)
 		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' => $this->FLAGZ, 'judul'=> $this->judul ]);
 			 
 
@@ -485,7 +482,7 @@ class LainController extends Controller
 
     // ganti 18
 
-    public function update(Request $request, Beli $lain)
+    public function update(Request $request, Belibsnz $lain)
     {
 
         $this->validate(
@@ -508,18 +505,17 @@ class LainController extends Controller
         $lain->update(
             [
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'CNT'              => ($request['CNT']==null) ? "" : $request['CNT'],				
-                'NCNT'             => ($request['NCNT']==null) ? "" : $request['NCNT'],				
+                'PER'              => $periode,
+                'flag'             => 'LL',			
                 'KODES'            => ($request['KODES']==null) ? "" : $request['KODES'],				
                 'NAMAS'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],				
-                'BACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],				
-                'BNAMA'            => ($request['BNAMA']==null) ? "" : $request['BNAMA'],				
-                'TOTAL'            => (float) str_replace(',', '', $request['TOTAL']),
-				'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
-				'updated_by'       => Auth::user()->username,
-                'FLAG'             => 'TL',	
-                'CBG'              => $CBG,	
+                'ACNO'            => ($request['BACNO']==null) ? "" : $request['BACNO'],				
+                'NACNO'            => ($request['BNAMA']==null) ? "" : $request['BNAMA'],				
+                'total'            => (float) str_replace(',', '', $request['TOTAL']),
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
+				'created_by'       => Auth::user()->username,
+				'CBG'              => $CBG,
             ]
         );
 
@@ -573,68 +569,27 @@ class LainController extends Controller
 
     }
     
-    public function cetak(Beli $lain)
+    public function cetak(Belibsnz $lain)
     {
         $no_lain = $lain->NO_BUKTI;
 
-        $file     = 'lainc';
+        $file     = 'transaksi lain - lain';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
         $query = DB::SELECT("
-			SELECT NO_BUKTI,  TGL, KODES, NAMAS, TOTAL_QTY, NOTES, TOTAL, ALAMAT, KOTA
-			FROM beli 
+			SELECT NO_BUKTI, TGL, KODES, NAMAS, total, notes
+			FROM belibsnz as beli
 			WHERE beli.NO_BUKTI='$no_lain' 
 			ORDER BY NO_BUKTI;
 		");
 
-        $xno_lain1       = $query[0]->NO_BUKTI;
-        $xtgl1         = $query[0]->TGL;
-        $xkodes1       = $query[0]->KODES;
-        $xnamas1       = $query[0]->NAMAS;
-        $xtotal1       = $query[0]->TOTAL_QTY;
-        $xnotes1       = $query[0]->NOTES;
-        $xharga1       = $query[0]->TOTAL;
-        $xalamat1      = $query[0]->ALAMAT;
-        $xkota1        = $query[0]->KOTA;
-        
-        $PHPJasperXML->arrayParameter = array("HARGA1" => (float) $xharga1, "TOTAL1" => (float) $xtotal1, "NO_PO1" => (string) $xno_lain1,
-                                     "TGL1" => (string) $xtgl1,  "KODES1" => (string) $xkodes1,  "NAMAS1" => (string) $xnamas1, "NOTES1" => (string) $xnotes1, "ALAMAT1" => (string) $xalamat1, "KOTA1" => (string) $xkota1 );
-        $PHPJasperXML->arraysqltable = array();
+        $PHPJasperXML->arrayParameter = [
+            'TERBILANG' => trim($this->terbilang($query[0]->total)) . " rupiah",
+        ];
 
-
-        $query2 = DB::SELECT("
-			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT, NO_PO,  IF ( FLAG='BL' , 'A','B' ) AS FLAG, AJU, BL, EMKL, KD_BRG, NA_BRG, KG, RPHARGA AS HARGA, RPTOTAL AS TOTAL, 0 AS BAYAR,  NOTES
-			FROM beli 
-			WHERE beli.NO_PO='$no_lain'  UNION ALL 
-			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT,  NO_PO,  'C' AS FLAG, '' AS AJU, '' AS BL, '' AS EMKL,  '' AS KD_BRG, '' AS NA_BRG, 0 AS KG, 
-			0 AS HARGA, 0 AS TOTAL, BAYAR, NOTES
-			FROM hut 
-			WHERE hut.NO_PO='$no_lain' 
-			ORDER BY TGL, FLAG, NO_BUKTI;
-		");
-
-        $data = [];
-
-        foreach ($query2 as $key => $value) {
-            array_push($data, array(
-                'NO_BUKTI' => $query2[$key]->NO_BUKTI,
-                'TGL'      => $query2[$key]->TGL,
-                'KODES'    => $query2[$key]->KODES,
-                'NAMAS'    => $query2[$key]->NAMAS,
-                'ALAMAT'    => $query2[$key]->ALAMAT,
-                'AJU'    => $query2[$key]->AJU,
-                'BL'       => $query2[$key]->BL,
-                'EMKL'    => $query2[$key]->EMKL,
-                'KG'       => $query2[$key]->KG,
-                'HARGA'    => $query2[$key]->HARGA,
-                'TOTAL'    => $query2[$key]->TOTAL,
-                'BAYAR'    => $query2[$key]->BAYAR,
-                'NOTES'    => $query2[$key]->NOTES
-            ));
-        }
-		
-        $PHPJasperXML->setData($data);
+        $cleanData = json_decode(json_encode($query), true);
+        $PHPJasperXML->setData($cleanData);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
        
@@ -658,7 +613,20 @@ class LainController extends Controller
     }
 	
 	
-	
+	function terbilang($angka)
+	{
+		$angka = abs($angka);
+		$baca = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+
+		if ($angka < 12) return " " . $baca[$angka];
+		elseif ($angka < 20) return $this->terbilang($angka - 10) . " Belas";
+		elseif ($angka < 100) return $this->terbilang(floor($angka / 10)) . " Puluh" . $this->terbilang($angka % 10);
+		elseif ($angka < 200) return " seratus" . $this->terbilang($angka - 100);
+		elseif ($angka < 1000) return $this->terbilang(floor($angka / 100)) . " Ratus" . $this->terbilang($angka % 100);
+		elseif ($angka < 2000) return " seribu" . $this->terbilang($angka - 1000);
+		elseif ($angka < 1000000) return $this->terbilang(floor($angka / 1000)) . " Ribu" . $this->terbilang($angka % 1000);
+		elseif ($angka < 1000000000) return $this->terbilang(floor($angka / 1000000)) . " Juta" . $this->terbilang($angka % 1000000);
+	}
 	
 	
 }

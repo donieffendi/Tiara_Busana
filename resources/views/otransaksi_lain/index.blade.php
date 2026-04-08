@@ -117,13 +117,23 @@
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="4" id="columnTqty" checked>
-                                        <label class="form-check-label" for="columnTqty">Total-QTY</label>
+                                            value="4" id="columnSup" checked>
+                                        <label class="form-check-label" for="columnSup">Suplier</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="5" id="columnNotes" checked>
-                                        <label class="form-check-label" for="columnNotes">Notes</label>
+                                            value="5" id="columnTotal" checked>
+                                        <label class="form-check-label" for="columnTotal">Total</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                            value="6" id="columnUser" checked>
+                                        <label class="form-check-label" for="columnUser">User</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                            value="7" id="columnPst" checked>
+                                        <label class="form-check-label" for="columnPst">Pst</label>
                                     </div>
                                 </form>
                             </div>
@@ -149,6 +159,7 @@
                             <th scope="col" style="text-align: center">No Bukti</th>
                             <th scope="col" style="text-align: center">Tgl</th>
                             <th scope="col" style="text-align: center">Suplier#</th>
+                            <th scope="col" style="text-align: center">Total</th>
                             <th scope="col" style="text-align: center">User</th>
                             <th scope="col" style="text-align: center">Pst</th>
                         </tr>
@@ -210,10 +221,13 @@
 
             columns: 
             [
-
+                {
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
                 { data: 'action', name: 'action'},
                 { data: 'NO_BUKTI', name: 'NO_BUKTI'},
-                { data: 'REF', name: 'REF'},
                 { data: 'TGL', name: 'TGL'},
                 { data: 'NAMAS', name: 'NAMAS',
                   render : function ( data, type, row, meta )
@@ -221,7 +235,8 @@
                     return ' <h5><span class="badge badge-pill badge-warning">' + data + '</span></h5>';
                   }
                 },
-                { data: 'USRNM', name: 'USRNM'},
+                { data: 'total', name: 'total'},
+                { data: 'usrnm', name: 'usrnm'},
                 { data: 'POSTED', name: 'POSTED',
                   render : function(data, type, row, meta) {
                     if(row['POSTED']=="0"){
@@ -236,10 +251,10 @@
             [
                 {
                     "className": "dt-center", 
-                    "targets": [8,9,10],
+                    "targets": [0, 1,2,3,4,6,7],
                 },			
                 {
-                  targets: 5,
+                  targets: 3,
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
                 }
             ],
