@@ -297,7 +297,7 @@
 
   <!-- batas -->
 
-      <div class="row d-flex">
+    <div class="row d-flex">
         <div class="col-md-3">
 
             <!-- kalau sub menu, di kasih warna pinggirannya. style:"border" -->
@@ -336,6 +336,20 @@
                   <!-- <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
                 <h6>Sub Barang</h6>
+              </a>
+			</div>
+        </div>
+    </div>
+
+
+    <div class="row d-flex">
+
+		<div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
+              <a href="javascript:addTab('Departement', '{{url('dept')}}')">
+                  <!-- <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
+                <h6>Departement</h6>
               </a>
 			</div>
         </div>

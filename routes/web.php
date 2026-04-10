@@ -237,6 +237,28 @@ Route::post('/sub_brg/update/{sub_brg}', 'App\Http\Controllers\Master\Sub_brgCon
 Route::get('/sub_brg/delete/{sub_brg}', 'App\Http\Controllers\Master\Sub_brgController@destroy')->middleware(['auth'])->name('sub_brg.delete');
 
 
+// master dept
+
+Route::get('/dept', 'App\Http\Controllers\Master\DeptController@index')->middleware(['auth'])->name('dept');
+Route::post('/dept/store', 'App\Http\Controllers\Master\DeptController@store')->middleware(['auth'])->name('dept/store');
+Route::get('/rdept', 'App\Http\Controllers\OReport\RDeptController@report')->middleware(['auth'])->name('rdept');
+
+    // GET dept
+    Route::get('/get-dept', 'App\Http\Controllers\Master\DeptController@getDept')->middleware(['auth'])->name('get-dept');
+    Route::get('/dept/browse', 'App\Http\Controllers\Master\DeptController@browse')->middleware(['auth'])->name('dept/browse');
+    Route::get('/dept/browse_hari', 'App\Http\Controllers\Master\DeptController@browse_hari')->middleware(['auth'])->name('dept/browse_hari');
+
+    Route::get('/get-dept-report', 'App\Http\Controllers\OReport\DeptController@getdeptReport')->middleware(['auth'])->name('get-dept-report');
+    Route::post('/jasper-dept-report', 'App\Http\Controllers\OReport\RDeptController@jasperdeptReport')->middleware(['auth'])->name('jasper-dept-report');
+    Route::get('dept/cekdept', 'App\Http\Controllers\Master\DeptController@cekdept')->middleware(['auth']);
+	Route::get('dept/get-select-kodec', 'App\Http\Controllers\Master\DeptController@getSelectKodes')->middleware(['auth']);
+
+// Dynamic dept
+Route::get('/dept/edit', 'App\Http\Controllers\Master\DeptController@edit')->middleware(['auth'])->name('dept.edit');
+Route::post('/dept/update/{dept}', 'App\Http\Controllers\Master\DeptController@update')->middleware(['auth'])->name('dept.update');
+Route::get('/dept/delete/{dept}', 'App\Http\Controllers\Master\DeptController@destroy')->middleware(['auth'])->name('dept.delete');
+
+
 // Manage User
 Route::get('/user/manage', 'App\Http\Controllers\UserController@index')->name('user/manage');
 //Route::get('/user/add', 'App\Http\Controllers\UserController@create')->middleware(['auth', 'role:user|superadmin'])->name('user/add');
