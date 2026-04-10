@@ -64,12 +64,23 @@ class PoController extends Controller
         $kodes = $request->kodes;
 
         //
-        $po = DB::SELECT("SELECT distinct PO.NO_BUKTI , PO.KODES, PO.NAMAS,
-	                    PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
-                        from nwbudget as po, nwbudgetd as pod
-                        WHERE PO.NO_BUKTI = POD.NO_BUKTI AND po.KODES='$kodes'
-                        AND POD.SISA > 0 AND po.POSTED = 1 AND po.JTEMPO > '$tanggal'
-                        GROUP BY NO_BUKTI ");
+        $po = DB::select("SELECT DISTINCT PO.NO_BUKTI, PO.KODES, PO.NAMAS,
+                                    PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
+                            FROM nwbudget AS PO
+                            JOIN nwbudgetd AS POD ON PO.NO_BUKTI = POD.NO_BUKTI
+                            WHERE PO.KODES = ?
+                            AND POD.SISA > 0
+                            AND PO.POSTED = 1
+                            AND PO.JTEMPO > ?
+                            AND NOT EXISTS (
+                                SELECT 1 
+                                FROM nwagend 
+                                WHERE nwagend.SP = PO.NO_BUKTI
+                            )
+                            GROUP BY PO.NO_BUKTI, PO.KODES, PO.NAMAS,
+                                    PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
+                        ", [$kodes, $tanggal]);
+
         return response()->json($po);
     }
 
@@ -384,16 +395,16 @@ class PoController extends Controller
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('nwbudget')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', $CBG)
+        $query = DB::table('nwbudget')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', 'DC1')
                 ->where('GOL', $this->GOLZ )->orderByDesc('NO_BUKTI')->limit(1)->get();
 
 
         if ($query != '[]') {
             $query = substr($query[0]->NO_BUKTI, -4);
             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-            $no_bukti = $GOLZ  . $CBG . $tahun . $bulan . '-' . $query;
+            $no_bukti = $GOLZ  . 'DC1' . $tahun . $bulan . '-' . $query;
         } else {
-            $no_bukti = $GOLZ  . $CBG . $tahun . $bulan . '-0001';
+            $no_bukti = $GOLZ  . 'DC1' . $tahun . $bulan . '-0001';
         }
 
 

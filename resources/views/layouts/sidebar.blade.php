@@ -441,10 +441,10 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-              <a href="javascript:addTab('Terima Barang TGZ', '{{url('beli?flagz=BO')}}')">
+              <a href="javascript:addTab('Terima Barang', '{{url('beli?flagz=BO')}}')">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cash-register icon-purple"></i>
-                <h6>Terima Barang TGZ</h6>
+                <h6>Terima Barang</h6>
               </a>
 			      </div>
         </div>
@@ -1212,8 +1212,8 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              {{-- <a href="javascript:addTab('Pencetakan Label Harga', '{{url('harga?flagz=HG&golz=LB')}}')" > --}}
-                <a href="javascript:addTab('Pencetakan Label Harga', '{{url('po?flagz=PO&golz=LH')}}')">
+              <a href="javascript:addTab('Pencetakan Label Harga', '{{url('harga?flagz=LB&golz=HG')}}')" >
+                <!-- <a href="javascript:addTab('Pencetakan Label Harga', '{{url('po?flagz=PO&golz=LH')}}')"> -->
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-blue"></i>
                 <h6>Pencetakan Label Harga</h6>

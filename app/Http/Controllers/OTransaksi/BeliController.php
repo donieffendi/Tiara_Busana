@@ -201,7 +201,7 @@ class BeliController extends Controller
 
         $beli = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, KODES, NAMAS, SP AS NO_PO, TOTAL, NETT, USRNM, POSTED, FLAG
                                     FROM nwagend
-                                    where PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG'
+                                    where PER = '$periode' AND CBG= 'DC1' AND FLAG= '$FLAG'
                                     order by NO_BUKTI ");
 
 
@@ -310,7 +310,7 @@ class BeliController extends Controller
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
 
-        $CBG = Auth::user()->CBG;
+        $CBG = 'DC1';
 
         $CBG_KODE = DB::table('toko')
             ->where('KODE', $CBG)
@@ -324,7 +324,7 @@ class BeliController extends Controller
         $last = DB::table('nwagend')
             ->where('PER', $periode)
             ->where('FLAG', $FLAGZ)
-            ->where('CBG', $CBG)
+            ->where('CBG', 'DC1')
             ->orderByDesc('NO_BUKTI')
             ->value('NO_BUKTI');
 

@@ -198,13 +198,13 @@
 											<input class="form-control date" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->JTEMPO))}}">
 										</div>
 
-										<div class="col-md-1" align="left">
-											<label for="KODES" class="form-label">Kodes</label>
+										<div class="col-md-2 input-group" >
+											<input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Pilih"value="{{$header->KODES}}" style="text-align: left" readonly >
+											<button type="button" class="btn btn-primary" onclick="browseSupplier()"><i class="fa fa-search"></i></button>
 										</div>
-
-										<div class="col-md-3" >
-											<select id="KODES" name="KODES" style="width: 100%" ></select>
-											<input type="text" hidden class="form-control NAMAS" id="NAMAS" name="NAMAS" value="{{$header->NAMAS}}" placeholder="" >
+										
+										<div class="col-md-3">
+											<input type="text" class="form-control NAMAS" id="NAMAS" name="NAMAS" placeholder=""  value="{{$header->NAMAS}}"  readonly >
 										</div>
 
 									</div>
@@ -432,24 +432,23 @@
     </div>
 
 
- 	<div class="modal fade" id="browseSuplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSuplierModalLabel" aria-hidden="true">
+ 	<div class="modal fade" id="browseSupplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSupplierModalLabel" aria-hidden="true">
 	  <div class="modal-dialog mw-100 w-75" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseSuplierModalLabel">Cari Suplier</h5>
+			<h5 class="modal-title" id="browseSupplierModalLabel">Cari Suplier</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bsuplier">
+			<table class="table table-stripped table-bordered" id="table-bsupplier">
 				<thead>
 					<tr>
 						<th>Suplier</th>
 						<th>Nama</th>
 						<th>Alamat</th>
 						<th>Kota</th>
-						<th>Status PKP</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -480,154 +479,6 @@
 						<th>Item#</th>
 						<th>Nama</th>
 
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-	<div class="modal fade" id="browseBarangdzModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangdzModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBarangdzModalLabel">Cari Satuan</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbarangdz">
-				<thead>
-					<tr>
-						<th>Item</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Kali</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-	<div class="modal fade" id="browseBahanModal" tabindex="-1" role="dialog" aria-labelledby="browseBahanModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBahanModalLabel">Cari Item</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbahan">
-				<thead>
-					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-	<div class="modal fade" id="browseGdgModal" tabindex="-1" role="dialog" aria-labelledby="browseGdgModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseMklModalLabel">Cari Gudang</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bgdg">
-				<thead>
-					<tr>
-						<th>Kode</th>
-						<th>Nama</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-	<div class="modal fade" id="browseSoModal" tabindex="-1" role="dialog" aria-labelledby="browseSoModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseSoModalLabel">Cari SO# Dropship</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bso">
-				<thead>
-					<tr>
-						<th>SO#</th>
-						<th>Kode</th>
-						<th>Nama</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-	<div class="modal fade" id="browseBarangdzModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangdzModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBarangdzModalLabel">Cari Satuan</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbarangdz">
-				<thead>
-					<tr>
-						<th>Item</th>
-						<th>Nama</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -679,44 +530,6 @@
 
     idrow=<?=$no?>;
     baris=<?=$no?>;
-
-    $('#KODES').select2({
-
-		placeholder:'Pilih Suplier',
-		allowClear: true,
-        ajax: {
-			url: '{{url('po/browse_sup')}}',
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    q: params.term // Search term
-                };
-            },
-            processResults: function(data) {
-                return {
-                    results: data.map(item => ({
-                        id: item.NO_SUPL, // The ID of the user
-                        text: item.NAMA, // The text to display
-						NAMAS: item.NAMA
-                    }))
-                };
-            },
-            cache: true
-        },
-	});
-
-	$('#KODES').on('select2:select', function (e) {
-
-		var data = e.params.data;
-
-		// KODES otomatis masuk ke select
-		$('#KODES').val(data.id);
-
-		// isi nama supplier
-		$('#NAMAS').val(data.NAMAS);
-
-	});
 
 	$('#CNT').select2({
 
@@ -885,74 +698,56 @@
 
 
 
+//////////////////////////////////////////////////////
 
-//		CHOOSE Supplier
- 		var dTableBSuplier;
-		loadDataBSuplier = function(){
-
+		var dTableBSupplier;
+		loadDataBSupplier = function(){
 			$.ajax(
 			{
-				type: 'GET',
+				type: 'GET',    
 				url: '{{url('sup/browse')}}',
-				// data: {
-				// 	'GOL': 'Y',
-				// },
-
-
-			    beforeSend: function(){
-					$("#LOADX").show();
-				},
-
-
 				success: function( response )
 				{
-					$("#LOADX").hide();
-
 					resp = response;
-					if(dTableBSuplier){
-						dTableBSuplier.clear();
+					if(dTableBSupplier){
+						dTableBSupplier.clear();
 					}
 					for(i=0; i<resp.length; i++){
-
-						dTableBSuplier.row.add([
-							'<a href="javascript:void(0);" onclick="chooseSuplier(\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\')">'+resp[i].KODES+'</a>',
-							resp[i].NAMAS,
+						
+						dTableBSupplier.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSupplier(\''+resp[i].NO_SUPL+'\',  \''+resp[i].NAMA+'\')">'+resp[i].NO_SUPL+'</a>',
+							resp[i].NAMA,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
 						]);
 					}
-					dTableBSuplier.draw();
+					dTableBSupplier.draw();
 				}
 			});
 		}
-
-		dTableBSuplier = $("#table-bsuplier").DataTable({
-
+		
+		dTableBSupplier = $("#table-bsupplier").DataTable({
+			
 		});
-
-		browseSuplier = function(){
-			loadDataBSuplier();
-			$("#browseSuplierModal").modal("show");
+		
+		browseSupplier = function(){
+			loadDataBSupplier();
+			$("#browseSupplierModal").modal("show");
 		}
-
-		chooseSuplier = function(KODES,NAMAS){
-			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#browseSuplierModal").modal("hide");
-
-
-
-
+		
+		chooseSupplier = function(NO_SUPL,NAMA){
+			$("#KODES").val(NO_SUPL);
+			$("#NAMAS").val(NAMA);
+			$("#browseSupplierModal").modal("hide");
 
 		}
-
-
-
+		
 		$("#KODES").keypress(function(e){
-
 			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browseSuplier();
+				e.preventDefault();
+				browseSupplier();
 			}
-		});
+		}); 
 
 
 

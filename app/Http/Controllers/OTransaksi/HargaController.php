@@ -5,8 +5,8 @@ namespace App\Http\Controllers\OTransaksi;
 use App\Http\Controllers\Controller;
 // ganti 1
 
-use App\Models\OTransaksi\Harga;
-use App\Models\OTransaksi\HargaDetail;
+use App\Models\OTransaksi\Belibsnz;
+use App\Models\OTransaksi\BelibsnzDetail;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
@@ -27,16 +27,21 @@ class HargaController extends Controller
 	 
     var $judul = '';
     var $FLAGZ = '';
+    var $GOLZ = '';
 	
     function setFlag(Request $request)
     {
-        if ( $request->flagz == 'HG') {
-            $this->judul = "Pengajuan Harga Jual (Ganti Harga)";
-        } else if ( $request->flagz == 'HT') {
-            $this->judul = "Pencetakan Label Harga (Turun Harga)";
+        if ( $request->flagz == 'HG' && $request->golz == 'BS' ) {
+            $this->judul = "Pengajuan Harga Jual";
+        } else if ( $request->flagz == 'LB' && $request->golz == 'HG' ) {
+            $this->judul = "Pencetakan Label Harga";
         } 
 
         $this->FLAGZ = $request->flagz;
+        $this->GOLZ = $request->golz;
+        
+
+
     }
 		
     public function index(Request $request)
@@ -45,7 +50,7 @@ class HargaController extends Controller
 
 	    $this->setFlag($request);
         // ganti 3
-        return view('otransaksi_harga.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
+        return view('otransaksi_harga.index')->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ , 'golz' => $this->GOLZ]);
 	
 		
     }
@@ -78,36 +83,6 @@ class HargaController extends Controller
         return response()->json($posting);
     }
 
-    public function browse_conter(Request $request)
-    {
-
-        $harga = DB::SELECT("SELECT CNT, NA_CNT AS NCNT
-                            FROM cntbsn");
-
-        return response()->json($harga);
-    }
-
-    public function browse_sup(Request $request)
-    {
-
-        $harga = DB::SELECT("SELECT KODES, NAMAS
-                            FROM supbsn");
-
-        return response()->json($harga);
-    }
-
-    public function browse_brg(Request $request)
-    {
-        
-        $cnt = $request->CNT;
-        $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
-        $bulan = session()->get('periode')['bulan'];
-
-        $harga = DB::SELECT("SELECT KD_BRG, BARCODE, NA_BRG, JNS, HJUAL AS HARGAJL, HJUAL$bulan AS HARGAKSR, (AWL + QTY_TRM - QTY_JUAL) AS SISA
-                            FROM brgbsn WHERE CNT = '$cnt'");
-
-        return response()->json($harga);
-    }
 
 
     public function getHarga(Request $request)
@@ -120,15 +95,16 @@ class HargaController extends Controller
             $periode = '';
         }
 
-		$this->setFlag($request);	
+		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
-
+        $GOLZ = $this->GOLZ;	
+        
 		$CBG = Auth::user()->CBG;
 		$PPN = Auth::user()->PPN;
 
-        $harga = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, KODES, NAMAS, CNT, NCNT, USRNM, POSTED, FLAG
-                            FROM bhrg
-                            where PER = '$periode' and FLAG='$FLAGZ' ");
+        $harga = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, KODES, NAMAS, usrnm, POSTED, flag, total
+                            FROM belibsnz
+                            where PER = '$periode' and flag='$FLAGZ' ");
 
 	   
         // ganti 6
@@ -139,19 +115,19 @@ class HargaController extends Controller
                 if ( (Auth::user()->divisi=="programmer" ) || (Auth::user()->divisi=="gudang" ))
 				{
                     //CEK POSTED di index dan edit
-                    $url = "'".url("harga/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
+                    $url = "'".url("harga/delete/" . $row->NO_ID . "/?flagz=" . $row->flag . "&golz=" . $this->GOLZ)."'";
 
                     // $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';					
                     if (Auth::user()->divisi == 'gudang') {
                         // khusus gudang, cek CETAK
                         $btnEdit = ($row->CETAK == 1)
                             ? ' onclick="alert(\'LPB ini sudah dicetak, tidak bisa edit.\')" href="#" '
-                            : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';
+                            : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '"';
                     } else {
                         // user lain, tetap cek POSTED
                         $btnEdit = ($row->POSTED == 1)
                             ? ' onclick="alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" '
-                            : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';
+                            : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '"';
                     }
                     
                     
@@ -232,12 +208,9 @@ class HargaController extends Controller
 
         $this->validate(
             $request,
-            // GANTI 9
 
             [
- //               'NO_PO'       => 'required',
                 'TGL'      => 'required',
-                // 'KODES'       => 'required'
 
             ]
         );
@@ -246,99 +219,87 @@ class HargaController extends Controller
         
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
-        
+        $GOLZ = $this->GOLZ;
         $judul = $this->judul;
 		
         $CBG = Auth::user()->CBG;
-
-        $CBG_KODE = DB::table('toko')
-            ->where('KODE', $CBG)
-            ->value('TYPE');
+ 
 
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
-        $bulan = session()->get('periode')['bulan'];
-        $tahun = substr(session()->get('periode')['tahun'], -2);
+        $bulan    = session()->get('periode')['bulan'];
+        $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        // ambil NO_BUKTI terakhir (langsung string, bukan collection)
-        $last = DB::table('bhrg')
-            ->where('PER', $periode)
-            ->where('FLAG', $FLAGZ)
-            ->where('CBG', $CBG)
-            ->orderByDesc('NO_BUKTI')
-            ->value('NO_BUKTI');
+        $query = DB::table('belibsnz')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', $FLAGZ )->where('CBG', $CBG)
+                    ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
-        if ($last) {
+        if ($GOLZ=='HG') {
 
-            // ambil angka setelah tanda "-"
-            preg_match('/-(\d+)/', $last, $matches);
+            if ($query != '[]') {
+                $query = substr($query[0]->NO_BUKTI, -4);
+                $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+                $no_bukti = 'LB'  . $CBG . $tahun . $bulan . '-' . $query;
+            } else {
+                $no_bukti = 'LB'  . $CBG . $tahun . $bulan . '-0001';
+            }
 
-            $angka = isset($matches[1]) ? (int)$matches[1] : 0;
-
-            $angka++;
-
-            $urutan = str_pad($angka, 4, '0', STR_PAD_LEFT);
-
-        } else {
-            $urutan = '0001';
-        }
-
-        $no_bukti = $FLAGZ . $tahun . $bulan . '-' . $urutan . $CBG_KODE;
+        } 
 
 
         // Insert Header
 
         // ganti 10
 
-        $harga = Harga::create(
+        $harga = Belibsnz::create(
             [
                 'NO_BUKTI'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'PER'              => $periode,
-                'FLAG'             => $FLAGZ,
-				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
-                'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
-                'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
-                'CBG'              => $CBG,
+                'flag'             => 'LB',			
+                'KODES'            => ($request['KODES']==null) ? "" : $request['KODES'],				
+                'NAMAS'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],				
+                'ACNO'            => ($request['ACNO']==null) ? "" : $request['ACNO'],				
+                'NACNO'            => ($request['NACNO']==null) ? "" : $request['NACNO'],				
+                'total'            => (float) str_replace(',', '', $request['TOTAL']),
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
+				'created_by'       => Auth::user()->username,
+				'CBG'              => $CBG,
             ]
         );
 
 
 		$REC        = $request->input('REC');
-		$KD_BRG     = $request->input('KD_BRG');
-        $BARCODE    = $request->input('BARCODE');
-        $NA_BRG     = $request->input('NA_BRG');
-        $JNS        = $request->input('JNS');
-        $HARGAJL    = $request->input('HARGAJL');
-        $HARGAKSR   = $request->input('HARGAKSR');
+		$TGL_CTK     = $request->input('TGL_CTK');
+        $JAM_CTK    = $request->input('JAM_CTK');
+        $NO_TRM     = $request->input('NO_TRM');
+        $TGL_TRM        = $request->input('TGL_TRM');
+        $QTYB    = $request->input('QTYB');
+        $QTYK   = $request->input('QTYK');
         $HARGA      = $request->input('HARGA');
-        $SISA       = $request->input('SISA');
-        $DTH        = $request->input('DTH');
-        $KET        = $request->input('KET');  
+        $TOTAL        = $request->input('TOTAL');  
 
         // Check jika value detail ada/tidak
         if ($REC) {
             foreach ($REC as $key => $value) {
                 // Declare new data di Model
-                $detail    = new HargaDetail;
+                $detail    = new BelibsnzDetail;
 
                 // Insert ke Database
                 $detail->NO_BUKTI    = $no_bukti;
-                $detail->REC         = $REC[$key];		
-                $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
-                $detail->BARCODE     = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
-                $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
-                $detail->JNS         = ($JNS[$key] == null) ? "" :  $JNS[$key];				
-                $detail->HARGAJL     = isset($HARGAJL[$key]) ? (float) str_replace(',', '', $HARGAJL[$key]) : 0;			
-                $detail->HARGAKSR    = isset($HARGAKSR[$key]) ? (float) str_replace(',', '', $HARGAKSR[$key]) : 0;			
+                $detail->REC         = $REC[$key];
+                $detail->PER         = $periode;
+                $detail->FLAG        = $FLAGZ;		
+                $detail->CBG         = $CBG;		
+               
+                $detail->TGL_CTK      = date('Y-m-d', strtotime($TGL_CTK[$key]));
+                $detail->JAM_CTK     = ($JAM_CTK[$key] == null) ? "" :  $JAM_CTK[$key];
+                $detail->NO_TRM      = ($NO_TRM[$key] == null) ? "" :  $NO_TRM[$key];
+                $detail->TGL_TRM         = date('Y-m-d', strtotime($TGL_TRM[$key]));			
+                $detail->QTYB     = (float) str_replace(',', '', $QTYB[$key]);			
+                $detail->QTYK    = (float) str_replace(',', '', $QTYK[$key]);			
                 $detail->HARGA       = (float) str_replace(',', '', $HARGA[$key]);
-                $detail->SISA        = isset($SISA[$key]) ? (float) str_replace(',', '', $SISA[$key]) : 0;
-                $detail->DTH         = isset($DTH[$key]) ? (float) str_replace(',', '', $DTH[$key]) : 0;
-                $detail->KET         = ($KET[$key] == null) ? "" :  $KET[$key];				
+                $detail->TOTAL         = (float) str_replace(',', '', $TOTAL[$key]);				
                 $detail->save();
             }
         }	
@@ -347,19 +308,19 @@ class HargaController extends Controller
 
 		$no_buktix = $no_bukti;
 		
-		$harga = Harga::where('NO_BUKTI', $no_buktix )->first();
+		$harga = Belibsnz::where('NO_BUKTI', $no_buktix )->first();
 
 
-        DB::SELECT("UPDATE bhrg,  bhrgd
-                            SET  bhrgd.ID = bhrg.NO_ID  WHERE  bhrg.NO_BUKTI =  bhrgd.NO_BUKTI 
-							AND  bhrg.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE belibsnz,  belibsnzd
+                            SET  belibsnzd.ID = belibsnz.NO_ID  WHERE  belibsnz.NO_BUKTI =  belibsnzd.NO_BUKTI 
+							AND  belibsnz.NO_BUKTI='$no_buktix';");
 
 		
 
         // $variablell = DB::select('call hargains(?)', array($no_buktix));
        
         // return redirect('/harga/edit/?idx=' . $harga->NO_ID . '&tipx=edit&flagz=' . $FLAGZ . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '');
-        return redirect('/harga?flagz='.$FLAGZ)->with(['judul' => $judul,'flagz' => $FLAGZ ]);
+        return redirect('/harga?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
 
 					
     }
@@ -368,7 +329,7 @@ class HargaController extends Controller
     // ganti 15
 
    
-   public function edit( Request $request , Harga $harga)
+   public function edit( Request $request , Belibsnz $harga)
     {
 
 
@@ -376,16 +337,14 @@ class HargaController extends Controller
 		
 				
         $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
-        // if ($cekperid[0]->POSTED==1)
-        // {
-        //     return redirect('/harga')
-		// 	       ->with('status', 'Maaf Periode sudah ditutup!')
-        //            ->with(['judul' => $judul, 'flagz' => $FLAGZ]);
-        // }
+        if ($cekperid[0]->POSTED==1)
+        {
+            return redirect('/harga')
+			       ->with('status', 'Maaf Periode sudah ditutup!')
+                   ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
+        }
 		
 		$this->setFlag($request);
-
-        // dd($request->all());
 		
         $tipx = $request->tipx;
 
@@ -407,12 +366,12 @@ class HargaController extends Controller
 		   	
     	   $buktix = $request->buktix;
 		   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bhrg
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsnz
 		                 where PER ='$per' and FLAG ='$this->FLAGZ' 
-                          
+                         and GOL ='$this->GOLZ' 
 						 and NO_BUKTI = '$buktix'						 
 		                 and CBG = '$CBG' 
-                         
+                         and PKP = '$PPN'
                          ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
 			
@@ -431,11 +390,11 @@ class HargaController extends Controller
 		if ($tipx=='top') {
 			
 
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bhrg 
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsnz 
 		                 where PER ='$per' 
-						 and FLAG ='$this->FLAGZ'     
+						 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'    
 		                 and CBG = '$CBG' 
-                         
+                         and PKP = '$PPN'
                          ORDER BY NO_BUKTI ASC  LIMIT 1" );
 						 
 		
@@ -456,11 +415,11 @@ class HargaController extends Controller
 			
     	   $buktix = $request->buktix;
 			
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bhrg     
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsnz     
 		             where PER ='$per' 
-					 and FLAG ='$this->FLAGZ' and NO_BUKTI < 
+					 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'  and NO_BUKTI < 
 					'$buktix' and CBG = '$CBG'
-                    
+                    and PKP = '$PPN'
                     ORDER BY NO_BUKTI DESC LIMIT 1" );
 			
 
@@ -481,11 +440,11 @@ class HargaController extends Controller
 				
       	   $buktix = $request->buktix;
 	   
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bhrg    
+		   $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsnz    
 		             where PER ='$per'  
-					 and FLAG ='$this->FLAGZ' and NO_BUKTI > 
+					 and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ' and NO_BUKTI > 
 					 '$buktix' and CBG = '$CBG'
-                         
+                         and PKP = '$PPN'
                           ORDER BY NO_BUKTI ASC LIMIT 1" );
 					 
 			if(!empty($bingco)) 
@@ -502,11 +461,11 @@ class HargaController extends Controller
 
 		if ($tipx=='bottom') {
 		  
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bhrg
+    		$bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from belibsnz
 						where PER ='$per'
-						and FLAG ='$this->FLAGZ'    
+						and FLAG ='$this->FLAGZ' and GOL ='$this->GOLZ'   
 		                and CBG = '$CBG' 
-                         
+                         and PKP = '$PPN'
                          ORDER BY NO_BUKTI DESC  LIMIT 1" );
 					 
 			if(!empty($bingco)) 
@@ -533,11 +492,11 @@ class HargaController extends Controller
 
        	if ( $idx != 0 ) 
 		{
-			$harga = Harga::where('NO_ID', $idx )->first();	
+			$harga = Belibsnz::where('NO_ID', $idx )->first();	
 	     }
 		 else
 		 {
-				$harga = new Harga;
+				$harga = new Belibsnz;
                 $harga->TGL = Carbon::now();
                 $harga->JTEMPO = Carbon::now();
 				
@@ -545,7 +504,7 @@ class HargaController extends Controller
 		 }
 
         $no_bukti = $harga->NO_BUKTI;
-        $hargadetail = DB::table('bhrgd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
+        $hargadetail = DB::table('belibsnzd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
 		
 		$data = [
             'header'        => $harga,
@@ -555,7 +514,7 @@ class HargaController extends Controller
  
          
          return view('otransaksi_harga.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul, 'golz' => $this->GOLZ ]);
       
     }
 
@@ -571,25 +530,24 @@ class HargaController extends Controller
 
     // ganti 18
 
-    public function update(Request $request, harga $harga)
+    public function update(Request $request, Belibsnzd $harga)
     {
 
         $this->validate(
             $request,
             [
-                'TGL'      => 'required',
-                'KODES'       => 'required'
+                'TGL'      => 'required'
 
 
             ]
         );
 
         // ganti 20
-        $variablell = DB::select('call hargadel(?)', array($harga['NO_BUKTI']));
+        // $variablell = DB::select('call hargadel(?)', array($harga['NO_BUKTI']));
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
-        
+        $GOLZ = $this->GOLZ;
         $judul = $this->judul;
 		
         $CBG = Auth::user()->CBG;
@@ -601,14 +559,17 @@ class HargaController extends Controller
         $harga->update(
             [
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-				'NCNT'             => ($request['NCNT'] == null) ? "" : $request['NCNT'],
-                'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
-                'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],				
-                'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],				
-				'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
-                'CBG'              => $CBG,
+                'PER'              => $periode,
+                'flag'             => 'LB',			
+                'KODES'            => ($request['KODES']==null) ? "" : $request['KODES'],				
+                'NAMAS'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],				
+                'ACNO'            => ($request['ACNO']==null) ? "" : $request['ACNO'],				
+                'NACNO'            => ($request['NACNO']==null) ? "" : $request['NACNO'],				
+                'total'            => (float) str_replace(',', '', $request['TOTAL']),
+                'usrnm'            => Auth::user()->username,
+                'tg_smp'           => Carbon::now(),
+				'created_by'       => Auth::user()->username,
+				'CBG'              => $CBG,
             ]
         );
 
@@ -619,44 +580,42 @@ class HargaController extends Controller
         $NO_ID  = $request->input('NO_ID');
 
         $REC    = $request->input('REC');
-
-        $KD_BRG     = $request->input('KD_BRG');
-        $BARCODE    = $request->input('BARCODE');
-        $NA_BRG     = $request->input('NA_BRG');
-        $JNS        = $request->input('JNS');
-        $HARGAJL    = $request->input('HARGAJL');
-        $HARGAKSR   = $request->input('HARGAKSR');
+		$TGL_CTK     = $request->input('TGL_CTK');
+        $JAM_CTK    = $request->input('JAM_CTK');
+        $NO_TRM     = $request->input('NO_TRM');
+        $TGL_TRM        = $request->input('TGL_TRM');
+        $QTYB    = $request->input('QTYB');
+        $QTYK   = $request->input('QTYK');
         $HARGA      = $request->input('HARGA');
-        $SISA       = $request->input('SISA');
-        $DTH        = $request->input('DTH');
-        $KET        = $request->input('KET'); 	
+        $TOTAL        = $request->input('TOTAL'); 
 
-        $query = DB::table('hargad')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
+        $query = DB::table('belibsnzd')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
             // Insert jika NO_ID baru
             if ($NO_ID[$i] == 'new') {
-                $insert = HargaDetail::create(
+                $insert = BelibsnzDetail::create(
                     [
                         'NO_BUKTI'   => $request->NO_BUKTI,
                         'REC'        => $REC[$i],
-                        'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
-                        'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],						
-                        'HARGAJL'    => (float) str_replace(',', '', $HARGAJL[$i]),
-                        'HARGAKSR'   => (float) str_replace(',', '', $HARGAKSR[$i]),
+                        'PER'        => $periode,
+                        'FLAG'       => $this->FLAGZ,
+                        'CBG'        => $CBG,
+                        'TGL_CTK'     => date('Y-m-d', strtotime($TGL_CTK[$i])),
+                        'JAM_CTK'    => ($JAM_CTK[$i] == null) ? "" :  $JAM_CTK[$i],
+                        'NO_TRM'     => ($NO_TRM[$i] == null) ? "" :  $NO_TRM[$i],
+                        'TGL_TRM'        => date('Y-m-d', strtotime($TGL_TRM[$i])),					
+                        'QTYB'    => (float) str_replace(',', '', $QTYB[$i]),
+                        'QTYK'   => (float) str_replace(',', '', $QTYK[$i]),
                         'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'SISA'       => (float) str_replace(',', '', $SISA[$i]),
-                        'DTH'        => (float) str_replace(',', '', $DTH[$i]),
-                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],	
+                        'TOTAL'        => (float) str_replace(',', '', $TOTAL[$i]),
 						
                     ]
                 );
             } else {
                 // Update jika NO_ID sudah ada
-                $upsert = HargaDetail::updateOrCreate(
+                $upsert = BelibsnzDetail::updateOrCreate(
                     [
                         'NO_BUKTI'  => $request->NO_BUKTI,
                         'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
@@ -665,16 +624,17 @@ class HargaController extends Controller
                     [
                         'REC'        => $REC[$i],
 
-                        'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
-                        'JNS'        => ($JNS[$i] == null) ? "" :  $JNS[$i],						
-                        'HARGAJL'    => (float) str_replace(',', '', $HARGAJL[$i]),
-                        'HARGAKSR'   => (float) str_replace(',', '', $HARGAKSR[$i]),
+                        'PER'        => $periode,
+                        'FLAG'       => $this->FLAGZ,
+                        'CBG'        => $CBG,
+                        'TGL_CTK'     => date('Y-m-d', strtotime($TGL_CTK[$i])),
+                        'JAM_CTK'    => ($JAM_CTK[$i] == null) ? "" :  $JAM_CTK[$i],
+                        'NO_TRM'     => ($NO_TRM[$i] == null) ? "" :  $NO_TRM[$i],
+                        'TGL_TRM'        => date('Y-m-d', strtotime($TGL_TRM[$i])),					
+                        'QTYB'    => (float) str_replace(',', '', $QTYB[$i]),
+                        'QTYK'   => (float) str_replace(',', '', $QTYK[$i]),
                         'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'SISA'       => (float) str_replace(',', '', $SISA[$i]),
-                        'DTH'        => (float) str_replace(',', '', $DTH[$i]),
-                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i]		
+                        'TOTAL'        => (float) str_replace(',', '', $TOTAL[$i]),						
                     ]
                 );
             }
@@ -683,19 +643,19 @@ class HargaController extends Controller
 
         //  ganti 21
 
- 		$harga = Harga::where('NO_BUKTI', $no_buktix )->first();
+ 		$harga = belibsnz::where('NO_BUKTI', $no_buktix )->first();
 
         $no_bukti = $harga->NO_BUKTI;
 
 
-        DB::SELECT("UPDATE bhrg,  bhrgd
-                    SET  bhrgd.ID =  bhrg.NO_ID  WHERE  bhrg.NO_BUKTI =  bhrgd.NO_BUKTI 
-                    AND  bhrg.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE belibsnz,  belibsnzd
+                    SET  belibsnzd.ID =  belibsnz.NO_ID  WHERE  belibsnz.NO_BUKTI =  belibsnzd.NO_BUKTI 
+                    AND  belibsnz.NO_BUKTI='$no_bukti';");
 
         // $variablell = DB::select('call hargains(?)', array($harga['NO_BUKTI']));
         
         // return redirect('/harga/edit/?idx=' . $harga->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul .  '&golz=' . $this->GOLZ . '');	
-        return redirect('/harga?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ]);
+        return redirect('/harga?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
 		
 	   
     }
@@ -714,20 +674,20 @@ class HargaController extends Controller
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
-        
+        $GOLZ = $this->GOLZ;
         $judul = $this->judul;
 		
 		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
         $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
-        // if ($cekperid[0]->POSTED==1)
-        // {
-        //     return redirect()->route('harga')
-        //         ->with('status', 'Maaf Periode sudah ditutup!')
-        //         ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
-        // }
+        if ($cekperid[0]->POSTED==1)
+        {
+            return redirect()->route('harga')
+                ->with('status', 'Maaf Periode sudah ditutup!')
+                ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
+        }
 		
 		
-    //    $variablell = DB::select('call hargadel(?)', array($harga['NO_BUKTI']));
+       $variablell = DB::select('call hargadel(?)', array($harga['NO_BUKTI']));//
 
 
         // ganti 23
@@ -740,7 +700,7 @@ class HargaController extends Controller
 
         // ganti 
 
-       return redirect('/harga?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ])->with('statusHapus', 'Data '.$harga->NO_BUKTI.' berhasil dihapus');
+       return redirect('/harga?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'flagz' => $FLAGZ, 'golz' => $GOLZ ])->with('statusHapus', 'Data '.$harga->NO_BUKTI.' berhasil dihapus');
 
 
     }
@@ -750,25 +710,69 @@ class HargaController extends Controller
     {
         $no_harga = $harga->NO_BUKTI;
 
-        $file     = 'hargac';        
+        $file     = 'hargac';
+
+        $flagz1 = $harga->FLAG;
+        $judul ='';
+        
+        if ( $flagz1 =='BL')
+        {
+                $judul ='Order Pemhargaan';
+        
+        }
+        
+        if ( $flagz1 =='RB')
+        {
+                $judul ='Retur Pemhargaan';    
+        }
+        
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
-        $params = [
-            "TGL_CTK" => date('d/m/Y H:i:s')
-        ];
-        $PHPJasperXML->arrayParameter = $params;
 
-        $query = DB::SELECT("SELECT bhrg.NO_BUKTI, bhrg.TGL, bhrg.KODES, bhrg.NAMAS, bhrg.CNT, bhrg.NCNT, bhrgd.KD_BRG, bhrgd.NA_BRG,
-                                    bhrgd.BARCODE, bhrgd.HARGAJL, bhrgd.DTH, bhrgd.HARGAKSR, bhrgd.HARGA, bhrgd.REC
-                            FROM bhrg, bhrgd 
-                            WHERE bhrg.NO_BUKTI='$no_harga' AND bhrg.NO_BUKTI = bhrgd.NO_BUKTI;
+        $query = DB::SELECT("SELECT harga.NO_BUKTI, harga.TGL, harga.KODES, harga.NAMAS, harga.TOTAL_QTY, harga.NOTES, harga.ALAMAT, 
+                                    harga.KOTA, hargad.KD_BRG, hargad.NA_BRG, hargad.SATUAN, hargad.QTY2 AS QTY, hargad.DISK,
+                                    hargad.HARGA, hargad.TOTAL, hargad.KET, harga.TPPN, harga.NETT,
+                                    harga.NO_PO, harga.USRNM, hargad.KALI, harga.TDISK, harga.TDPP, hargad.PPN, hargad.DPP
+                            FROM harga, hargad 
+                            WHERE harga.NO_BUKTI='$no_harga' AND harga.NO_BUKTI = hargad.NO_BUKTI 
+                            ;
 		");
 
-                // DB::SELECT("UPDATE bhrg SET POSTED = 1 WHERE NO_BUKTI='$no_harga';");
+                DB::SELECT("UPDATE harga SET POSTED = 1 WHERE NO_BUKTI='$no_harga';");
                 
         $data = [];
 
-        $data = json_decode(json_encode($query), true);
+        foreach ($query as $key => $value) {
+            array_push($data, array(
+                'NO_BUKTI' => $query[$key]->NO_BUKTI,
+                'TGL'      => $query[$key]->TGL,
+                'KODES'    => $query[$key]->KODES,
+                'NAMAS'    => $query[$key]->NAMAS,
+                'ALAMAT'    => $query[$key]->ALAMAT,
+                'KOTA'    => $query[$key]->KOTA,
+                'KG'       => $query[$key]->KG,
+                'HARGA'    => $query[$key]->HARGA,
+                'TOTAL'    => $query[$key]->TOTAL,
+                'BAYAR'    => $query[$key]->BAYAR,
+                'NOTES'    => $query[$key]->NOTES,
+                'KD_BRG'    => $query[$key]->KD_BRG,
+                'NA_BRG'    => $query[$key]->NA_BRG,
+                'SATUAN'    => $query[$key]->SATUAN,
+                'QTY'    => $query[$key]->QTY,
+                'DISK'    => $query[$key]->DISK,
+                'NETT'    => $query[$key]->NETT,
+                'KET'    => $query[$key]->KET,
+                'NO_PO'    => $query[$key]->NO_PO,
+                'JUDUL'    => $judul,
+                'USRNM'    => $query[$key]->USRNM,
+                'KALI'    => $query[$key]->KALI,
+                'TPPN'    => $query[$key]->TPPN,
+                'TDISK'    => $query[$key]->TDISK,
+                'TDPP'    => $query[$key]->TDPP,
+                'PPN'    => $query[$key]->PPN,
+                'DPP'    => $query[$key]->DPP
+            ));
+        }
 		
         $PHPJasperXML->setData($data);
         ob_end_clean();
