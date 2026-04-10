@@ -214,6 +214,29 @@ Route::get('/cust/edit', 'App\Http\Controllers\Master\CustController@edit')->mid
 Route::post('/cust/update/{cust}', 'App\Http\Controllers\Master\CustController@update')->middleware(['auth'])->name('cust.update');
 Route::get('/cust/delete/{cust}', 'App\Http\Controllers\Master\CustController@destroy')->middleware(['auth'])->name('cust.delete');
 
+
+// master sub_brg
+
+Route::get('/sub_brg', 'App\Http\Controllers\Master\Sub_brgController@index')->middleware(['auth'])->name('sub_brg');
+Route::post('/sub_brg/store', 'App\Http\Controllers\Master\Sub_brgController@store')->middleware(['auth'])->name('sub_brg/store');
+Route::get('/rsub_brg', 'App\Http\Controllers\OReport\RSub_brgController@report')->middleware(['auth'])->name('rsub_brg');
+
+    // GET sub_brg
+    Route::get('/get-sub_brg', 'App\Http\Controllers\Master\Sub_brgController@getSub_brg')->middleware(['auth'])->name('get-sub_brg');
+    Route::get('/sub_brg/browse', 'App\Http\Controllers\Master\Sub_brgController@browse')->middleware(['auth'])->name('sub_brg/browse');
+    Route::get('/sub_brg/browse_hari', 'App\Http\Controllers\Master\Sub_brgController@browse_hari')->middleware(['auth'])->name('sub_brg/browse_hari');
+
+    Route::get('/get-sub_brg-report', 'App\Http\Controllers\OReport\Rsub_brgController@getsub_brgReport')->middleware(['auth'])->name('get-sub_brg-report');
+    Route::post('/jasper-sub_brg-report', 'App\Http\Controllers\OReport\RSub_brgController@jaspersub_brgReport')->middleware(['auth'])->name('jasper-sub_brg-report');
+    Route::get('sub_brg/ceksub_brg', 'App\Http\Controllers\Master\Sub_brgController@ceksub_brg')->middleware(['auth']);
+	Route::get('sub_brg/get-select-kodec', 'App\Http\Controllers\Master\Sub_brgController@getSelectKodes')->middleware(['auth']);
+
+// Dynamic sub_brg
+Route::get('/sub_brg/edit', 'App\Http\Controllers\Master\Sub_brgController@edit')->middleware(['auth'])->name('sub_brg.edit');
+Route::post('/sub_brg/update/{sub_brg}', 'App\Http\Controllers\Master\Sub_brgController@update')->middleware(['auth'])->name('sub_brg.update');
+Route::get('/sub_brg/delete/{sub_brg}', 'App\Http\Controllers\Master\Sub_brgController@destroy')->middleware(['auth'])->name('sub_brg.delete');
+
+
 // Manage User
 Route::get('/user/manage', 'App\Http\Controllers\UserController@index')->name('user/manage');
 //Route::get('/user/add', 'App\Http\Controllers\UserController@create')->middleware(['auth', 'role:user|superadmin'])->name('user/add');
