@@ -11,9 +11,10 @@
     }
 
     .table thead {
-        background-color: #8a2be2;
-        color: #ffff;
+        background-color: #FFFFFF;
+        color: #000000;
     }
+
 
     .datatable tbody td {
         padding: 5px !important;
@@ -40,12 +41,9 @@
 
 
 @section('content')
-
-
 <!-- Sweetalert delete -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--  -->
-
 <div class="content-wrapper">
 
 
@@ -55,16 +53,14 @@
             {{session('status')}}
         </div>
 
-        <!-- tambahan notifikasinya untuk delete di index -->
         <script>
             Swal.fire({
-					title: 'Deleted!',
-					text: 'Data has been deleted. {{session('status')}}',
-					icon: 'success',
-					confirmButtonText: 'OK'
-				})
+                    title: 'Berhasil !',
+                    text: '{{session('status')}}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
         </script>
-        <!-- tutupannya -->
 
     @endif
 
@@ -75,91 +71,20 @@
             <div class="card">
               <div class="card-body">
 
-              <!-- filter kolom di index -->
-
-                <!-- Button to open modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#columnModal">
-                    Filter Columns
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="columnModalLabel">Toggle Columns</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close">X</button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Column visibility checkboxes -->
-                                <form id="columnToggleForm">
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="0" id="columnNo" checked>
-                                        <label class="form-check-label" for="columnNo">No</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="1" id="columnAction" checked>
-                                        <label class="form-check-label" for="columnAction">Action</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="2" id="columnBukti" checked>
-                                        <label class="form-check-label" for="columnBukti">Bukti#</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="3" id="columnTgl" checked>
-                                        <label class="form-check-label" for="columnTgl">Tgl</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="4" id="columnSup" checked>
-                                        <label class="form-check-label" for="columnSup">Suplier</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="5" id="columnTotal" checked>
-                                        <label class="form-check-label" for="columnTotal">Total</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="6" id="columnUser" checked>
-                                        <label class="form-check-label" for="columnUser">User</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="7" id="columnPst" checked>
-                                        <label class="form-check-label" for="columnPst">Pst</label>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary"
-                                    id="applyColumnToggle">Apply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+			  <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
             
-              <!-- batas filter -->
+            {{-- <form method="POST" action="{{ url('harga/batal_post?flagz='.$flagz.'') }}" id="form-batal-post"> --}}
+            @csrf
 
-              <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
 
                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col" style="text-align: center">#</th>
+                            <th scope="col" style="text-align: center">#</th>						
                             <th scope="col" style="text-align: center">-</th>							
                             <th scope="col" style="text-align: center">No Bukti</th>
                             <th scope="col" style="text-align: center">Tgl</th>
                             <th scope="col" style="text-align: center">Suplier#</th>
-                            <th scope="col" style="text-align: center">Total</th>
                             <th scope="col" style="text-align: center">User</th>
                             <th scope="col" style="text-align: center">Pst</th>
                         </tr>
@@ -168,6 +93,9 @@
                     <tbody>
                     </tbody> 
                 </table>
+
+            </form>
+
               </div>
             </div>
           </div>
@@ -185,20 +113,7 @@
 <!-- batas filter  -->
 
 <script>
-
-    // filter kolom di index
-        window.addEventListener('message', (event) => {
-            if (event.origin !== window.location.origin) {
-                console.warn('Origin mismatch!');
-                return;
-            }
-
-            const currentData = event.data;
-            console.log(currentData); // Use currentData as needed
-        });
-    // batas filter
-
-  $(document).ready(function() {
+    $(document).ready(function() {
 	  
 
 			  
@@ -209,24 +124,27 @@
             // 'scrollX': true,
             // 'scrollY': '400px',
             "order": [[ 0, "asc" ]],
-            ajax: 
-            {
+            ajax: {
                 url: "{{ route('get-harga') }}",
-				        data: 
-                {
-                    flagz : $('#flagz').val(),
-				   
+                data: function (d) {
+                    d.flagz = $('#flagz').val();
                 }
             },
 
             columns: 
             [
-                {
-                    data: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                { data: 'action', name: 'action'},
+                { data: 'DT_RowIndex', orderable: false, searchable: false },
+
+                // {
+                //     data: null,
+                //     orderable: false,
+                //     searchable: false,
+                //     render: function(data, type, row, meta) {
+                //         return `<input type="checkbox" name="batal_post[]" value="${row.NO_ID}" class="form-control batal-post">`;
+                //     }
+                // },
+
+			    { data: 'action', name: 'action'},
                 { data: 'NO_BUKTI', name: 'NO_BUKTI'},
                 { data: 'TGL', name: 'TGL'},
                 { data: 'NAMAS', name: 'NAMAS',
@@ -235,8 +153,7 @@
                     return ' <h5><span class="badge badge-pill badge-warning">' + data + '</span></h5>';
                   }
                 },
-                { data: 'total', name: 'total'},
-                { data: 'usrnm', name: 'usrnm'},
+                { data: 'USRNM', name: 'USRNM'},
                 { data: 'POSTED', name: 'POSTED',
                   render : function(data, type, row, meta) {
                     if(row['POSTED']=="0"){
@@ -251,7 +168,7 @@
             [
                 {
                     "className": "dt-center", 
-                    "targets": [0, 1,2,3,4,6,7],
+                    "targets": [0,1,2,3,4,5,6],
                 },			
                 {
                   targets: 3,
@@ -268,31 +185,47 @@
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
 
         });
-
-        // filter kolom di index
-
-        // Handle column visibility toggle
-        $('#applyColumnToggle').on('click', function() {
-            $('#columnToggleForm .column-checkbox').each(function() {
-                var column = dataTable.column($(this).val());
-                column.visible($(this).is(':checked'));
-            });
-            $('#columnModal').modal('hide'); // Close the modal
-        });
-
-        $('#columnToggleForm .column-checkbox').each(function() {
-            var column = dataTable.column($(this).val());
-            column.visible($(this).is(':checked'));
-        });
         
         // batas filter
 		
-        $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('harga/edit?flagz='.$flagz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
+        // $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('harga/edit?flagz='.$flagz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
+            $("div.test_btn").html(`
+                <div class="d-flex align-items-center" style="gap: 1rem;">
+                    
+                    <!-- tombol tambah -->
+                    <a class="btn btn-success btn-md" id="btnTambah">
+                        <i class="fas fa-plus fa-sm"></i>
+                    </a>
 
-        // function buat ganti tombol + onclick
-        
+                    <!-- radio HG -->
+                    <div class="form-check">
+                        <input class="form-check-input pilih-flagz" type="radio" name="flagz_option" value="HG" id="flagHG"
+                            ${$('#flagz').val() == 'HG' ? 'checked' : ''}>
+                        <label class="form-check-label" for="flagHG">Ganti Harga</label>
+                    </div>
+
+                    <!-- radio HT -->
+                    <div class="form-check">
+                        <input class="form-check-input pilih-flagz" type="radio" name="flagz_option" value="HT" id="flagHT"
+                            ${$('#flagz').val() == 'HT' ? 'checked' : ''}>
+                        <label class="form-check-label" for="flagHT">Turun Harga</label>
+                    </div>
+
+                </div>
+            `);
+
+            $('#btnTambah').on('click', function() {
+                let flagz = $('#flagz').val();
+                window.location.href = `{{ url('harga/edit') }}?flagz=${flagz}&idx=0&tipx=new`;
+            });
+
+            $('body').on('change', '.pilih-flagz', function() {
+                let val = $(this).val();
+                $('#flagz').val(val);
+
+                dataTable.ajax.reload(); // pakai ini
+            });
     });
-	
 
     function deleteRow(link) {
         console.log('Masuk');
@@ -311,6 +244,6 @@
             }
         });
     }
-
+	
 </script>
 @endsection
