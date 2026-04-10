@@ -297,7 +297,7 @@
 
   <!-- batas -->
 
-      <div class="row d-flex">
+    <div class="row d-flex">
         <div class="col-md-3">
 
             <!-- kalau sub menu, di kasih warna pinggirannya. style:"border" -->
@@ -319,14 +319,39 @@
               </a>
 			      </div>
         </div>
-		    <div class="col-md-3">
+		<div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               <a href="javascript:addTab('Barang Busana', '{{url('brg')}}')">
                   <!-- <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
                 <h6>Barang Busana</h6>
               </a>
-			      </div>
+			</div>
+        </div>
+
+
+		<div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
+              <a href="javascript:addTab('Sub Barang', '{{url('sub_brg')}}')">
+                  <!-- <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
+                <h6>Sub Barang</h6>
+              </a>
+			</div>
+        </div>
+    </div>
+
+
+    <div class="row d-flex">
+
+		<div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
+              <a href="javascript:addTab('Departement', '{{url('dept')}}')">
+                  <!-- <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
+                <h6>Departement</h6>
+              </a>
+			</div>
         </div>
 
 
@@ -1198,7 +1223,7 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-                <a href="javascript:addTab('Transaksi Lain-Lain', '{{url('lain?flagz=LL')}}')" > 
+                <a href="javascript:addTab('Transaksi Lain-Lain', '{{url('lain?flagz=LL')}}')" >
                 <!-- <a href="javascript:addTab('Transaksi Lain-Lain', '{{url('po?flagz=PO&golz=TL')}}')"> -->
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
