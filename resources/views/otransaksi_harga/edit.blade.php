@@ -79,7 +79,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{($tipx=='new')? url('/beli/store?flagz='.$flagz.'&golz='.$golz.'') : url('/beli/update/'.$header->NO_ID.'&flagz='.$flagz.'&golz='.$golz.'' ) }}" method="POST" name ="entri" id="entri" >
+                    <form action="{{($tipx=='new')? url('/harga/store?flagz='.$flagz.'') : url('/harga/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
   
                         @csrf
                         <div class="tab-content mt-3">
@@ -94,7 +94,6 @@
 
 									<input name="tipx" class="form-control tipx" id="tipx" value="{{$tipx}}" hidden>
 									<input name="flagz" class="form-control flagz" id="flagz" value="{{$flagz}}" hidden>
-									<input name="golz" class="form-control golz" id="golz" value="{{$golz}}" hidden>
 
 								
 								
@@ -108,7 +107,7 @@
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih"value="{{$header->CNT}}" style="text-align: left" readonly >
-									<button type="button" class="btn btn-primary" onclick="browseBeli()"><i class="fa fa-search"></i></button>
+									<button type="button" class="btn btn-primary" onclick="browseConter()"><i class="fa fa-search"></i></button>
 								</div>
 								
                                 <div class="col-md-2">
@@ -131,6 +130,7 @@
 								</div>
 								<div class="col-md-2 input-group" >
 									<input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="" value="{{$header->KODES}}" style="text-align: left" readonly >
+									<button type="button" class="btn btn-primary" onclick="browseSup()"><i class="fa fa-search"></i></button>
 								</div>
 								
                                 <div class="col-md-2">
@@ -220,19 +220,20 @@
 										<tr>
 											<th width="100px" style="text-align:center">No.</th>
 											<th width="150px" style="text-align:center">Kode</th>
-											<th width="200px" style="text-align:center">Barcode</th>
+											<th {{ $flagz == 'HG' ? 'hidden' : '' }} width="200px" style="text-align:center">Barcode</th>
 											<th width="300px" style="text-align:center">Nama Barang</th>
 											<th width="200px" style="text-align:center">JNS</th>
-											<th width="200px" style="text-align:center">Harga Lama</th>
-											<th width="200px" style="text-align:center">Harga Kasir</th>
-
+											<th {{ $flagz == 'HT' ? 'hidden' : '' }} width="200px" style="text-align:center">Harga Lama</th>
+											<th {{ $flagz == 'HT' ? 'hidden' : '' }} width="200px" style="text-align:center">Harga Kasir</th>
 											<th width="200px" style="text-align:center">Harga Baru</th>
+											<th {{ $flagz == 'HG' ? 'hidden' : '' }} width="200px" style="text-align:center">Sisa</th>
+											<th {{ $flagz == 'HG' ? 'hidden' : '' }} width="200px" style="text-align:center">Diskon</th>
 											<th width="200px" style="text-align:center">Keterangan</th>  
 
 											<th></th>
 																
 										</tr>
-									<tbody id="detailPod">
+									<tbody id="detailHargad">
 			
 									<tbody>
 									<?php $no=0 ?>
@@ -250,25 +251,33 @@
 												value="{{$detail->KD_BRG}}" onblur="browseBarang({{$no}})">
 											</td>
 
-											<td>
-												<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->BARCODE}}">
+											<td {{ $flagz == 'HG' ? 'hidden' : '' }}>
+												<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->BARCODE}}" readonly>
 											</td>
 
 											<td>
-												<input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}">
+												<input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}" readonly>
 											</td>
 
 											<td>
-												<input name="JNS[]" id="JNS{{$no}}" type="text" class="form-control JNS" value="{{$detail->JNS}}">
+												<input name="JNS[]" id="JNS{{$no}}" type="text" class="form-control JNS" value="{{$detail->JNS}}" readonly>
 											</td>									
-											<td>
-												<input name="HARGAJL[]" onclick="select()" onblur="hitung()" value="{{$detail->HARGAJL}}" id="HARGAJL{{$no}}" type="text" style="text-align: right"  class="form-control HARGAJL" >
+											<td {{ $flagz == 'HT' ? 'hidden' : '' }}>
+												<input name="HARGAJL[]" onclick="select()" value="{{$detail->HARGAJL}}" id="HARGAJL{{$no}}" type="text" style="text-align: right"  class="form-control HARGAJL" readonly>
 											</td>									
-											<td>
-												<input name="HARGAKSR[]" onclick="select()" onblur="hitung()" value="{{$detail->HARGAKSR}}" id="HARGAKSR{{$no}}" type="text" style="text-align: right"  class="form-control HARGAKSR" >
+											<td {{ $flagz == 'HT' ? 'hidden' : '' }}>
+												<input name="HARGAKSR[]" onclick="select()" value="{{$detail->HARGAKSR}}" id="HARGAKSR{{$no}}" type="text" style="text-align: right"  class="form-control HARGAKSR" readonly>
 											</td>										
 											<td>
-												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA" >
+												<input name="HARGA[]" onclick="select()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA" >
+											</td>
+
+											<td {{ $flagz == 'HG' ? 'hidden' : '' }}>
+												<input name="SISA[]" onclick="select()" value="{{$detail->SISA}}" id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA" readonly>
+											</td>
+
+											<td {{ $flagz == 'HG' ? 'hidden' : '' }}>
+												<input name="DTH[]" onclick="select()" value="{{$detail->DTH}}" id="DTH{{$no}}" type="text" style="text-align: right"  class="form-control DTH" >
 											</td>
 											
 											<td>
@@ -291,7 +300,7 @@
 										<td></td>
 										<td></td>
 										<td></td>
-										<td><input class="form-control THARGAJL  text-primary" style="text-align: right"  id="THARGAJL" name="THARGAJL" value="{{$header->HARGAJL}}" readonly></td>
+										{{-- <td><input class="form-control THARGAJL  text-primary" style="text-align: right"  id="THARGAJL" name="THARGAJL" value="{{$header->HARGAJL}}" readonly></td> --}}
 										<td></td>									
 										<td></td>
 										<td></td>
@@ -311,22 +320,22 @@
 						   
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
-								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-primary">Top</button>
-								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/beli/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&golz='.$golz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
-								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/beli/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&golz='.$golz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
-								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
+								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/harga/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
+								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/harga/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
+								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/harga/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
+								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/harga/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">
-								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/beli/edit/?idx=0&tipx=new&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-warning">New</button>
+								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/harga/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
 								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>                    
-								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-info">Undo</button>  
+								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/harga/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
 								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
 							<div class="col-md-3">
 								<button hidden type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
 
-								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/beli?flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/harga?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
 							
 								<!-- tombol close sweet alert -->
 								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>   
@@ -343,24 +352,21 @@
     </div>
 
 
- 	<div class="modal fade" id="browsePoModal" tabindex="-1" role="dialog" aria-labelledby="browsePoModalLabel" aria-hidden="true">
+ 	<div class="modal fade" id="browseSupModal" tabindex="-1" role="dialog" aria-labelledby="browseSupModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browsePoModalLabel">Cari Po</h5>
+			<h5 class="modal-title" id="browseSupModalLabel">Cari Sup</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bpo">
+			<table class="table table-stripped table-bordered" id="table-bsup">
 				<thead>
 					<tr>
-						<th>PO#</th>
-						<th>Suplier</th>
+						<th>Kode</th>
 						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -374,24 +380,21 @@
 	  </div>
 	</div>
 
-	<div class="modal fade" id="browseBeliModal" tabindex="-1" role="dialog" aria-labelledby="browseBeliModalLabel" aria-hidden="true">
+	<div class="modal fade" id="browseConterModal" tabindex="-1" role="dialog" aria-labelledby="browseConterModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBeliModalLabel">Cari Pembelian</h5>
+			<h5 class="modal-title" id="browseConterModalLabel">Cari Conter</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbeli">
+			<table class="table table-stripped table-bordered" id="table-bconter">
 				<thead>
 					<tr>
-						<th>No Beli</th>
-						<th>Suplier</th>
+						<th>No Conter</th>
 						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -419,13 +422,10 @@
 			<table class="table table-stripped table-bordered" id="table-bbarang">
 				<thead>
 					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
+						<th>Kode#</th>
+						<th>Barcode</th>
+						<th>Nama Barang</th>
+						<th>Jenis</th>
 							
 					</tr>
 				</thead>
@@ -505,8 +505,8 @@
 
 		},500);
 
-    idrow=<?=$no?>;
-    baris=<?=$no?>;
+		idrow=<?=$no?>;
+		baris=<?=$no?>;
 
 		$('body').on('keydown', 'input, select', function(e) {
 			if (e.key === "Enter") {
@@ -543,7 +543,7 @@
 			 ganti();			
 		}    
 		
-		$("#THARGAJL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		// $("#THARGAJL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 
 
 
@@ -552,6 +552,8 @@
 			$("#HARGAJL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#HARGAKSR" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#SISA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#DTH" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 		}	
 
 
@@ -559,7 +561,7 @@
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
-			hitung();
+			// hitung();
 			nomor();
 			
 		});
@@ -571,18 +573,14 @@
 		
  	
 		
-//		CHOOSE Po
- 		var dTableBPo;
-		loadDataBPo = function(){
+		//	CHOOSE Sup
+ 		var dTableBSup;
+		loadDataBSup = function(){
 		
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: '{{url('po/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
-					// 'KODES' : $("#KODES").val(),
-				},
+				url: '{{url('harga/browse_sup')}}',
 
 				beforeSend: function(){
 					$("#LOADX").show();
@@ -593,197 +591,48 @@
 					$("#LOADX").hide();
 
 					resp = response;
-					if(dTableBPo){
-						dTableBPo.clear();
+					if(dTableBSup){
+						dTableBSup.clear();
 					}
 					for(i=0; i<resp.length; i++){
 						
-						dTableBPo.row.add([
-							'<a href="javascript:void(0);" onclick="choosePo(\''+resp[i].NO_BUKTI+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\',  \''+resp[i].GUDANG+'\',  \''+resp[i].JTEMPO+'\',  \''+resp[i].NOTES+'\')">'+resp[i].NO_BUKTI+'</a>',
-							resp[i].KODES,
+						dTableBSup.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSup(\''+resp[i].KODES+'\' ,\''+resp[i].NAMAS+'\')">'+resp[i].KODES+'</a>',
 							resp[i].NAMAS,
-							resp[i].ALAMAT,
-							resp[i].KOTA,
 						]);
 					}
-					dTableBPo.draw();
+					dTableBSup.draw();
 				}
 			});
 		}
 		
-		dTableBPo = $("#table-bpo").DataTable({
+		dTableBSup = $("#table-bsup").DataTable({
 			
 		});
 		
-		browsePo = function(){
-			loadDataBPo();
-			$("#browsePoModal").modal("show");
+		browseSup = function(){
+			loadDataBSup();
+			$("#browseSupModal").modal("show");
 
 		}
 		
-		choosePo = function( NO_BUKTI,KODES,NAMAS, ALAMAT, KOTA, PKP, GUDANG, JTEMPO, NOTES){
+		chooseSup = function( KODES,NAMAS){
 
-			$("#NO_PO").val(NO_BUKTI);
 			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
-			$("#GUDANG").val(GUDANG);			
-			$("#JTEMPO").val(JTEMPO);			
-			$("#NOTES").val(NOTES);			
-			
-			
-				if ( $("#PKP").val() == '1' )
-        		{
+			$("#NAMAS").val(NAMAS);			
+			$("#browseSupModal").modal("hide");
+		} 
 
-                     document.getElementById("PKP").checked = true;
-                    	
-        		}
-        
-                else
-                {
-                     document.getElementById("PKP").checked = false;
-                    
-                }
-			
-			
-			
-			$("#browsePoModal").modal("hide");
-			
-			getPod(NO_BUKTI);
-		}
-		
-		$("#NO_PO").keypress(function(e){
+		//////////////////////////////////////////////////////////////////
 
-			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browsePo();
-			}
-		}); 
-
-////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////
-
-	function getPod(bukti)
-	{
-		
-		var mulai = (idrow==baris) ? idrow-1 : idrow;
-
-		$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_pod')}}",
-				data: {
-					nobukti: bukti,
-					'GOL': "{{$golz}}",
-				},
-				success: function( resp )
-				{
-					var html = '';
-					for(i=0; i<resp.length; i++){
-						html+=`<tr>
-                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-                                    
-
-									<td >
-										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-						            </td>
-						            <td >
-						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-						            </td>
-									
-									<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-                                    <td>
-										<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
-									</td>
-									<td>
-										<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
-									</td>
-									<td>
-										<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
-										<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
-									</td>
-									<td>
-										<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
-									</td>
-                                    <td>
-										<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-									</td>
-									<td >
-										<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-									</td>
-									<td >
-										<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-									</td>
-									<td >
-										<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-									</td>
-									<td >
-										<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-									</td>
-									<td>
-										<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
-									</td>
-									<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-                                    
-
-									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-                                </tr>`;
-					}
-					$('#detailPod').html(html);
-
-					$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".XQTY").autoNumeric('update');
-					
-					$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY_PO").autoNumeric('update');
-
-					$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY").autoNumeric('update');
-					
-					$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".HARGA").autoNumeric('update');
-					
-					$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".KALI").autoNumeric('update');
-					
-					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".TOTAL").autoNumeric('update');
-					
-					$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".PPNX").autoNumeric('update');
-					
-					$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DPP").autoNumeric('update');
-
-					$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DISK").autoNumeric('update');
-
-
-					idrow=resp.length;
-					baris=resp.length;
-
-					nomor();
-					hitung();
-				}
-			});
-	}
-
-//////////////////////////////////////////////////////////////////
-
-//		CHOOSE Beli
-		var dTableBBeli;
-		loadDataBBeli = function(){
+		//	CHOOSE Conter
+		var dTableBConter;
+		loadDataBConter = function(){
 		
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: '{{url('beli/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
-				},
+				url: '{{url('harga/browse_conter')}}',
 
 				beforeSend: function(){
 					$("#LOADX").show();
@@ -794,178 +643,40 @@
 					$("#LOADX").hide();
 
 					resp = response;
-					if(dTableBBeli){
-						dTableBBeli.clear();
+					if(dTableBConter){
+						dTableBConter.clear();
 					}
 					for(i=0; i<resp.length; i++){
 						
-						dTableBBeli.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBeli(\''+resp[i].NO_BUKTI+'\', \''+resp[i].NO_PO+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\',  \''+resp[i].GUDANG+'\')">'+resp[i].NO_BUKTI+'</a>',
-							resp[i].KODES,
-							resp[i].NAMAS,
-							resp[i].ALAMAT,
-							resp[i].KOTA,
+						dTableBConter.row.add([
+							'<a href="javascript:void(0);" onclick="chooseConter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
+							resp[i].NCNT,
 						]);
 					}
-					dTableBBeli.draw();
+					dTableBConter.draw();
 				}
 			});
 		}
 		
-		dTableBBeli = $("#table-bbeli").DataTable({
+		dTableBConter = $("#table-bconter").DataTable({
 			
 		});
 		
-		browseBeli = function(){
-			loadDataBBeli();
-			$("#browseBeliModal").modal("show");
+		browseConter = function(){
+			loadDataBConter();
+			$("#browseConterModal").modal("show");
 		}
 		
-		chooseBeli = function( NO_BUKTI, NO_PO , KODES,NAMAS, ALAMAT, KOTA, PKP, GUDANG){
+		chooseConter = function( CNT, NCNT){
 
-			$("#NO_BELI").val(NO_BUKTI);
-			$("#NO_PO").val(NO_PO);
-			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
-			$("#GUDANG").val(GUDANG);			
-			$("#browseBeliModal").modal("hide");
-			
-			if ( $("#PKP").val() == '1' )
-			{
-
-				document.getElementById("PKP").checked = true;
-					
-			}
-	
-			else
-			{
-				document.getElementById("PKP").checked = false;
-				
-			}
-
-			getBelid(NO_BUKTI);
+			$("#CNT").val(CNT);
+			$("#NCNT").val(NCNT);			
+			$("#browseConterModal").modal("hide");
 		}
-		
-		$("#NO_BELI").keypress(function(e){
 
-			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browseBeli();
-			}
-		}); 
+		//////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////
-
-	function getBelid(bukti)
-	{
-		
-		var mulai = (idrow==baris) ? idrow-1 : idrow;
-
-		$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('beli/browse_belid')}}",
-				data: {
-					nobukti: bukti,
-				},
-				success: function( resp )
-				{
-					var html = '';
-					for(i=0; i<resp.length; i++){
-						html+=`<tr>
-                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-                                    
-
-									<td >
-										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-						            </td>
-						            <td >
-						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-						            </td>
-									
-									<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-                                    <td>
-										<input name='XQTY[]' onclick='select()' onblur='hitung()' id='XQTY${i}' value="${resp[i].XQTY}" type='text' style='text-align: right' class='form-control XQTY text-primary' >
-									</td>
-									<td>
-										<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary' >
-									</td>
-									<td>
-										<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly>
-										<input hidden name='SISA[]' onclick='select()' onblur='hitung()' id='SISA{i}' value="${resp[i].SISA}" type='text' style='text-align: right' class='form-control SISA text-primary' readonly>
-									</td>
-									<td>
-										<input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly>
-									</td>
-                                    <td>
-										<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-									</td>
-									<td >
-										<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-									</td>
-									<td >
-										<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-									</td>
-									<td >
-										<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="${resp[i].PPN}" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-									</td>
-									<td >
-										<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="${resp[i].DPP}" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-									</td>
-									<td>
-										<input name='DISK[]' onclick='select()' onblur='hitung()' id='DISK${i}' value="${resp[i].DISK}" type='text' style='text-align: right' class='form-control DISK text-primary' readonly >
-									</td>
-									<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-                                    
-
-									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-                                </tr>`;
-					}
-					$('#detailPod').html(html);
-
-					$(".XQTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".XQTY").autoNumeric('update');
-					
-					$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY_PO").autoNumeric('update');
-
-					$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY").autoNumeric('update');
-					
-					$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".HARGA").autoNumeric('update');
-					
-					$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".KALI").autoNumeric('update');
-					
-					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".TOTAL").autoNumeric('update');
-					
-					$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".PPNX").autoNumeric('update');
-					
-					$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DPP").autoNumeric('update');
-
-					$(".DISK").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DISK").autoNumeric('update');
-
-
-					idrow=resp.length;
-					baris=resp.length;
-
-					nomor();
-					hitung();
-				}
-			});
-	}
-
-//////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 
 		var dTableBBarang;
 		var rowidBarang;
@@ -973,11 +684,10 @@
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('po/browse_detail2')}}",
+				url: "{{url('harga/browse_brg')}}",
 				data: 
-				{
-                    KD_BRG : $("#KD_BRG"+rowidBarang).val(),
-                    NO_PO : $("#NO_PO").val(), 					
+				{	
+					CNT : $("#CNT").val(),				
 				},				
 				
 				success: function( response )
@@ -989,13 +699,10 @@
 					for(i=0; i<resp.length; i++){
 						
 						dTableBBarang.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\',\''+resp[i].NA_BRG+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\' , \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\', \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\'  )">'+resp[i].KD_BRG+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\',\''+resp[i].BARCODE+'\', \''+resp[i].NA_BRG+'\' , \''+resp[i].JNS+'\' , \''+resp[i].HARGAJL+'\' , \''+resp[i].HARGAKSR+'\' , \''+resp[i].SISA+'\')">'+resp[i].KD_BRG+'</a>',
+							resp[i].BARCODE,
 							resp[i].NA_BRG,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,							
+							resp[i].JNS,							
 						]);
 					}
 					dTableBBarang.draw();
@@ -1013,27 +720,17 @@
 			$("#browseBarangModal").modal("show");
 		}
 		
-		chooseBarang = function(KD_BRG, NA_BRG, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
+		chooseBarang = function(KD_BRG, BARCODE, NA_BRG, JNS, HARGAJL, HARGAKSR, SISA ){
 			$("#KD_BRG"+rowidBarang).val(KD_BRG);
+			$("#BARCODE"+rowidBarang).val(BARCODE);
 			$("#NA_BRG"+rowidBarang).val(NA_BRG);
-			$("#SATUAN_PO"+rowidBarang).val(SATUAN_PO);
-			$("#QTY_PO"+rowidBarang).val(SISA);
-			$("#HARGA"+rowidBarang).val(HARGA);
-			$("#SATUAN"+rowidBarang).val(SATUAN);			
-			$("#QTY"+rowidBarang).val(QTY);			
-			$("#KALI"+rowidBarang).val(KALI);			
+			$("#JNS"+rowidBarang).val(JNS);
+			$("#HARGAJL"+rowidBarang).val(HARGAJL);
+			$("#HARGAKSR"+rowidBarang).val(HARGAKSR);			
+			$("#SISA"+rowidBarang).val(SISA);			
 			$("#browseBarangModal").modal("hide");
-			hitung();
+			// hitung();
 		}
-		
-		
-		$("#KD_BRG0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBarang(0);
-			}
-		}); 
-
 	});
 
 
@@ -1046,8 +743,8 @@
 			
 			let z = $(this).closest('tr');
 			var KD_BRGX = z.find('.KD_BRG').val();
-			var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
-			var SISAX = parseFloat(z.find('.SISA').val().replace(/,/g, ''));
+			// var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
+			// var SISAX = parseFloat(z.find('.SISA').val().replace(/,/g, ''));
 
 			// alert(QTYX);
 			// alert(SEDIAX);
@@ -1058,11 +755,11 @@
 					
 			}	
 
-			if( QTY_POX > SISAX )
-			{
-					cekBarang = '1';
+			// if( QTY_POX > SISAX )
+			// {
+			// 		cekBarang = '1';
 					
-			}	
+			// }	
 		});
 		
 		return cekBarang;
@@ -1070,7 +767,7 @@
 	
 
  	function simpan() {
-		hitung();
+		// hitung();
 		
 		var tgl = $('#TGL').val();
 		var bulanPer = {{session()->get('periode')['bulan']}};
@@ -1101,36 +798,16 @@
 				return; // Stop function execution
 			}
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-		$tipx = $('#tipx').val();
-		
-        if ( $tipx != 'new' )
-		{
-		    
-		    $pkp00 = $('#PKP').val();
-		    $pkp11 = $('#ZPKP').val();
-		    
-		    
-		    
-			if ( $pkp00 != $pkp11   ) 
-            {
-               
-                check = '1';
+			if ( $('#CNT').val()=='' ) 
+            {				
+			    check = '1';
 				Swal.fire({
 					icon: 'warning',
 					title: 'Warning',
-					text: 'Type PKP beda dengan Type PKP awal.'
+					text: 'Conter# Harus Diisi.'
 				});
-				return;
-                
-            }			 
-		}
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
+				return; // Stop function execution
+			}
 
 			if ( tgl.substring(3,5) != bulanPer ) 
 			{
@@ -1208,121 +885,121 @@
 	
 	}
 
-   function hitung() {
-		var TTOTAL_QTY = 0;
-		var TTOTAL = 0;
-		var TDISK = 0;
-		var TDPPX = 0;
-		var TPPNX = 0;
-		var NETTX = 0;
+    // function hitung() {
+	// 	var TTOTAL_QTY = 0;
+	// 	var TTOTAL = 0;
+	// 	var TDISK = 0;
+	// 	var TDPPX = 0;
+	// 	var TPPNX = 0;
+	// 	var NETTX = 0;
 
 		
-		$(".QTY_PO").each(function() {
+	// 	$(".QTY_PO").each(function() {
 			
-			let z = $(this).closest('tr');
-			var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
-			var XQTYX = parseFloat(z.find('.XQTY').val().replace(/,/g, ''));
-			var XX = parseFloat(z.find('.KALI').val().replace(/,/g, ''));
-			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
-			var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
-			var DISKX = parseFloat(z.find('.DISK').val().replace(/,/g, ''));
+	// 		let z = $(this).closest('tr');
+	// 		var QTY_POX = parseFloat(z.find('.QTY_PO').val().replace(/,/g, ''));
+	// 		var XQTYX = parseFloat(z.find('.XQTY').val().replace(/,/g, ''));
+	// 		var XX = parseFloat(z.find('.KALI').val().replace(/,/g, ''));
+	// 		var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
+	// 		var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
+	// 		var DISKX = parseFloat(z.find('.DISK').val().replace(/,/g, ''));
 	
-			var PKPX  = $('#PKP').val();
+	// 		var PKPX  = $('#PKP').val();
 
-			var FLAGZ = $('#flagz').val();
+	// 		var FLAGZ = $('#flagz').val();
 	
-			if (FLAGZ == 'RB'){
+	// 		if (FLAGZ == 'RB'){
 				
-				var XQTYX  = ( XQTYX * -1 ) ;
-				var QTY_POX  = ( QTY_POX * -1 ) ;
-				var DISKX  = ( DISKX * -1 ) ;
+	// 			var XQTYX  = ( XQTYX * -1 ) ;
+	// 			var QTY_POX  = ( QTY_POX * -1 ) ;
+	// 			var DISKX  = ( DISKX * -1 ) ;
 				
-				z.find('.QTY_PO').autoNumeric('update');
-				z.find('.DISKX').autoNumeric('update');
-				z.find('.XQTY').autoNumeric('update');
+	// 			z.find('.QTY_PO').autoNumeric('update');
+	// 			z.find('.DISKX').autoNumeric('update');
+	// 			z.find('.XQTY').autoNumeric('update');
 
-			} 
+	// 		} 
 
-			var QTYX  = ( XQTYX * XX );
-			z.find('.QTY').val(QTYX);
+	// 		var QTYX  = ( XQTYX * XX );
+	// 		z.find('.QTY').val(QTYX);
 
-		    z.find('.KALI').autoNumeric('update');	
-		    z.find('.QTY').autoNumeric('update');	
+	// 	    z.find('.KALI').autoNumeric('update');	
+	// 	    z.find('.QTY').autoNumeric('update');	
 
             
-            var TOTALX  =  ( XQTYX * HARGAX ) - DISKX;
+    //         var TOTALX  =  ( XQTYX * HARGAX ) - DISKX;
             
-			z.find('.TOTAL').val(TOTALX);
+	// 		z.find('.TOTAL').val(TOTALX);
 
 
-			var DPPX = 0 ;
-			var PPNX = 0;
+	// 		var DPPX = 0 ;
+	// 		var PPNX = 0;
 			
-            DPPX = TOTALX;
-	     	z.find('.DPP').val(DPPX);
+    //         DPPX = TOTALX;
+	//      	z.find('.DPP').val(DPPX);
 
-			if (PKPX == '0' ) {
-			    PPNX = 0;
+	// 		if (PKPX == '0' ) {
+	// 		    PPNX = 0;
 			    
-			} 
+	// 		} 
 
 	     		
-			if (PKPX == '1' ) {
-			    DPPX = TOTALX * 100/111;
-			    PPNX = TOTALX - DPPX;
-	     	    z.find('.DPP').val(DPPX);
+	// 		if (PKPX == '1' ) {
+	// 		    DPPX = TOTALX * 100/111;
+	// 		    PPNX = TOTALX - DPPX;
+	//      	    z.find('.DPP').val(DPPX);
 	     	
-			} 
+	// 		} 
 
 
             
-			z.find('.PPNX').val(PPNX);	
+	// 		z.find('.PPNX').val(PPNX);	
 
-		    z.find('.HARGA').autoNumeric('update');			
-		    z.find('.QTY').autoNumeric('update');	
-		    z.find('.TOTAL').autoNumeric('update');				
-		    z.find('.DPP').autoNumeric('update');			
-		    z.find('.DISK').autoNumeric('update');			
-		    z.find('.PPNX').autoNumeric('update');		
+	// 	    z.find('.HARGA').autoNumeric('update');			
+	// 	    z.find('.QTY').autoNumeric('update');	
+	// 	    z.find('.TOTAL').autoNumeric('update');				
+	// 	    z.find('.DPP').autoNumeric('update');			
+	// 	    z.find('.DISK').autoNumeric('update');			
+	// 	    z.find('.PPNX').autoNumeric('update');		
 
-            TTOTAL_QTY +=QTYX;		
-            TTOTAL +=TOTALX;				
-            TPPNX +=PPNX;
-            TDPPX +=DPPX;
+    //         TTOTAL_QTY +=QTYX;		
+    //         TTOTAL +=TOTALX;				
+    //         TPPNX +=PPNX;
+    //         TDPPX +=DPPX;
             
-            TDISK +=DISKX;				
+    //         TDISK +=DISKX;				
 		
-		});
-
-		
-		NETTX = TTOTAL ;
+	// 	});
 
 		
-		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
-
-		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));		
-		$("#TTOTAL_QTY").autoNumeric('update');
-		
-		if(isNaN(TTOTAL)) TTOTAL = 0;
-
-		$('#TTOTAL').val(numberWithCommas(TTOTAL));		
-		$("#TTOTAL").autoNumeric('update');
-
-		$('#TDISK').val(numberWithCommas(TDISK));		
-		$("#TDISK").autoNumeric('update');
-
-
-		$('#TDPP').val(numberWithCommas(TDPPX));		
-		$("#TDPP").autoNumeric('update');
-		
-		$('#TPPN').val(numberWithCommas(TPPNX));		
-		$("#TPPN").autoNumeric('update');
-
-		$('#NETT').val(numberWithCommas(NETTX));		
-		$("#NETT").autoNumeric('update');
+	// 	NETTX = TTOTAL ;
 
 		
-	}
+	// 	if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
+
+	// 	$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));		
+	// 	$("#TTOTAL_QTY").autoNumeric('update');
+		
+	// 	if(isNaN(TTOTAL)) TTOTAL = 0;
+
+	// 	$('#TTOTAL').val(numberWithCommas(TTOTAL));		
+	// 	$("#TTOTAL").autoNumeric('update');
+
+	// 	$('#TDISK').val(numberWithCommas(TDISK));		
+	// 	$("#TDISK").autoNumeric('update');
+
+
+	// 	$('#TDPP').val(numberWithCommas(TDPPX));		
+	// 	$("#TDPP").autoNumeric('update');
+		
+	// 	$('#TPPN').val(numberWithCommas(TPPNX));		
+	// 	$("#TPPN").autoNumeric('update');
+
+	// 	$('#NETT').val(numberWithCommas(NETTX));		
+	// 	$("#NETT").autoNumeric('update');
+
+		
+	// }
 	
 
 	
@@ -1406,7 +1083,7 @@
 			$("#KALI" + i.toString()).attr("readonly", false );
 			$("#SATUAN" + i.toString()).attr("readonly", true);
 			$("#QTY" + i.toString()).attr("readonly", true);
-			$("#HARGA" + i.toString()).attr("readonly", true);
+			$("#HARGA" + i.toString()).attr("readonly", false);
 			$("#TOTAL" + i.toString()).attr("readonly", true);
 			$("#DPP" + i.toString()).attr("readonly", true);
 			$("#PPN" + i.toString()).attr("readonly", true);
@@ -1512,7 +1189,7 @@
 		 $('#DPP').val("0.00");
 		 $('#PPNX').val("0.00");		 
 	
-		 $('#TTOTAL_QTY').val("0.00");
+		 $('#THARGAJL').val("0.00");
 		 $('#TTOTAL').val("0.00");		 
 		 
 		 
@@ -1525,7 +1202,7 @@
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
 		if (confirm(text) == true) 
 		{
-			window.location ="{{url('/beli/delete/'.$header->NO_ID .'/?flagz='.$flagz.'&golz=' .$golz.'' )}}";
+			window.location ="{{url('/harga/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
 			//return true;
 		} 
 		return false;
@@ -1538,7 +1215,6 @@
 
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		var golz = "{{ $golz }}";
 		
 		Swal.fire({
 			title: 'Are you sure?',
@@ -1559,8 +1235,7 @@
 					confirmButtonText: 'OK'
 				}).then(() => {
 					// Redirect to delete the data after user confirms the success message
-	            	loc = "{{ url('/beli/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz) + 
-						  '&golz=' + encodeURIComponent(golz) ;
+	            	loc = "{{ url('/harga/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz) ;
 
 		            // alert(loc);
 	            	window.location = loc;
@@ -1573,7 +1248,6 @@
 	function closeTrans() {
 		var loc ='';
 		var flagz = "{{ $flagz }}";
-		var golz = "{{ $golz }}";
 		
 		Swal.fire({
 			title: 'Are you sure?',
@@ -1584,7 +1258,7 @@
 			cancelButtonText: 'No, stay here'
 		}).then((result) => {
 			if (result.isConfirmed) {
-	        	loc = "{{ url('/beli/') }}" + '?flagz=' + encodeURIComponent(flagz) + '&golz=' + encodeURIComponent(golz) ;
+	        	loc = "{{ url('/harga/') }}" + '?flagz=' + encodeURIComponent(flagz);
 				window.location = loc ;
 			} else {
 				Swal.fire({
@@ -1602,9 +1276,8 @@
 	function CariBukti() {
 		
 		var flagz = "{{ $flagz }}";
-		var golz = "{{ $golz }}";
 		var cari = $("#CARI").val();
-		var loc = "{{ url('/beli/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&golz=' + encodeURIComponent(golz) + '&buktix=' +encodeURIComponent(cari);
+		var loc = "{{ url('/harga/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
 		window.location = loc;
 		
 	}
@@ -1625,28 +1298,36 @@
 				    <input name='KD_BRG[]' data-rowid=${idrow} onblur='browseBarang(${idrow})' id='KD_BRG${idrow}' type='text' class='form-control  KD_BRG' >
                 </td>
 				
-                <td>
-				    <input name='BARCODE[]' id='BARCODE${idrow}' type='text' class='form-control  BARCODE' required >
+                <td {{ $flagz == 'HG' ? 'hidden' : '' }}>
+				    <input name='BARCODE[]' id='BARCODE${idrow}' type='text' class='form-control  BARCODE' required readonly>
                 </td>
 
                 <td>
-				    <input name='NA_BRG[]' id='NA_BRG${idrow}' type='text' class='form-control  NA_BRG' required >
+				    <input name='NA_BRG[]' id='NA_BRG${idrow}' type='text' class='form-control  NA_BRG' required readonly>
                 </td>
 
                 <td>
-				    <input name='JNS[]' id='JNS${idrow}' type='text' class='form-control  JNS' >
+				    <input name='JNS[]' id='JNS${idrow}' type='text' class='form-control  JNS' readonly>
                 </td>
 				
-				<td>
-		            <input name='HARGAJL[]' onclick ='select()' onblur='hitung()' value='0' id='HARGAJL${idrow}' type='text' style='text-align: right' class='form-control HARGAJL text-primary' >
+				<td {{ $flagz == 'HT' ? 'hidden' : '' }}>
+		            <input name='HARGAJL[]' onclick ='select()' value='0' id='HARGAJL${idrow}' type='text' style='text-align: right' class='form-control HARGAJL text-primary' readonly>
+                </td>
+
+				<td {{ $flagz == 'HT' ? 'hidden' : '' }}>
+				    <input name='HARGAKSR[]' onclick ='select()' value='0'  id='HARGAKSR${idrow}' type='text' style='text-align: right' class='form-control  HARGAKSR'readonly>
                 </td>
 
 				<td>
-				    <input name='HARGAKSR[]' onclick ='select()' value='0' onblur='hitung()'  id='HARGAKSR${idrow}' type='text' style='text-align: right' class='form-control  HARGAKSR'>
-                </td>
+					<input name='HARGA[]' onclick ='select()' value='0'  id='HARGA${idrow}' type='text' style='text-align: right' class='form-control  HARGA'>
+				</td>
 
-				<td>
-					<input name='HARGA[]' onclick ='select()' value='0' onblur='hitung()'  id='HARGA${idrow}' type='text' style='text-align: right' class='form-control  HARGA'>
+				<td {{ $flagz == 'HG' ? 'hidden' : ''}}>
+					<input name='SISA[]' onclick ='select()' value='0'  id='SISA${idrow}' type='text' style='text-align: right' class='form-control  SISA' readonly>
+				</td>
+
+				<td {{ $flagz == 'HG' ? 'hidden' : ''}}>
+					<input name='DTH[]' onclick ='select()' value='0'  id='DTH${idrow}' type='text' style='text-align: right' class='form-control  DTH'>
 				</td>
 
 				<td>
@@ -1677,6 +1358,16 @@
 
 			
 			$("#HARGA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+
+			$("#SISA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+
+			$("#DTH" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});

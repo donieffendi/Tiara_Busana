@@ -9,7 +9,7 @@ class HargaDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'hargad';
+    protected $table = 'bhrgd';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
@@ -18,6 +18,6 @@ class HargaDetail extends Model
 
         "REC", "NO_BUKTI", "ID", "KD_BRG", "BARCODE", 
         "NA_BRG", "JNS", "HARGAJL", "HARGAKSR", "HARGA",
-        "KET", "FLAG", "PER"
+        "KET", "SISA", "DTH"
     ];
 }

@@ -485,6 +485,9 @@ Route::get('/harga', 'App\Http\Controllers\OTransaksi\HargaController@index')->m
 Route::post('/harga/store', 'App\Http\Controllers\OTransaksi\HargaController@store')->middleware(['auth'])->name('harga/store');
 Route::get('/harga/create', 'App\Http\Controllers\OTransaksi\HargaController@create')->middleware(['auth'])->name('harga/create');
 Route::get('/get-harga', 'App\Http\Controllers\OTransaksi\HargaController@getHarga')->middleware(['auth'])->name('get-harga');
+Route::get('/harga/browse_conter', 'App\Http\Controllers\OTransaksi\HargaController@browse_conter')->middleware(['auth'])->name('harga/browse_conter');
+Route::get('/harga/browse_sup', 'App\Http\Controllers\OTransaksi\HargaController@browse_sup')->middleware(['auth'])->name('harga/browse_sup');
+Route::get('/harga/browse_brg', 'App\Http\Controllers\OTransaksi\HargaController@browse_brg')->middleware(['auth'])->name('harga/browse_brg');
 Route::get('/rharga', 'App\Http\Controllers\OReport\RHargaController@report')->middleware(['auth'])->name('rharga');
 Route::get('/get-harga-report', 'App\Http\Controllers\OReport\RHargaController@getHargaReport')->middleware(['auth'])->name('get-harga-report');
 
@@ -492,6 +495,7 @@ Route::get('/harga/show/{harga}', 'App\Http\Controllers\OTransaksi\HargaControll
 Route::get('/harga/edit', 'App\Http\Controllers\OTransaksi\HargaController@edit')->name('harga.edit');
 Route::post('/harga/update/{harga}', 'App\Http\Controllers\OTransaksi\HargaController@update')->name('harga.update');
 Route::get('/harga/delete/{harga}', 'App\Http\Controllers\OTransaksi\HargaController@destroy')->name('harga.delete');
+Route::get('/harga/cetak/{harga}', 'App\Http\Controllers\OTransaksi\HargaController@cetak')->middleware(['auth'])->name('harga/cetak');
 
 Route::post('/jasper-harga-report', 'App\Http\Controllers\OReport\RHargaController@jasperHargaReport')->middleware(['auth']);
 Route::get('/jshargac/{harga:NO_ID}', 'App\Http\Controllers\OTransaksi\HargaController@jshargac')->middleware(['auth']);

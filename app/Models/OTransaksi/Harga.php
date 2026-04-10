@@ -12,7 +12,7 @@ class Harga extends Model
     use HasFactory;
 
 // ganti 2
-    protected $table = 'harga';
+    protected $table = 'bhrg';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 

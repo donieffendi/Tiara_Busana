@@ -1162,8 +1162,7 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              {{-- <a href="javascript:addTab('Pengajuan Harga Jual', '{{url('harga?flagz=HG&golz=BS')}}')" > --}}
-                <a href="javascript:addTab('Pengajuan Harga Jual', '{{url('po?flagz=PO&golz=HJ')}}')">
+              <a href="javascript:addTab('Pengajuan Harga Jual', '{{url('harga?flagz=HG')}}')" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
                 <h6>Pengajuan</h6>
