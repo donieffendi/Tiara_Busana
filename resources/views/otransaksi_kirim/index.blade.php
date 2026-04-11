@@ -96,6 +96,7 @@
                                         <select class="form-control" id="cbg_tujuan">
                                             <option value="TMM">TMM</option>
                                             <option value="SOP">SOP</option>
+                                            <option value="TGZ">TGZ</option>
                                         </select>
                                     </div>
 
@@ -210,14 +211,14 @@
                         searchable: false
                     },
 
-                    {
-                        data: null,
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            return `<input type="checkbox" name="batal_post[]" value="${row.NO_ID}" class="form-control batal-post">`;
-                        }
-                    },
+                    // {
+                    //     data: null,
+                    //     orderable: false,
+                    //     searchable: false,
+                    //     render: function(data, type, row, meta) {
+                    //         return `<input type="checkbox" name="batal_post[]" value="${row.NO_ID}" class="form-control batal-post">`;
+                    //     }
+                    // },
 
                     {
                         data: 'action',
