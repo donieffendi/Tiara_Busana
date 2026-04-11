@@ -56,24 +56,54 @@ class HargaController extends Controller
         return view('otransaksi_harga.post');
     }
 	
+    // public function browse_posting(Request $request)
+    // {
+
+
+	// 	$cari = $request->CARI;
+		
+	// 	if ($cari == ''){
+			
+    //         $posting = DB::SELECT("SELECT NO_ID, BARCODE, NA_BRG, CNT, NCNT, HJUAL, KD_BRG
+    //                                     FROM bhrgd
+    //                                     WHERE KD_BRG ='' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
+							
+    //     } else if ($cari != ''){
+			
+    //         $posting = DB::SELECT("SELECT NO_ID, BARCODE, NA_BRG, CNT, NCNT, HJUAL, KD_BRG
+    //                                     FROM bhrgd
+    //                                     WHERE KD_BRG = '$cari' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
+    //     } 
+
+    //     return response()->json($posting);
+    // }
+
     public function browse_posting(Request $request)
     {
+        $cari = $request->CARI;
 
+        $CBG   = Auth::user()->CBG;
 
-		$cari = $request->CARI;
-		
-		if ($cari == ''){
-			
-            $posting = DB::SELECT("SELECT NO_ID, BARCODE, NA_BRG, CNT, NCNT, HJUAL, KD_BRG
-                                        FROM harga
-                                        WHERE KD_BRG ='' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
-							
-        } else if ($cari != ''){
-			
-            $posting = DB::SELECT("SELECT NO_ID, BARCODE, NA_BRG, CNT, NCNT, HJUAL, KD_BRG
-                                        FROM harga
-                                        WHERE KD_BRG = '$cari' AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
-        } 
+        $query = DB::table('bhrgd as d')
+            ->join('bhrg as h', 'd.NO_BUKTI', '=', 'h.NO_BUKTI')
+            ->select(
+                'd.NO_ID',
+                'd.KD_BRG',
+                'd.NA_BRG',
+                'd.BARCODE',
+                'd.HARGA',
+                'h.CNT',
+                'h.NCNT'
+            )
+            ->where('h.CBG', 'TGZ')
+            ->where('h.POSTED', '0');
+
+        // filter berdasarkan NO_BUKTI
+        if ($cari != '') {
+            $query->where('d.NO_BUKTI', 'like', "%$cari%");
+        }
+
+        $posting = $query->get();
 
         return response()->json($posting);
     }
@@ -777,83 +807,123 @@ class HargaController extends Controller
     }
 	
 
-    function posting (Request $request, Harga $harga)
-	{
+    // function posting (Request $request, Harga $harga)
+	// {
 
-        $REC = $request->input('REC');
-		$CEKX = $request->input('CEKX');
-        $NO_IDX = $request->input('NO_ID');
-        $NO_BUKTIX = $request->input('NO_BUKTI');
-        $TGLX = $request->input('TGL');
-        $NO_SURATSX = $request->input('NO_SURATS');
-        $NAMACX = $request->input('NAMAC');
-        $NETTX = $request->input('NETT');
-        $NO_FPX = $request->input('NO_FPX');
-        $TGL_FPX = $request->input('TGL_FPX');	
+    //     $REC = $request->input('REC');
+	// 	$CEKX = $request->input('CEKX');
+    //     $NO_IDX = $request->input('NO_ID');
+    //     $NO_BUKTIX = $request->input('NO_BUKTI');
+    //     $TGLX = $request->input('TGL');
+    //     $NO_SURATSX = $request->input('NO_SURATS');
+    //     $NAMACX = $request->input('NAMAC');
+    //     $NETTX = $request->input('NETT');
+    //     $NO_FPX = $request->input('NO_FPX');
+    //     $TGL_FPX = $request->input('TGL_FPX');	
 
-        $USRNMX = Auth::user()->USERNAME;
+    //     $USRNMX = Auth::user()->USERNAME;
 				
-        session()->put('posttimer', time());
+    //     session()->put('posttimer', time());
  
-        $hasil = "";
-        // ddd($TGL_FPX);
-        if ($REC) {
-            foreach ($REC as $key => $value) {
+    //     $hasil = "";
+    //     // ddd($TGL_FPX);
+    //     if ($REC) {
+    //         foreach ($REC as $key => $value) {
 				
-					$periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
-					$bulan    = session()->get('periode')['bulan'];
-					$tahun    = substr(session()->get('periode')['tahun'], -2);
+	// 				$periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+	// 				$bulan    = session()->get('periode')['bulan'];
+	// 				$tahun    = substr(session()->get('periode')['tahun'], -2);
 						
 				
-				// $NETTXZ = (float) str_replace(',', '', $NETTX[$key]);
+	// 			// $NETTXZ = (float) str_replace(',', '', $NETTX[$key]);
 
-				$NO_IDXZ = $NO_IDX[$key];
+	// 			$NO_IDXZ = $NO_IDX[$key];
 				
 				
-				// $HUTHGXZ = $HUTHGX[$key];
+	// 			// $HUTHGXZ = $HUTHGX[$key];
 				
 	
-				$CEK11 = $CEKX[$key];
+	// 			$CEK11 = $CEKX[$key];
 				
 				
-				// $NO_BUKTIXZ = ($NO_BUKTIX[$key] == null) ? "" :  $NO_BUKTIX[$key];
-				// $TGLXZ = ($TGLX[$key] == null) ? "" :  $TGLX[$key];
+	// 			// $NO_BUKTIXZ = ($NO_BUKTIX[$key] == null) ? "" :  $NO_BUKTIX[$key];
+	// 			// $TGLXZ = ($TGLX[$key] == null) ? "" :  $TGLX[$key];
 
-				// $NO_SURATSXZ = ($NO_SURATSX[$key] == null) ? "" :  $NO_SURATSX[$key];
-				// $NAMACXZ = ($NAMACX[$key] == null) ? "" :  $NAMACX[$key];
+	// 			// $NO_SURATSXZ = ($NO_SURATSX[$key] == null) ? "" :  $NO_SURATSX[$key];
+	// 			// $NAMACXZ = ($NAMACX[$key] == null) ? "" :  $NAMACX[$key];
 		
-				$NO_FPXZ = ($NO_FPX[$key] == null) ? "" :  $NO_FPX[$key];
-				$TGL_FPXZ = ($TGL_FPX[$key] == null) ? "" :  date('Y-m-d', strtotime($TGL_FPX[$key]));
+	// 			$NO_FPXZ = ($NO_FPX[$key] == null) ? "" :  $NO_FPX[$key];
+	// 			$TGL_FPXZ = ($TGL_FPX[$key] == null) ? "" :  date('Y-m-d', strtotime($TGL_FPX[$key]));
 	
 				
-				if ( $CEK11 == 1 )
-			    {
+	// 			if ( $CEK11 == 1 )
+	// 		    {
 								
-                    DB::SELECT("UPDATE jual
-                                SET NO_FP = '$NO_FPXZ',
-                                    TGL_FP = '$TGL_FPXZ'
-                                WHERE NO_ID ='$NO_IDXZ' ");
+    //                 DB::SELECT("UPDATE jual
+    //                             SET NO_FP = '$NO_FPXZ',
+    //                                 TGL_FP = '$TGL_FPXZ'
+    //                             WHERE NO_ID ='$NO_IDXZ' ");
                 
 							
-				}
+	// 			}
 
-					// IF CEK
+	// 				// IF CEK
 							
-            } // FOR 
+    //         } // FOR 
 			
 			
-        }
-        else
-        {
-            $hasil = $hasil ."Tidak ada No Bukti yang dipilih! ; ";
-        }
+    //     }
+    //     else
+    //     {
+    //         $hasil = $hasil ."Tidak ada No Bukti yang dipilih! ; ";
+    //     }
 
 		
-		return redirect('/harga/post')->with('statusInsert', 'No Bukti berhasil diupdate');		
+	// 	return redirect('/harga/post')->with('statusInsert', 'No Bukti berhasil diupdate');		
 	
 		
 		
-	}
+	// }
+
+    public function posting(Request $request)
+    {
+        $NO_ID = $request->input('NO_ID');
+
+        if (empty($NO_ID)) {
+            return redirect()->back()->with('error', 'Tidak ada data!');
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            // ambil NO_BUKTI dari detail
+            $no_bukti = DB::table('bhrgd')
+                ->whereIn('NO_ID', $NO_ID)
+                ->pluck('NO_BUKTI')
+                ->unique();
+
+            if ($no_bukti->isEmpty()) {
+                return redirect()->back()->with('error', 'Data tidak ditemukan');
+            }
+
+            // update header
+            DB::table('bhrg')
+                ->whereIn('NO_BUKTI', $no_bukti)
+                ->update([
+                    'POSTED' => 1
+                ]);
+
+            DB::commit();
+
+            return redirect('/harga/post')->with('statusInsert', 'Data berhasil diposting');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'Gagal posting: '.$e->getMessage());
+        }
+    }
 	
 	
 	public function getDetailharga(){

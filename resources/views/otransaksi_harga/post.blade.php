@@ -164,6 +164,27 @@
 <script src="{{ asset('js/autoNumerics/autoNumeric.min.js') }}"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="{{asset('foxie_js_css/bootstrap.bundle.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (session('statusInsert'))
+	<script>
+		Swal.fire({
+			title: 'Berhasil!',
+			text: '{{ session('statusInsert') }}',
+			icon: 'success'
+		});
+		</script>
+		@endif
+
+		@if (session('error'))
+		<script>
+		Swal.fire({
+			title: 'Gagal!',
+			text: '{{ session('error') }}',
+			icon: 'error'
+		});
+	</script>
+@endif
 
 <script>
 
@@ -179,12 +200,21 @@
 	});
 
 
-	function simpanx()
-    { 
-	        
-		
-			document.getElementById("entri").submit();
-		
+	function simpanx() {
+		Swal.fire({
+			title: 'Yakin?',
+			text: "Data akan diposting!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Ya, posting!',
+			cancelButtonText: 'Batal'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				document.getElementById("entri").submit();
+			}
+		});
 	}
 		
 		
@@ -216,7 +246,7 @@
                                     <td><input name='NA_BRGX[]' data-rowid=${i} id='NA_BRGX${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRGX' required readonly></td>
                                     <td><input name='CNTX[]' data-rowid=${i} id='CNTX${i}' value="${resp[i].CNT}" type='text' class='form-control  CNTX' required readonly></td>
                                     <td><input name='NCNTX[]' data-rowid=${i} id='NCNTX${i}' value="${resp[i].NCNT}" type='text' class='form-control  NCNTX' required readonly></td>
-                                    <td><input name='HJUALX[]' onblur="hitung()" id='HJUALX${i}' value="${resp[i].HJUAL}" type='text' style='text-align: right' class='form-control HJUALX text-primary' readonly required></td>
+                                    <td><input name='HJUALX[]' onblur="hitung()" id='HJUALX${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HJUALX text-primary' readonly required></td>
                                    
 								</tr>`;
 					}
