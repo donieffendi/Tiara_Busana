@@ -287,13 +287,13 @@
 											<th width="100px" style="text-align:center">Qty</th>
 											<th width="150px" style="text-align:center">Harga Beli</th>
 											<th width="150px" style="text-align:center">Margin</th>
-											<th width="150px" style="text-align:center">Diskon 1</th>
-											<th width="150px" style="text-align:center">Diskon 2</th>
-											<th width="150px" style="text-align:center">Diskon 3</th>
-											<th width="150px" style="text-align:center">Diskon 4</th>
-											<th width="150px" style="text-align:center">Total</th>
-											<th width="150px" style="text-align:center">Harga Jual</th>
-											<th width="150px" style="text-align:center">+ / -</th>
+											<th width="75px" style="text-align:center">Dis 1</th>
+											<th width="75px" style="text-align:center">Dis 2</th>
+											<th width="75px" style="text-align:center">Dis 3</th>
+											<th width="75px" style="text-align:center">Dis 4</th>
+											<th width="100px" style="text-align:center">Total</th>
+											<th width="100px" style="text-align:center">Harga Jual</th>
+											<th width="100px" style="text-align:center">+ / -</th>
 
 											<th></th>
 
@@ -749,14 +749,19 @@
 			$("#QTY_PO" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#SISA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#HARGA_JL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#PPNX" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#DPP" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#DISK" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#XQTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-
 			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#KALI" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#DISKON1" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#DISKON2" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#DISKON3" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#DISKON4" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#BLT" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 		}
 
 

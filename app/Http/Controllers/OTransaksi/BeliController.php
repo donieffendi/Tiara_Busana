@@ -328,8 +328,17 @@ class BeliController extends Controller
             ->orderByDesc('NO_BUKTI')
             ->value('NO_BUKTI');
 
+        // if ($last) {
+        //     $urut = str_pad(substr($last, -5, 4) + 1, 4, '0', STR_PAD_LEFT);
+        // } else {
+        //     $urut = '0001';
+        // }
+
         if ($last) {
-            $urut = str_pad(substr($last, -5, 4) + 1, 4, '0', STR_PAD_LEFT);
+            preg_match('/-(\d+)/', $last, $matches);
+            $angka = isset($matches[1]) ? (int)$matches[1] : 0;
+
+            $urut = str_pad($angka + 1, 4, '0', STR_PAD_LEFT);
         } else {
             $urut = '0001';
         }
@@ -808,7 +817,7 @@ class BeliController extends Controller
 
     // ganti 22
 
-    public function destroy(Request $request, Beli $beli)
+    public function destroy(Request $request, Nwagend $beli)
     {
 
 		$this->setFlag($request);
@@ -825,12 +834,15 @@ class BeliController extends Controller
         // }
 
 
-       $variablell = DB::select('call belidel(?)', array($beli['NO_BUKTI']));
+    //    $variablell = DB::select('call belidel(?)', array($beli['NO_BUKTI']));
 
 
         // ganti 23
-
-        $deletebeli = Beli::find($beli->NO_ID);
+        DB::table('nwagendd')
+            ->where('NO_BUKTI', $beli->NO_BUKTI)
+            ->delete();
+        
+        $deletebeli = Nwagend::find($beli->NO_ID);
 
         // ganti 24
 
