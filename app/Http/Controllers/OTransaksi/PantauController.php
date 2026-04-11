@@ -169,10 +169,12 @@ class PantauController extends Controller
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
 
+        $filter = $request->filter;
+
         $pantau = DB::SELECT("
             SELECT *
             FROM nwbudget
-            WHERE PER= '$periode'
+            WHERE PER= '$periode' AND CAT = '$filter'
             ORDER BY NO_SP
         ");
 

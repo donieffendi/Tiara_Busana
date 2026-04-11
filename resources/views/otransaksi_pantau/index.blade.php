@@ -76,6 +76,18 @@
           <div class="col-12">
             <div class="card">
               <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label for="filter">Filter Pemantauan</label>
+                        <select name="filter" id="filter" class="form-control">
+                            <option value="" selected disabled>--Pilih Filter--</option>
+                            <option value="A">Pemantauan Barang Kurang Laku Setiap Senin</option>
+                            <option value="B">Pemantauan Barang Laku Setiap Rabu</option>
+                            <option value="C">Barang Tidak Laku</option>
+                            <option value="D">Barang Laku</option>
+                        </select>
+                    </div>
+                </div>
                 <button id="btn-proses" class="btn btn-primary">Proses</button>
                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
 
@@ -124,6 +136,9 @@
             ajax:
             {
                 url: "{{ route('get-pantau') }}",
+                data: function (d) {
+                    d.filter = $('#filter').val();
+                }
             },
 
             columns:
@@ -171,7 +186,7 @@
         });
 
         $("div.test_btn").html(
-        '<a class="btn btn-lg btn-md btn-success" href="{{url('.pantau/edit&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
+        '<a class="btn btn-lg btn-md btn-success" href="{{url('pantau/edit?idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
 
         );
     });
