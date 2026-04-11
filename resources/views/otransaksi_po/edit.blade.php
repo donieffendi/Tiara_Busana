@@ -340,7 +340,7 @@
 												</td>
 
 												<td>
-													<input name="SISA[]" onclick="select()" onblur="hitung()"  value="{{$detail->SISA}}"  id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA" >
+													<input name="SISA[]" onclick="select()" onblur="hitung()"  value="{{$detail->SISA}}"  id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA" readonly>
 												</td>
 
 												<td>
@@ -1608,7 +1608,7 @@
                 </td>
 
 				<td>
-					<input name='SISA[]'  onclick='select()' onblur='hitung()' value='0' id='SISA${idrow}' type='text' style='text-align: right' class='form-control SISA text-primary' required >
+					<input name='SISA[]'  onclick='select()' onblur='hitung()' value='0' id='SISA${idrow}' type='text' style='text-align: right' class='form-control SISA text-primary' required readonly>
 				</td>
 
 				<td>
@@ -1715,7 +1715,7 @@
 									</td>
 
                     				<td>
-                    					<input name='SISA[]'  onclick='select()' onblur='hitung()' value='${resp[i].SISA}' id='SISA${idrow}' type='text' style='text-align: right' class='form-control SISA text-primary' required >
+                    					<input name='SISA[]'  onclick='select()' onblur='hitung()' value='${resp[i].SISA}' id='SISA${idrow}' type='text' style='text-align: right' class='form-control SISA text-primary' required readonly>
                     				</td>
 
                     				<td>
