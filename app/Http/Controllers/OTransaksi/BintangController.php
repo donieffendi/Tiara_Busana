@@ -142,17 +142,17 @@ class BintangController extends Controller
                     $url = "'".url("bintang/delete/" . $row->NO_ID)."'";
                     // batas
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="bintang/edit/?idx=' . $row->NO_ID . '&tipx=edit';
+                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="bintang/edit/?idx=' . $row->NO_ID . '&tipx=edit'.'"';
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')"';
 
 
                     $btnPrivilege =
                         '
                                 <a class="dropdown-item" ' . $btnEdit . '>
-                                <i class="fas fa-edit"></i>
+                                    <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" target="_blank" href="bintang/cetak/' . $row->NO_ID . '">
+                                <a hidden class="dropdown-item btn btn-danger" target="_blank" href="bintang/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a>
