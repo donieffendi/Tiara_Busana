@@ -318,10 +318,24 @@ Route::post('/pantau/store', 'App\Http\Controllers\OTransaksi\PantauController@s
     Route::get('/get-pantau-post', 'App\Http\Controllers\OTransaksi\PantauController@getPantau_posting')->middleware(['auth'])->name('get-pantau-post');
 	Route::get('/pantau/cetak/{pantau:NO_ID}','App\Http\Controllers\OTransaksi\PantauController@cetak')->middleware(['auth']);
 
-// Dynamic Pantau
-Route::get('/pantau/edit', 'App\Http\Controllers\OTransaksi\PantauController@edit')->middleware(['auth'])->name('pantau.edit');
-Route::post('/pantau/update/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@update')->middleware(['auth'])->name('pantau.update');
-Route::get('/pantau/delete/{pantau}', 'App\Http\Controllers\OTransaksi\PantauController@destroy')->middleware(['auth'])->name('pantau.delete');
+// Dynamic Bintang
+Route::get('/bintang/edit', 'App\Http\Controllers\OTransaksi\BintangController@edit')->middleware(['auth'])->name('bintang.edit');
+Route::post('/bintang/update/{bintang}', 'App\Http\Controllers\OTransaksi\BintangController@update')->middleware(['auth'])->name('bintang.update');
+Route::get('/bintang/delete/{bintang}', 'App\Http\Controllers\OTransaksi\BintangController@destroy')->middleware(['auth'])->name('bintang.delete');
+
+Route::get('/bintang', 'App\Http\Controllers\OTransaksi\BintangController@index')->middleware(['auth'])->name('bintang');
+Route::post('/bintang/store', 'App\Http\Controllers\OTransaksi\BintangController@store')->middleware(['auth'])->name('bintang/store');
+    // GET BINTANG
+    Route::get('/bintang/browse_sup', 'App\Http\Controllers\OTransaksi\BintangController@browse_sup')->middleware(['auth'])->name('bintang/browse_sup');
+    Route::get('/bintang/browse_brg', 'App\Http\Controllers\OTransaksi\BintangController@browse_brg')->middleware(['auth'])->name('bintang/browse_brg');
+    Route::get('/get-bintang', 'App\Http\Controllers\OTransaksi\BintangController@getBintang')->middleware(['auth'])->name('get-bintang');
+    Route::get('/get-bintang-post', 'App\Http\Controllers\OTransaksi\BintangController@getBintang_posting')->middleware(['auth'])->name('get-bintang-post');
+	Route::get('/bintang/cetak/{bintang:NO_ID}','App\Http\Controllers\OTransaksi\BintangController@cetak')->middleware(['auth']);
+
+// Dynamic Bintang
+Route::get('/bintang/edit', 'App\Http\Controllers\OTransaksi\BintangController@edit')->middleware(['auth'])->name('bintang.edit');
+Route::post('/bintang/update/{bintang}', 'App\Http\Controllers\OTransaksi\BintangController@update')->middleware(['auth'])->name('bintang.update');
+Route::get('/bintang/delete/{bintang}', 'App\Http\Controllers\OTransaksi\BintangController@destroy')->middleware(['auth'])->name('bintang.delete');
 
 
 // Operational Proses Budget Pokok

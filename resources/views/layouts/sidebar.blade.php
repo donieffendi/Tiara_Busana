@@ -736,8 +736,7 @@
       <div class="row">
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                {{-- <a href="javascript:addTab('Terima Retur Outlet', '{{url('terima?flagz=TR&golz=RM')}}')"> --}}
-                <a href="javascript:addTab('Tanda Bintang', '{{url('po?flagz=PO&golz=TB')}}')">
+                <a href="javascript:addTab('Tanda Bintang', '{{url('bintang')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Memberi Tanda Bintang</h6>
