@@ -1361,7 +1361,7 @@
               </div>
               <div class="col-md-3">
                   <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
-                    <a href="javascript:addTab('Cetak Barcode', '{{url('rpo')}}')">
+                    <a href="javascript:addTab('Cetak Barcode', '{{url('rcetakbcd')}}')">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
                         <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cart-plus icon-pink"></i>
                       <h6>Cetak Barcode</h6>

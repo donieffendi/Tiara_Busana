@@ -565,6 +565,12 @@ Route::get('/rusulanth', 'App\Http\Controllers\OReport\RUsulanthController@repor
 Route::get('/get-usulanth-report', 'App\Http\Controllers\OReport\RUsulanthController@getUsulanthReport')->middleware(['auth'])->name('get-usulanth-report');
 Route::post('jasper-usulanth-report', 'App\Http\Controllers\OReport\RUsulanthController@jasperUsulanthReport')->middleware(['auth']);
 
+// Operational Cetak Barcode
+
+Route::get('/rcetakbcd', 'App\Http\Controllers\OReport\RCetakbcdController@report')->middleware(['auth'])->name('rcetakbcd');
+Route::get('/get-cetakbcd-report', 'App\Http\Controllers\OReport\RCetakbcdController@getCetakbcdReport')->middleware(['auth'])->name('get-cetakbcd-report');
+Route::post('jasper-cetakbcd-report', 'App\Http\Controllers\OReport\RCetakbcdController@jasperCetakbcdReport')->middleware(['auth']);
+
 // Operational Perubahan Margin
 
 Route::get('/rubahmargin', 'App\Http\Controllers\OReport\RUbahmarginController@report')->middleware(['auth'])->name('rubahmargin');
