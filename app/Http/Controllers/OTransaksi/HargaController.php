@@ -95,7 +95,7 @@ class HargaController extends Controller
                 'h.CNT',
                 'h.NCNT'
             )
-            ->where('h.CBG', 'TGZ')
+            ->where('h.CBG', $CBG)
             ->where('h.POSTED', '0');
 
         // filter berdasarkan NO_BUKTI
