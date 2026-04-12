@@ -1379,7 +1379,7 @@
               </div>
               <div class="col-md-3">
                 <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
-                    <a href="javascript:addTab('Cabang', '{{url('rthut')}}')" >
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#cabangModal" id="cabang">
                       <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                         <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-briefcase icon-pink"></i>
                       <h6>Cabang</h6>

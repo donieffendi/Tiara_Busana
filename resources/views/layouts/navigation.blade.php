@@ -19,6 +19,14 @@
       </a>
     </li>
 
+    <li class="nav-item d-none d-sm-inline-block">
+			<a href="javascript:void(0)" data-toggle="modal" data-target="#cabangModal" id="cabang" class="nav-link">
+				<b>
+					Cabang : {{ session('periode.cabang', Auth::user()->CBG) }}
+				</b>
+			</a>
+		</li>
+
     </ul>
 
     <!-- Right Side Of Navbar -->
@@ -135,6 +143,39 @@
           </button>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="cabangModal" tabindex="-1" role="dialog" aria-labelledby="cabangLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 250px">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="cabangLabel"> <i class="fas fa-store"></i> Ganti Cabang</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+          <form method="POST" id="gantiCbg" action="{{ url('periode') }}">
+            @csrf
+
+            <div class="form-group">
+              <select class="form-control form-control-user" name="cabang">
+                <option value="TGZ" {{ session('periode.cabang') == 'TGZ' ? 'selected' : '' }}>TGZ</option>
+                <option value="SOP" {{ session('periode.cabang') == 'SOP' ? 'selected' : '' }}>SOP</option>
+                <option value="TMM" {{ session('periode.cabang') == 'TMM' ? 'selected' : '' }}>TMM</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-user btn-block">Ubah Cabang</button>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+        </div>
       </div>
     </div>
   </div>

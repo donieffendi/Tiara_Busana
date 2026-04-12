@@ -21,6 +21,8 @@ class PeriodeController extends Controller
 
         // default kalau belum ada
         $periodeBaru['dept'] = $periodeBaru['dept'] ?? 'NF';
+        // default kalau belum ada
+        $periodeBaru['cabang'] = $periodeBaru['cabang'] ?? Auth::user()->CBG;
 
         $request->session()->put('periode', $periodeBaru);
 
