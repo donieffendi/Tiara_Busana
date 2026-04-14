@@ -564,7 +564,7 @@ class BrgController extends Controller
         $PHPJasperXML->outpage("I"); // "I" artinya inline (tampil di browser)
     }
 
-    public function cetak(Request $request, Vbrg $vbrg){
+    public function cetak(Request $request, Brg $brg){
         $file = 'vbrg';
         $data = [];
         $qty = max((int) $request->query('qty', 1), 1);
@@ -572,10 +572,12 @@ class BrgController extends Controller
 
 		for ($i = 0; $i < $jumlahCetak; $i++) {
             $data[] = [
-                "KD_BRG"  => $vbrg->KD_BRG . " ",
-                "NA_BRG"  => $vbrg->NA_BRG . " ",
-                "KET_UK"  => $vbrg->KET_UK . " ",
-                "BARCODE" => $vbrg->BARCODE . " ",
+                "KD_BRG"  => $brg->KD_BRG . " ",
+                "NA_BRG"  => $brg->NA_BRG . " ",
+                "KET_UK"  => $brg->KET_UK . " ",
+                "BARCODE" => $brg->BARCODE . " ",
+                "SUB"     => $brg->SUB . " ",
+                "SUPP"   => $brg->SUPP . " ",
             ];
         }
         $PHPJasperXML = new PHPJasperXML();
@@ -594,10 +596,10 @@ class BrgController extends Controller
     {
         $no_bukti = $request->buktix;
         $file     = 'vbrg';
-        $data     = DB::SELECT("SELECT belid.KD_BRG, belid.NA_BRG, belid.QTY, vbrg.KET_UK, vbrg.BARCODE, beli.TOTAL_QTY
-                        FROM beli, belid, vbrg
+        $data     = DB::SELECT("SELECT belid.KD_BRG, belid.NA_BRG, belid.QTY, brg.KET_UK, brg.BARCODE, beli.TOTAL_QTY
+                        FROM beli, belid, brg
                         WHERE beli.NO_BUKTI = belid.NO_BUKTI
-                            AND belid.KD_BRG = vbrg.KD_BRG
+                            AND belid.KD_BRG = brg.KD_BRG
                             AND belid.NO_BUKTI = '$no_bukti'");
 
         // dd($data);
