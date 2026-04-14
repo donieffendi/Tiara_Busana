@@ -180,6 +180,9 @@ Route::get('/rbrg', 'App\Http\Controllers\OReport\RBrgController@report')->middl
     Route::get('/brg/browse_koreksi', 'App\Http\Controllers\Master\BrgController@browse_koreksi')->middleware(['auth'])->name('brg/browse_koreksi');
     Route::get('/brg/browse_sedia', 'App\Http\Controllers\Master\BrgController@browse_sedia')->middleware(['auth'])->name('brg/browse_sedia');
     Route::get('/brg/print', 'App\Http\Controllers\Master\BrgController@Print')->middleware(['auth'])->name('brg.print');
+    Route::get('/brg/barcode', 'App\Http\Controllers\Master\BrgController@Barcode')->middleware(['auth'])->name('brg.barcode');
+    Route::post('/brg/cetak-range', 'App\Http\Controllers\Master\BrgController@jasperBrgReport')->middleware(['auth'])->name('brg-cetak-range');
+    Route::get('/brg/cetak/{brg}', 'App\Http\Controllers\Master\BrgController@cetak')->middleware(['auth'])->name('brg.cetak');
 
     Route::get('/brg/browsedz', 'App\Http\Controllers\Master\BrgController@browsedz')->middleware(['auth'])->name('brg/browsedz');
     Route::get('/get-brg-report', 'App\Http\Controllers\OReport\RBrgController@getBrgReport')->middleware(['auth'])->name('get-brg-report');
@@ -1046,6 +1049,7 @@ Route::get('/rbeli_gdg', 'App\Http\Controllers\OReport\RBeli_gdgController@repor
     Route::get('/beli/browse_belid', 'App\Http\Controllers\OTransaksi\BeliController@browse_belid')->middleware(['auth'])->name('beli/browse_belid');
     Route::get('/beli/get-ppn', 'App\Http\Controllers\OTransaksi\BeliController@getPpn')->middleware(['auth'])->name('beli/get-ppn');
     Route::get('/beli/cek-harga', 'App\Http\Controllers\OTransaksi\BeliController@cekHarga')->middleware(['auth'])->name('beli/cek-harga');
+    Route::get('/beli/cetak_barcode', 'App\Http\Controllers\OTransaksi\BeliController@cetakBarcode')->middleware(['auth'])->name('beli.cetakBarcode');
 
 // Dynamic Beli
 Route::get('/beli/edit', 'App\Http\Controllers\OTransaksi\BeliController@edit')->middleware(['auth'])->name('beli.edit');

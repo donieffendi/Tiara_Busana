@@ -142,10 +142,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            
+
                             <!-- batas filter -->
                                 <div class="form-group">
-                                    
+
                                     <div class="row mb-2">
                                         <div class="col-md-1" align="right">
                                             <label>Filter</label>
@@ -184,10 +184,21 @@
                                             <button id="btnPrint" class="btn btn-warning">
                                                 <i class="fas fa-print"></i> Print
                                             </button>
+
+                                            <button type="submit" name="print_type" value="barcode" class="btn btn-success">
+                                            Print Barcode
+                                            </button>
                                         </div>
+
+                                        {{-- <div class="col-md-2">
+                                            <button id="btnBarcode" class="btn btn-warning">
+                                                <i class="fas fa-barcode"></i> Barcode
+                                            </button>
+                                        </div> --}}
+
                                     </div>
                                 </div>
-                        
+
                                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable"
                                     id="datatable">
                                     <thead class="table-dark">
@@ -232,6 +243,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- batas filter  -->
+
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 
     <script>
 
@@ -304,9 +317,9 @@
                         data: 'SUPP',
                         name: 'SUPP'
                     },
-                    {data: 'QTY_BELI1', name: 'QTY_BELI1', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                    {data: 'HB', name: 'HB', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
-                    {data: 'DIS_A', name: 'DIS_A', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},			
+                    {data: 'QTY_BELI1', name: 'QTY_BELI1', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                    {data: 'HB', name: 'HB', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                    {data: 'DIS_A', name: 'DIS_A', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                     {data: 'DIS_B', name: 'DIS_B', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                     {data: 'DIS_C', name: 'DIS_C', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                     {data: 'TOT_BL', name: 'TOT_BL', render: $.fn.dataTable.render.number( ',', '.', 0, '' )}
@@ -317,9 +330,9 @@
                         "targets": 0
                     },
                     {
-                        "className": "dt-right", 
+                        "className": "dt-right",
                         "targets": [9,10,11,12,13,14]
-                    }		
+                    }
                 ],
                 dom: "<'row'<'col-md-6'><'col-md-6'>>" +
                     "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
@@ -342,7 +355,7 @@
                 var column = dataTable.column($(this).val());
                 column.visible($(this).is(':checked'));
             });
-            
+
             // batas filter
 
             $("div.test_btn").html(
@@ -380,6 +393,96 @@
 					}
 				});
 			});
+
+            // $('#btnBarcode').on('click', function() {
+			// 	let sub1 = $('#sub1').val();
+            //     let sub2 = $('#sub2').val();
+            //     let supp1 = $('#supp1').val();
+            //     let supp2 = $('#supp2').val();
+
+            //     if (sub1 == '' && sub2 == '' && supp1 == '' && supp2 == '') {
+            //         Swal.fire({
+            //             icon: 'warning',
+            //             title: 'Oops...',
+            //             text: 'Anda belum mengisi filter!',
+            //         });
+            //         return;
+            //     }
+
+			// 	Swal.fire({
+			// 		title: 'Cetak Data Barang?',
+			// 		text: "Laporan akan dibuka di tab baru sesuai filter Sub yang dipilih.",
+			// 		icon: 'question',
+			// 		showCancelButton: true,
+			// 		confirmButtonText: 'Ya, Cetak!',
+			// 		cancelButtonText: 'Batal',
+			// 		confirmButtonColor: '#3085d6',
+			// 		cancelButtonColor: '#d33'
+			// 	}).then((result) => {
+			// 		if (result.isConfirmed) {
+			// 			// buka jasper report di tab baru
+			// 			window.open(`{{ url('brg/barcode') }}?sub1=${sub1}&sub2=${sub2}&supp1=${supp1}&supp2=${supp2}`, '_blank');
+			// 		}
+			// 	});
+			// });
+
+            $('.barcode').each(function() {
+                var barcodeValue = $(this).data('barcode');
+                if (barcodeValue) {
+                    try {
+                        var cleanValue = barcodeValue.toString().trim();
+
+                        // Check if JsBarcode is loaded
+                        if (typeof JsBarcode === 'undefined') {
+                            console.log('JsBarcode library not loaded');
+                            $(this).text(barcodeValue);
+                            return;
+                        }
+
+                        // Use CODE128 format for all barcodes (most compatible)
+                        JsBarcode(this, cleanValue, {
+                            format: "CODE128",
+                            width: 2,
+                            height: 40,
+                            displayValue: false,
+                            textAlign: "center",
+                            textPosition: "bottom",
+                            background: "#ffffff",
+                            lineColor: "#000000"
+                        });
+                    } catch (e) {
+                        console.log('Invalid barcode: ' + barcodeValue + ', Error: ' + (e.message || e));
+                        // If barcode generation fails, show text instead
+                        $(this).replaceWith('<span>' + barcodeValue + '</span>');
+                    }
+                }
+            });
+
+            function cetakBarcode(no_id){
+                Swal.fire({
+                    title: 'Cetak Barcode',
+                    text: 'Mau cetak berapa kali?',
+                    input: 'number',
+                    inputAttributes: {
+                        min: 1
+                    },
+                    inputValue: 1,
+                    showCancelButton: true,
+                    confirmButtonText: 'Cetak',
+                    cancelButtonText: 'Batal',
+                    preConfirm: (value) => {
+                        if (!value || value <= 0) {
+                            Swal.showValidationMessage('Jumlah cetak harus lebih dari 0')
+                        }
+                        return value
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let qty = result.value
+                        window.open(`brg/cetak/${no_id}?qty=${qty}`, '_blank')
+                    }
+                })
+            }
 
             $('#TYPE').on('change', function(){
 

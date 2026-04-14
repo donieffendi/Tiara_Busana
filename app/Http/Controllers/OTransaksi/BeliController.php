@@ -232,6 +232,13 @@ class BeliController extends Controller
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a>
+
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="cetakBarcode('. $row->NO_ID .')">
+                                    <i class="fas fa-id-card"></i>
+                                    Cetak Barcode
+                                </a>
+
                                 <hr></hr>
                                 <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
 
@@ -621,7 +628,7 @@ class BeliController extends Controller
 
         $no_bukti = $beli->NO_BUKTI;
         // $belidetail = DB::table('nwagendd')->where('NO_BUKTI', $no_bukti)->orderBy('rec')->get();
-        
+
         $belidetail = NwagendDetail::select('nwagendd.*',
                                     'nwmasbar.HB as HARGALAMA',
                                     'nwmasbar.DIS_A as DISKLAMA1',
@@ -841,7 +848,7 @@ class BeliController extends Controller
         DB::table('nwagendd')
             ->where('NO_BUKTI', $beli->NO_BUKTI)
             ->delete();
-        
+
         $deletebeli = Nwagend::find($beli->NO_ID);
 
         // ganti 24
@@ -923,7 +930,7 @@ class BeliController extends Controller
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-        $query = DB::SELECT("SELECT 
+        $query = DB::SELECT("SELECT
                                 nwagend.NO_BUKTI, nwagend.TGL, nwagend.NO_BUKTI, nwagend.CBG,
                                 nwagend.ST_PJK, nwagend.ST_NOTA, nwagend.NAMAS, nwagend.JT AS JTEMPO,
                                 nwagend.TOTAL AS BRUTO, nwagend.PROM, nwagend.PPN, nwagend.DPP, nwagend.NETT,
@@ -931,9 +938,9 @@ class BeliController extends Controller
                                 nwagendd.DISKON1, nwagendd.DISKON2, nwagendd.DISKON3, nwagendd.DISKON4, nwagendd.TOTAL, nwagendd.HARGA_JL,
                                 nwmassup.DISC_PS
                             FROM nwagend
-                            JOIN nwagendd 
+                            JOIN nwagendd
                                 ON nwagend.NO_BUKTI = nwagendd.NO_BUKTI
-                            LEFT JOIN nwmassup 
+                            LEFT JOIN nwmassup
                                 ON nwagend.KODES = nwmassup.NO_SUPL
                             WHERE nwagend.NO_BUKTI = '$no_beli'
                         ");
@@ -1107,7 +1114,7 @@ class BeliController extends Controller
 
         return response()->json($result);;
     }
-	
+
 	public function getPpn(Request $request)
     {
         $tgl = $request->tgl;
@@ -1145,9 +1152,9 @@ class BeliController extends Controller
 
         try {
 
-            $flagg = $request->flagg; 
+            $flagg = $request->flagg;
 
-            // 
+            //
             $cabangs = DB::table('toko')
                 ->where('kode', '!=', '')
                 ->pluck('kode');
@@ -1162,8 +1169,8 @@ class BeliController extends Controller
 
                 if (!$header || $header->POSTED == 1) continue;
 
-                    // 
-                    $details = DB::table('nwagendd') 
+                    //
+                    $details = DB::table('nwagendd')
                         ->where('NO_BUKTI', $no_bukti)
                         ->get();
 
@@ -1172,25 +1179,25 @@ class BeliController extends Controller
                         if ($flagg == 'RX') {
 
                             DB::update("
-                                UPDATE nwmasbard 
-                                SET MA00 = MA00 - ?, 
+                                UPDATE nwmasbard
+                                SET MA00 = MA00 - ?,
                                     AK00 = AW00 + MA00 - KE00 + LN00
                                 WHERE KD_BRG = ? AND CBG = ?
                             ", [
                                 $row->QTY,
                                 $row->KD_BRG,
-                                $CBG 
+                                $CBG
                             ]);
                         }
 
-                        // BS / BO 
+                        // BS / BO
                         if (in_array($flagg, ['BS', 'BO'])) {
 
                             if ($flagg == 'BS') {
 
                                 // update barang master
                                 DB::update("
-                                    UPDATE nwmasbar 
+                                    UPDATE nwmasbar
                                     SET TOT_TRM = TOT_TRM + QTY_TRM,
                                         QTY_TRM = ?,
                                         BKT_TRM = ?,
@@ -1225,8 +1232,8 @@ class BeliController extends Controller
 
                             // update stok masuk
                             DB::update("
-                                UPDATE NWMASBARD 
-                                SET MA00 = MA00 - ?, 
+                                UPDATE NWMASBARD
+                                SET MA00 = MA00 - ?,
                                     AK00 = AW00 + MA00 - KE00 + LN00
                                 WHERE KDBAR = ? AND CBG = ?
                             ", [
@@ -1237,13 +1244,13 @@ class BeliController extends Controller
                         }
                     }
 
-                    // 
+                    //
                     // DB::statement("CALL postbs(?, ?)", [
                     //     $no_bukti,
                     //     $usr
                     // ]);
 
-                    // 
+                    //
                     DB::table('nwagend')
                         ->where('NO_BUKTI', $no_bukti)
                         ->update([
@@ -1268,5 +1275,45 @@ class BeliController extends Controller
             ], 500);
         }
     }
-	
+
+    public function cetakBarcode(Request $request)
+    {
+        $no_bukti = $request->buktix;
+        $file     = 'vbrg';
+        $data     = DB::SELECT("SELECT belid.KD_BRG, belid.NA_BRG, belid.QTY, vbrg.KET_UK, vbrg.BARCODE, beli.TOTAL_QTY
+                        FROM beli, belid, vbrg
+                        WHERE beli.NO_BUKTI = belid.NO_BUKTI
+                            AND belid.KD_BRG = vbrg.KD_BRG
+                            AND belid.NO_BUKTI = '$no_bukti'");
+
+        // dd($data);
+        $finalData = [];
+        foreach ($data as $row) {
+
+			// bagi 2 dan bulatkan ke atas
+			$qty = (int) $row->QTY;
+			$jumlahCetak = ceil($qty / 2);
+
+            for ($i = 0; $i < $jumlahCetak; $i++) {
+                $finalData[] = [
+                    'KD_BRG'  => $row->KD_BRG,
+                    'NA_BRG'  => $row->NA_BRG,
+                    'KET_UK'  => $row->KET_UK,
+                    'BARCODE' => $row->BARCODE,
+                ];
+            }
+        }
+
+        $PHPJasperXML = new PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+        $cleanData = json_decode(json_encode($data), true);
+        $PHPJasperXML->setData($finalData);
+        $PHPJasperXML->arrayPageSetting["orientation"] = "L";
+        $PHPJasperXML->arrayPageSetting["pageHeight"]  = 1 * 3.7795 * 18; // 1 mm = 3.7795 pixel, 1 ( jumlah row ) x 18 mm ( tinggi row )
+
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
+    }
+
 }
