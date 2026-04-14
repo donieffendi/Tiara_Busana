@@ -30,16 +30,16 @@ class DeptController extends Controller
     	if (!empty(request('q'))) {
 
 
-            $dept = DB::SELECT("SELECT NO_ID, kd_dept, nama
+            $dept = DB::SELECT("SELECT NO_ID, KD_DEPT, nama
                             FROM dept
-                            WHERE  kd_dept LIKE ('%$request->q%')
-                            ORDER BY kd_dept ");
+                            WHERE  KD_DEPT LIKE ('%$request->q%')
+                            ORDER BY KD_DEPT ");
 
 
         } else {
-			$dept = DB::SELECT("SELECT NO_ID, kd_dept, nama
+			$dept = DB::SELECT("SELECT NO_ID, KD_DEPT, nama
                             FROM dept
-                            ORDER BY kd_dept ");
+                            ORDER BY KD_DEPT ");
 		}
 
         return response()->json($dept);
@@ -47,7 +47,7 @@ class DeptController extends Controller
 
     public function browse_th(Request $request)
     {
-        $dept = DB::SELECT("SELECT kd_dept, nama FROM dept ORDER BY kd_dept ");
+        $dept = DB::SELECT("SELECT KD_DEPT, nama FROM dept ORDER BY KD_DEPT ");
 
         return response()->json($dept);
     }
@@ -57,9 +57,9 @@ class DeptController extends Controller
     {
 		// $PPN = Auth::user()->PPN;
 
-        $dept = DB::SELECT("SELECT NO_ID, kd_dept, nama
-                        from dept
-                        ORDER BY kd_dept ");
+        $dept = DB::SELECT("SELECT NO_ID, KD_DEPT, NA_DEPT
+                        from nwdept
+                        ORDER BY KD_DEPT ");
 
         return Datatables::of($dept)
             ->addIndexColumn()
@@ -75,7 +75,8 @@ class DeptController extends Controller
 
                     $btnPrivilege =
                         '
-                                <a class="dropdown-item" href="dept/edit/?idx=' . $row->NO_ID . '&tipx=edit";                                <i class="fas fa-edit"></i>
+                                <a class="dropdown-item" href="dept/edit/?idx=' . $row->NO_ID . '&tipx=edit";>                                
+                                <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
                                 <hr>
@@ -131,31 +132,31 @@ class DeptController extends Controller
             $request,
             // GANTI 8 SESUAI NAMA KOLOM DI NAVICAT //
             [
-                'kd_dept'       => 'required'
+                'KD_DEPT'       => 'required'
             ]
         );
 
         // Insert Header
 
-        $query = DB::table('dept')->select('kd_dept')->orderByDesc('kd_dept')->limit(1)->get();
+        $query = DB::table('dept')->select('KD_DEPT')->orderByDesc('KD_DEPT')->limit(1)->get();
 
 
         $dept = Dept::create(
             [
-                'kd_dept'       => ($request['kd_dept'] == null) ? "" : $request['kd_dept'],
-                'nama'  => ($request['nama'] == null) ? "" : $request['nama'],
-                // 'USRNM'     => Auth::user()->username,
-                // 'TG_SMP'    => Carbon::now()
+                'KD_DEPT'   => ($request['KD_DEPT'] == null) ? "" : $request['KD_DEPT'],
+                'NA_DEPT'   => ($request['NA_DEPT'] == null) ? "" : $request['NA_DEPT'],
+                'USRNM'     => Auth::user()->username,
+                'TG_SMP'    => Carbon::now()
             ]
         );
 
 
-	    $kodesx = $request['kd_dept'];
+	    $kodesx = $request['KD_DEPT'];
 
-		$dept = Dept::where('kd_dept', $kodesx )->first();
+		$dept = Dept::where('KD_DEPT', $kodesx )->first();
 
         //return redirect('/dept/edit/?idx=' . $dept->NO_ID . '&tipx=edit')->with('statusInsert', 'Data baru berhasil ditambahkan');
-		return redirect('/dept')->with('statusInsert', 'Data baru berhasil ditambahkan');
+		return redirect('/dept')->with('statusInsert', 'Data Baru Berhasil Ditambahkan');
 
 
     }
@@ -165,7 +166,7 @@ class DeptController extends Controller
     public function edit(Request $request ,  Dept $dept)
     {
 
-        $pilihbank = DB::table('bang')->select('KODE', 'NAMA')->orderBy('KODE', 'ASC')->get();
+        // $pilihbank = DB::table('bang')->select('KODE', 'NAMA')->orderBy('KODE', 'ASC')->get();
         // ganti 16
 
 
@@ -187,9 +188,9 @@ class DeptController extends Controller
 
     	   $kodex = $request->kodex;
 
-		   $bingco = DB::SELECT("SELECT NO_ID, kd_dept from dept
-		                 where kd_dept = '$kodex'
-		                 ORDER BY kd_dept ASC  LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KD_DEPT from nwdept
+		                 where KD_DEPT = '$kodex'
+		                 ORDER BY KD_DEPT ASC  LIMIT 1" );
 
 
 			if(!empty($bingco))
@@ -206,8 +207,8 @@ class DeptController extends Controller
 
 		if ($tipx=='top') {
 
-		   $bingco = DB::SELECT("SELECT NO_ID, kd_dept from dept
-		                 ORDER BY kd_dept ASC  LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KD_DEPT from nwdept
+		                 ORDER BY KD_DEPT ASC  LIMIT 1" );
 
 			if(!empty($bingco))
 			{
@@ -225,9 +226,9 @@ class DeptController extends Controller
 
     	   $kodex = $request->kodex;
 
-		   $bingco = DB::SELECT("SELECT NO_ID, kd_dept from dept
-		             where kd_dept <
-					 '$kodex' ORDER BY kd_dept DESC LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KD_DEPT from nwdept
+		             where KD_DEPT <
+					 '$kodex' ORDER BY KD_DEPT DESC LIMIT 1" );
 
 
 			if(!empty($bingco))
@@ -249,9 +250,9 @@ class DeptController extends Controller
 
       	   $kodex = $request->kodex;
 
-		   $bingco = DB::SELECT("SELECT NO_ID, kd_dept from dept
-		             where kd_dept >
-					 '$kodex' ORDER BY kd_dept ASC LIMIT 1" );
+		   $bingco = DB::SELECT("SELECT NO_ID, KD_DEPT from nwdept
+		             where KD_DEPT >
+					 '$kodex' ORDER BY KD_DEPT ASC LIMIT 1" );
 
 			if(!empty($bingco))
 			{
@@ -267,8 +268,8 @@ class DeptController extends Controller
 
 		if ($tipx=='bottom') {
 
-    		$bingco = DB::SELECT("SELECT NO_ID, kd_dept from dept
-		              ORDER BY kd_dept DESC  LIMIT 1" );
+    		$bingco = DB::SELECT("SELECT NO_ID, KD_DEPT from nwdept
+		              ORDER BY KD_DEPT DESC  LIMIT 1" );
 
 			if(!empty($bingco))
 			{
@@ -303,7 +304,8 @@ class DeptController extends Controller
 		 $data = [
                     'header' => $dept,
                 ];
-			return view('master_dept.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ])->with(['pilihbank' => $pilihbank]);
+			// return view('master_dept.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ])->with(['pilihbank' => $pilihbank]);
+			return view('master_dept.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ]);
 
 
     }
@@ -321,7 +323,7 @@ class DeptController extends Controller
         $this->validate(
             $request,
             [
-                'kd_dept'       => 'required'
+                'KD_DEPT'       => 'required'
             ]
         );
 
@@ -331,16 +333,15 @@ class DeptController extends Controller
         $dept->update(
             [
 
-                'nama'  => ($request['nama'] == null) ? "" : $request['nama'],
-
-                // 'USRNM'     => Auth::user()->username,
-                // 'TG_SMP'    => Carbon::now()
+                'NA_DEPT'  => ($request['NA_DEPT'] == null) ? "" : $request['NA_DEPT'],
+                'USRNM'    => Auth::user()->username,
+                'TG_SMP'   => Carbon::now()
             ]
         );
 
 
         //return redirect('/dept/edit/?idx=' . $dept->NO_ID . '&tipx=edit');
-		return redirect('/dept')->with('statusInsert', 'Data baru berhasil diupdate');
+		return redirect('/dept')->with('statusInsert', 'Data ' . $dept->KD_DEPT . ' berhasil diubah');
 
     }
 
@@ -360,7 +361,7 @@ class DeptController extends Controller
 
     public function cekdept(Request $request)
     {
-        $getItem = DB::SELECT('select count(*) as ADA from dept where kd_dept ="' . $request->kd_dept . '"');
+        $getItem = DB::SELECT('select count(*) as ADA from nwdept where KD_DEPT ="' . $request->KD_DEPT . '"');
 
         return $getItem;
     }
@@ -376,13 +377,13 @@ class DeptController extends Controller
         }
         $perPage = 10;
 
-        $hasil = DB::SELECT("SELECT kd_dept, NAMAS from dept WHERE (kd_dept LIKE '%$search%' or NAMAS LIKE '%$search%') ORDER BY kd_dept LIMIT $xa,$perPage ");
+        $hasil = DB::SELECT("SELECT KD_DEPT, NA_DEPT from nwdept WHERE (KD_DEPT LIKE '%$search%' or NA_DEPT LIKE '%$search%') ORDER BY KD_DEPT LIMIT $xa,$perPage ");
         $selectajax = array();
         foreach ($hasil as $row => $value) {
             $selectajax[] = array(
-                'id' => $hasil[$row]->kd_dept,
-                'text' => $hasil[$row]->kd_dept,
-                'namas' => $hasil[$row]->NAMAS,
+                'id' => $hasil[$row]->KD_DEPT,
+                'text' => $hasil[$row]->KD_DEPT,
+                'namas' => $hasil[$row]->NA_DEPT,
             );
         }
         $select['total_count'] =  count($selectajax);

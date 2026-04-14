@@ -112,18 +112,18 @@
 									<!-- code text box baru -->
 									<div class="col-md-2 form-group row special-input-label">
 
-										<input type="text" class="kd_dept" id="kd_dept" name="kd_dept"
-											value="{{$header->kd_dept}}" placeholder=" " >
-										<label for="kd_dept">Kode</label>
+										<input type="text" class="KD_DEPT" id="KD_DEPT" name="KD_DEPT"
+											value="{{$header->KD_DEPT}}" placeholder=" " >
+										<label for="KD_DEPT">Kode Departemen</label>
 									</div>
 								</div>
 
 								<div class="form-group row">
 
 									<div class="col-md-4 form-group row special-input-label">
-										<input type="text" class="nama" id="nama" name="nama"
-											value="{{$header->nama}}" placeholder=" " >
-										<label for="nama">Nama</label>
+										<input type="text" class="NA_DEPT" id="NA_DEPT" name="NA_DEPT"
+											value="{{$header->NA_DEPT}}" placeholder=" " >
+										<label for="NA_DEPT">Nama Departemen</label>
 									</div>
 								</div>
 
@@ -143,8 +143,8 @@
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
 								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/dept/edit/?idx=' .$idx. '&tipx=top')}}'" class="btn btn-outline-primary">Top</button>
-								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/dept/edit/?idx='.$header->NO_ID.'&tipx=prev&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Prev</button>
-								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/dept/edit/?idx='.$header->NO_ID.'&tipx=next&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Next</button>
+								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/dept/edit/?idx='.$header->NO_ID.'&tipx=prev&kodex='.$header->KD_DEPT )}}'" class="btn btn-outline-primary">Prev</button>
+								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/dept/edit/?idx='.$header->NO_ID.'&tipx=next&kodex='.$header->KD_DEPT )}}'" class="btn btn-outline-primary">Next</button>
 								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/dept/edit/?idx=' .$idx. '&tipx=bottom')}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">

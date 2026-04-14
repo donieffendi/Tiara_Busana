@@ -23,9 +23,9 @@
     <div class="content-wrapper">
 
         <!-- Status -->
-        @if (session('status'))
+        @if (session('statusInsert'))
             <div class="alert alert-success">
-                {{ session('status') }}
+                {{ session('statusInsert') }}
             </div>
         @endif
 
@@ -160,12 +160,12 @@
                         name: 'action'
                     },
                     {
-                        data: 'kd_dept',
-                        name: 'kd_dept'
+                        data: 'KD_DEPT',
+                        name: 'KD_DEPT'
                     },
                     {
-                        data: 'nama',
-                        name: 'nama',
+                        data: 'NA_DEPT',
+                        name: 'NA_DEPT',
                         render: function(data) {
                             return '<span class="badge badge-pill badge-warning">' + data +
                                 '</span>';
@@ -204,11 +204,5 @@
                 '<a class="btn btn-lg btn-md btn-success" href="{{ url('dept/edit?idx=0&tipx=new') }}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
             );
         });
-        // Open modal programmatically
-        // document.querySelector('.btn-primary').addEventListener('click', function(e) {
-        //     e.preventDefault(); // Optional, only if needed
-        //     var myModal = new bootstrap.Modal(document.getElementById('columnModal'));
-        //     myModal.show();
-        // });
     </script>
 @endsection

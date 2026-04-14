@@ -12,15 +12,15 @@ class Dept extends Model
     use HasFactory;
 
 // ganti 2
-    protected $table = 'dept';
+    protected $table = 'nwdept';
     protected $primaryKey = 'NO_ID';
     public $timestamps = false;
 
 // ganti 3
     protected $fillable =
     [
-        'kd_dept',
-        'nama',
+        'KD_DEPT',
+        'NA_DEPT',
         'USRNM',
         'TG_SMP'
     ];
