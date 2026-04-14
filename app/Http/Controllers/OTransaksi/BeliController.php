@@ -1280,10 +1280,10 @@ class BeliController extends Controller
     {
         $no_bukti = $request->buktix;
         $file     = 'vbrg';
-        $data     = DB::SELECT("SELECT belid.KD_BRG, belid.NA_BRG, belid.QTY, vbrg.KET_UK, vbrg.BARCODE, beli.TOTAL_QTY
-                        FROM beli, belid, vbrg
+        $data     = DB::SELECT("SELECT belid.KD_BRG, belid.NA_BRG, belid.QTY, brg.KET_UK, brg.BARCODE, beli.TOTAL_QTY, brg.SUB, brg.SUPP
+                        FROM beli, belid, brg
                         WHERE beli.NO_BUKTI = belid.NO_BUKTI
-                            AND belid.KD_BRG = vbrg.KD_BRG
+                            AND belid.KD_BRG = brg.KD_BRG
                             AND belid.NO_BUKTI = '$no_bukti'");
 
         // dd($data);
@@ -1300,6 +1300,8 @@ class BeliController extends Controller
                     'NA_BRG'  => $row->NA_BRG,
                     'KET_UK'  => $row->KET_UK,
                     'BARCODE' => $row->BARCODE,
+                    'SUB'     => $row->SUB,
+                    'SUPP'    => $row->SUPP,
                 ];
             }
         }
