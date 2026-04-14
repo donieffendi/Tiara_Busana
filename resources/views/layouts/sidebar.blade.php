@@ -499,6 +499,7 @@
                 <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
                   <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
                 <h6>Label Budget</h6>
+                <h6>(dijadikan 1 di master barang)</h6>
               </a>
             </div>
         </div>
@@ -509,6 +510,8 @@
                 <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
                   <i style="margin-left:-30px;font-size: 40px;" class="nav-icon fas fa-tags icon-blue"></i>
                 <h6>Label Non Data</h6>
+                <h6>(dijadikan 1 di master barang)</h6>
+
               </a>
             </div>
         </div>
