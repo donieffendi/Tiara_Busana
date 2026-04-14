@@ -17,13 +17,13 @@ class Counter extends Model
     public $timestamps = false;
 
 // ganti 3
-    protected $fillable = 
+    protected $fillable =
     [
         'CNT',
         'NA_CNT',
         'SUP',
         'NAMAS',
-        'LS_CNT', 
+        'LS_CNT',
         'DIS_CUST',
         'JN_CNT',
         'DIS_TGLMP',
@@ -51,6 +51,12 @@ class Counter extends Model
         'KW_LBL',
         'PER_MIN',
         'B_MIN',
-        'KALIB'
+        'KALIB',
+        'QBU',
+        'NBU',
+        'QOL',
+        'NOL',
+        'QSB',
+        'NSB',
     ];
 }
