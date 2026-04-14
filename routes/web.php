@@ -1602,4 +1602,64 @@ Route::get('/jsperubahanbudgetc/{perubahanbudget:NO_ID}', 'App\Http\Controllers\
 Route::get('/get-detail-perubahanbudget', 'App\Http\Controllers\OTransaksi\PerubahanbudgetController@getDetailPerubahanbudget')->middleware(['auth'])->name('get-detail-perubahanbudget');
 
 
+///////////////////////
+// Master Entry Rencana Data barang
+Route::get('/rencana_brg', 'App\Http\Controllers\OTransaksi\Rencana_brgController@index')->middleware(['auth'])->name('rencana_brg');
+Route::post('/rencana_brg/store', 'App\Http\Controllers\OTransaksi\Rencana_brgController@store')->middleware(['auth'])->name('rencana_brg/store');
+Route::get('/rbrg', 'App\Http\Controllers\OReport\RRencana_brgController@report')->middleware(['auth'])->name('rbrg');
+    // GET Entry Rencana Data barang
+    Route::get('/get-rencana_brg', 'App\Http\Controllers\OTransaksi\Rencana_brgController@getRencana_brg')->middleware(['auth'])->name('get-rencana_brg');
+    Route::get('/rencana_brg/browse', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse')->middleware(['auth'])->name('rencana_brg/browse');
+    Route::get('/rencana_brg/browsex', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browsex')->middleware(['auth'])->name('rencana_brg/browsex');
+    Route::get('/rencana_brg/browse_sup', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse_sup')->middleware(['auth'])->name('rencana_brg/browse_sup');
+    Route::get('/rencana_brg/browse_sub', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse_sub')->middleware(['auth'])->name('rencana_brg/browse_sub');
+    Route::get('/rencana_brg/browse_event', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse_event')->middleware(['auth'])->name('rencana_brg/browse_event');
+    Route::get('/rencana_brg/browse_plu', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse_plu')->middleware(['auth'])->name('rencana_brg/browse_plu');
+    Route::get('/rencana_brg/browse_beli', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse_beli')->middleware(['auth'])->name('rencana_brg/browse_beli');
+    Route::get('/rencana_brg/browse_koreksi', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse_koreksi')->middleware(['auth'])->name('rencana_brg/browse_koreksi');
+    Route::get('/rencana_brg/browse_sedia', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browse_sedia')->middleware(['auth'])->name('rencana_brg/browse_sedia');
+    Route::get('/rencana_brg/print', 'App\Http\Controllers\OTransaksi\Rencana_brgController@Print')->middleware(['auth'])->name('rencana_brg.print');
+    Route::get('/rencana_brg/barcode', 'App\Http\Controllers\OTransaksi\Rencana_brgController@Barcode')->middleware(['auth'])->name('rencana_brg.barcode');
+    Route::post('/rencana_brg/cetak-range', 'App\Http\Controllers\OTransaksi\Rencana_brgController@jasperBrgReport')->middleware(['auth'])->name('rencana_brg-cetak-range');
+    Route::get('/rencana_brg/cetak/{rencana_brg}', 'App\Http\Controllers\OTransaksi\Rencana_brgController@cetak')->middleware(['auth'])->name('rencana_brg.cetak');
+
+    Route::get('/rencana_brg/browsedz', 'App\Http\Controllers\OTransaksi\Rencana_brgController@browsedz')->middleware(['auth'])->name('rencana_brg/browsedz');
+    Route::get('/get-rencana_brg-report', 'App\Http\Controllers\OReport\RBrgController@getBrgReport')->middleware(['auth'])->name('get-rencana_brg-report');
+    Route::post('/jasper-rencana_brg-report', 'App\Http\Controllers\OReport\RBrgController@jasperBrgReport')->middleware(['auth'])->name('jasper-rencana_brg-report');
+    Route::get('rencana_brg/cekbrg', 'App\Http\Controllers\OTransaksi\Rencana_brgController@cekbrg')->middleware(['auth']);
+	Route::get('rencana_brg/get-select-kd_brg', 'App\Http\Controllers\OTransaksi\Rencana_brgController@getSelectKdbrg')->middleware(['auth']);
+
+// Dynamic Entry Rencana Data barang
+
+Route::get('/rencana_brg/edit', 'App\Http\Controllers\OTransaksi\Rencana_brgController@edit')->middleware(['auth'])->name('rencana_brg.edit');
+Route::post('/rencana_brg/update/{rencana_brg}', 'App\Http\Controllers\OTransaksi\Rencana_brgController@update')->middleware(['auth'])->name('rencana_brg.update');
+Route::get('/rencana_brg/delete/{rencana_brg}', 'App\Http\Controllers\OTransaksi\Rencana_brgController@destroy')->middleware(['auth'])->name('rencana_brg.delete');
+
+
+
+// Master Budget Order Lebih
+Route::get('/budget_ob', 'App\Http\Controllers\OTransaksi\Budget_obController@index')->middleware(['auth'])->name('budget_ob');
+Route::post('/budget_ob/store', 'App\Http\Controllers\OTransaksi\Budget_obController@store')->middleware(['auth'])->name('budget_ob/store');
+Route::get('/rbudget_ob', 'App\Http\Controllers\OReport\RBudget_obController@report')->middleware(['auth'])->name('rbudget_ob');
+    // GET SUP
+    Route::get('/get-budget_ob', 'App\Http\Controllers\OTransaksi\Budget_obController@getBudget_ob')->middleware(['auth'])->name('get-budget_ob');
+    Route::get('/budget_ob/browse', 'App\Http\Controllers\OTransaksi\Budget_obController@browse')->middleware(['auth'])->name('budget_ob/browse');
+    Route::get('/budget_ob/browse_th', 'App\Http\Controllers\OTransaksi\Budget_obController@browse_th')->middleware(['auth'])->name('budget_ob/browse_th');
+    Route::get('/budget_ob/browse_hari', 'App\Http\Controllers\OTransaksi\Budget_obController@browse_hari')->middleware(['auth'])->name('budget_ob/browse_hari');
+
+
+    Route::get('/budget_ob/browse', 'App\Http\Controllers\OTransaksi\Budget_obController@browse')->middleware(['auth'])->name('budget_ob/browse');
+    Route::get('/budget_ob/browsebudget_obz', 'App\Http\Controllers\OTransaksi\Budget_obController@browsebudget_obz')->middleware(['auth'])->name('budget_ob/browsebudget_obz');
+
+
+    Route::get('/get-budget_ob-report', 'App\Http\Controllers\OReport\RCounterController@getCounterReport')->middleware(['auth'])->name('get-budget_ob-report');
+    Route::post('/jasper-budget_ob-report', 'App\Http\Controllers\OReport\RCounterController@jasperCounterReport')->middleware(['auth'])->name('jasper-budget_ob-report');
+    Route::get('budget_ob/cekbudget_ob', 'App\Http\Controllers\OTransaksi\Budget_obController@cekbudget_ob')->middleware(['auth']);
+	Route::get('budget_ob/get-select-kodes', 'App\Http\Controllers\OTransaksi\Budget_obController@getSelectKodes')->middleware(['auth']);
+// Dynamic Budget Order Lebih
+Route::get('/budget_ob/edit', 'App\Http\Controllers\OTransaksi\Budget_obController@edit')->middleware(['auth'])->name('budget_ob.edit');
+Route::post('/budget_ob/update/{budget_ob}', 'App\Http\Controllers\OTransaksi\Budget_obController@update')->middleware(['auth'])->name('budget_ob.update');
+Route::get('/budget_ob/delete/{budget_ob}', 'App\Http\Controllers\OTransaksi\Budget_obController@destroy')->middleware(['auth'])->name('budget_ob.delete');
+
+
 require __DIR__.'/auth.php';
