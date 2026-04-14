@@ -115,8 +115,15 @@
 								"footer" => "sum",
 								"footerText" => "<b>@value</b>",
 							),
+							// "CETAK" => array(
+							// 	"label" => "Cetak",
+							// 	"type" => "string",
+							// 	"formatValue" => function($value, $row){
+							// 		return '<input type="checkbox" style="transform: scale(2);" class="cek-cetak" value="'.$row["NO_SUPL"].'">';
+							// 	}
+							// ),
 							"CETAK" => array(
-								"label" => "Cetak",
+								"label" => 'Cetak (Centang <input type="checkbox" id="check_all" style="transform: scale(1.5);"> Semua)',
 								"type" => "string",
 								"formatValue" => function($value, $row){
 									return '<input type="checkbox" style="transform: scale(2);" class="cek-cetak" value="'.$row["NO_SUPL"].'">';
@@ -258,6 +265,23 @@
 			}
 
 			$('#selected_suppliers').val(JSON.stringify(selected));
+		});
+
+		$(document).on('change', '#check_all', function(){
+			let table = $('#example').DataTable();
+			let rows = table.rows({ search: 'applied' }).nodes();
+			$('input.cek-cetak', rows).prop('checked', this.checked);
+		});
+
+		// OPTIONAL: kalau uncheck salah satu, header ikut update
+		$(document).on('change', '.cek-cetak', function(){
+			if(!$(this).prop('checked')){
+				$('#check_all').prop('checked', false);
+			} else {
+				if($('.cek-cetak:checked').length === $('.cek-cetak').length){
+					$('#check_all').prop('checked', true);
+				}
+			}
 		});
 
 		var dTableBSuplier;
