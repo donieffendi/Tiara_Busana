@@ -185,16 +185,10 @@
                                                 <i class="fas fa-print"></i> Print
                                             </button>
 
-                                            <button type="submit" name="print_type" value="barcode" class="btn btn-success">
-                                            Print Barcode
+                                            <button id="btnBarcode" class="btn btn-dark">
+                                                <i class="fas fa-print"></i> Print Barcode
                                             </button>
                                         </div>
-
-                                        {{-- <div class="col-md-2">
-                                            <button id="btnBarcode" class="btn btn-warning">
-                                                <i class="fas fa-barcode"></i> Barcode
-                                            </button>
-                                        </div> --}}
 
                                     </div>
                                 </div>
@@ -426,63 +420,46 @@
 			// 	});
 			// });
 
-            $('.barcode').each(function() {
-                var barcodeValue = $(this).data('barcode');
-                if (barcodeValue) {
-                    try {
-                        var cleanValue = barcodeValue.toString().trim();
+            $('#btnBarcode').on('click', function() {
+                let sub1 = $('#sub1').val();
+                let sub2 = $('#sub2').val();
+                let supp1 = $('#supp1').val();
+                let supp2 = $('#supp2').val();
 
-                        // Check if JsBarcode is loaded
-                        if (typeof JsBarcode === 'undefined') {
-                            console.log('JsBarcode library not loaded');
-                            $(this).text(barcodeValue);
-                            return;
-                        }
-
-                        // Use CODE128 format for all barcodes (most compatible)
-                        JsBarcode(this, cleanValue, {
-                            format: "CODE128",
-                            width: 2,
-                            height: 40,
-                            displayValue: false,
-                            textAlign: "center",
-                            textPosition: "bottom",
-                            background: "#ffffff",
-                            lineColor: "#000000"
-                        });
-                    } catch (e) {
-                        console.log('Invalid barcode: ' + barcodeValue + ', Error: ' + (e.message || e));
-                        // If barcode generation fails, show text instead
-                        $(this).replaceWith('<span>' + barcodeValue + '</span>');
-                    }
+                if (sub1 == '' && sub2 == '' && supp1 == '' && supp2 == '') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Anda belum mengisi filter!',
+                    });
+                    return;
                 }
-            });
 
-            function cetakBarcode(no_id){
                 Swal.fire({
                     title: 'Cetak Barcode',
-                    text: 'Mau cetak berapa kali?',
-                    input: 'number',
-                    inputAttributes: {
-                        min: 1
-                    },
-                    inputValue: 1,
+                    html: `
+                        <p>Masukkan jumlah cetak per barcode:</p>
+                        <input type="number" id="qtyCetak" class="swal2-input" placeholder="Jumlah" value="1" min="1">
+                    `,
+                    icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Cetak',
                     cancelButtonText: 'Batal',
-                    preConfirm: (value) => {
-                        if (!value || value <= 0) {
-                            Swal.showValidationMessage('Jumlah cetak harus lebih dari 0')
+                    preConfirm: () => {
+                        let qty = document.getElementById('qtyCetak').value;
+                        if (!qty || qty <= 0) {
+                            Swal.showValidationMessage('Jumlah harus lebih dari 0');
                         }
-                        return value
+                        return qty;
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        let qty = result.value
-                        window.open(`brg/cetak/${no_id}?qty=${qty}`, '_blank')
+                        let qty = result.value;
+
+                        window.open(`{{ url('brg/barcode') }}?sub1=${sub1}&sub2=${sub2}&supp1=${supp1}&supp2=${supp2}&qty=${qty}`, '_blank');
                     }
-                })
-            }
+                });
+            });
 
             $('#TYPE').on('change', function(){
 
