@@ -661,7 +661,7 @@ Route::get('/ubsuppost', 'App\Http\Controllers\OTransaksi\UbsupController@index_
 Route::get('/ubsuppost1', 'App\Http\Controllers\OTransaksi\UbsupController@post')->middleware(['auth'])->name('ubsuppost1');
 Route::post('/ubsuppost2', 'App\Http\Controllers\OTransaksi\UbsupController@post')->middleware(['auth'])->name('ubsuppost2');
 // Route::get('/ubsuppost2', 'App\Http\Controllers\OTransaksi\UbsupController@post')->middleware(['auth'])->name('ubsuppost2');
-Route::post('/ubsup/store', 'App\Http\Controllers\OTransaksi\UbsupController@store')->middleware(['auth'])->name('bsup/store');
+Route::post('/ubsup/store', 'App\Http\Controllers\OTransaksi\UbsupController@store')->middleware(['auth'])->name('ubsup/store');
 Route::get('/rubsup', 'App\Http\Controllers\OReport\RUbsupController@report')->middleware(['auth'])->name('rubsup');
 
 // GET Usulan Rubah Email
@@ -741,7 +741,7 @@ Route::get('/uppnpost', 'App\Http\Controllers\OTransaksi\UppnController@index_po
 Route::get('/uppnpost1', 'App\Http\Controllers\OTransaksi\UppnController@post')->middleware(['auth'])->name('uppnpost1');
 Route::post('/uppnpost2', 'App\Http\Controllers\OTransaksi\UppnController@post')->middleware(['auth'])->name('uppnpost2');
 // Route::get('/uppnpost2', 'App\Http\Controllers\OTransaksi\UppnController@post')->middleware(['auth'])->name('uppnpost2');
-Route::post('/uppn/store', 'App\Http\Controllers\OTransaksi\UppnController@store')->middleware(['auth'])->name('bsup/store');
+Route::post('/uppn/store', 'App\Http\Controllers\OTransaksi\UppnController@store')->middleware(['auth'])->name('uppn/store');
 Route::get('/ruppn', 'App\Http\Controllers\OReport\RUppnController@report')->middleware(['auth'])->name('ruppn');
 
 // GET Usulan Rubah Tanda PPN
