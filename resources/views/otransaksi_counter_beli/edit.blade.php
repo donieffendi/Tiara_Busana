@@ -398,12 +398,17 @@
     		 ganti();
 		}
 
+		$("#MARGIN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
 		$("#QBU").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
 		$("#NBU").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
 		$("#QOL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
 		$("#NOL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
 		$("#QSB").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
 		$("#NSB").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
+		$("#QST").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
+		$("#NST").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
+		$("#QBL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
+		$("#NBL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
 
     });
 
@@ -610,12 +615,17 @@
 		 $('#HARI').val("0");
 		 $('#LIM').val("0");
 
+		 $('#MARGIN').val("0.00");
 		 $('#QBU').val("0.00");
 		 $('#NBU').val("0.00");
 		 $('#QOL').val("0.00");
 		 $('#NOL').val("0.00");
 		 $('#QSB').val("0.00");
 		 $('#NSB').val("0.00");
+		 $('#QST').val("0.00");
+		 $('#NST').val("0.00");
+		 $('#QBL').val("0.00");
+		 $('#NBL').val("0.00");
 
 
 	}
