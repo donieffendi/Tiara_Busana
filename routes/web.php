@@ -762,6 +762,18 @@ Route::post('jasper-uppn-report', 'App\Http\Controllers\OReport\RUppnController@
 Route::get('/uppn/browse_pod', 'App\Http\Controllers\OTransaksi\UppnController@browse_pod')->middleware(['auth'])->name('uppn/browse_pod');
 Route::get('/uppn/jtempo', 'App\Http\Controllers\OTransaksi\UppnController@jtempo')->middleware(['auth'])->name('uppn/jtempo');
 
+
+Route::post('/uppn-new/store', 'App\Http\Controllers\OTransaksi\UppnNewController@store')->middleware(['auth'])->name('uppn-new/store');
+Route::get('/uppn-new/browse', 'App\Http\Controllers\OTransaksi\UppnNewController@browse')->middleware(['auth'])->name('uppn-new/browse');
+Route::get('/get-uppn-new', 'App\Http\Controllers\OTransaksi\UppnNewController@getUppnNew')->middleware(['auth'])->name('get-uppn-new');
+Route::get('/uppn-new/browse_pod', 'App\Http\Controllers\OTransaksi\UppnNewController@browse_uppn')->middleware(['auth'])->name('uppn-new/browse_uppnd');
+Route::get('/uppn-new/browse_spd', 'App\Http\Controllers\OTransaksi\UppnNewController@browse_spd')->middleware(['auth'])->name('uppn-new/browse_spd');
+Route::get('/uppn-new/edit', 'App\Http\Controllers\OTransaksi\UppnNewController@edit')->middleware(['auth'])->name('uppn-new.edit');
+Route::post('/uppn-new/update/{uppn}', 'App\Http\Controllers\OTransaksi\UppnNewController@update')->middleware(['auth'])->name('uppn-new.update');
+Route::get('/uppn-new/delete/{uppn}', 'App\Http\Controllers\OTransaksi\UppnNewController@destroy')->middleware(['auth'])->name('uppn-new.delete');
+Route::get('/uppn-new/print/{uppn}', 'App\Http\Controllers\OTransaksi\UppnNewController@print')->middleware(['auth'])->name('uppn-new.print');
+
+
 // Dynamic Usulan Rubah Email
 Route::get('/uppn/edit', 'App\Http\Controllers\OTransaksi\UppnController@edit')->middleware(['auth'])->name('uppn.edit');
 Route::get('/uppn/process', 'App\Http\Controllers\OTransaksi\UppnController@process')->middleware(['auth'])->name('uppn.process');

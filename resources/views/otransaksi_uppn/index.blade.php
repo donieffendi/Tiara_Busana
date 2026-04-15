@@ -1,26 +1,21 @@
 @extends('layouts.plain')
 @section('styles')
-<!-- <link rel="stylesheet" href="{{url('http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css') }}"> -->
-<link rel="stylesheet" href="{{asset('foxie_js_css/jquery.dataTables.min.css')}}" />
-
+    <!-- <link rel="stylesheet" href="{{ url('http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css') }}"> -->
+    <link rel="stylesheet" href="{{ asset('foxie_js_css/jquery.dataTables.min.css') }}" />
 @endsection
 
 <style>
-
     .card {
         padding: 5px 10px !important;
     }
 
-
     .table thead {
-        background-color: #FFFFFF;
-        color: #000000;
+        background-color: #fff;
+        color: #000;
     }
-
 
     .datatable tbody td {
         padding: 5px !important;
-        background-color: #FFFFFF;
     }
 
     .datatable {
@@ -33,305 +28,465 @@
         background-color: #42047e !important;
     }
 
-    th { font-size: 12px; }
-    td { font-size: 12px; }
+    th {
+        font-size: 13px;
+    }
+
+    td {
+        font-size: 13px;
+    }
+
+    .x {
+        Color: red
+    }
 
     /* menghilangkan padding */
     .content-header {
         padding: 0 !important;
     }
 
-    .badge-warning {
-        background-color: #5a01d5 !important; /* Warna default badge-warning (kuning) */
-        color: white !important; /* Warna teks putih */
-    }
+    /*
+    BG WARNA PUTIH
+     */
 
-    .badge-success {
-        background-color: #068f3f !important; /* Warna default badge-warning (kuning) */
-        color: white !important; /* Warna teks putih */
-    }
+    .datatable,
+	.dataTables_wrapper,
+	.datatable thead,
+	.datatable tbody tr,
+	.dataTables_scrollBody {
+		background-color: white;
+		color: black;
+	}
 
+	/* Override baris ganjil/genap supaya semua putih */
+	.datatable tbody tr.odd,
+	.datatable tbody tr.even {
+		background-color: white !important;
+		color: black !important;
+	}
+
+	/* Hover effect untuk baris */
+	.datatable tbody tr:hover {
+		background-color: #f2f2f2 !important; /* ganti sesuai selera */
+		color: black !important;
+		cursor: pointer;
+	}
 </style>
 
 
 @section('content')
-<!-- Sweetalert delete -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!--  -->
-<div class="content-wrapper">
+    <!-- Sweetalert delete -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--  -->
+
+    <div class="content-wrapper">
 
 
-    <!-- Status -->
-    @if (session('status'))
-        <div class="alert alert-success">
-            {{session('status')}}
-        </div>
+        <!-- Status -->
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
 
-        <!-- tambahan notifikasinya untuk delete di index -->
-        <script>
-            Swal.fire({
-					title: 'Deleted!',
-					text: 'Data has been deleted. {{session('status')}}',
-					icon: 'success',
-					confirmButtonText: 'OK'
-				})
-        </script>
-        <!-- tutupannya -->
+            <!-- tambahan notifikasinya untuk delete di index -->
+            <script>
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Data has been deleted. {{ session('status') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
+            </script>
+            <!-- tutupannya -->
+        @endif
 
-    @endif
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
+            </script>
+        @endif
 
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    title: 'Oops!',
+                    text: '{{ session('error') }}',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            </script>
+        @endif
 
-              <!-- filter kolom di index -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
 
-                <!-- Button to open modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#columnModal">
-                    Filter Columns
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="columnModalLabel">Toggle Columns</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close">X</button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Column visibility checkboxes -->
-                                <form id="columnToggleForm">
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="0" id="columnNo" checked>
-                                        <label class="form-check-label" for="columnNo">No</label>
+                                <!-- filter kolom di index -->
+                                @if (session('errorInsert'))
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Gagal menyimpan:</strong> {{ session('errorInsert') }}
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="1" id="columnAction" checked>
-                                        <label class="form-check-label" for="columnAction">Action</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="2" id="columnBukti" checked>
-                                        <label class="form-check-label" for="columnBukti">No. Bukti</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="3" id="columnTgl" checked>
-                                        <label class="form-check-label" for="columnTgl">Tgl</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="4" id="columnConter" checked>
-                                        <label class="form-check-label" for="columnConter">Conter</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="5" id="columnNama" checked>
-                                        <label class="form-check-label" for="columnNama">Nama</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="6" id="columnTotalqty" checked>
-                                        <label class="form-check-label" for="columnTotalqty">Total Qty</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input column-checkbox" type="checkbox"
-                                            value="7" id="columnNotes" checked>
-                                        <label class="form-check-label" for="columnNotes">Notes</label>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary"
-                                    id="applyColumnToggle">Apply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                @endif
+                                <div class="d-flex justify-content-start gap-2 mb-3">
+                                    <!-- Button to open modal -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#columnModal">
+                                        Filter Columns
+                                    </button>
 
-              <!-- batas filter -->
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="columnModalLabel">Toggle Columns</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close">X</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Column visibility checkboxes -->
+                                                <form id="columnToggleForm">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="0" id="columnDetail" checked>
+                                                        <label class="form-check-label" for="columnDetail">Detail</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="1" id="columnNo" checked>
+                                                        <label class="form-check-label" for="columnNo">No</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="2" id="columnAction" checked>
+                                                        <label class="form-check-label" for="columnAction">Action</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="3" id="columnBukti" checked>
+                                                        <label class="form-check-label" for="columnBukti">Bukti#</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="4" id="columnTgl" checked>
+                                                        <label class="form-check-label" for="columnTgl">Tgl</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="5" id="columnTgl" checked>
+                                                        <label class="form-check-label" for="columnTgl">Tgl</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="6" id="columnNotes" checked>
+                                                        <label class="form-check-label" for="columnNotes">Keterangan</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="7" id="columnPosted" checked>
+                                                        <label class="form-check-label" for="columnPosted">Status Posting</label>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    id="applyColumnToggle">Apply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-              <form method="POST" id="entri" action="{{url('uppn/posting')}}">
+                                <!-- batas filter -->
 
-              <input name="flagz"  class="form-control flagz" id="flagz" value="{{$flagz}}" hidden >
-              <input name="golz"  class="form-control golz" id="golz" value="{{$golz}}" hidden >
-
-                <!-- <button class="btn btn-danger" type="button"  onclick="simpan()">Posting</button> -->
-
-                <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
+                                <input name="flagz" class="form-control flagz" id="flagz" value="{{ $flagz }}"
+                                    hidden>
 
 
+                                {{-- <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
                     <thead class="table-dark">
                         <tr>
+                            <th scope="col" style="text-align: center"></th>
                             <th scope="col" style="text-align: center">#</th>
-				     		<th scope="col" style="text-align: center">-</th>							
-                            <th scope="col" style="text-align: left">No. Bukti</th>
+				     		<th scope="col" style="text-align: center">-</th>
+                            <th scope="col" style="text-align: left">Bukti#</th>
                             <th scope="col" style="text-align: left">Tgl</th>
-                            <th scope="col" style="text-align: right">Conter</th>
-                            <th scope="col" style="text-align: left">Nama</th>
-                            <th scope="col" style="text-align: left">Total Qty</th>
+                            <th scope="col" style="text-align: right">Total_Qty</th>
                             <th scope="col" style="text-align: left">Notes</th>
                         </tr>
                     </thead>
 
                     <tbody>
                     </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                </table> --}}
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab"
+                                            data-bs-target="#tab1" type="button">
+                                            Usulan Tanda PPN
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="nav-link" id="tab2-tab" data-bs-toggle="tab"
+                                            data-bs-target="#tab2" type="button">
+                                            Pengesahan Tanda PPN
+                                        </button>
+                                    </li>
+                                </ul>
 
+                                <div class="tab-content mt-3">
+
+
+
+                                    <!-- TAB 1 -->
+                                    <div class="tab-pane fade show active" id="tab1">
+									<!-- Scan Barcode -->
+                                    <a class="btn btn-success btn-lg"
+                                        href="{{ url('uppn/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
+                                        <i class="fas fa-file"></i> Usulan Baru
+                                    </a>
+                                        <table class="table table-striped table-hover nowrap datatable" id="datatable1">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    {{-- <th></th>
+                                                    <th>#</th>
+                                                    <th>-</th>
+                                                    <th>Bukti#</th>
+                                                    <th>Tgl</th>
+                                                    <th>Total_Qty</th>
+                                                    <th>Notes</th>
+                                                    <th>Posted</th> --}}
+
+                                                    <th scope="col" style="text-align: center">No. Urut</th>
+                                                    <th scope="col" style="text-align: center">-</th>
+                                                    <th scope="col" style="text-align: left">No. Bukti</th>
+                                                    <th scope="col" style="text-align: left">Tanggal Entry</th>
+                                                    <th scope="col" style="text-align: right">Keterangan</th>
+                                                    <th scope="col" style="text-align: left">Status Posting</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                    <!-- TAB 2 -->
+                                    <div class="tab-pane fade" id="tab2">
+									 <!-- New -->
+                                    <a class="btn btn-primary btn-lg"
+                                        href="{{ url('uppn-new/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
+                                        <i class="fas fa-check"></i> Pengesahan
+                                    </a>
+                                        <table class="table table-striped table-hover nowrap datatable" id="datatable2">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    {{-- <th></th>
+                                                    <th>#</th>
+                                                    <th>-</th>
+                                                    <th>Bukti#</th>
+                                                    <th>Tgl</th>
+                                                    <th>Total_Qty</th>
+                                                    <th>Notes</th> --}}
+
+                                                    <th scope="col" style="text-align: center">No. Urut</th>
+                                                    <th scope="col" style="text-align: center">-</th>
+                                                    <th scope="col" style="text-align: left">No. Bukti</th>
+                                                    <th scope="col" style="text-align: left">Tanggal Entry</th>
+                                                    <th scope="col" style="text-align: right">Keterangan</th>
+                                                    <th scope="col" style="text-align: left">Status Posting</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('javascripts')
+    <!-- filter kolom di index -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- batas filter  -->
 
-<!-- filter kolom di index -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<!-- batas filter  -->
-
-<script>
-
-  // filter kolom di index
-    window.addEventListener('message', (event) => {
-      if (event.origin !== window.location.origin) {
-          console.warn('Origin mismatch!');
-          return;
-      }
-
-      const currentData = event.data;
-      console.log(currentData); // Use currentData as needed
-    });
-  // batas filter
-
-  $(document).ready(function() {
-
-        var dataTable = $('.datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            autoWidth: false,
-            // 'scrollX': true,
-            'scrollY': '400px',
-            "order": [[ 0, "asc" ]],
-            ajax:
-            {
-                url: "{{ route('get-uppn') }}",
-				        data:
-                {
-                    flagz : $('#flagz').val(),
-                    golz : $('#golz').val(),
-
-                }
-            },
-
-            columns: 
-            [
-
-                { data: 'DT_RowIndex', orderable: false, searchable: false },
-			    { data: 'action', name: 'action'},
-                {data: 'NO_BUKTI', name: 'NO_BUKTI',
-                  render : function ( data, type, row, meta )
-                  {
-                    return ' <h5><span class="badge badge-pill badge-warning">' + data + '</span></h5>';
-                  }
-                },
-                {data: 'TGL', name: 'TGL'},
-                {data: 'CNT', name: 'CNT'},
-                {data: 'NCNT', name: 'NCNT'},
-                {
-                  data: 'total_qty',
-                  name: 'total_qty',
-                  render: $.fn.dataTable.render.number( ',', '.', 0, '' )
-				},								
-                {data: 'notes', name: 'notes'},
-            ],
-            columnDefs: 
-            [
-                {
-                    "className": "dt-center", 
-                    "targets": [0,1,2,4,5]
-                },
-                {
-                    "className": "dt-right", 
-                    "targets": 6
-                },			
-                {
-                  targets: 3,
-                  render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
-                }
-            ],
-            lengthMenu: 
-            [
-                [8, 10, 20, 50, 100, -1],
-                [8, 10, 20, 50, 100, "All"]
-            ],
-            dom: "<'row'<'col-md-6'><'col-md-6'>>" +
-                "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
-                "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-
-        });
-
+    <script>
         // filter kolom di index
+        window.addEventListener('message', (event) => {
+            if (event.origin !== window.location.origin) {
+                console.warn('Origin mismatch!');
+                return;
+            }
 
-        // Handle column visibility toggle
-        $('#applyColumnToggle').on('click', function() {
+            const currentData = event.data;
+            console.log(currentData); // Use currentData as needed
+        });
+        // batas filter
+
+        $(document).ready(function() {
+            let table1, table2;
+
+            table1 = initDataTable('datatable1', "{{ route('get-uppn') }}");
+
+            // TAB 2 load saat diklik
+            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+                let target = $(e.target).attr("data-bs-target");
+
+                if (target === '#tab2' && !$.fn.DataTable.isDataTable('#datatable2')) {
+                    table2 = initDataTable('datatable2', "{{ route('get-uppn-new') }}");
+                }
+            });
+
+            function initDataTable(tableId, url) {
+                return $('#' + tableId).DataTable({
+                    processing: true,
+                    serverSide: true,
+                    autoWidth: false,
+                    scrollY: '400px',
+
+                    ajax: {
+                        url: url,
+                        data: {
+                            flagz: $('#flagz').val()
+                        }
+                    },
+                    columns: [
+                        //add tombol +
+                        {
+                            data: null, // Column for the button
+                            orderable: false,
+                            searchable: false,
+                            render: function(data, type, row, meta) {
+
+                                // tanpa ada POST (posting) di atas
+                                return `<button class="btn btn-success btn-sm toggle-button" data-no_bukti="${row.NO_BUKTI}" onclick="toggleButton(this)">+</button>`;
+                            }
+                        },
+                        // tutupannya
+
+                        {
+                            data: 'DT_RowIndex',
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: 'action',
+                            name: 'action'
+                        },
+                        {
+                            data: 'NO_BUKTI',
+                            name: 'NO_BUKTI',
+                            render: function(data, type, row, meta) {
+                                return ' <h5><span class="x">' + data + '</span></h5>';
+                            }
+                        },
+                        {
+                            data: 'TGL',
+                            name: 'TGL'
+                        },
+                        {data: 'notes', name: 'notes'},
+                        { data: 'POSTED', name: 'POSTED',
+                        render : function(data, type, row, meta) {
+                            if(row['POSTED']=="0"){
+                                return '';
+                            }else{
+                                return '<input type="checkbox" checked style="pointer-events: none;">';
+                            }
+                        }
+                },
+                    ],
+                    columnDefs: [{
+                            "className": "dt-center",
+                            "targets": [0, 1, 2, 5]
+                        },
+                        // {
+                        //     "className": "dt-right",
+                        //     "targets": 4
+                        // },
+                        {
+                            targets: 4,
+                            render: $.fn.dataTable.render.moment('DD-MM-YYYY')
+                        }
+                    ],
+                    lengthMenu: [
+                        [8, 10, 20, 50, 100, -1],
+                        [8, 10, 20, 50, 100, "All"]
+                    ],
+
+
+                    dom: "<'row'<'col-md-6'><'col-md-6'>>" +
+                        "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
+                        "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
+                });
+
+            }
+
+
+
+            // filter kolom di index
+
+            // Handle column visibility toggle
+            $('#applyColumnToggle').on('click', function() {
+                $('#columnToggleForm .column-checkbox').each(function() {
+                    var column = dataTable.column($(this).val());
+                    column.visible($(this).is(':checked'));
+                });
+                $('#columnModal').modal('hide'); // Close the modal
+            });
+
             $('#columnToggleForm .column-checkbox').each(function() {
                 var column = dataTable.column($(this).val());
                 column.visible($(this).is(':checked'));
             });
-            $('#columnModal').modal('hide'); // Close the modal
-        });
 
-        $('#columnToggleForm .column-checkbox').each(function() {
-            var column = dataTable.column($(this).val());
-            column.visible($(this).is(':checked'));
-        });
+            // batas filter
 
-        // batas filter
+            //     $("div.test_btn").html(`
+        // 	<a class="btn btn-success btn-lg me-2"
+        // 	   href="{{ url('uppn/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
+        // 		<i class="fas fa-plus"></i> Scan Barcode
+        // 	</a>
 
-        $("div.test_btn").html(
-        '<a class="btn btn-lg btn-md btn-success" href="{{url('uppn/edit?flagz='.$flagz.'&golz='.$golz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a> ');
+        // 	<a class="btn btn-primary btn-lg"
+        // 	   href="{{ url('uppn/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
+        // 		<i class="fas fa-file"></i> New
+        // 	</a>
+        // `);
 
+            // function buat ganti tombol + onclick
+            window.toggleButton = function(button) {
+                const no_bukti = $(button).data('no_bukti'); // Get the no_bukti from data attribute
 
-        // function buat ganti tombol + onclick
-        window.toggleButton = function(button) {
-            const no_bukti = $(button).data('no_bukti'); // Get the no_bukti from data attribute
+                if (button.innerText === '+') {
+                    button.innerText = '-';
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-danger');
 
-            if (button.innerText === '+') {
-                button.innerText = '-';
-                button.classList.remove('btn-success');
-                button.classList.add('btn-danger');
+                    // Fetch and show detail data using no_bukti
+                    $.ajax({
+                        url: '{{ route('get-detail-uppn') }}', // Define the route to fetch detail data
+                        method: 'GET',
+                        data: {
+                            no_bukti: no_bukti
+                        }, // Pass no_bukti in the request
+                        success: function(response) {
+                            console.log(response);
 
-                // Fetch and show detail data using no_bukti
-                $.ajax({
-                    url: '{{ route('get-detail-uppn') }}', // Define the route to fetch detail data
-                    method: 'GET',
-                    data: {
-                        no_bukti: no_bukti
-                    }, // Pass no_bukti in the request
-                    success: function(response) {
-                        console.log(response);
-
-                        // jangan lupa untuk menjumlah tambah di sini
-                        let totalQty = 0;
-                        let totalTotal = 0;
-                        // tutupannya
-
-
-                        let detailHtml = `
+                            let totalQty = 0;
+                            let detailHtml = `
                             <div class="p-3">
                                 <table class="table table-bordered table-sm">
                                     <thead class="table-light">
@@ -339,108 +494,81 @@
                                             <th>No.</th>
                                             <th>Kode</th>
                                             <th>Nama</th>
-                                            <th>Email</th>
-                                            <th>Email Baru</th>
+                                            <th>Satuan</th>
+                                            <th>Qty-Comp</th>
+                                            <th>Qty-Real</th>
+                                            <th>Qty</th>
+                                            <th>Ket</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                         `;
 
-                        response.forEach((item, index) => {
-                            // untuk menjumlah
-                            totalQty += parseFloat(item.QTY);
+                            response.forEach((item, index) => {
+                                totalQty += parseFloat(item.QTY);
 
-                            detailHtml += `
+                                detailHtml += `
                                 <tr>
                                     <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${index + 1}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.KODES}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.NAMAS}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.EMAIL}</div></td>
-                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.E_BARU}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.KD_BRG}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.NA_BRG}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.SATUAN}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTYC).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTYR).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTY).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.KET}</div></td>
                                 </tr>
                             `;
-                        });
-                        // <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTY).toFixed(2)}</div></td>
-                        // detailHtml += `
-                        //             <tr>
-                        //                 <td colspan="4" style="text-align: right;"><strong>Total:</strong></td>
-                        //                 <td>
-                        //                     <div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalQty.toFixed(2)}</div>
-                        //                 </td>
+                            });
 
-                        //             </tr>
+                            detailHtml += `
+                                    <tr>
+                                        <td colspan="6" style="text-align: right;"><strong>Total:</strong></td>
+                                        <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalQty.toFixed(2)}</div></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
 
-                        //             </tbody>
-                        //         </table>
-                        //     </div>
-                        // `;
-
-                        // Insert the detail row below the clicked row
-                        var detailRow = `<tr class="detail-row">
+                            // Insert the detail row below the clicked row
+                            var detailRow = `<tr class="detail-row">
                                 <td colspan="11">${detailHtml}</td>
-                                </tr>`;
+                              </tr>`;
 
-                        $(button).closest('tr').after(detailRow);
-                    }
-                });
-            } else {
-                button.innerText = '+';
-                button.classList.remove('btn-danger');
-                button.classList.add('btn-success');
+                            $(button).closest('tr').after(detailRow);
+                        }
+                    });
+                } else {
+                    button.innerText = '+';
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-success');
 
-                // Remove the detail row if it exists
-                $(button).closest('tr').next('.detail-row').remove();
-            }
-        };
+                    // Remove the detail row if it exists
+                    $(button).closest('tr').next('.detail-row').remove();
+                }
+            };
 
-        // tutupanya
-    });
-
-    function deleteRow(link) {
-        console.log('Masuk');
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Are you sure?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = link;
-            }
+            // tutupannya
         });
-    }
 
 
-	function simpan() {
-    var check = '0';
-    var min = '0';
-
-
-	document.getElementById("entri").submit();
-
-	}
-
-    // $(document).on("click", ".process-btn", function (e) {
-    //     e.preventDefault();
-    //     if (confirm("Apakah Anda ingin memproses?")) {
-    //         $.ajax({
-    //             url: "{{ route('uppn.process') }}",
-    //             type: "GET",
-    //             success: function(response) {
-    //                 alert(response.message);
-    //                 if (response.status === "success") {
-    //                     location.reload(); // Reload jika sukses
-    //                 }
-    //             }
-    //         });
-    //     }
-    // });
-
-
-
-</script>
+        function deleteRow(link) {
+            console.log('Masuk');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Are you sure?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = link;
+                }
+            });
+        }
+    </script>
 @endsection
