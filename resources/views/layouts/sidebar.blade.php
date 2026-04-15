@@ -145,6 +145,12 @@
 
     }
 
+    .menu-card h7 {
+      margin-top: 8px;
+	    color:rgb(255, 0, 0);
+
+    }
+
     .menu-card i {
       font-size: 30px;
       margin-bottom: 10px;
@@ -316,6 +322,7 @@
                   <!-- <i class="nav-icon fas fa-users icon-yellow" style="text-align: center;"></i> -->
                   <i style="margin-left:-25px;font-size: 40px;" class="nav-icon fas fa-warehouse icon-blue"></i>
                 <h6>Counter Busana</h6>
+                <h7>(Tidak Dipakai)</h7>
               </a>
 			      </div>
         </div>
