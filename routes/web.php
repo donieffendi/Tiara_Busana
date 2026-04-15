@@ -992,7 +992,7 @@ Route::get('/jasper-penjualansummary-report', 'App\Http\Controllers\OReport\RPen
 Route::get('/jasper-penjualansummarydetail-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanSummaryDetailReport')->middleware(['auth'])->name('jasper-penjualansummarydetail-report');
 Route::get('/jasper-penjualan-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperPenjualanReport')->middleware(['auth'])->name('jasper-penjualan-report');
 Route::get('/jasper-spbsn-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperSpbsnReport')->middleware(['auth'])->name('jasper-spbsn-report');
-Route::get('/jasper-counter-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperCounterReport')->middleware(['auth'])->name('jasper-counter-report');
+Route::get('/jasper-conter-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperCounterReport')->middleware(['auth'])->name('jasper-conter-report');
 Route::get('/jasper-jual-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperJualReport')->middleware(['auth'])->name('jasper-jual-report');
 Route::get('/jasper-omzet-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperOmzetReport')->middleware(['auth'])->name('jasper-omzet-report');
 Route::get('/jasper-hari-report', 'App\Http\Controllers\OReport\RPenjualanController@jasperHariReport')->middleware(['auth'])->name('jasper-hari-report');

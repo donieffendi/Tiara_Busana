@@ -1330,7 +1330,7 @@ function cetakCounter() {
 		cnt: cnt
     });
 
-    var url = '{{ route('jasper-counter-report') }}?' + params.toString();
+    var url = '{{ route('jasper-conter-report') }}?' + params.toString();
     printReport(url);
 }
 
