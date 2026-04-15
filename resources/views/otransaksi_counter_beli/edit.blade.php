@@ -42,7 +42,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{($tipx=='new')? url('/budget_ob/store/') : url('/budget_ob/update/'.$header->NO_ID ) }}" method="POST" name ="entri" id="entri" >
+                    <form action="{{($tipx=='new')? url('/counter_beli/store/') : url('/counter_beli/update/'.$header->NO_ID ) }}" method="POST" name ="entri" id="entri" >
 
                         @csrf
 
@@ -125,6 +125,22 @@
 											value="{{$header->PER}}" placeholder=" " >
 										<label for="PER">Periode</label>
 									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+									</div>
+
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="QBU" id="QBU" name="QBU"
+											value="{{$header->QBU}}" placeholder=" " style="text-align: right">
+										<label for="QBU">Budget</label>
+									</div>
+
+                                    <div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="NBU" id="NBU" name="NBU"
+											value="{{$header->NBU}}" placeholder=" " style="text-align: right">
+										<label for="NBU">Rp</label>
+									</div>
 								</div>
 
 								<div class="form-group row">
@@ -133,6 +149,23 @@
 										<input type="text" class="NA_CNT" id="NA_CNT" name="NA_CNT"
 											value="{{$header->NA_CNT}}" placeholder=" " >
 										<label for="NA_CNT">Nama</label>
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+									</div>
+
+
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="QOL" id="QOL" name="QOL"
+											value="{{$header->QOL}}" placeholder=" " style="text-align: right">
+										<label for="QOL">Order Lebih</label>
+									</div>
+
+                                    <div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="NOL" id="NOL" name="NOL"
+											value="{{$header->NOL}}" placeholder=" " style="text-align: right">
+										<label for="NOL">Rp</label>
 									</div>
 								</div>
 
@@ -145,63 +178,48 @@
 										<label for="SUP">Suplier</label>
 									</div>
 
-									<div class="col-md-4 form-group row special-input-label">
 
-										<input type="text" class="NAMAS" id="NAMAS" name="NAMAS"
-											value="{{$header->NAMAS}}" placeholder=" " >
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="MARGIN" id="MARGIN" name="MARGIN"
+											value="{{$header->MARGIN}}" placeholder=" " style="text-align: right">
+										<label for="MARGIN">Margin</label>
 									</div>
-								</div>
 
-								<div class="form-group row">
+									<div class="col-md-2 form-group row special-input-label">
+									</div>
+
 
 
 									<div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="QBU" id="QBU" name="QBU"
-											value="{{$header->QBU}}" placeholder=" " style="text-align: right">
-										<label for="QBU">Total Budget</label>
+										<input type="text" class="QBL" id="QBL" name="QBL"
+											value="{{$header->QBL}}" placeholder=" " style="text-align: right">
+										<label for="QBL">Pembelian</label>
 									</div>
 
                                     <div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="NBU" id="NBU" name="NBU"
-											value="{{$header->NBU}}" placeholder=" " style="text-align: right">
-										<label for="NBU">Rp</label>
+										<input type="text" class="NBL" id="NBL" name="NBL"
+											value="{{$header->NBL}}" placeholder=" " style="text-align: right">
+										<label for="NBL">Rp</label>
 									</div>
-								</div>
-
-								<div class="form-group row">
-
-
-									<div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="QOL" id="QOL" name="QOL"
-											value="{{$header->QOL}}" placeholder=" " style="text-align: right">
-										<label for="QOL">Total Order Lebih</label>
-									</div>
-
-                                    <div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="NOL" id="NOL" name="NOL"
-											value="{{$header->NOL}}" placeholder=" " style="text-align: right">
-										<label for="NOL">Rp</label>
-									</div>
-								</div>
-
-								<div class="form-group row">
-                                    <div class="col-md-4 form-group row special-input-label">
-
-										<input type="text" class="BLK_STS" id="BLK_STS" name="BLK_STS"
-											value="{{$header->BLK_STS}}" placeholder=" " >
-										<label for="BLK_STS">Status Blokir</label>
-
-									</div>
-
 								</div>
 
                                 <div class="form-group row">
 
 
+									<div class="col-md-4 form-group row special-input-label">
+
+										<input type="text" class="NAMAS" id="NAMAS" name="NAMAS"
+											value="{{$header->NAMAS}}" placeholder=" " >
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+									</div>
+
+
 									<div class="col-md-2 form-group row special-input-label">
 										<input type="text" class="QSB" id="QSB" name="QSB"
 											value="{{$header->QSB}}" placeholder=" " style="text-align: right">
-										<label for="QSB">Order Lebih Sp</label>
+										<label for="QSB">Sisa</label>
 									</div>
 
                                     <div class="col-md-2 form-group row special-input-label">
@@ -211,8 +229,50 @@
 									</div>
 								</div>
 
+                                <div class="form-group row">
+
+									<!-- code text box baru -->
+									<div class="col-md-1 form-group row special-input-label">
+
+										<input type="text" class="ST_CNT" id="ST_CNT" name="ST_CNT"
+											value="{{$header->ST_CNT}}" placeholder=" " >
+										<label for="ST_CNT">Status</label>
+									</div>
 
 
+									<!-- code text box baru -->
+									<div class="col-md-1 form-group row special-input-label">
+
+										<input type="text" class="ST_ORD" id="ST_ORD" name="ST_ORD"
+											value="{{$header->ST_ORD}}" placeholder=" " >
+										<label for="ST_ORD">Order</label>
+									</div>
+
+
+									<!-- code text box baru -->
+									<div class="col-md-2 form-group row special-input-label">
+
+										<input type="text" class="ST_PJK" id="ST_PJK" name="ST_PJK"
+											value="{{$header->ST_PJK}}" placeholder=" " >
+										<label for="ST_PJK">KPT</label>
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+									</div>
+
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="QST" id="QST" name="QST"
+											value="{{$header->QST}}" placeholder=" " style="text-align: right">
+										<label for="QST">Entry Pembelian</label>
+									</div>
+
+                                    <div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="NST" id="NST" name="NST"
+											value="{{$header->NST}}" placeholder=" " style="text-align: right">
+										<label for="NST">Rp</label>
+									</div>
+
+								</div>
 
 
 							</div>
@@ -221,22 +281,22 @@
 
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
-								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/budget_ob/edit/?idx=' .$idx. '&tipx=top')}}'" class="btn btn-outline-primary">Top</button>
-								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/budget_ob/edit/?idx='.$header->NO_ID.'&tipx=prev&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Prev</button>
-								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/budget_ob/edit/?idx='.$header->NO_ID.'&tipx=next&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Next</button>
-								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/budget_ob/edit/?idx=' .$idx. '&tipx=bottom')}}'" class="btn btn-outline-primary">Bottom</button>
+								<button hidden type="button" id='TOPX'  onclick="location.href='{{url('/counter_beli/edit/?idx=' .$idx. '&tipx=top')}}'" class="btn btn-outline-primary">Top</button>
+								<button hidden type="button" id='PREVX' onclick="location.href='{{url('/counter_beli/edit/?idx='.$header->NO_ID.'&tipx=prev&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Prev</button>
+								<button hidden type="button" id='NEXTX' onclick="location.href='{{url('/counter_beli/edit/?idx='.$header->NO_ID.'&tipx=next&kodex='.$header->CNT )}}'" class="btn btn-outline-primary">Next</button>
+								<button hidden type="button" id='BOTTOMX' onclick="location.href='{{url('/counter_beli/edit/?idx=' .$idx. '&tipx=bottom')}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">
-								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/budget_ob/edit/?idx=0&tipx=new')}}'" class="btn btn-warning">New</button>
+								<button hidden type="button" id='NEWX' onclick="location.href='{{url('/counter_beli/edit/?idx=0&tipx=new')}}'" class="btn btn-warning">New</button>
 								<button hidden type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>
-								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/budget_ob/edit/?idx=' .$idx. '&tipx=undo' )}}'" class="btn btn-info">Undo</button>
+								<button hidden type="button" id='UNDOX' onclick="location.href='{{url('/counter_beli/edit/?idx=' .$idx. '&tipx=undo' )}}'" class="btn btn-info">Undo</button>
 								<button type="button" id='SAVEX' onclick='simpan()' class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
 							<div class="col-md-3">
 								<button hidden type="button" id='HAPUSX' hidden onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
 
-								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/budget_ob' )}}'" class="btn btn-outline-secondary">Close</button> -->
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/counter_beli' )}}'" class="btn btn-outline-secondary">Close</button> -->
 
 								<!-- tombol close sweet alert -->
 								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
@@ -588,7 +648,7 @@
 					confirmButtonText: 'OK'
 				}).then(() => {
 					// Redirect to delete the data after user confirms the success message
-	            	loc = "{{ url('/budget_ob/delete/'.$header->NO_ID) }}"  ;
+	            	loc = "{{ url('/counter_beli/delete/'.$header->NO_ID) }}"  ;
 
 		            // alert(loc);
 	            	window.location = loc;
@@ -611,7 +671,7 @@
 			cancelButtonText: 'No, stay here'
 		}).then((result) => {
 			if (result.isConfirmed) {
-	        	loc = "{{ url('/budget_ob/') }}" ;
+	        	loc = "{{ url('/counter_beli/') }}" ;
 				window.location = loc ;
 			} else {
 				Swal.fire({
@@ -628,7 +688,7 @@
 	function CariBukti() {
 
 		var cari = $("#CARI").val();
-		var loc = "{{ url('/budget_ob/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&kodex=' +encodeURIComponent(cari);
+		var loc = "{{ url('/counter_beli/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&kodex=' +encodeURIComponent(cari);
 		window.location = loc;
 
 	}
@@ -639,7 +699,7 @@
 	function cekSup(kodes) {
 		$.ajax({
 			type: "GET",
-			url: "{{url('budget_ob/cekcounter')}}",
+			url: "{{url('counter_beli/cekcounter')}}",
             async: false,
 			data: ({ CNT: kodes, }),
 			success: function(data) {

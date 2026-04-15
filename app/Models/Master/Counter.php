@@ -58,5 +58,10 @@ class Counter extends Model
         'NOL',
         'QSB',
         'NSB',
+        'QST',
+        'NST',
+        'QBL',
+        'NBL'
+
     ];
 }

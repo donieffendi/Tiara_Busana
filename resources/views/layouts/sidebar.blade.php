@@ -1251,7 +1251,7 @@
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
               {{-- <a href="javascript:addTab('Conter Pembelian', '{{url('counter?flagz=CT')}}')" > --}}
-                <a href="javascript:addTab('Conter Pembelian', '{{url('po?flagz=PO&golz=CT')}}')">
+                <a href="javascript:addTab('Conter Pembelian', '{{url('counter_beli')}}')" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-blue"></i>
                 <h6>Conter Pembelian</h6>

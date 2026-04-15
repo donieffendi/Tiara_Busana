@@ -200,7 +200,7 @@
                     [0, "asc"]
                 ],
                 ajax: {
-                    url: '{{ route('get-budget_ob') }}'
+                    url: '{{ route('get-counter_beli') }}'
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -261,7 +261,7 @@
             // batas filter
 
             $("div.test_btn").html(
-                '<a class="btn btn-lg btn-md btn-success" href="{{ url('budget_ob/edit?idx=0&tipx=new') }}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
+                '<a class="btn btn-lg btn-md btn-success" href="{{ url('counter_beli/edit?idx=0&tipx=new') }}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
             );
         });
         // Open modal programmatically

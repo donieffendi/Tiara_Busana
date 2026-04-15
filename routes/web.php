@@ -1641,7 +1641,8 @@ Route::get('/rencana_brg/delete/{rencana_brg}', 'App\Http\Controllers\OTransaksi
 Route::get('/budget_ob', 'App\Http\Controllers\OTransaksi\Budget_obController@index')->middleware(['auth'])->name('budget_ob');
 Route::post('/budget_ob/store', 'App\Http\Controllers\OTransaksi\Budget_obController@store')->middleware(['auth'])->name('budget_ob/store');
 Route::get('/rbudget_ob', 'App\Http\Controllers\OReport\RBudget_obController@report')->middleware(['auth'])->name('rbudget_ob');
-    // GET SUP
+
+// GET Budget Order Lebih
     Route::get('/get-budget_ob', 'App\Http\Controllers\OTransaksi\Budget_obController@getBudget_ob')->middleware(['auth'])->name('get-budget_ob');
     Route::get('/budget_ob/browse', 'App\Http\Controllers\OTransaksi\Budget_obController@browse')->middleware(['auth'])->name('budget_ob/browse');
     Route::get('/budget_ob/browse_th', 'App\Http\Controllers\OTransaksi\Budget_obController@browse_th')->middleware(['auth'])->name('budget_ob/browse_th');
@@ -1656,10 +1657,38 @@ Route::get('/rbudget_ob', 'App\Http\Controllers\OReport\RBudget_obController@rep
     Route::post('/jasper-budget_ob-report', 'App\Http\Controllers\OReport\RCounterController@jasperCounterReport')->middleware(['auth'])->name('jasper-budget_ob-report');
     Route::get('budget_ob/cekbudget_ob', 'App\Http\Controllers\OTransaksi\Budget_obController@cekbudget_ob')->middleware(['auth']);
 	Route::get('budget_ob/get-select-kodes', 'App\Http\Controllers\OTransaksi\Budget_obController@getSelectKodes')->middleware(['auth']);
+
 // Dynamic Budget Order Lebih
 Route::get('/budget_ob/edit', 'App\Http\Controllers\OTransaksi\Budget_obController@edit')->middleware(['auth'])->name('budget_ob.edit');
 Route::post('/budget_ob/update/{budget_ob}', 'App\Http\Controllers\OTransaksi\Budget_obController@update')->middleware(['auth'])->name('budget_ob.update');
 Route::get('/budget_ob/delete/{budget_ob}', 'App\Http\Controllers\OTransaksi\Budget_obController@destroy')->middleware(['auth'])->name('budget_ob.delete');
+
+
+// Master Counter pembelian
+Route::get('/counter_beli', 'App\Http\Controllers\OTransaksi\Counter_beliController@index')->middleware(['auth'])->name('counter_beli');
+Route::post('/counter_beli/store', 'App\Http\Controllers\OTransaksi\Counter_beliController@store')->middleware(['auth'])->name('counter_beli/store');
+Route::get('/rcounter_beli', 'App\Http\Controllers\OReport\RCounterController@report')->middleware(['auth'])->name('rcounter_beli');
+
+// GET Counter pembelian
+    Route::get('/get-counter_beli', 'App\Http\Controllers\OTransaksi\Counter_beliController@getCounter_beli')->middleware(['auth'])->name('get-counter_beli');
+    Route::get('/counter_beli/browse', 'App\Http\Controllers\OTransaksi\Counter_beliController@browse')->middleware(['auth'])->name('counter_beli/browse');
+    Route::get('/counter_beli/browse_th', 'App\Http\Controllers\OTransaksi\Counter_beliController@browse_th')->middleware(['auth'])->name('counter_beli/browse_th');
+    Route::get('/counter_beli/browse_hari', 'App\Http\Controllers\OTransaksi\Counter_beliController@browse_hari')->middleware(['auth'])->name('counter_beli/browse_hari');
+
+
+    Route::get('/counter_beli/browse', 'App\Http\Controllers\OTransaksi\Counter_beliController@browse')->middleware(['auth'])->name('counter_beli/browse');
+    Route::get('/counter_beli/browsecounter_beliz', 'App\Http\Controllers\OTransaksi\Counter_beliController@browsecounter_beliz')->middleware(['auth'])->name('counter_beli/browsecounter_beliz');
+
+
+    Route::get('/get-counter_beli-report', 'App\Http\Controllers\OReport\RCounterController@getCounterReport')->middleware(['auth'])->name('get-counter_beli-report');
+    Route::post('/jasper-counter_beli-report', 'App\Http\Controllers\OReport\RCounterController@jasperCounterReport')->middleware(['auth'])->name('jasper-counter_beli-report');
+    Route::get('counter_beli/cekcounter_beli', 'App\Http\Controllers\OTransaksi\Counter_beliController@cekcounter_beli')->middleware(['auth']);
+	Route::get('counter_beli/get-select-kodes', 'App\Http\Controllers\OTransaksi\Counter_beliController@getSelectKodes')->middleware(['auth']);
+
+    // Dynamic Counter pembelian
+Route::get('/counter_beli/edit', 'App\Http\Controllers\OTransaksi\Counter_beliController@edit')->middleware(['auth'])->name('counter_beli.edit');
+Route::post('/counter_beli/update/{counter_beli}', 'App\Http\Controllers\OTransaksi\Counter_beliController@update')->middleware(['auth'])->name('counter_beli.update');
+Route::get('/counter_beli/delete/{counter_beli}', 'App\Http\Controllers\OTransaksi\Counter_beliController@destroy')->middleware(['auth'])->name('counter_beli.delete');
 
 
 require __DIR__.'/auth.php';
