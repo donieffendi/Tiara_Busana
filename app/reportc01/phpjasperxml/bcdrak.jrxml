@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="brgpr01" language="groovy" columnCount="3" printOrder="Horizontal" pageWidth="450" pageHeight="595" orientation="Landscape" columnWidth="120" columnSpacing="10" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="20" uuid="bfad45cf-72e9-4697-a6dc-fa407eb0bfe2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="1ca77ded-8c64-4fed-a35d-53c974271eab"/>
+	<parameter name="compan01" class="java.lang.String"/>
+	<parameter name="TGL_CTK" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT KD_BRG, NA_BRG, TGL, AWAL, MASUK, KELUAR, LAIN, AKHIR FROM KARTU]]>
+	</queryString>
+	<field name="KD_BRG1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NA_BRG1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BARCODE1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CNT1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NCNT1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HJUAL1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KD_BRG2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NA_BRG2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BARCODE2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CNT2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NCNT2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HJUAL2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KD_BRG3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NA_BRG3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BARCODE3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CNT3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NCNT3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HJUAL3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="var_awal" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{AWAL}]]></variableExpression>
+	</variable>
+	<variable name="var_masuk" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{MASUK}]]></variableExpression>
+	</variable>
+	<variable name="var_keluar" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{KELUAR}]]></variableExpression>
+	</variable>
+	<variable name="var_lain" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{LAIN}]]></variableExpression>
+	</variable>
+	<variable name="var_akhir" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{AKHIR}]]></variableExpression>
+	</variable>
+	<variable name="var_niw" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{NIW}]]></variableExpression>
+	</variable>
+	<variable name="var_nim" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{NIM}]]></variableExpression>
+	</variable>
+	<variable name="var_nik" class="java.lang.String">
+		<variableExpression><![CDATA[$F{NIK}]]></variableExpression>
+	</variable>
+	<variable name="var_nir" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{NIR}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="10" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="10" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="105" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="120" height="105" uuid="24dd616b-ce85-4f44-8ac7-ca479a168f08"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="120" height="15" uuid="7391ca93-356f-4197-b84d-00fc2d2af5c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NA_BRG1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="15" width="60" height="10" uuid="ee8cba19-0079-43c5-851c-9d19fcac5846"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CNT1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="15" width="60" height="10" uuid="a0efc76f-64ad-4052-8dc5-8fa7b94a2440"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NCNT1}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="46" y="25" width="69" height="40" uuid="9156b797-8d3e-4852-bd85-5c5322da84fb"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" verticalQuietZone="0.0">
+					<jr:codeExpression><![CDATA[$F{BARCODE1}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
+			<textField>
+				<reportElement x="0" y="65" width="60" height="20" uuid="6163cb0f-ab29-4fa5-8528-689ad432ba7d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rp"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="60" y="65" width="60" height="20" uuid="1a6f42bd-bc12-4ab1-bfde-1cfed28c18f2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HJUAL1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="85" width="60" height="10" uuid="50f6c1ff-8015-4303-aa96-6086301116b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{KD_BRG1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="85" width="60" height="10" uuid="3f52a6f6-48c4-4388-a772-1f6ac3539be7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{BARCODE1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="95" width="60" height="10" uuid="b6ff2783-343f-466a-9e1a-b689d0e53a59"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TGL_CTK}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="130" y="0" width="120" height="105" uuid="e5696def-8ddb-409f-b88a-e286bc76dfad"/>
+			</rectangle>
+			<textField>
+				<reportElement x="130" y="0" width="120" height="15" uuid="e5300da6-8c88-4e11-832f-d4ff23e13962"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NA_BRG2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="15" width="60" height="10" uuid="4664b71f-211d-4e86-9d57-121b64927904"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CNT2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="15" width="60" height="10" uuid="c4f30ef0-487f-41a7-9abb-5b6b9afda182"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NCNT2}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="176" y="25" width="69" height="40" uuid="06edfd0a-de5c-4f3d-bc92-2d4b1b8626e9"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" verticalQuietZone="0.0">
+					<jr:codeExpression><![CDATA[$F{BARCODE2}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
+			<textField>
+				<reportElement x="130" y="65" width="60" height="20" uuid="56e24840-ab3c-44aa-ae58-eb30b84ccd80"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rp"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="190" y="65" width="60" height="20" uuid="3713fc2d-fdd9-4e55-8daf-701294c6d381"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HJUAL2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="85" width="60" height="10" uuid="57b8a398-c84f-461f-96d3-e4dbb9c8a19c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{KD_BRG2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="85" width="60" height="10" uuid="7eb15a58-c376-41d0-9881-9d8eb12e49cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{BARCODE2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="95" width="60" height="10" uuid="43cb39bc-93a9-44d8-aeac-60f651daa78d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TGL_CTK}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="260" y="0" width="120" height="105" uuid="38469a1e-5948-4045-8e85-864a4152f3f4"/>
+			</rectangle>
+			<textField>
+				<reportElement x="260" y="0" width="120" height="15" uuid="23732f5c-5bf5-4845-8796-95fd9f646687"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NA_BRG3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="15" width="60" height="10" uuid="b2ff566b-3c1b-42dc-8da4-edde77238e50"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CNT3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="15" width="60" height="10" uuid="b940627c-b17c-4219-adc6-b49e091d805b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NCNT3}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="306" y="25" width="69" height="40" uuid="047e6f51-cf1d-4aa8-8aa2-db7f8b82061f"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" verticalQuietZone="0.0">
+					<jr:codeExpression><![CDATA[$F{BARCODE3}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
+			<textField>
+				<reportElement x="260" y="65" width="60" height="20" uuid="215b9863-5522-4de9-9094-5347ed9902da"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rp"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="320" y="65" width="60" height="20" uuid="14d88d78-ac36-4bcb-b24f-bc868bdeedc3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HJUAL3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="85" width="60" height="10" uuid="7550817a-d230-4e2a-bd2c-0b3c66b3fefd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{KD_BRG3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="85" width="60" height="10" uuid="47b09727-206e-4a5e-aa51-28b052b2cf06"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{BARCODE3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="95" width="60" height="10" uuid="4d0bd330-c416-435f-93f9-9a03a2117eb8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TGL_CTK}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</summary>
+</jasperReport>
