@@ -89,17 +89,12 @@ class BrgController extends Controller
 
                     $btnPrivilege =
                         '
-                                <a class="dropdown-item" href="brg/edit/?idx=' . $row->NO_ID . '&tipx=edit";                                <i class="fas fa-edit"></i>
+                                <a class="dropdown-item" href="brg/edit/?idx=' . $row->NO_ID . '&tipx=edit";>                                
+                                <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
                                 <hr>
                                 </hr>
-
-                                <a class="dropdown-item" href="javascript:void(0)"
-                                    onclick="cetakBarcode('. $row->NO_ID .')">
-                                    <i class="fas fa-id-card"></i>
-                                    Cetak Barcode
-                                </a>
 
                                 <a hidden class="dropdown-item btn btn-danger" ' . $btnDelete . '>
 
@@ -520,25 +515,32 @@ class BrgController extends Controller
         $sub2  = $request->input('sub2');
         $supp1 = $request->input('supp1');
         $supp2 = $request->input('supp2');
+        $qty = $request->input('qty', 1);
 
         // Nama file laporan Jasper
-        $file = 'Barcode'; // ubah sesuai nama file .jrxml kamu, misalnya 'brg_list.jrxml'
+        $file = 'cetakbcd'; // ubah sesuai nama file .jrxml kamu, misalnya 'brg_list.jrxml'
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+        $params = [
+			"TGL_CTK" => date('d/m/Y')
+		];
+		$PHPJasperXML->arrayParameter = $params;
+
 
         // === Query utama (sesuai dengan query DataTables kamu) ===
         $query = DB::table('nwmasbar as a')
             ->join('nwmassup as b', 'a.SUPP', '=', 'b.NO_SUPL')
             ->select(
-                'a.SUB',
-                'a.KDBAR',
-                'a.NMBAR',
+                'a.SUB AS SUB',
+                'a.KDBAR AS KD_BRG',
+                'a.NMBAR AS NA_BRG',
                 'a.ITEM_SUP',
                 'a.SUPP',
-                'b.NAMA',
+                'b.NAMA ',
                 'a.KET_UK',
                 'a.KET_KEM',
-                'a.BARCODE'
+                'a.BARCODE',
+                'a.HJ AS HJUAL'
             );
 
         // Filter SUB BETWEEN
@@ -555,8 +557,13 @@ class BrgController extends Controller
 
         // === Konversi hasil ke array untuk Jasper ===
         $data = [];
+        $resultArray = json_decode(json_encode($result), true);
 
-        $data = json_decode(json_encode($result), true);
+        foreach ($resultArray as $row) {
+            for ($i = 0; $i < $qty; $i++) {
+                $data[] = $row;
+            }
+        }
 
         // Kirim data ke Jasper
         $PHPJasperXML->setData($data);
