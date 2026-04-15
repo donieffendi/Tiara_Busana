@@ -1690,5 +1690,14 @@ Route::get('/counter_beli/edit', 'App\Http\Controllers\OTransaksi\Counter_beliCo
 Route::post('/counter_beli/update/{counter_beli}', 'App\Http\Controllers\OTransaksi\Counter_beliController@update')->middleware(['auth'])->name('counter_beli.update');
 Route::get('/counter_beli/delete/{counter_beli}', 'App\Http\Controllers\OTransaksi\Counter_beliController@destroy')->middleware(['auth'])->name('counter_beli.delete');
 
+///////////////////////
+// Master Bcdrak
+Route::get('/bcdrak', 'App\Http\Controllers\Master\BcdrakController@index')->middleware(['auth'])->name('bcdrak');
+    // GET bcdrak
+    Route::get('/get-bcdrak', 'App\Http\Controllers\Master\BcdrakController@getBcdrak')->middleware(['auth'])->name('get-bcdrak');
+    Route::get('/bcdrak/print', 'App\Http\Controllers\Master\BcdrakController@Print')->middleware(['auth'])->name('bcdrak.print');
+    Route::get('/bcdrak/barcode', 'App\Http\Controllers\Master\BcdrakController@Barcode')->middleware(['auth'])->name('bcdrak.barcode');
+    Route::post('/bcdrak/cetak-range', 'App\Http\Controllers\Master\BcdrakController@jasperBcdrakReport')->middleware(['auth'])->name('bcdrak-cetak-range');
+    Route::get('/bcdrak/cetak/{bcdrak}', 'App\Http\Controllers\Master\BcdrakController@cetak')->middleware(['auth'])->name('bcdrak.cetak');
 
 require __DIR__.'/auth.php';
