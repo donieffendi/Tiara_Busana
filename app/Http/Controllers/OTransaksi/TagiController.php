@@ -147,7 +147,11 @@ class TagiController extends Controller
                                 </a>
                                 <a class="dropdown-item btn btn-danger" href="cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
-                                    Print
+                                    Cetak Form Bayar Putus
+                                </a>
+                                <a class="dropdown-item btn btn-danger" href="cetak2/' . $row->NO_ID . '">
+                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                    Cetak Form BayarKonsinyasi
                                 </a>
                                 <hr></hr>
                                 <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
@@ -656,7 +660,73 @@ class TagiController extends Controller
     {
         $no_tagi = $tagi->NO_BUKTI;
 
-        $file         = 'tagic';
+        $file         = 'form_bayar_busana_putus';
+        $PHPJasperXML = new PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+        $query = DB::SELECT("
+			SELECT NO_BUKTI,  TGL, KODES, NAMAS, TOTAL_QTY, NOTES, TOTAL, ALAMAT, KOTA
+			FROM tagi
+			WHERE tagi.NO_BUKTI='$no_tagi'
+			ORDER BY NO_BUKTI;
+		");
+
+        $xno_tagi1 = $query[0]->NO_BUKTI;
+        $xtgl1     = $query[0]->TGL;
+        $xkodes1   = $query[0]->KODES;
+        $xnamas1   = $query[0]->NAMAS;
+        $xtotal1   = $query[0]->TOTAL_QTY;
+        $xnotes1   = $query[0]->NOTES;
+        $xharga1   = $query[0]->TOTAL;
+        $xalamat1  = $query[0]->ALAMAT;
+        $xkota1    = $query[0]->KOTA;
+
+        $PHPJasperXML->arrayParameter = ["HARGA1" => (float) $xharga1, "TOTAL1" => (float) $xtotal1, "NO_PO1"  => (string) $xno_tagi1,
+            "TGL1"                                         => (string) $xtgl1, "KODES1"  => (string) $xkodes1, "NAMAS1" => (string) $xnamas1, "NOTES1" => (string) $xnotes1, "ALAMAT1" => (string) $xalamat1, "KOTA1" => (string) $xkota1];
+        $PHPJasperXML->arraysqltable = [];
+
+        $query2 = DB::SELECT("
+			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT, NO_PO,  IF ( FLAG='BL' , 'A','B' ) AS FLAG, AJU, BL, EMKL, KD_BRG, NA_BRG, KG, RPHARGA AS HARGA, RPTOTAL AS TOTAL, 0 AS BAYAR,  NOTES
+			FROM beli
+			WHERE beli.NO_PO='$no_tagi'  UNION ALL
+			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT,  NO_PO,  'C' AS FLAG, '' AS AJU, '' AS BL, '' AS EMKL,  '' AS KD_BRG, '' AS NA_BRG, 0 AS KG,
+			0 AS HARGA, 0 AS TOTAL, BAYAR, NOTES
+			FROM hut
+			WHERE hut.NO_PO='$no_tagi'
+			ORDER BY TGL, FLAG, NO_BUKTI;
+		");
+
+        $data = [];
+
+        foreach ($query2 as $key => $value) {
+            array_push($data, [
+                'NO_BUKTI' => $query2[$key]->NO_BUKTI,
+                'TGL'      => $query2[$key]->TGL,
+                'KODES'    => $query2[$key]->KODES,
+                'NAMAS'    => $query2[$key]->NAMAS,
+                'ALAMAT'   => $query2[$key]->ALAMAT,
+                'AJU'      => $query2[$key]->AJU,
+                'BL'       => $query2[$key]->BL,
+                'EMKL'     => $query2[$key]->EMKL,
+                'KG'       => $query2[$key]->KG,
+                'HARGA'    => $query2[$key]->HARGA,
+                'TOTAL'    => $query2[$key]->TOTAL,
+                'BAYAR'    => $query2[$key]->BAYAR,
+                'NOTES'    => $query2[$key]->NOTES,
+            ]);
+        }
+
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
+
+    }
+
+    public function cetak2(Tagi $tagi)
+    {
+        $no_tagi = $tagi->NO_BUKTI;
+
+        $file         = 'form_bayar_busana_konsinyasi';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 

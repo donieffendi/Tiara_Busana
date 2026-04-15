@@ -28,9 +28,9 @@ class BudgetrepController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
+
     public function index(Request $request)
-    {   
+    {
         $per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
         // ganti 3
         return view('otransaksi_budgetrep.index')->with(['per' => $per]);
@@ -200,11 +200,19 @@ class BudgetrepController extends Controller
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a>
+
+                                @if ($row->POSTED == 1)
+                                    <a class="dropdown-item btn btn-danger" target="_blank" href="budgetrep/cetak/{{ $row->NO_ID }}">
+                                        <i class="fa fa-print"></i>
+                                        Cetak Ulang
+                                    </a>
+                                @endif
+
                                 <hr></hr>
                                 <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
 
                                     <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Delete
+                                    Hapus
                                 </a>
                         ';
                 } else {
