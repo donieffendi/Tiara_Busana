@@ -57,7 +57,7 @@ class BrgController extends Controller
 
     public function browse_plu(Request $request)
     {
-        $brg = DB::SELECT("SELECT KDBAR, NMBAR, SUB FROM nwmasbar ORDER BY KDBAR ");
+        $brg = DB::SELECT("SELECT KDBAR, NMBAR, SUB, SUPP FROM nwmasbar ORDER BY KDBAR ");
 
         return response()->json($brg);
     }
@@ -89,7 +89,7 @@ class BrgController extends Controller
 
                     $btnPrivilege =
                         '
-                                <a class="dropdown-item" href="brg/edit/?idx=' . $row->NO_ID . '&tipx=edit";>                                
+                                <a class="dropdown-item" href="brg/edit/?idx=' . $row->NO_ID . '&tipx=edit";>
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>

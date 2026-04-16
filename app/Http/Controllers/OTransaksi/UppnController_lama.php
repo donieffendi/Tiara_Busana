@@ -4,8 +4,8 @@ namespace App\Http\Controllers\OTransaksi;
 use App\Http\Controllers\Controller;
 // ganti 1
 
-use App\Models\OTransaksi\Ubhppnj;
-use App\Models\OTransaksi\UbhppnjDetail;
+use App\Models\OTransaksi\Ubsup;
+use App\Models\OTransaksi\UbsupDetail;
 use Auth;
 use Carbon\Carbon;
 use DataTables;
@@ -84,11 +84,11 @@ break;
 
         $filterbukti = '';
         if ($request->NO_BUKTI) {
-            $filterbukti = " AND ubhppnj.NO_BUKTI='" . $request->NO_BUKTI . "' ";
+            $filterbukti = " AND ubsup.NO_BUKTI='" . $request->NO_BUKTI . "' ";
         }
-        $uppn = DB::SELECT("SELECT * from ubhppnj, ubhppnjd where ubhppnj.NO_BUKTI=ubhppnjd.no_bukti $filterbukti ");
+        $ubsup = DB::SELECT("SELECT * from bretur, breturd where ubsup.NO_BUKTI=breturd.no_bukti $filterbukti ");
 
-        return response()->json($uppn);
+        return response()->json($ubsup);
     }
 
     public function browse_brg(Request $request)
@@ -115,28 +115,28 @@ break;
 
         $CBG = Auth::user()->CBG;
 
-        //$uppn = DB::SELECT("SELECT *, POSTED as cek1, POSTED1 as cek2 from ubhppnj  WHERE PER='$periode' AND CBG = '$CBG' AND FLAG = '$FLAGZ' ORDER BY NO_BUKTI ");
-		$uppn = DB::select("
+        //$ubsup = DB::SELECT("SELECT *, POSTED as cek1, POSTED1 as cek2 from bretur  WHERE PER='$periode' AND CBG = '$CBG' AND FLAG = '$FLAGZ' ORDER BY NO_BUKTI ");
+		$ubsup = DB::select("
 						SELECT *
-						FROM ubhppnj
-                        WHERE PER = '$periode'
+						FROM bretur
+                        WHERE PER = '$periode' AND CBG = '$CBG' AND flag = '$FLAGZ'
 						ORDER BY NO_BUKTI
 					");
 
 
         // ganti 6
 
-        return Datatables::of($uppn)
+        return Datatables::of($ubsup)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi == "programmer" || Auth::user()->divisi == "non") {
                     //CEK POSTED di index dan edit
 
                     // url untuk delete di index
-                    $url = "'" . url("uppn/delete/" . $row->NO_ID . "/?flagz=" . $row->flag . "&golz=" . $row->GOL) . "'";
+                    $url = "'" . url("ubsup/delete/" . $row->NO_ID . "/?flagz=" . $row->flag . "&golz=" . $row->GOL) . "'";
                     // batas
 
-                    $btnEdit   = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="uppn/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';
+                    $btnEdit   = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="ubsup/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow(' . $url . ')"';
 
                     $btnPrivilege =
@@ -145,7 +145,7 @@ break;
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" target="_blank" href="uppn/cetak/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" target="_blank" href="ubsup/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a>
@@ -217,7 +217,7 @@ break;
         $tahun = substr(session()->get('periode')['tahun'], -2);
 
         // Ambil NO_BUKTI terakhir
-        $query = DB::table('ubhppnj')
+        $query = DB::table('bretur')
             ->where('NO_BUKTI', 'like', $FLAGZ . $CBG . $tahun . $bulan . '-%')
             ->orderBy('NO_BUKTI', 'desc')
             ->first();
@@ -233,7 +233,7 @@ break;
         // Format NO_BUKTI
         $no_bukti = $FLAGZ . $CBG . $tahun . $bulan . '-' . $newNumber;
 
-        $uppn = Ubhppnj::create([
+        $ubsup = Ubsup::create([
             'NO_BUKTI'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'PER'              => $periode,
@@ -275,18 +275,18 @@ break;
         // dd($detail);
         $no_buktix = $no_bukti;
 
-        $uppn = Ubhppnj::where('NO_BUKTI', $no_buktix)->first();
+        $ubsup = Ubsup::where('NO_BUKTI', $no_buktix)->first();
 
-        DB::SELECT("UPDATE ubhppnj,  ubhppnjd
-                            SET  ubhppnjd.ID =  ubhppnj.NO_ID  WHERE  ubhppnj.NO_BUKTI =  ubhppnjd.no_bukti
-							AND  ubhppnj.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE ubsup,  breturd
+                            SET  breturd.ID =  ubsup.NO_ID  WHERE  ubsup.NO_BUKTI =  breturd.no_bukti
+							AND  ubsup.NO_BUKTI='$no_buktix';");
 
         // return redirect('/pp/edit/?idx=' . $pp->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&golz=' . $this->GOLZ . '&judul=' . $this->judul . '');
-        return redirect('/uppn?flagz=' . $FLAGZ . '&golz=' . $GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ]);
+        return redirect('/ubsup?flagz=' . $FLAGZ . '&golz=' . $GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ]);
 
     }
 
-    public function edit(Request $request, Ubhppnj $uppn)
+    public function edit(Request $request, Ubsup $ubsup)
     {
 
         $per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
@@ -316,7 +316,7 @@ break;
 
             $buktix = $request->buktix;
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from ubhppnj
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
                          and GOL ='$this->GOLZ'
                          AND CBG = '$CBG'
@@ -333,7 +333,7 @@ break;
 
         if ($tipx == 'top') {
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from ubhppnj
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		                 where PER ='$per'
 						 and FLAG ='$this->FLAGZ'
                          and GOL ='$this->GOLZ'
@@ -352,7 +352,7 @@ break;
 
             $buktix = $request->buktix;
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from ubhppnj
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		             where PER ='$per'
 					 and FLAG ='$this->FLAGZ'
                      and GOL ='$this->GOLZ'
@@ -372,7 +372,7 @@ break;
 
             $buktix = $request->buktix;
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from ubhppnj
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 		             where PER ='$per'
 					 and FLAG ='$this->FLAGZ'
                      and GOL ='$this->GOLZ'
@@ -390,7 +390,7 @@ break;
 
         if ($tipx == 'bottom') {
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from ubhppnj
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
 						where PER ='$per'
 						and FLAG ='$this->FLAGZ'
                         and GOL ='$this->GOLZ'
@@ -412,19 +412,19 @@ break;
         }
 
         if ($idx != 0) {
-            $uppn = Ubhppnj::where('NO_ID', $idx)->first();
+            $ubsup = Ubsup::where('NO_ID', $idx)->first();
         } else {
-            $uppn      = new Ubhppnj;
-            $uppn->TGL = Carbon::now();
+            $ubsup      = new Ubsup;
+            $ubsup->TGL = Carbon::now();
 
         }
 
-        $no_bukti   = $uppn->NO_BUKTI;
-        $uppnDetail = DB::table('ubhppnjd')->where('NO_BUKTI', $no_bukti)->get();
+        $no_bukti   = $ubsup->NO_BUKTI;
+        $ubsupDetail = DB::table('breturd')->where('NO_BUKTI', $no_bukti)->get();
 
         $data = [
-            'header' => $uppn,
-            'detail' => $uppnDetail,
+            'header' => $ubsup,
+            'detail' => $ubsupDetail,
 
         ];
 
@@ -443,7 +443,7 @@ break;
 
     // ganti 18
 
-    public function update(Request $request, Ubhppnj $uppn)
+    public function update(Request $request, Ubsup $ubsup)
     {
 
         $this->validate(
@@ -463,14 +463,14 @@ break;
 
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
-        $uppn->update([
+        $ubsup->update([
             'tgl'              => date('Y-m-d', strtotime($request['TGL'])),
             'notes'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
             'usrnm'            => Auth::user()->username,
             'tg_smp'           => Carbon::now()
         ]);
 
-        $no_buktix = $uppn->NO_BUKTI;
+        $no_buktix = $ubsup->NO_BUKTI;
         $NO_ID     = $request->input('NO_ID');
         $REC       = $request->input('REC');
         $KD_BRG    = $request->input('KD_BRG');
@@ -482,7 +482,7 @@ break;
         $GOL       = $GOLZ;
 
         // Hapus data yang tidak ada di request
-        DB::table('ubhppnjd')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID', $NO_ID)->delete();
+        DB::table('breturd')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID', $NO_ID)->delete();
 
         for ($i = 0; $i < $length; $i++) {
             // Insert jika NO_ID baru
@@ -520,16 +520,16 @@ break;
             }
         }
 
-        $uppn = Ubhppnj::where('NO_BUKTI', $no_buktix)->first();
+        $ubsup = Ubsup::where('NO_BUKTI', $no_buktix)->first();
 
-        $no_bukti = $uppn->NO_BUKTI;
+        $no_bukti = $ubsup->NO_BUKTI;
 
-        DB::SELECT("UPDATE ubhppnj,  ubhppnjd
-                    SET  ubhppnjd.NO_ID =  ubhppnj.NO_ID  WHERE  ubhppnj.NO_BUKTI =  ubhppnjd.no_bukti
-                    AND  ubhppnj.NO_BUKTI='$no_bukti';");
+        DB::SELECT("UPDATE ubsup,  breturd
+                    SET  breturd.NO_ID =  ubsup.NO_ID  WHERE  ubsup.NO_BUKTI =  breturd.no_bukti
+                    AND  ubsup.NO_BUKTI='$no_bukti';");
 
         // return redirect('/pp/edit/?idx=' . $pp->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&golz=' . $this->GOLZ . '&judul=' . $this->judul . '');
-        return redirect('/uppn?flagz=' . $FLAGZ . '&golz=' . $GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ]);
+        return redirect('/ubsup?flagz=' . $FLAGZ . '&golz=' . $GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ]);
 
     }
 
@@ -542,7 +542,7 @@ break;
 
     // ganti 22
 
-    public function destroy(Request $request, Ubhppnj $uppn)
+    public function destroy(Request $request, Ubsup $ubsup)
     {
 
         $this->setFlag($request);
@@ -557,37 +557,37 @@ break;
         $per      = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
         $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
         if ($cekperid[0]->POSTED == 1) {
-            return redirect()->route('uppn')
+            return redirect()->route('ubsup')
                 ->with('status', 'Maaf Periode sudah ditutup!')
                 ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ]);
         }
 
-        $deleteUbhppnj = Ubhppnj::find($uppn->NO_ID);
+        $deleteUbsup = Ubsup::find($ubsup->NO_ID);
 
-        $deleteUbhppnj->delete();
+        $deleteUbsup->delete();
         // return redirect('/pp?flagz=' . $FLAGZ . '&golz=J')
-        return redirect('/uppn?flagz=' . $FLAGZ . '&golz=' . $GOLZ)
+        return redirect('/ubsup?flagz=' . $FLAGZ . '&golz=' . $GOLZ)
             ->with(['judul' => $judul, 'flagz' => $this->FLAGZ, 'golz' => $this->GOLZ])
-            ->with('statusHapus', 'Data ' . $uppn->NO_BUKTI . ' berhasil dihapus');
+            ->with('statusHapus', 'Data ' . $ubsup->NO_BUKTI . ' berhasil dihapus');
 
     }
 
-    public function cetak(Ubhppnj $uppn)
+    public function cetak(Ubsup $ubsup)
     {
-        $no_pp = $uppn->NO_BUKTI;
+        $no_pp = $ubsup->NO_BUKTI;
 
-        $file         = 'uppn';
+        $file         = 'ubsup';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
         $query = DB::SELECT("SELECT *
-                            FROM ubhppnj
-                            WHERE ubhppnj.NO_BUKTI='$no_pp'
+                            FROM ubsup
+                            WHERE ubsup.NO_BUKTI='$no_pp'
                             ;
 		");
         $query2 = DB::SELECT("SELECT *
-                            FROM ubhppnjd
-                            WHERE ubhppnjd.no_bukti='$no_pp'
+                            FROM breturd
+                            WHERE breturd.no_bukti='$no_pp'
                             ;
 		");
 
@@ -608,7 +608,7 @@ break;
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
-        DB::SELECT("UPDATE ubhppnj SET POSTED = 1 WHERE ubhppnj.NO_BUKTI='$no_pp';");
+        DB::SELECT("UPDATE ubsup SET POSTED = 1 WHERE ubsup.NO_BUKTI='$no_pp';");
         if($query[0]->FLAG == 'UE'){
             foreach($query2 as $sup){
 
@@ -643,7 +643,7 @@ break;
 
     //             $NO_BUKTIXZ = $NO_BUKTI[$key];
 
-    //             DB::SELECT("UPDATE ubhppnj SET POSTED = 1 WHERE PO.NO_BUKTI='$NO_BUKTIXZ'");
+    //             DB::SELECT("UPDATE ubsup SET POSTED = 1 WHERE PO.NO_BUKTI='$NO_BUKTIXZ'");
 
     //         }
     //     } else {
@@ -651,18 +651,18 @@ break;
     //     }
 
     //     if ($hasil != '') {
-    //         return redirect('/uppn/index-posting')->with('status', 'Proses Approvement Usulan ..')->with('gagal', $hasil);
+    //         return redirect('/ubsup/index-posting')->with('status', 'Proses Approvement Usulan ..')->with('gagal', $hasil);
     //     } else {
-    //         return redirect('/uppn/index-posting')->with('status', 'Approvement Usulan  selesai..');
+    //         return redirect('/ubsup/index-posting')->with('status', 'Approvement Usulan  selesai..');
     //     }
 
     // }
 
-    public function getDetailUbhppnj()
+    public function getDetailUbsup()
     {
 
         $no_bukti = $_GET['no_bukti'];
-        $result   = DB::table('ubhppnjd')->where('NO_BUKTI', $no_bukti)->get();
+        $result   = DB::table('breturd')->where('NO_BUKTI', $no_bukti)->get();
 
         return response()->json($result);
     }
@@ -680,7 +680,7 @@ break;
         }
 
         foreach ($data as $id => $posted) {
-            DB::table('ubhppnj')->where('NO_ID', $id)->update(['POSTED' => $posted]);
+            DB::table('ubsup')->where('NO_ID', $id)->update(['POSTED' => $posted]);
         }
 
         return response()->json(['message' => 'Status berhasil diperbarui']);
@@ -699,7 +699,7 @@ break;
         }
 
         foreach ($data as $id => $posted) {
-            DB::table('ubhppnj')->where('NO_ID', $id)->update(['POSTED' => $posted]);
+            DB::table('ubsup')->where('NO_ID', $id)->update(['POSTED' => $posted]);
         }
 
         return response()->json(['message' => 'Status berhasil diperbarui']);

@@ -213,6 +213,9 @@
                                 <input name="flagz" class="form-control flagz" id="flagz" value="{{ $flagz }}"
                                     hidden>
 
+                                <input name="golz" class="form-control golz" id="golz" value="{{ $golz }}"
+                                hidden>
+
 
                                 {{-- <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
                     <thead class="table-dark">
@@ -253,7 +256,7 @@
                                     <div class="tab-pane fade show active" id="tab1">
 									<!-- Scan Barcode -->
                                     <a class="btn btn-success btn-lg"
-                                        href="{{ url('uppn/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
+                                        href="{{ url('uppn/edit?flagz=' . $flagz .'&golz='.$golz. '&idx=0&tipx=new') }}">
                                         <i class="fas fa-file"></i> Usulan Baru
                                     </a>
                                         <table class="table table-striped table-hover nowrap datatable" id="datatable1">
@@ -282,10 +285,10 @@
                                     <!-- TAB 2 -->
                                     <div class="tab-pane fade" id="tab2">
 									 <!-- New -->
-                                    <a class="btn btn-primary btn-lg"
+                                    {{-- <a class="btn btn-primary btn-lg"
                                         href="{{ url('uppn-new/edit?flagz=' . $flagz . '&idx=0&tipx=new') }}">
                                         <i class="fas fa-check"></i> Pengesahan
-                                    </a>
+                                    </a> --}}
                                         <table class="table table-striped table-hover nowrap datatable" id="datatable2">
                                             <thead class="table-dark">
                                                 <tr>

@@ -164,108 +164,6 @@
                                         </div>
 
                                     </div>
-                                    @if ($flagz != 'TE')
-                                    <div class="form-group row">
-                                        <div class="col-md-1" align="left">
-                                            <label style="color:red">*</label>
-                                            <label for="BARCODE" class="form-label">Barcode</label>
-                                        </div>
-                                        <div class="col-md-2 input-group">
-                                            <input type="text" class="form-control BARCODE" id="BARCODE"
-                                                name="BARCODE" placeholder="Pilih No. Expedisi"
-                                                value="{{ $header->NO_KKIRIM }}" style="text-align: left">
-                                        </div>
-                                    </div>
-                                    @endif
-
-
-
-                                    <div class="form-group row">
-
-                                        <div class="col-md-1" align="left">
-                                            <label style="color:red">*</label>
-                                            <label for="NO_KIRIM" class="form-label">No Kirim</label>
-                                        </div>
-                                        <div class="col-md-2 input-group">
-                                            <input type="text" class="form-control NO_KIRIM" id="NO_KIRIM"
-                                                name="NO_KIRIM" placeholder="Pilih Bukti Kirim"
-                                                value="{{ $header->NO_KIRIM }}" style="text-align: left">
-                                            <button type="button" class="btn btn-primary" onclick="browseKirim()"><i
-                                                    class="fa fa-search"></i></button>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group column"></div>
-                                    <div class="form-group row">
-
-                                        <div class="col-md-5 form-group row special-input-label">
-
-                                            <input type="text" class="NOTES" id="NOTES" name="NOTES"
-                                                value="{{ $header->NOTES }}" placeholder=" ">
-                                            <label for="NOTES">Notes</label>
-                                        </div>
-                                        <!-- tutupannya -->
-
-                                        <div class="col-md-1">
-                                            <label for="CBG_DARI" class="form-label">Pengirim</label>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <input type="text" class="form-control CBG_DARI" id="CBG_DARI"
-                                                name="CBG_DARI" value="{{ $header->CBG_DARI }}"
-                                                style="text-align: left" readonly>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <label for="CBG" class="form-label">Penerima</label>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <input type="text" class="form-control CBG" id="CBG"
-                                                name="CBG" value="{{ $header->CBG }}" style="text-align: left"
-                                                readonly>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <!-- code text box baru -->
-                                        <div class="col-md-2 form-group row special-input-label">
-                                            <input type="text" class="BARCODE" id="BARCODE" name="BARCODE"
-                                                value="{{ $header->BARCODE }}" placeholder=" "
-                                                onblur="ambil_barang()">
-                                            <input hidden type="text" class="XKD_BRG" id="XKD_BRG" name="XKD_BRG">
-                                            <label for="BARCODE">Barcode</label>
-                                        </div>
-                                        <!-- tutupannya -->
-
-                                        <!-- code text box baru -->
-                                        <div class="col-md-2 form-group row special-input-label">
-                                            <input type="text" class="ZNA_BRG" id="ZNA_BRG" name="ZNA_BRG"
-                                                value="{{ $header->ZNA_BRG }}" placeholder=" " readonly>
-                                            <label for="ZNA_BRG">Nama Barang</label>
-                                        </div>
-                                        <!-- tutupannya -->
-
-                                        <!-- code text box baru -->
-                                        <div class="col-md-2 form-group row special-input-label">
-                                            <input type="text" class="ZSATUAN" id="ZSATUAN" name="ZSATUAN"
-                                                value="{{ $header->ZSATUAN }}" placeholder=" " readonly>
-                                            <label for="ZSATUAN">Satuan</label>
-                                        </div>
-                                        <!-- tutupannya -->
-
-                                        <!-- code text box baru -->
-                                        <div class="col-md-2 form-group row special-input-label">
-                                            <input type="text" class="ZQTY" id="ZQTY" name="ZQTY"
-                                                value="{{ $header->ZQTY }}" placeholder=" ">
-                                            <label for="ZQTY">Qty</label>
-                                        </div>
-                                        <!-- tutupannya -->
-
-                                        <div class="col-md-1 form-group row special-input-label">
-                                            <button type="button" class="btn btn-primary" onclick="tambah_barang()"
-                                                style="width:40px"><i class="fa fa-download"></i></button>
-                                        </div>
-                                    </div>
 
                                     <!-- loader tampil di modal  -->
                                     <div class="loader" style="z-index: 1055;" id='LOADX'></div>
@@ -279,24 +177,18 @@
                                                     <th style="text-align: center;">No.</th>
                                                     <th style="text-align: center;">
                                                         <label style="color:red;font-size:20px">* </label>
-                                                        <label for="KD_BRG" class="form-label">Kode Barang</label>
+                                                        <label for="KD_BRG" class="form-label">Kode Barang/PLU</label>
                                                     </th>
                                                     <th style="text-align: center;">Nama Barang</th>
-                                                    <th style="text-align: center;">Stn</th>
-                                                    <th style="text-align: center;">Qty Kirim</th>
-                                                    <th style="text-align: center;">Qty Terima</th>
-                                                    <th style="text-align: center;">Harga</th>
-                                                    <th style="text-align: center;">Total</th>
-                                                    <th style="text-align: center;">Ket</th>
-                                                    <th style="text-align: center;">Selisih</th>
-
-                                                    <!-- <th style="text-align: center;">Cabang Tuju</th> -->
+                                                    <th style="text-align: center;">Supplier</th>
+                                                    <th style="text-align: center;">Ukuran</th>
+                                                    <th style="text-align: center;">PPN</th>
 
                                                     <th></th>
 
                                                 </tr>
                                             </thead>
-                                            <tbody id="detailKirimd">
+                                            <tbody>
 
                                             <tbody>
                                                 <?php $no = 0; ?>
@@ -327,62 +219,29 @@
                                                     <td>
                                                         <input name="NA_BRG[]" id="NA_BRG{{ $no }}"
                                                             type="text" class="form-control NA_BRG "
-                                                            value="{{ $detail->NA_BRG }}">
+                                                            value="{{ $detail->NA_BRG }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input name="SATUAN[]" id="SATUAN{{ $no }}"
-                                                            type="text" value="{{ $detail->SATUAN }}"
-                                                            class="form-control SATUAN" readonly required>
+                                                        <input name="SUPP[]" id="SUPP{{ $no }}"
+                                                            type="text" value="{{ $detail->SUPP }}"
+                                                            class="form-control SUPP" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input name="KET_UK[]" id="KET_UK{{ $no }}"
+                                                            type="text" value="{{ $detail->KET_UK }}"
+                                                            class="form-control KET_UK" readonly>
                                                     </td>
 
-                                                    <td>
-                                                        <input name="QTY_KIRIM[]" onclick="select()"
-                                                            onkeyup="hitung()" value="{{ $detail->QTY_KIRIM }}"
-                                                            id="QTY_KIRIM{{ $no }}" type="text"
-                                                            style="text-align: right"
-                                                            class="form-control QTY_KIRIM text-primary" readonly
-                                                            required>
-                                                    </td>
 
                                                     <td>
-                                                        <input name="QTY[]" onclick="select()"
-                                                            onkeyup="hitung()" value="{{ $detail->QTY }}"
-                                                            id="QTY{{ $no }}" type="text"
-                                                            style="text-align: right"
-                                                            class="form-control QTY text-primary" required>
+                                                        <select name="PPN[]" id="PPN{{ $no }}" class="form-control PPN" required>
+                                                            <option value="">-- Pilih PPN --</option>
+                                                            <option value="0" {{ $detail->PPN == 0 ? 'selected' : '' }}>0 - Tidak terhutang</option>
+                                                            <option value="1" {{ $detail->PPN == 1 ? 'selected' : '' }}>1 - Terhutang & dipungut</option>
+                                                            <option value="2" {{ $detail->PPN == 2 ? 'selected' : '' }}>2 - Terhutang & tidak dipungut</option>
+                                                            <option value="3" {{ $detail->PPN == 3 ? 'selected' : '' }}>3 - Terhutang & dibebaskan</option>
+                                                        </select>
                                                     </td>
-                                                    <td>
-                                                        <input name="HARGA[]" onclick="select()"
-                                                            onkeyup="hitung()" value="{{ $detail->HARGA }}"
-                                                            id="HARGA{{ $no }}" type="text"
-                                                            style="text-align: right"
-                                                            class="form-control HARGA text-primary" required>
-                                                    </td>
-                                                    <td>
-                                                        <input name="TOTAL[]" onclick="select()"
-                                                            onkeyup="hitung()" value="{{ $detail->TOTAL }}"
-                                                            id="TOTAL{{ $no }}" type="text"
-                                                            style="text-align: right"
-                                                            class="form-control TOTAL text-primary" required>
-                                                    </td>
-
-                                                    <td>
-                                                        <input name="KET[]" id="KET{{ $no }}"
-                                                            type="text" class="form-control KET"
-                                                            value="{{ $detail->KET }}" required>
-                                                    </td>
-                                                    <td>
-                                                        <input name="SELISIH[]" id="SELISIH{{ $no }}"
-                                                            type="text"
-                                                            value="{{ ($detail->QTY_KIRIM ?? 0) - ($detail->QTY ?? 0) }}"
-                                                            class="form-control SELISIH text-primary text-end"
-                                                            readonly required>
-
-                                                    </td>
-
-                                                    <!-- <td>
-                                                            <input name="CBG_TUJU[]" id="CBG_TUJU{{ $no }}" type="text" class="form-control CBG_TUJU" value="{{ $detail->CBG_TUJU }}" required>
-                                                        </td> -->
 
                                                     <td>
                                                         <button type='button' id='DELETEX{{ $no }}'
@@ -403,11 +262,6 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><input
-                                                        class="form-control TTOTAL_QTY  text-primary font-weight-bold"
-                                                        style="text-align: right" id="TTOTAL_QTY" name="TTOTAL_QTY"
-                                                        value="{{ $header->TOTAL_QTY }}" readonly></td>
-                                                <td></td>
                                                 <td></td>
                                             </tfoot>
                                         </table>
@@ -421,10 +275,7 @@
                                     </div>
                                 </div>
 
-                                <hr style="margin-top: 30px; margin-buttom: 30px">
-                                <!-- dari sini shelvi-->
-
-                                <!-- sampai sini shelvi-->
+                                <hr style="margin-top: 30px; margin-buttom: 30px">>
 
                                 <div class="mt-3 col-md-12 form-group row">
                                     <div class="col-md-4">
@@ -492,7 +343,8 @@
                             <tr>
                                 <th>Item#</th>
                                 <th>Nama</th>
-                                <th>Satuan</th>
+                                <th>Supplier</th>
+                                <th>Ukuran</th>
 
                             </tr>
                         </thead>
@@ -598,7 +450,7 @@
 
             if ($tipx == 'new') {
                 baru();
-                //  tambah();
+                tambah();
             }
 
             if ($tipx != 'new') {
@@ -643,7 +495,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('vbrg/browse_beli') }}",
+                    url: "{{ url('brg/browse_plu') }}",
 
                     beforeSend: function() {
                         $("#LOADX").show();
@@ -672,18 +524,20 @@
 
                                 dTableBBarang.row.add([
                                     '<a href="javascript:void(0);" onclick="chooseBarang(\'' +
-                                    resp[i].KD_BRG + '\', \'' + resp[i].NA_BRG + '\' , \'' +
-                                    resp[i].SATUAN + '\' )">' + resp[i].KD_BRG + '</a>',
-                                    resp[i].NA_BRG,
-                                    resp[i].SATUAN,
+                                    resp[i].KDBAR + '\', \'' + resp[i].NMBAR + '\' , \'' +
+                                    resp[i].SUPP + '\', \'' + resp[i].KET_UK + '\'  )">' + resp[i].KDBAR + '</a>',
+                                    resp[i].NMBAR,
+                                    resp[i].SUPP,
+                                    resp[i].KET_UK,
                                 ]);
                             }
                             dTableBBarang.draw();
 
                         } else {
-                            $("#KD_BRG" + rowidBarang).val(resp[0].KD_BRG);
-                            $("#NA_BRG" + rowidBarang).val(resp[0].NA_BRG);
-                            $("#SATUAN" + rowidBarang).val(resp[0].SATUAN);
+                            $("#KD_BRG" + rowidBarang).val(resp[0].KDBAR);
+                            $("#NA_BRG" + rowidBarang).val(resp[0].NMBAR);
+                            $("#SUPP" + rowidBarang).val(resp[0].SUPP);
+                            $("#KET_UK" + rowidBarang).val(resp[0].KET_UK);
                         }
                     }
                 });
@@ -704,10 +558,11 @@
                 }
             }
 
-            chooseBarang = function(KD_BRG, NA_BRG, SATUAN) {
-                $("#KD_BRG" + rowidBarang).val(KD_BRG);
-                $("#NA_BRG" + rowidBarang).val(NA_BRG);
-                $("#SATUAN" + rowidBarang).val(SATUAN);
+            chooseBarang = function(KDBAR, NMBAR, SUPP, KET_UK) {
+                $("#KD_BRG" + rowidBarang).val(KDBAR);
+                $("#NA_BRG" + rowidBarang).val(NMBAR);
+                $("#SUPP" + rowidBarang).val(SUPP);
+                $("#KET_UK" + rowidBarang).val(KET_UK);
                 $("#browseBarangModal").modal("hide");
             }
 
@@ -1439,19 +1294,21 @@
                 </td>
 
                 <td>
-				    <input name='SATUAN[]'   id='SATUAN${idrow}' type='text' class='form-control  SATUAN' readonly required>
-                </td>
-
-				<td>
-		            <input name='QTY_KIRIM[]' onclick='select()' onblur='hitung()' value='0' id='QTY_KIRIM${idrow}' type='text' style='text-align: right' class='form-control QTY_KIRIM text-primary' readonly required >
-                </td>
-
-				<td>
-		            <input name='QTY[]' onclick='select()' onblur='hitung()' value='0' id='QTY${idrow}' type='text' style='text-align: right' class='form-control QTY text-primary' required >
+				    <input name='SUPP[]'   id='SUPP${idrow}' type='text' class='form-control  SUPP' readonly>
                 </td>
 
                 <td>
-				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET' required>
+				    <input name='KET_UK[]'   id='KET_UK${idrow}' type='text' class='form-control  KET_UK' readonly>
+                </td>
+
+                <td>
+                    <select name="PPN[]" id="PPN${idrow}" class="form-control PPN" required>
+                        <option value="">-- Pilih PPN --</option>
+                        <option value="0">0 - Tidak terhutang</option>
+                        <option value="1">1 - Terhutang & dipungut</option>
+                        <option value="2">2 - Terhutang & tidak dipungut</option>
+                        <option value="3">3 - Terhutang & dibebaskan</option>
+                    </select>
                 </td>
 
                 <td>
