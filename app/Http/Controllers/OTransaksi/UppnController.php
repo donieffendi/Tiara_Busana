@@ -576,7 +576,7 @@ break;
     {
         $no_pp = $uppn->NO_BUKTI;
 
-        $file         = 'uppn';
+        $file         = 'rusulan_perubahan_ppn';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
@@ -595,31 +595,32 @@ break;
 
         foreach ($query2 as $key => $value) {
             array_push($data, [
-                'NO_BUKTI' => $query[$key]->NO_BUKTI,
-                'TGL'      => $query[$key]->TGL,
-                'TGL_NOW' => now()->format('d F Y'),
-                'NAMAS'      => $query2[$key]->NAMAS,
-                'KODES'      => $query2[$key]->KODES,
-                'EMAIL'      => $query2[$key]->EMAIL,
-                'E_BARU'      => $query2[$key]->E_BARU,
+                'NO_BUKTI'   => $query[$key]->NO_BUKTI,
+                'TGL'        => $query[$key]->TGL,
+                'TGL_NOW'    => now()->format('d F Y'),
+                'KD_BRG'     => $query2[$key]->KD_BRG,
+                'NA_BRG'     => $query2[$key]->NA_BRG,
+                'SUB'        => $query2[$key]->SUPP,
+                'KET_UK'      => $query2[$key]->KET_UK,
+                'PPN'      => $query2[$key]->PPN,
             ]);
         }
 
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
-        DB::SELECT("UPDATE ubhppnj SET POSTED = 1 WHERE ubhppnj.NO_BUKTI='$no_pp';");
-        if($query[0]->FLAG == 'UE'){
-            foreach($query2 as $sup){
+        // DB::SELECT("UPDATE ubhppnj SET POSTED = 1 WHERE ubhppnj.NO_BUKTI='$no_pp';");
+        // if($query[0]->FLAG == 'UE'){
+        //     foreach($query2 as $sup){
 
-                DB::SELECT("UPDATE zsup SET EMAIL = '" . $sup->E_BARU . "' WHERE zsup.KODES='" . $sup->KODES . "';");
-            }
-        }
-        if($query[0]->FLAG == 'HS'){
-            foreach($query2 as $sup){
-                DB::SELECT("DELETE FROM zsup WHERE zsup.KODES='" . $sup->KODES . "';");
-            }
-        }
+        //         DB::SELECT("UPDATE zsup SET EMAIL = '" . $sup->E_BARU . "' WHERE zsup.KODES='" . $sup->KODES . "';");
+        //     }
+        // }
+        // if($query[0]->FLAG == 'HS'){
+        //     foreach($query2 as $sup){
+        //         DB::SELECT("DELETE FROM zsup WHERE zsup.KODES='" . $sup->KODES . "';");
+        //     }
+        // }
     }
 
     // public function posting(Request $request)
