@@ -1712,4 +1712,13 @@ Route::get('/bcdrak', 'App\Http\Controllers\Master\BcdrakController@index')->mid
     Route::post('/bcdrak/cetak-range', 'App\Http\Controllers\Master\BcdrakController@jasperBcdrakReport')->middleware(['auth'])->name('bcdrak-cetak-range');
     Route::get('/bcdrak/cetak/{bcdrak}', 'App\Http\Controllers\Master\BcdrakController@cetak')->middleware(['auth'])->name('bcdrak.cetak');
 
+// Master Cekbcd
+Route::get('/cekbcd', 'App\Http\Controllers\Master\CekbcdController@index')->middleware(['auth'])->name('cekbcd');
+    // GET cekbcd
+    Route::get('/get-cekbcd', 'App\Http\Controllers\Master\CekbcdController@getCekbcd')->middleware(['auth'])->name('get-cekbcd');
+    Route::get('/cekbcd/print', 'App\Http\Controllers\Master\CekbcdController@Print')->middleware(['auth'])->name('cekbcd.print');
+    Route::get('/cekbcd/barcode', 'App\Http\Controllers\Master\CekbcdController@Barcode')->middleware(['auth'])->name('cekbcd.barcode');
+    Route::post('/cekbcd/cetak-range', 'App\Http\Controllers\Master\CekbcdController@jasperCekbcdReport')->middleware(['auth'])->name('cekbcd-cetak-range');
+    Route::get('/cekbcd/cetak/{cekbcd}', 'App\Http\Controllers\Master\CekbcdController@cetak')->middleware(['auth'])->name('cekbcd.cetak');
+
 require __DIR__.'/auth.php';
