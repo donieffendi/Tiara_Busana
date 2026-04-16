@@ -437,79 +437,58 @@ class UppnNewController extends Controller
         //    return redirect('/beli?flagz='.$FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ ])->with('statusHapus', 'Data '.$beli->NO_BUKTI.' berhasil dihapus');
         return redirect('/uppn?flagz=' . $FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ])->with('statusHapus', 'Data ' . $uppn->NO_BUKTI . ' berhasil dihapus');
     }
-    public function print($uppn)
+
+    public function print(Ubhppnj $uppn)
     {
-        $no_uppn = $uppn;
-        $JAM       = Carbon::now('Asia/Jakarta')
-            ->addHour()
-            ->format('H:i:s');
-        $TGL = Carbon::now('Asia/Jakarta')
-            ->addHour()
-            ->format('d-m-Y');
-        $file         = 'uppn-new';
+        $no_pp = $uppn->NO_BUKTI;
+
+        $file         = 'rpengesahan_perubahan_ppn';
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-        $query = DB::select("SELECT
-                                b.NO_BUKTI,
-                                b.NO_SCAN,
-								b.CBG,
-								comp.NAMA AS COMPAN,
-                                bd.KD_BRG,
-                                bd.NA_BRG,
-                                bd.QTY,
-                                bd.HARGA AS HARGA,
-                                bd.TOTAL,
-								v.HJUAL AS HARGA_VBRG,
-								u.N_POINT,
-                                c.KODES,
-                                c.NAMAS,
-                                c.ALMT_K as ALAMAT,
-                                c.KOTA
-                            FROM TERIMA b
-                            JOIN TERIMAD bd
-                                ON b.NO_BUKTI = bd.NO_BUKTI
+        $query = DB::SELECT("SELECT *
+                            FROM ubhppnj
+                            WHERE ubhppnj.NO_BUKTI='$no_pp'
+                            ;
+		");
+        $query2 = DB::SELECT("SELECT *
+                            FROM ubhppnjd
+                            WHERE ubhppnjd.no_bukti='$no_pp'
+                            ;
+		");
 
-							LEFT JOIN compan comp
-								ON comp.KODE = b.CBG
-							LEFT JOIN vbrg v
-								ON v.KD_BRG = bd.KD_BRG
-							LEFT JOIN ubhnd u
-								ON u.KD_BRG = bd.KD_BRG
-                            LEFT JOIN zsup c
-                                ON LOWER(c.CBG) = LOWER(
-                                    SUBSTRING(
-                                        SUBSTRING_INDEX(b.NO_SCAN, '-', 1),
-                                        3,
-                                        3
-                                    )
-                                )
-                            WHERE b.NO_BUKTI = ?;
-                        ", [$no_uppn]);
-                        // dd($query);
+        $data = [];
 
-        $POSTED = DB::table("ubhppnj")->where('NO_BUKTI', $no_uppn)->value('POSTED');
-        if ($POSTED == 0) {
-            DB::select('call ubhppnjins(?)', [$no_uppn]);
+        foreach ($query2 as $key => $value) {
+            array_push($data, [
+                'NO_BUKTI'   => $query[$key]->NO_BUKTI,
+                'TGL'        => $query[$key]->TGL,
+                'TGL_NOW'    => now()->format('d F Y'),
+                'KD_BRG'     => $query2[$key]->KD_BRG,
+                'NA_BRG'     => $query2[$key]->NA_BRG,
+                'SUB'        => $query2[$key]->SUPP,
+                'KET_UK'      => $query2[$key]->KET_UK,
+                'PPN'      => $query2[$key]->PPN,
+            ]);
         }
-        DB::update(
-            "UPDATE TERIMA SET POSTED = 1 WHERE NO_BUKTI = ?",
-            [$no_uppn]
-        );
 
-        $cleanData                    = json_decode(json_encode($query), true);
-        $PHPJasperXML->arrayParameter = [
-            "JAM" => $JAM,
-            "TGL" => $TGL,
-        ];
-
-        $PHPJasperXML->setData($cleanData);
-        // dd($cleanData);
-
+        $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
+        // DB::SELECT("UPDATE ubhppnj SET POSTED = 1 WHERE ubhppnj.NO_BUKTI='$no_pp';");
+        // if($query[0]->FLAG == 'UE'){
+        //     foreach($query2 as $sup){
 
+        //         DB::SELECT("UPDATE zsup SET EMAIL = '" . $sup->E_BARU . "' WHERE zsup.KODES='" . $sup->KODES . "';");
+        //     }
+        // }
+        // if($query[0]->FLAG == 'HS'){
+        //     foreach($query2 as $sup){
+        //         DB::SELECT("DELETE FROM zsup WHERE zsup.KODES='" . $sup->KODES . "';");
+        //     }
+        // }
     }
+
     private function updateQTY($kd_brg, $cbg, $qty)
     {
         try {
