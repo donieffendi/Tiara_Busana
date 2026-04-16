@@ -26,7 +26,7 @@ class RSuratsController extends Controller
         $cbg   = Cbg::groupBy('CBG')->get();
         $tahun = Carbon::now()->format('Y');
 
-        $per = Perid::where('PERIO', 'like', "%/2025")
+        $per = Perid::where('PERIO', 'like', "%/2026")
             ->orderBy('PERIO')
             ->get();
         session()->put('filter_cbg', '');
