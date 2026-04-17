@@ -59,7 +59,7 @@ class Tretur_ppnController extends Controller
     //     $CBG = Auth::user()->CBG;
 
     //     $retur = DB::SELECT("SELECT distinct PO.NO_BUKTI , PO.KODES, PO.NAMAS,
-    // 	                  PO.ALAMAT, PO.KOTA from bretur, returd
+    // 	                  PO.ALAMAT, PO.KOTA from nwtandaretur, returd
     //                       WHERE PO.NO_BUKTI = POD.NO_BUKTI AND PO.GOL ='$golz' AND CBG = '$CBG'
     //                       AND POD.SISA > 0	");
     //     return resreturnse()->json($retur);
@@ -71,7 +71,7 @@ class Tretur_ppnController extends Controller
 
         $CBG = Auth::user()->CBG;
 
-        $retur = DB::SELECT("SELECT distinct NO_BUKTI , TGL from bretur, returd
+        $retur = DB::SELECT("SELECT distinct NO_BUKTI , TGL from nwtandaretur, returd
                           WHERE CBG = '$CBG' ");
         return resreturnse()->json($retur);
     }
@@ -81,7 +81,7 @@ class Tretur_ppnController extends Controller
         $CBG = Auth::user()->CBG;
 
         $retur = DB::SELECT("SELECT NO_BUKTI,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
-                        (TOTAL-BAYAR) AS SISA, ALAMAT, KOTA from bretur
+                        (TOTAL-BAYAR) AS SISA, ALAMAT, KOTA from nwtandaretur
 		                WHERE LNS <> 1 AND CBG = '$CBG' ORDER BY NO_BUKTI; ");
 
         return response()->json($retur);
@@ -99,14 +99,14 @@ class Tretur_ppnController extends Controller
 
             $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY,
                                             NOTES
-                                        FROM bretur
+                                        FROM nwtandaretur
                                         WHERE NO_BUKTI =''AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
 
         } else if ($cari != '') {
 
             $posting = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, NAMAS, TOTAL_QTY,
                                             NOTES
-                                        FROM bretur
+                                        FROM nwtandaretur
                                         WHERE NO_BUKTI = '$cari'AND CBG = '$CBG' AND FLAG = '$FLAGZ' AND POSTED = '0' ");
         }
 
@@ -127,7 +127,7 @@ class Tretur_ppnController extends Controller
         }
         $returd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X
-                            from breturd a, brg b
+                            from nwtandareturd a, brg b
                             $filterbukti ORDER BY NO_BUKTI ");
 
         return response()->json($returd);
@@ -142,7 +142,7 @@ class Tretur_ppnController extends Controller
         }
         $returd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X
-                            from breturd a, brg b
+                            from nwtandareturd a, brg b
                             $filterbukti ORDER BY NO_BUKTI ");
 
         return response()->json($returd);
@@ -182,7 +182,7 @@ class Tretur_ppnController extends Controller
 
         $CBG = Auth::user()->CBG;
 
-        $tretur_ppn = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, CNT, NCNT, total_qty, notes, POSTED, flag FROM bretur where per='$periode' and flag='$FLAGZ' order by NO_BUKTI");
+        $tretur_ppn = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, CNT, NCNT, total_qty, notes, POSTED, flag FROM nwtandaretur where per='$periode' and flag='$FLAGZ' order by NO_BUKTI");
 
         // ganti 6
 
@@ -291,7 +291,7 @@ class Tretur_ppnController extends Controller
         $bulan = session()->get('periode')['bulan'];
         $tahun = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('bretur')->select('NO_BUKTI')->where('PER', $periode)->where('flag', $FLAGZ)->where('CBG', $CBG)
+        $query = DB::table('nwtandaretur')->select('NO_BUKTI')->where('PER', $periode)->where('flag', $FLAGZ)->where('CBG', $CBG)
             ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
         if ($query != '[]') {
@@ -356,9 +356,9 @@ class Tretur_ppnController extends Controller
 
         $tretur_ppn = Tretur_ppn::where('NO_BUKTI', $no_buktix)->first();
 
-        DB::SELECT("UPDATE bretur,  breturd
-                            SET  breturd.ID =  bretur.NO_ID  WHERE  bretur.NO_BUKTI =  breturd.no_bukti
-							AND  bretur.NO_BUKTI='$no_buktix';");
+        DB::SELECT("UPDATE nwtandaretur,  nwtandareturd
+                            SET  nwtandareturd.ID =  nwtandaretur.NO_ID  WHERE  nwtandaretur.NO_BUKTI =  nwtandareturd.no_bukti
+							AND  nwtandaretur.NO_BUKTI='$no_buktix';");
 
         // return redirect('/tretur_ppn/edit/?idx=' . $tretur_ppn->NO_ID . '&tipx=edit&flagz=' . $this->FLAGZ . '&judul=' . $this->judul . '');
         return redirect('/tretur_ppn?flagz=' . $FLAGZ)->with(['judul' => $judul, 'flagz' => $FLAGZ]);
@@ -395,7 +395,7 @@ class Tretur_ppnController extends Controller
 
             $buktix = $request->buktix;
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwtandaretur
 		                 where PER ='$per' and FLAG ='$this->FLAGZ'
 						 and NO_BUKTI = '$buktix' AND CBG = '$CBG'
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1");
@@ -410,7 +410,7 @@ class Tretur_ppnController extends Controller
 
         if ($tipx == 'top') {
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwtandaretur
 		                 where PER ='$per'
 						 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
 		                 ORDER BY NO_BUKTI ASC  LIMIT 1");
@@ -427,7 +427,7 @@ class Tretur_ppnController extends Controller
 
             $buktix = $request->buktix;
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwtandaretur
 		             where PER ='$per'
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI <
@@ -445,7 +445,7 @@ class Tretur_ppnController extends Controller
 
             $buktix = $request->buktix;
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwtandaretur
 		             where PER ='$per'
 					 and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
                      and NO_BUKTI >
@@ -461,7 +461,7 @@ class Tretur_ppnController extends Controller
 
         if ($tipx == 'bottom') {
 
-            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from bretur
+            $bingco = DB::SELECT("SELECT NO_ID, NO_BUKTI from nwtandaretur
 						where PER ='$per'
 						and FLAG ='$this->FLAGZ' AND CBG = '$CBG'
 		              ORDER BY NO_BUKTI DESC  LIMIT 1");
@@ -489,7 +489,7 @@ class Tretur_ppnController extends Controller
         }
 
         $no_bukti    = $tretur_ppn->NO_BUKTI;
-        $returDetail = DB::table('breturd')->where('no_bukti', $no_bukti)->orderBy('rec')->get();
+        $returDetail = DB::table('nwtandareturd')->where('no_bukti', $no_bukti)->orderBy('rec')->get();
 
         $data = [
             'header' => $tretur_ppn,
@@ -560,7 +560,7 @@ class Tretur_ppnController extends Controller
         $QTY      = $request->input('QTY');
         $KET      = $request->input('KET');
 
-        $query = DB::table('breturd')->where('no_bukti', $request->NO_BUKTI)->whereNotIn('NO_ID', $NO_ID)->delete();
+        $query = DB::table('nwtandareturd')->where('no_bukti', $request->NO_BUKTI)->whereNotIn('NO_ID', $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
@@ -743,7 +743,7 @@ class Tretur_ppnController extends Controller
 
                 $no_bukti = trim($no_bukti_arr[$i]);
 
-                $details = DB::table('breturd')
+                $details = DB::table('nwtandareturd')
                     ->where('no_bukti', $no_bukti)
                     ->get();
 
@@ -772,7 +772,7 @@ class Tretur_ppnController extends Controller
                     }
                 }
 
-                DB::table('bretur')
+                DB::table('nwtandaretur')
                     ->where('no_bukti', $no_bukti)
                     ->update([
                         'POSTED'     => 1,
