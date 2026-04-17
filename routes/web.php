@@ -1733,4 +1733,7 @@ Route::get('/vbrgdw/browse_beli', 'App\Http\Controllers\Master\VBrgDwController@
 Route::get('/vbrgdw/browse_koreksi', 'App\Http\Controllers\Master\VBrgDwController@browse_koreksi')->middleware(['auth'])->name('vbrgdw/browse_koreksi');
 Route::get('/vbrgdw/browse_hdh', 'App\Http\Controllers\Master\VBrgDwController@browse_hdh')->middleware(['auth'])->name('vbrgdw/browse_hdh');
 
+//Proses Akhir Periode
+Route::get('/prosesso', 'App\Http\Controllers\OReport\RSoController@prosesso')->middleware(['auth'])->name('prosesso');
+
 require __DIR__.'/auth.php';
