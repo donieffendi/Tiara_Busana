@@ -361,6 +361,16 @@
 			</div>
         </div>
 
+        <div class="col-md-3">
+            <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
+              <a href="javascript:addTab('Komponen Barang', '{{url('vbrgdw')}}')">
+                  <!-- <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i> -->
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
+                <h6>Komponen Barang</h6>
+              </a>
+			</div>
+        </div>
+
 
     </div>
 

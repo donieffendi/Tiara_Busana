@@ -1721,4 +1721,16 @@ Route::get('/cekbcd', 'App\Http\Controllers\Master\CekbcdController@index')->mid
     Route::post('/cekbcd/cetak-range', 'App\Http\Controllers\Master\CekbcdController@jasperCekbcdReport')->middleware(['auth'])->name('cekbcd-cetak-range');
     Route::get('/cekbcd/cetak/{cekbcd}', 'App\Http\Controllers\Master\CekbcdController@cetak')->middleware(['auth'])->name('cekbcd.cetak');
 
+// Master Komponen Barang
+Route::get('/vbrgdw', 'App\Http\Controllers\Master\VBrgDwController@index')->middleware(['auth'])->name('vbrgdw');
+Route::get('/vbrgdw/edit', 'App\Http\Controllers\Master\VBrgDwController@edit')->middleware(['auth'])->name('vbrgdw.edit');
+Route::post('/vbrgdw/store', 'App\Http\Controllers\Master\VBrgDwController@store')->middleware(['auth'])->name('vbrgdw/store');
+Route::get('/vbrgdw/browse_hdh_promo', 'App\Http\Controllers\Master\VBrgDwController@browse_hdh_promo')->middleware(['auth'])->name('vbrgdw/browse_hdh_promo');
+Route::get('/get-vbrgdw', 'App\Http\Controllers\Master\VBrgDwController@getVbrgdw')->middleware(['auth'])->name('get-vbrgdw');
+Route::get('/vbrgdw/browse', 'App\Http\Controllers\Master\VBrgDwController@browse')->middleware(['auth'])->name('vbrgdw/browse');
+Route::get('/vbrgdw/browse_kirim', 'App\Http\Controllers\Master\VBrgDwController@browse_kirim')->middleware(['auth'])->name('vbrgdw/browse_kirim');
+Route::get('/vbrgdw/browse_beli', 'App\Http\Controllers\Master\VBrgDwController@browse_beli')->middleware(['auth'])->name('vbrgdw/browse_beli');
+Route::get('/vbrgdw/browse_koreksi', 'App\Http\Controllers\Master\VBrgDwController@browse_koreksi')->middleware(['auth'])->name('vbrgdw/browse_koreksi');
+Route::get('/vbrgdw/browse_hdh', 'App\Http\Controllers\Master\VBrgDwController@browse_hdh')->middleware(['auth'])->name('vbrgdw/browse_hdh');
+
 require __DIR__.'/auth.php';
