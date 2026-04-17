@@ -1412,10 +1412,10 @@
 
             <div class="row d-flex">
               <div class="col-md-3">
-                  <div class="menu-card" style="">
+                  <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#periodeModal" id="periode">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-calendar icon-purple"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-calendar icon-pink"></i>
                       <h6>Ganti Periode</h6>
                     </a>
                   </div>
@@ -1459,11 +1459,13 @@
                     </a>
                 </div>
               </div>
-              <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
-                <a href="javascript:addTab('Proses Akhir Periode', '{{url('prosesso')}}')">
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-clock icon-pink"></i>
-                  <h6>Proses Akhir Periode</h6>
-                </a>
+              <div class="col-md-3">
+                <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
+                  <a href="javascript:addTab('Proses Akhir Periode', '{{url('prosesso')}}')">
+                    <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-clock icon-pink"></i>
+                    <h6>Proses Akhir Periode</h6>
+                  </a>
+                </div>
               </div>
             </div>
 
