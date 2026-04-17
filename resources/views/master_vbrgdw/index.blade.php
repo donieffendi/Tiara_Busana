@@ -239,26 +239,26 @@
                 },
 
                 {
-                    data: 'KD_BRG',
-                    name: 'KD_BRG'
+                    data: 'KDBAR',
+                    name: 'KDBAR'
                 },
                 {
-                    data: 'NA_BRG',
-                    name: 'NA_BRG'
+                    data: 'NMBAR',
+                    name: 'NMBAR'
                     
                 }, {
-                    data: 'KODES',
-                    name: 'KODES',
+                    data: 'SUPP',
+                    name: 'SUPP',
 
                 }, {
-                    data: 'NAMAS',
-                    name: 'NAMAS',
+                    data: 'NAMA',
+                    name: 'NAMA',
                     render: function(data, type, row, meta) {
                         return ' <h5><span class="badge badge-pill badge-info">' + data + '</span></h5>';
                     }
                 }, {
-                    data: 'HARGA',
-                    name: 'HARGA',
+                    data: 'HB',
+                    name: 'HB',
                     render: function (data, type, row, meta) {
                         if (type === 'display' || type === 'filter') {
                             let rupiah = new Intl.NumberFormat('id-ID', {
@@ -274,26 +274,37 @@
 
                 }, {
                     data: 'DISC',
-                    name: 'DISC'
+                    name: 'DISC',
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '' )
                 },{
-                    data: 'DISC2',
-                    name: 'DISC2'
+                    data: 'DIS_A',
+                    name: 'DIS_A',
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '' )
                 },{
-                    data: 'DISC3',
-                    name: 'DISC3'
+                    data: 'DIS_B',
+                    name: 'DIS_B',
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '' )
                 },{
-                    data: 'DISC4',
-                    name: 'DISC4'
+                    data: 'DIS_C',
+                    name: 'DIS_C',
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '' )
                 },{
                     data: 'PPN',
-                    name: 'PPN'
+                    name: 'PPN',
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '' )
                 },
 
             ],
-            columnDefs: [{
-                "className": "dt-center",
-                "targets": [0, 1, 2, 3]
-            }, ],
+            columnDefs: [
+                {
+                    "className": "dt-center",
+                    "targets": [0, 1, 2, 3]
+                }, 
+                {
+                    "className": "dt-right",
+                    "targets": [6, 7, 8, 9, 10]
+                }
+        ],
             dom: "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
