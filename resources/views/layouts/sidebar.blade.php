@@ -1447,6 +1447,9 @@
                     </a>
                   </div>
               </div>
+            </div>
+
+            <div class="row d-flex">
               <div class="col-md-3">
                 <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
                     <a href="javascript:addTab('Cek Barcode Double', '{{url('cekbcd')}}')" >
@@ -1455,6 +1458,12 @@
                       <h6>Cek Barcode Double</h6>
                     </a>
                 </div>
+              </div>
+              <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
+                <a href="javascript:addTab('Proses Akhir Periode', '{{url('prosesso')}}')">
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-clock icon-pink"></i>
+                  <h6>Proses Akhir Periode</h6>
+                </a>
               </div>
             </div>
 
