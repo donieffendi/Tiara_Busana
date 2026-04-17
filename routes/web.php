@@ -1726,7 +1726,7 @@ Route::get('/vbrgdw', 'App\Http\Controllers\Master\VBrgDwController@index')->mid
 Route::get('/vbrgdw/edit', 'App\Http\Controllers\Master\VBrgDwController@edit')->middleware(['auth'])->name('vbrgdw.edit');
 Route::post('/vbrgdw/store', 'App\Http\Controllers\Master\VBrgDwController@store')->middleware(['auth'])->name('vbrgdw/store');
 Route::get('/vbrgdw/browse_hdh_promo', 'App\Http\Controllers\Master\VBrgDwController@browse_hdh_promo')->middleware(['auth'])->name('vbrgdw/browse_hdh_promo');
-Route::get('/get-vbrgdw', 'App\Http\Controllers\Master\VBrgDwController@getVbrgdw')->middleware(['auth'])->name('get-vbrgdw');
+Route::get('/get-vbrgdw', 'App\Http\Controllers\Master\VBrgDwController@getVbrgDw')->middleware(['auth'])->name('get-vbrgdw');
 Route::get('/vbrgdw/browse', 'App\Http\Controllers\Master\VBrgDwController@browse')->middleware(['auth'])->name('vbrgdw/browse');
 Route::get('/vbrgdw/browse_kirim', 'App\Http\Controllers\Master\VBrgDwController@browse_kirim')->middleware(['auth'])->name('vbrgdw/browse_kirim');
 Route::get('/vbrgdw/browse_beli', 'App\Http\Controllers\Master\VBrgDwController@browse_beli')->middleware(['auth'])->name('vbrgdw/browse_beli');

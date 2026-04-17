@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 // ganti 2
-class VbrgdwController extends Controller
+class VbrgDwController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,11 +38,13 @@ class VbrgdwController extends Controller
     }
 
 
-    public function getVbrgdw(  )
+    public function getVbrgDw()
     {
         // ganti 5
 
-        $vbrg = DB::SELECT("SELECT * from vbrgdw WHERE POSTED=1 ORDER BY KD_BRG  ");
+        $vbrg = DB::SELECT("SELECT a.NO_ID, a.SUB, a.KDBAR, a.NMBAR, a.SUPP, b.NAMA, a.HB, a.DIS_A, a.DIS_B, a.DIS_C, a.PPN, a.DISC
+                            FROM nwmasbar a, nwmassup b 
+                            WHERE a.SUPP = b.NO_SUPL ORDER BY KDBAR ");
 
         return Datatables::of($vbrg)
             ->addIndexColumn()
