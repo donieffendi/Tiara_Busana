@@ -1736,4 +1736,21 @@ Route::get('/vbrgdw/browse_hdh', 'App\Http\Controllers\Master\VBrgDwController@b
 //Proses Akhir Periode
 Route::get('/prosesso', 'App\Http\Controllers\OReport\RSoController@prosesso')->middleware(['auth'])->name('prosesso');
 
+// Opertational Tanda Retur Per PLU
+Route::get('/tandaretur', 'App\Http\Controllers\OTransaksi\TandareturController@index')->middleware(['auth'])->name('tandaretur');
+Route::post('/tandaretur/store', 'App\Http\Controllers\OTransaksi\TandareturController@store')->middleware(['auth'])->name('tandaretur/store');
+Route::post('/tandaretur/proses', 'App\Http\Controllers\OTransaksi\TandareturController@prosesOtomatis')->middleware(['auth'])->name('tandaretur/proses');
+
+// GET Tanda Retur Per PLU
+Route::get('/tandaretur/browse_brg', 'App\Http\Controllers\OTransaksi\TandareturController@browse_brg')->middleware(['auth'])->name('tandaretur/browse_brg');
+
+Route::get('/get-tandaretur', 'App\Http\Controllers\OTransaksi\TandareturController@getTandaretur')->middleware(['auth'])->name('get-tandaretur');
+Route::get('/tandaretur/cetak/{tandaretur:NO_ID}', 'App\Http\Controllers\OTransaksi\TandareturController@cetak')->middleware(['auth']);
+Route::post('/tandaretur/posting/{id}', 'App\Http\Controllers\OTransaksi\TandareturController@posting')->middleware(['auth'])->name('tandaretur.posting');
+
+// Dynamic Tanda Retur Per PLU
+Route::get('/tandaretur/edit', 'App\Http\Controllers\OTransaksi\TandareturController@edit')->middleware(['auth'])->name('tandaretur.edit');
+Route::post('/tandaretur/update/{tandaretur}', 'App\Http\Controllers\OTransaksi\TandareturController@update')->middleware(['auth'])->name('tandaretur.update');
+Route::get('/tandaretur/delete/{tandaretur}', 'App\Http\Controllers\OTransaksi\TandareturController@destroy')->middleware(['auth'])->name('tandaretur.delete');
+
 require __DIR__.'/auth.php';

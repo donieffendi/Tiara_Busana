@@ -24,6 +24,7 @@ class Tandaretur extends Model
         "TGL",
         "NOTES",
         "USRNM",
-        "TG_SMP"
+        "TG_SMP",
+        "CBG"
     ];
 }

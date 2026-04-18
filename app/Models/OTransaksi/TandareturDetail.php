@@ -21,8 +21,12 @@ class TandareturDetail extends Model
         "PER",
         "KDBAR",
         "NMBAR",
-        "NAMA",
-        "KET",
-        "RETUR"
+        "KET_UK",
+        "KET_KEM",
+        "RETUR",
+        "RETUR_B",
+        "CBG",
+        "USRNM",
+        "TG_SMP"
     ];
 }
