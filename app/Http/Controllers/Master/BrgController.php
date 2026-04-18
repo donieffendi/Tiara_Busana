@@ -73,8 +73,8 @@ class BrgController extends Controller
 
         $brg = DB::SELECT("SELECT nwmasbar.NO_ID, nwmasbar.SUB, nwmasbar.KDBAR, nwmasbar.NMBAR, nwmasbar.ITEM_SUP, nwmasbar.KET_UK, nwmasbar.KET_KEM, nwmasbar.SUPP, nwmasbar.QTY_BELI1, nwmasbar.HB, nwmasbar.DIS_A, nwmasbar.DIS_B, nwmasbar.DIS_C, nwmasbar.TOT_BL
                         from nwmasbar
-						join aotprice on nwmasbar.SUB = aotprice.SUB
-						where aotprice.TYPE = '$dept'
+						join nwaotprice on nwmasbar.SUB = nwaotprice.SUB
+						where nwaotprice.TYPE = '$dept'
                         order by nwmasbar.SUB ");
 
         return Datatables::of($brg)
