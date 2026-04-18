@@ -67,7 +67,8 @@
 					
 					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
 					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rtidakkirim")}}'">Reset</button>
-					<button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button>
+					<button type="button" id="cetak" class="btn btn-warning">Cetak</button>
+					{{-- <button class="btn btn-warning" type="submit" id="cetak" class="cetak" formtarget="_blank">Cetak</button> --}}
 					</form>
 					<div style="margin-bottom: 15px;"></div>
 					
@@ -237,6 +238,7 @@
 
 @section('javascripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	$(document).ready(function() {
 		
@@ -244,7 +246,57 @@
 			dateFormat: 'dd-mm-yy'
 		}); 
 
+		// $('#cetak').on('click', function(e){
+		// 	let selected = [];
+
+		// 	$('.cek-cetak:checked').each(function(){
+		// 		selected.push($(this).val());
+		// 	});
+
+		// 	if(selected.length === 0){
+		// 		alert('Pilih minimal 1 data!');
+		// 		e.preventDefault();
+		// 		return false;
+		// 	}
+
+		// 	$('#selected_suppliers').val(JSON.stringify(selected));
+		// });
+
+		let isSubmitting = false;
+
 		$('#cetak').on('click', function(e){
+
+			console.log('CLICK CETAK');
+
+			if(isSubmitting){
+				return false;
+			}
+
+			let per = $('#per').val();
+
+			if(!per){
+				Swal.fire({
+					icon: 'warning',
+					title: 'Oops...',
+					text: 'Periode harus dipilih!'
+				});
+				return;
+			}
+
+			let now = new Date();
+			let bulanNow = (now.getMonth() + 1).toString().padStart(2, '0');
+			let tahunNow = now.getFullYear();
+			let perNow = bulanNow + '/' + tahunNow;
+
+			if(per !== perNow){
+				Swal.fire({
+					icon: 'error',
+					title: 'Periode tidak valid',
+					text: 'Periode harus sama dengan periode saat ini (' + perNow + ')'
+				});
+				return;
+			}
+
 			let selected = [];
 
 			$('.cek-cetak:checked').each(function(){
@@ -252,12 +304,23 @@
 			});
 
 			if(selected.length === 0){
-				alert('Pilih minimal 1 data!');
-				e.preventDefault();
-				return false;
+				Swal.fire({
+					icon: 'warning',
+					title: 'Tidak ada data',
+					text: 'Pilih minimal 1 data!'
+				});
+				return;
 			}
 
 			$('#selected_suppliers').val(JSON.stringify(selected));
+
+			// 🔥 LOCK supaya tidak double klik
+			isSubmitting = true;
+
+			$('#cetak').prop('disabled', true).text('Sedang Memproses...');
+
+			// 🔥 submit manual (sekarang aman karena bukan submit button)
+			$(this).closest('form')[0].submit();
 		});
 
 		var dTableBSuplier;
