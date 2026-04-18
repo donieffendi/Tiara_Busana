@@ -131,6 +131,18 @@
 									</div>
 									<!-- tutupannya -->
 
+									<div class="col-md-1" align="right">
+										<label class="form-label">Departement</label>
+									</div>
+									<div class="col-md-2">
+										<select name="dept" id="dept" class="form-control dept" style="width: 200px">
+											<option value="">--Pilih Periode--</option>
+											@foreach($dept as $deptD)
+												<option value="{{$deptD->KD_DEPT}}">{{$deptD->KD_DEPT}}</option>
+											@endforeach
+										</select>
+									</div>
+
 									{{-- <div class="col-md-1" align="right">
 										<label for="TYPE" class="form-label">Tipe</label>
 									</div>

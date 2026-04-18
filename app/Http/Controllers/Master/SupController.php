@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use App\Models\Master\Sup;
+use App\Models\Master\Dept;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
@@ -348,10 +349,12 @@ class SupController extends Controller
              $sup = new Sup;
 		 }
 
+         $dept = DB::select("SELECT KD_DEPT FROM nwdept"); 
+
 		 $data = [
 						'header' => $sup,
 			        ];
-			return view('master_sup.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ])->with(['pilihbank' => $pilihbank]);
+			return view('master_sup.edit', $data)->with(['dept' => $dept])->with(['tipx' => $tipx, 'idx' => $idx ])->with(['pilihbank' => $pilihbank]);
 
 
     }
