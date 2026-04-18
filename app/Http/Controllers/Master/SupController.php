@@ -30,19 +30,19 @@ class SupController extends Controller
     public function browse(Request $request)
     {
 
-
+        $dept = session()->get('periode')['dept'];
     	if (!empty(request('q'))) {
 
 
                  $sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA from nwmassup
-                            WHERE  NAMA LIKE ('%$request->q%')
+                            WHERE  NAMA LIKE ('%$request->q%') and RAK ='$dept'
                             ORDER BY NAMA ");
 
 
         } else {
 			$sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA
                             from nwmassup
-
+                            where RAK = '$dept'
                             ORDER BY NAMA ");
 		}
 

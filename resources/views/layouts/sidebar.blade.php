@@ -1271,7 +1271,7 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#e3f1fc;">
-              <a href="javascript:addTab('Pencetakan Label Harga', '{{url('harga?flagz=LB&golz=HG')}}')" >
+              <a href="javascript:addTab('Pencetakan Label Harga', '{{url('lbharga?flagz=LB&golz=HG')}}')" >
                 <!-- <a href="javascript:addTab('Pencetakan Label Harga', '{{url('po?flagz=PO&golz=LH')}}')"> -->
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-blue"></i>

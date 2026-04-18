@@ -64,11 +64,29 @@ class PoController extends Controller
         $kodes = $request->kodes;
 
         //
-        $po = DB::select("SELECT DISTINCT PO.NO_BUKTI, PO.KODES, PO.NAMAS,
-                                    PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
-                            FROM nwbudget AS PO
-                            JOIN nwbudgetd AS POD ON PO.NO_BUKTI = POD.NO_BUKTI
-                            WHERE PO.KODES = ?
+        // $po = DB::select("SELECT DISTINCT PO.NO_BUKTI, PO.KODES, PO.NAMAS,
+        //                             PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
+        //                     FROM nwbudget AS PO
+        //                     JOIN nwbudgetd AS POD ON PO.NO_BUKTI = POD.NO_BUKTI
+        //                     WHERE PO.KODES = ?
+        //                     AND POD.SISA > 0
+        //                     AND PO.POSTED = 1
+        //                     AND PO.JTEMPO > ?
+        //                     AND NOT EXISTS (
+        //                         SELECT 1 
+        //                         FROM nwagend 
+        //                         WHERE nwagend.SP = PO.NO_BUKTI
+        //                     )
+        //                     GROUP BY PO.NO_BUKTI, PO.KODES, PO.NAMAS,
+        //                             PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
+        //                 ", [$kodes, $tanggal]);
+
+        $po = DB::SELECT("SELECT DISTINCT 
+                            PO.NO_BUKTI, PO.KODES, PO.NAMAS,
+                            PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
+                        FROM nwbudget AS PO
+                        JOIN nwbudgetd AS POD ON PO.NO_BUKTI = POD.NO_BUKTI
+                        WHERE PO.KODES = ?
                             AND POD.SISA > 0
                             AND PO.POSTED = 1
                             AND PO.JTEMPO > ?
@@ -77,9 +95,23 @@ class PoController extends Controller
                                 FROM nwagend 
                                 WHERE nwagend.SP = PO.NO_BUKTI
                             )
-                            GROUP BY PO.NO_BUKTI, PO.KODES, PO.NAMAS,
-                                    PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
-                        ", [$kodes, $tanggal]);
+
+                        UNION ALL
+                            
+                            SELECT DISTINCT 
+                            BS.NO_BUKTI, BS.KODES, BS.NAMAS,
+                            BS.ALAMAT, BS.KOTA, BS.JTEMPO, BS.NOTES
+                        FROM bstockaz AS BS
+                        JOIN bstockazd AS BSD ON BS.NO_BUKTI = BSD.NO_BUKTI
+                        WHERE BS.KODES = ?
+                            AND BS.SISA > 0
+                            AND BS.POSTED = 1
+                            AND BS.JTEMPO > ?
+                            AND NOT EXISTS (
+                                SELECT 1 
+                                FROM nwagend 
+                                WHERE nwagend.SP = BS.NO_BUKTI
+                            )", [$kodes, $tanggal, $kodes, $tanggal]);
 
         return response()->json($po);
     }
