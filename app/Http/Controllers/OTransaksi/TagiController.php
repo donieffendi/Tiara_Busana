@@ -453,7 +453,7 @@ class TagiController extends Controller
         }
 
         $no_bukti   = $tagi->NO_BUKTI;
-        $tagiDetail = DB::table('tagid')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
+        $tagiDetail = DB::table('tagibsnd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
 
         $data = [
             'header' => $tagi,
