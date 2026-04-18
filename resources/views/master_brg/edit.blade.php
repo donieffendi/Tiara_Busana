@@ -285,10 +285,14 @@
 									<div class="col-md-3">
 									</div>
 
-									<div class="col-md-2 form-group row special-input-label">
-										<input type="text" class="RETUR" id="RETUR" name="RETUR" 
-											value="{{$header->RETUR}}" placeholder=" " >
-										<label for="RETUR">Tanda Retur [Y/T]</label>
+									<div class="col-md-1">
+										<label for="RETUR" class="form-label">Tanda Retur[Y/T]</label>
+									</div>
+									<div class="col-md-1">
+										<select id="RETUR" class="form-control"  name="RETUR">
+											<option value="Y" {{ ($header->RETUR == 'Y') ? 'selected' : '' }}>Y</option>
+											<option value="T" {{ ($header->RETUR == 'T') ? 'selected' : '' }}>T</option>
+										</select>
 									</div>
 								</div>
 
