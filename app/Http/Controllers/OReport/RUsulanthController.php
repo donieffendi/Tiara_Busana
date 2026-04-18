@@ -24,6 +24,7 @@ class RUsulanthController extends Controller
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
 		session()->put('filter_nobukti1', '');
+		session()->put('filter_ulang', '');
         return view('oreport_usulanth.report')->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	
@@ -45,15 +46,22 @@ class RUsulanthController extends Controller
 			{
 				$filtercbg = " and po.CBG='".$request->cbg."' ";
 			}
+
+			$cbgx = session()->get('periode')['cabang'];
 			
 			$nobukti_1 = $request->nobukti;
 
+			$userx = Auth::user()->username;
+
 			session()->put('filter_nobukti1', $request->nobukti);
 			session()->put('filter_cbg', $request->cbg);
+			session()->put('filter_ulang', $request->ulang);
 		
-
-		$query = $db->prepare("CALL bsn_turun_harga_terima(?, ?, ?, ?)");
-		$query->execute([$jnsx, $cbgx, $buktix, $userx]);
+		if ($request->has('ulang')){
+			$query = DB::SELECT("CALL bsn_turun_harga_terima('USUL_TH', '$cbgx', '$nobukti_1', '$userx')");
+		} else {
+			$query = DB::SELECT("CALL bsn_turun_harga_terima('USUL_TH', '$cbgx', '', '$userx')");
+		}
 
 
 		if($request->has('filter'))

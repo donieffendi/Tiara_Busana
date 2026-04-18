@@ -32,13 +32,22 @@
                                                 readonly>
                                             <input type="hidden" name="cbg" value="{{ Auth::user()->CBG }}">
                                         </div>
+
+                                        <div class="col-md-2 d-flex align-items-end">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ulang" name="ulang"
+                                                    {{ session()->get('filter_ulang') ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="ulang">Ulang</label>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="form-group row">
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-2" id="group_nobukti">
                                             <label class="form-label">No Usulan</label>
                                             <input type="text" class="form-control nobukti" id="nobukti" name="nobukti"
-                                                placeholder="" value="{{ session()->get('filter_nobukti1') }}" readonly>
+                                                value="{{ session()->get('filter_nobukti1') }}">
                                         </div>
                                     </div>
 
@@ -80,7 +89,7 @@
                                                     'label' => 'Nama Barang',
                                                     'footerText' => '<b>Grand Total :</b>',
                                                 ],
-                                                'TOTAL' => [
+                                                'STOK' => [
                                                     'label' => 'Jumlah',
                                                     'type' => 'number',
                                                     'decimals' => 2,
@@ -89,10 +98,13 @@
                                                     'footer' => 'sum',
                                                     'footerText' => '<b>@value</b>',
                                                 ],
-                                                'TGL_BL' => [
+                                                'TGL_BELI' => [
                                                     'label' => 'Tanggal Beli',
+                                                    'type' => 'date',
+                                                    'format' => 'Y-m-d',
+                                                    'displayFormat' => 'd-m-Y',
                                                 ],
-                                                'MJUAL' => [
+                                                'HARI' => [
                                                     'label' => 'Masa Jual',
                                                     'type' => 'number',
                                                     'decimals' => 2,
@@ -101,7 +113,7 @@
                                                     'footer' => 'sum',
                                                     'footerText' => '<b>@value</b>',
                                                 ],
-                                                'DISK' => [
+                                                'DISKON' => [
                                                     'label' => '% Diskon ',
                                                     'type' => 'number',
                                                     'decimals' => 2,
@@ -110,7 +122,7 @@
                                                     'footer' => 'sum',
                                                     'footerText' => '<b>@value</b>',
                                                 ],
-                                                'PERUBAHAN' => [
+                                                'NO_TH_JUAL' => [
                                                     'label' => 'No Perubahan Harga Jual',
                                                 ],
                                             ],
@@ -124,7 +136,7 @@
                                                 'columnDefs' => [
                                                     [
                                                         'className' => 'dt-right',
-                                                        'targets' => [6, 7, 8, 9, 10],
+                                                        'targets' => [4,6,7],
                                                     ],
                                                 ],
                                                 'order' => [],
@@ -259,6 +271,8 @@
             $('.date').datepicker({
                 dateFormat: 'dd-mm-yy'
             });
+
+            
             /*
             function fill_datatable( kodes = '' ,  gol='', tglDr = '', tglSmp = '' )
             {
@@ -387,6 +401,23 @@
             	fill_datatable(kodes, gol, tglDr, tglSmp);
             });
             */
+        });
+
+        function toggleNoBukti() {
+            if ($('#ulang').is(':checked')) {
+                $('#group_nobukti').show();
+            } else {
+                $('#group_nobukti').hide();
+                $('#nobukti').val(''); // optional: kosongkan value
+            }
+        }
+
+        // saat pertama load
+        toggleNoBukti();
+
+        // saat checkbox berubah
+        $('#ulang').change(function () {
+            toggleNoBukti();
         });
 
         var dTableBSuplier;
