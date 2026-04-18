@@ -131,7 +131,7 @@
 
 									<!-- code text box baru -->
 									<div class="col-md-2" >
-										<label for="DEPT" class="form-label">Jenis Counter</label>
+										<label for="DEPT" class="form-label">Departement</label>
 									</div>
 									<div class="col-md-2">
 										<select id="DEPT" class="form-control"  name="DEPT">
