@@ -57,8 +57,10 @@ class Sub_brgController extends Controller
     {
 		// $PPN = Auth::user()->PPN;
 
+        $dept = session()->get('periode')['dept'];
+        
         $sub_brg = DB::SELECT("SELECT NO_ID, SUB, KELOMPOK, DEPT
-                        from nwaotprice
+                        from nwaotprice where DEPT='$dept'
                         ORDER BY SUB ");
 
         return Datatables::of($sub_brg)
