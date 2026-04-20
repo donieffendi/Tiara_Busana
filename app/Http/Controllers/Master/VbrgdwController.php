@@ -43,16 +43,16 @@ class VbrgDwController extends Controller
         // ganti 5
 
         $vbrg = DB::SELECT("SELECT a.NO_ID, a.SUB, a.KDBAR, a.NMBAR, a.SUPP, b.NAMA, a.HB, a.DIS_A, a.DIS_B, a.DIS_C, a.PPN, a.DISC
-                            FROM nwmasbar a, nwmassup b 
+                            FROM nwmasbar a, nwmassup b
                             WHERE a.SUPP = b.NO_SUPL ORDER BY KDBAR ");
 
         return Datatables::of($vbrg)
             ->addIndexColumn()
-            
+
             ->rawColumns(['action'])
             ->make(true);
-			
-			
+
+
     }
     public function store(Request $request)
     {
@@ -64,13 +64,13 @@ class VbrgDwController extends Controller
         $HARGAAWAL = $request->HARGAAWAL;
         $HARGA = $request->HARGA;
         $DISCAWAL = $request->DISCAWAL;
-        $DISC = $request->DISC;        
+        $DISC = $request->DISC;
         $DISCAWAL2 = $request->DISCAWAL2;
-        $DISC2 = $request->DISC2;       
+        $DISC2 = $request->DISC2;
         $DISCAWAL3 = $request->DISCAWAL3;
-        $DISC3 = $request->DISC3;        
+        $DISC3 = $request->DISC3;
         $DISCAWAL4 = $request->DISCAWAL4;
-        $DISC4 = $request->DISC4;      
+        $DISC4 = $request->DISC4;
         $PPNAWAL = $request->PPNAWAL;
         $PPN = $request->PPN;
         $STATUS = $request->STATUS;
@@ -134,7 +134,7 @@ class VbrgDwController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
+
 
     // ganti 15
 

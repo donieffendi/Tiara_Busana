@@ -158,7 +158,7 @@ class VBrgDwHargaPemulaController extends Controller
     }
     public function store(Request $request)
     {
-		
+
         $NO_BUKTI = $request->NO_BUKTI;
         $KODES    = $request->KODES;
         $NAMAS    = $request->NAMAS;

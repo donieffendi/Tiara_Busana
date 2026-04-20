@@ -1783,4 +1783,34 @@ Route::get('/vbrgdw-harga-pemula-new/print/{vbrgdw-harga-pemula}', 'App\Http\Con
 Route::get('/get-detail-vbrgdw-harga-pemula', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@getDetailVBrgDwHargaPemula')->middleware(['auth'])->name('get-detail-vbrgdw-harga-pemula');
 
 
+
+// Report Perubahan Harga
+Route::get('/rubbrgdw', 'App\Http\Controllers\OReport\RubbrgdwController@report')->middleware(['auth'])->name('rubbrgdw');
+Route::get('/rubbrgdw/browse', 'App\Http\Controllers\OReport\RubbrgdwController@browse')->middleware(['auth'])->name('rubbrgdw.browse');
+Route::get('/rubbrgdw/browse_detail', 'App\Http\Controllers\OReport\RubbrgdwController@browse_detail')->middleware(['auth'])->name('rubbrgdw.browse_detail');
+Route::get('/rubbrgdw/edit', 'App\Http\Controllers\OReport\RubbrgdwController@edit')->middleware(['auth'])->name('rubbrgdw.edit');
+Route::delete('/rubbrgdw/delete', 'App\Http\Controllers\OReport\RubbrgdwController@delete')->middleware(['auth'])->name('rubbrgdw.delete');
+// Report Perubahan Harga
+Route::get('/ubbrgdw', 'App\Http\Controllers\OTransaksi\UbbrgdwController@index')->middleware(['auth'])->name('ubbrgdw');
+Route::get('/ubbrgdw/browse', 'App\Http\Controllers\OTransaksi\UbbrgdwController@browse')->middleware(['auth'])->name('ubbrgdw.browse');
+Route::get('/ubbrgdw/cetak/{NO_ID}', 'App\Http\Controllers\OTransaksi\UbbrgdwController@cetak')->middleware(['auth'])->name('ubbrgdw.cetak');
+Route::get('/ubbrgdw/browse_detail', 'App\Http\Controllers\OTransaksi\UbbrgdwController@browse_detail')->middleware(['auth'])->name('ubbrgdw.browse_detail');
+Route::get('/ubbrgdw/browse_nobeli', 'App\Http\Controllers\OTransaksi\UbbrgdwController@browse_nobeli')->middleware(['auth'])->name('ubbrgdw.browse_nobeli');
+Route::get('/ubbrgdw/get_detail_by_nobeli', 'App\Http\Controllers\OTransaksi\UbbrgdwController@get_detail_by_nobeli')->middleware(['auth'])->name('ubbrgdw.get_detail_by_nobeli');
+Route::get('/ubbrgdw/edit', 'App\Http\Controllers\OTransaksi\UbbrgdwController@edit')->middleware(['auth'])->name('ubbrgdw.edit');
+Route::post('/ubbrgdw/store', 'App\Http\Controllers\OTransaksi\UbbrgdwController@store')->middleware(['auth'])->name('ubbrgdw.store');
+// Route::delete('/ubbrgdw/delete', 'App\Http\Controllers\OTransaksi\UbbrgdwController@delete')->middleware(['auth'])->name('ubbrgdw.delete');
+Route::delete('/ubbrgdw/delete/{id}', 'App\Http\Controllers\OTransaksi\UbbrgdwController@delete')
+    ->middleware(['auth'])
+    ->name('ubbrgdw.delete');
+Route::post('/ubbrgdw/update/{ubbrgdw}', 'App\Http\Controllers\OTransaksi\UbbrgdwController@update')->middleware(['auth'])->name('ubbrgdw.update');
+Route::get('/ubbrgdw/ubbrgdw-otomatis', 'App\Http\Controllers\OTransaksi\UbbrgdwController@ubbrgdwOtomatis')->middleware(['auth'])->name('ubbrgdw/ubbrgdw-otomatis');
+
+Route::get('/get-ubbrgdw-report', 'App\Http\Controllers\OReport\Rubbrgdw@getUbbrgdwReport')->middleware(['auth'])->name('get-ubbrgdw-report');
+Route::post('/jasper-ubbrgdw-report', 'App\Http\Controllers\OReport\Rubbrgdw@jasperUbbrgdwReport')->middleware(['auth'])->name('jasper-ubbrgdw-report');
+
+Route::get('/get-ubbrgdw', 'App\Http\Controllers\OTransaksi\UbbrgdwController@getUbbrgdw')->middleware(['auth'])->name('get-ubbrgdw');
+Route::get('/get-ubbrgdw-new', 'App\Http\Controllers\OTransaksi\UbbrgdwController@getUbbrgdw')->middleware(['auth'])->name('get-ubbrgdw-new');
+
+
 require __DIR__.'/auth.php';

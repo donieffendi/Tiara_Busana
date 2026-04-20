@@ -17,13 +17,13 @@ class Vbrg extends Model
     public $timestamps = false;
 
 //ganti 3
-    protected $fillable = 
+    protected $fillable =
     [
         "KD_BRG", "NA_BRG", "JENIS", "SATUAN","LOGO", "SATUAN", "FORMULA", "USRNM","D1", "D2", "BY_ANGKUT", "PPN",
         "TG_SMP", "GOL", "SUPI", "MERK", "KET", "created_at", "created_by", "KODES", "SUPP",
         "KLK", "BL_PER", "BL_AKR", "JL_AKR", "HB", "HS", "HB_NAIK", "KELOMPOK", "LOKASI",
         "UP_HB", "KET_UK", "KET_KEM", "DIAMETER", "TEBAL", "PANJANG", "NAMAS","AKTIF",
         "KG", "SMIN", "SMAX", "CBG", "HJUAL", "MO1", "LPP", "HARGA", "BARCODE", "SMIN_TK"
-		
+
     ];
 }
