@@ -70,7 +70,7 @@ class VBrgDwHargaPemulaNewController extends Controller
         return response()->json($results);
     }
 
-    public function getVbrgdw(Request $request)
+    public function getVBrgDwHargaPemulaNew(Request $request)
     {
         // ganti 5
 
