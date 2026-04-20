@@ -1753,4 +1753,34 @@ Route::get('/tandaretur/edit', 'App\Http\Controllers\OTransaksi\TandareturContro
 Route::post('/tandaretur/update/{tandaretur}', 'App\Http\Controllers\OTransaksi\TandareturController@update')->middleware(['auth'])->name('tandaretur.update');
 Route::get('/tandaretur/delete/{tandaretur}', 'App\Http\Controllers\OTransaksi\TandareturController@destroy')->middleware(['auth'])->name('tandaretur.delete');
 
+
+//Usulan Harga Beli Pemula
+Route::get('/vbrgdw-harga-pemula', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@index')->middleware(['auth'])->name('vbrgdw-harga-pemula');
+Route::get('/vbrgdw-harga-pemula/edit', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@edit')->middleware(['auth'])->name('vbrgdw-harga-pemula.edit');
+Route::post('/vbrgdw-harga-pemula/store', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@store')->middleware(['auth'])->name('vbrgdw/store');
+Route::get('/vbrgdw-harga-pemula/browse_hdh_promo', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@browse_hdh_promo')->middleware(['auth'])->name('vbrgdw-harga-pemula/browse_hdh_promo');
+Route::get('/get-vbrgdw-harga-pemula', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@getVbrgdw')->middleware(['auth'])->name('get-vbrgdw-harga-pemula');
+Route::get('/vbrgdw-harga-pemula/browse', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@browse')->middleware(['auth'])->name('vbrgdw-harga-pemula/browse');
+Route::get('/vbrgdw-harga-pemula/browse_kirim', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@browse_kirim')->middleware(['auth'])->name('vbrgdw-harga-pemula/browse_kirim');
+Route::get('/vbrgdw-harga-pemula/browse_beli', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@browse_beli')->middleware(['auth'])->name('vbrgdw-harga-pemula/browse_beli');
+Route::get('/vbrgdw-harga-pemula/browse_koreksi', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@browse_koreksi')->middleware(['auth'])->name('vbrgdw-harga-pemula/browse_koreksi');
+Route::get('/vbrgdw-harga-pemula/browse_hdh', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@browse_hdh')->middleware(['auth'])->name('vbrgdw-harga-pemula/browse_hdh');
+Route::get('vbrgdw-harga-pemula/print/{no_bukti}','App\Http\Controllers\Master\VBrgDwHargaPemulaController@printUsulan')->name('vbrgdw.print.usulan');
+Route::get('vbrgdw-harga-pemula/print-pengesahan/{no_bukti}','App\Http\Controllers\Master\VBrgDwHargaPemulaController@printPengesahan')->name('vbrgdw.print.pengesahan');
+Route::get('/vbrgdw-harga-pemula/browse_kodes', 'App\Http\Controllers\Master\VBrgDwHargaPemulaController@browse_kodes')->middleware(['auth'])->name('vbrgdw.browse_kodes');
+
+
+Route::post('/vbrgdw-harga-pemula-new/store', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@store')->middleware(['auth'])->name('vbrgdw-harga-pemula-new/store');
+Route::get('/vbrgdw-harga-pemula-new/browse', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@browse')->middleware(['auth'])->name('vbrgdw-harga-pemula-new/browse');
+Route::get('/get-vbrgdw-harga-pemula-new', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@getVBrgDwHargaPemulaNew')->middleware(['auth'])->name('get-vbrgdw-harga-pemula-new');
+Route::get('/vbrgdw-harga-pemula-new/browse_pod', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@browse_vbrgdw-harga-pemula')->middleware(['auth'])->name('vbrgdw-harga-pemula-new/browse_vbrgdw-harga-pemulad');
+Route::get('/vbrgdw-harga-pemula-new/browse_spd', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@browse_spd')->middleware(['auth'])->name('vbrgdw-harga-pemula-new/browse_spd');
+Route::get('/vbrgdw-harga-pemula-new/edit', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@edit')->middleware(['auth'])->name('vbrgdw-harga-pemula-new.edit');
+Route::post('/vbrgdw-harga-pemula-new/update/{vbrgdw-harga-pemula}', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@update')->middleware(['auth'])->name('vbrgdw-harga-pemula-new.update');
+Route::get('/vbrgdw-harga-pemula-new/delete/{vbrgdw-harga-pemula}', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@destroy')->middleware(['auth'])->name('vbrgdw-harga-pemula-new.delete');
+Route::get('/vbrgdw-harga-pemula-new/print/{vbrgdw-harga-pemula}', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaNewController@print')->middleware(['auth'])->name('vbrgdw-harga-pemula-new.print');
+
+Route::get('/get-detail-vbrgdw-harga-pemula', 'App\Http\Controllers\OTransaksi\VBrgDwHargaPemulaController@getDetailVBrgDwHargaPemula')->middleware(['auth'])->name('get-detail-vbrgdw-harga-pemula');
+
+
 require __DIR__.'/auth.php';

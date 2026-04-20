@@ -226,7 +226,7 @@
                 [0, "asc"]
             ],
             ajax: {
-                url: "{{ route('get-terima') }}",
+                url: "{{ route('get-uppn') }}",
                 data: {
                     flagz: $('#flagz').val(),
 
@@ -234,7 +234,7 @@
             },
 
             columns: [
-                //add tombol + 
+                //add tombol +
                 {
                     data: null, // Column for the button
                     orderable: false,
@@ -329,12 +329,12 @@
 
 		$("div.test_btn").html(`
 			<a class="btn btn-success btn-lg me-2"
-			   href="{{ url('terima/edit?flagz='.$flagz.'&idx=0&tipx=new') }}">
+			   href="{{ url('uppn/edit?flagz='.$flagz.'&idx=0&tipx=new') }}">
 				<i class="fas fa-plus"></i> Scan Barcode
 			</a>
 
 			<a class="btn btn-primary btn-lg"
-			   href="{{ url('terima-new/edit?flagz='.$flagz.'&idx=0&tipx=new') }}">
+			   href="{{ url('uppn-new/edit?flagz='.$flagz.'&idx=0&tipx=new') }}">
 				<i class="fas fa-file"></i> Tanda Terima
 			</a>
 		`);
@@ -350,7 +350,7 @@
 
                 // Fetch and show detail data using no_bukti
                 $.ajax({
-                    url: "{{ route('get-detail-terima') }}", // Define the route to fetch detail data
+                    url: "{{ route('get-detail-uppn') }}", // Define the route to fetch detail data
                     method: 'GET',
                     data: {
                         no_bukti: no_bukti
