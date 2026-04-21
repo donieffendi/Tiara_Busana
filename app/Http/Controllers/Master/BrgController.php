@@ -71,7 +71,8 @@ class BrgController extends Controller
         $cabang = session()->get('periode')['cabang'];
 
 
-        $brg = DB::SELECT("SELECT nwmasbar.NO_ID, nwmasbar.SUB, nwmasbar.KDBAR, nwmasbar.NMBAR, nwmasbar.ITEM_SUP, nwmasbar.KET_UK, nwmasbar.KET_KEM, nwmasbar.SUPP, nwmasbar.QTY_BELI1, nwmasbar.HB, nwmasbar.DIS_A, nwmasbar.DIS_B, nwmasbar.DIS_C, nwmasbar.TOT_BL
+        $brg = DB::SELECT("SELECT nwmasbar.NO_ID, nwmasbar.SUB, nwmasbar.KDBAR, nwmasbar.NMBAR, nwmasbar.ITEM_SUP, nwmasbar.KET_UK, nwmasbar.KET_KEM, nwmasbar.SUPP, nwmasbar.QTY_BELI1, nwmasbar.HB, nwmasbar.DIS_A, nwmasbar.DIS_B, nwmasbar.DIS_C, nwmasbar.TOT_BL,
+                                nwaotprice.DEPT
                         from nwmasbar
 						join nwaotprice on nwmasbar.SUB = nwaotprice.SUB
 						where nwaotprice.DEPT = '$dept'

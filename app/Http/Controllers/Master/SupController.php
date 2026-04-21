@@ -69,9 +69,10 @@ class SupController extends Controller
 
     public function getSup( Request $request )
     {
-		// $PPN = Auth::user()->PPN;
 
-        $sup = DB::SELECT("SELECT * from nwmassup ORDER BY NO_SUPL ASC");
+        $dept = session()->get('periode')['dept'];
+        $cabang = session()->get('periode')['cabang'];
+        $sup = DB::SELECT("SELECT * from nwmassup WHERE DEPT = '$dept' ORDER BY NO_SUPL ASC");
 
         return Datatables::of($sup)
             ->addIndexColumn()
