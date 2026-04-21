@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Agenda per Tanggal</h1>
+			<h1 class="m-0">Daftar Agenda</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item active">Laporan Agenda per Tanggal</li>
+				<li class="breadcrumb-item active">Daftar Agenda</li>
 			</ol>
 		</div>
 		</div>
@@ -23,8 +23,23 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-agenda_pertanggal-report')}}">
+					<form method="POST" action="{{url('jasper-daftar_agenda-report')}}">
 					@csrf
+
+                    <div class="form-group row">
+						<div class="col-md-2">
+							<label class="form-label">Agenda 1</label>
+							<input type="text" class="form-control bukti" id="bukti" name="bukti" placeholder="Pilih Agenda" value="{{ session()->get('filter_bukti1') }}" readonly>
+						</div>
+						<div class="col-md-1">
+							<label class="form-label"> s.d </label>
+						</div>
+						<div class="col-md-2">
+							<label class="form-label">Agenda 2</label>
+							<input type="text" class="form-control bukti2" id="bukti2" name="bukti2" placeholder="Pilih Agenda" value="{{ session()->get('filter_bukti2') }}" readonly>
+						</div>
+					</div>
+
 
 					<!-- Filter Tanggal -->
 					<div class="form-group row">
@@ -96,10 +111,13 @@
 							"showFooter" => "bottom",
 							"columns" => array(
 								"AGD" => array(
-									"label" => "Agenda",
+									"label" => "No Agenda",
 								),
 								"AGD_TG" => array(
 									"label" => "Tanggal",
+								),
+								"AGD_JT" => array(
+									"label" => "Jtempo",
 								),
 								"AGD_SP" => array(
 									"label" => "No. SP",
@@ -109,16 +127,7 @@
 									"footerText" => "<b>Grand Total :</b>",
 								),
 								"AGD_TOT_NET" => array(
-									"label" => "TJumlah",
-									"type" => "number",
-									"decimals" => 2,
-									"decimalPoint" => ".",
-									"thousandSeparator" => ",",
-									"footer" => "sum",
-									"footerText" => "<b>@value</b>",
-								),
-								"TOT" => array(
-									"label" => "Total",
+									"label" => "JUmlah",
 									"type" => "number",
 									"decimals" => 2,
 									"decimalPoint" => ".",
@@ -175,23 +184,21 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="browseSuplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSuplierModalLabel" aria-hidden="true">
+<div class="modal fade" id="browseAgendaModal" tabindex="-1" role="dialog" aria-labelledby="browseAgendaModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 		<div class="modal-header">
-			<h5 class="modal-title" id="browseSuplierModalLabel">Cari Suplier</h5>
+			<h5 class="modal-title" id="browseAgendaModalLabel">Cari Agenda</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bsuplier">
+			<table class="table table-stripped table-bordered" id="table-bagenda">
 				<thead>
 					<tr>
-						<th>Suplier</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
+						<th>No Bukti</th>
+						<th>Tgl</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -205,23 +212,21 @@
 	</div>
 </div>
 
-<div class="modal fade" id="browseSuplier2Modal" tabindex="-1" role="dialog" aria-labelledby="browseSuplier2ModalLabel" aria-hidden="true">
+<div class="modal fade" id="browseAgenda2Modal" tabindex="-1" role="dialog" aria-labelledby="browseAgenda2ModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 		<div class="modal-header">
-			<h5 class="modal-title" id="browseSuplier2ModalLabel">Cari Suplier2</h5>
+			<h5 class="modal-title" id="browseAgenda2ModalLabel">Cari Agenda2</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bsuplier2">
+			<table class="table table-stripped table-bordered" id="table-bagenda2">
 				<thead>
 					<tr>
-						<th>Suplier</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
+						<th>No Bukti</th>
+						<th>Tgl</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -403,109 +408,105 @@
 		*/
 	});
 
-	var dTableBSuplier;
-	loadDataBSuplier = function(){
+	var dTableBAgenda;
+	loadDataBAgenda = function(){
 
 		$.ajax(
 		{
 			type: 'GET',
-			url: "{{url('sup/browse')}}",
+			url: "{{url('agenda/browse')}}",
 			data: {
-				'GOL': $('#gol').val(),
+				// 'GOL': $('#gol').val(),
 			},
 			success: function( response )
 			{
 				resp = response;
-				if(dTableBSuplier){
-					dTableBSuplier.clear();
+				if(dTableBAgenda){
+					dTableBAgenda.clear();
 				}
 				for(i=0; i<resp.length; i++){
 
-					dTableBSuplier.row.add([
-						'<a href="javascript:void(0);" onclick="chooseSuplier(\''+resp[i].KODES+'\')">'+resp[i].KODES+'</a>',
-						resp[i].NAMAS,
-						resp[i].ALAMAT,
-						resp[i].KOTA,
+					dTableBAgenda.row.add([
+						'<a href="javascript:void(0);" onclick="chooseAgenda(\''+resp[i].NO_BUKTI+'\')">'+resp[i].NO_BUKTI+'</a>',
+						resp[i].TGL,
 					]);
 				}
-				dTableBSuplier.draw();
+				dTableBAgenda.draw();
 			}
 		});
 	}
 
-	dTableBSuplier = $("#table-bsuplier").DataTable({
+	dTableBAgenda = $("#table-bagenda").DataTable({
 
 	});
 
-	browseSuplier = function(){
-		loadDataBSuplier();
-		$("#browseSuplierModal").modal("show");
+	browseAgenda = function(){
+		loadDataBAgenda();
+		$("#browseAgendaModal").modal("show");
 	}
 
-	chooseSuplier = function(KODES){
-		$("#kodes").val(KODES);
+	chooseAgenda = function(NO_BUKTI){
+		$("#bukti").val(NO_BUKTI);
 		// $("#NAMAS").val(NAMAS);
-		$("#browseSuplierModal").modal("hide");
+		$("#browseAgendaModal").modal("hide");
 	}
 
-	$("#kodes").keypress(function(e){
+	$("#bukti").keypress(function(e){
 		if(e.keyCode == 46){
 			e.preventDefault();
-			browseSuplier();
+			browseAgenda();
 		}
 	});
 
 //////////////////////////////////////////////////////////////////////
 
-	var dTableBSuplier2;
-	loadDataBSuplier2 = function(){
+	var dTableBAgenda2;
+	loadDataBAgenda2 = function(){
 
 		$.ajax(
 		{
 			type: 'GET',
-			url: "{{url('sup/browse')}}",
+			url: "{{url('agenda/browse')}}",
 			data: {
-				'GOL': $('#gol').val(),
+				// 'GOL': $('#gol').val(),
 			},
 			success: function( response )
 			{
 				resp = response;
-				if(dTableBSuplier2){
-					dTableBSuplier2.clear();
+				if(dTableBAgenda2){
+					dTableBAgenda2.clear();
 				}
 				for(i=0; i<resp.length; i++){
 
-					dTableBSuplier2.row.add([
-						'<a href="javascript:void(0);" onclick="chooseSuplier2(\''+resp[i].KODES+'\')">'+resp[i].KODES+'</a>',
-						resp[i].NAMAS,
-						resp[i].ALAMAT,
-						resp[i].KOTA,
+					dTableBAgenda2.row.add([
+						'<a href="javascript:void(0);" onclick="chooseAgenda2(\''+resp[i].NO_BUKTI+'\')">'+resp[i].NO_BUKTI+'</a>',
+						resp[i].TGL,
 					]);
 				}
-				dTableBSuplier2.draw();
+				dTableBAgenda2.draw();
 			}
 		});
 	}
 
-	dTableBSuplier2 = $("#table-bsuplier2").DataTable({
+	dTableBAgenda2 = $("#table-bagenda2").DataTable({
 
 	});
 
-	browseSuplier2 = function(){
-		loadDataBSuplier2();
-		$("#browseSuplier2Modal").modal("show");
+	browseAgenda2 = function(){
+		loadDataBAgenda2();
+		$("#browseAgenda2Modal").modal("show");
 	}
 
-	chooseSuplier2 = function(KODES){
-		$("#kodes2").val(KODES);
+	chooseAgenda2 = function(NO_BUKTI){
+		$("#bukti2").val(NO_BUKTI);
 		// $("#NAMAS").val(NAMAS);
-		$("#browseSuplier2Modal").modal("hide");
+		$("#browseAgenda2Modal").modal("hide");
 	}
 
-	$("#kodes2").keypress(function(e){
+	$("#bukti2").keypress(function(e){
 		if(e.keyCode == 46){
 			e.preventDefault();
-			browseSuplier2();
+			browseAgenda2();
 		}
 	});
 
