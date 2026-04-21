@@ -1819,4 +1819,18 @@ Route::get('/get-lbharga', 'App\Http\Controllers\OTransaksi\LabelHargaController
 Route::get('/lbharga/edit', 'App\Http\Controllers\OTransaksi\LabelHargaController@edit')->name('lbharga.edit');
 Route::post('/lbharga/update/{lbharga}', 'App\Http\Controllers\OTransaksi\LabelHargaController@update')->name('lbharga.update');
 
+
+
+// Report Agenda per Tanggal
+
+Route::get('/ragenda_pertanggal', 'App\Http\Controllers\OReport\RAgenda_pertanggalController@report')->middleware(['auth'])->name('ragenda_pertanggal');
+Route::get('/get-agenda_pertanggal-report', 'App\Http\Controllers\OReport\RAgenda_pertanggalController@getAgenda_pertanggalReport')->middleware(['auth'])->name('get-agenda_pertanggal-report');
+Route::post('jasper-agenda_pertanggal-report', 'App\Http\Controllers\OReport\RAgenda_pertanggalController@jasperAgenda_pertanggalReport')->middleware(['auth']);
+
+// Report Daftar Agenda
+
+Route::get('/rdaftar_agenda', 'App\Http\Controllers\OReport\RDaftar_agendaController@report')->middleware(['auth'])->name('rdaftar_agenda');
+Route::get('/get-daftar_agenda-report', 'App\Http\Controllers\OReport\RDaftar_agendaController@getDaftar_agendaReport')->middleware(['auth'])->name('get-daftar_agenda-report');
+Route::post('jasper-daftar_agenda-report', 'App\Http\Controllers\OReport\RDaftar_agendaController@jasperDaftar_agendaReport')->middleware(['auth']);
+
 require __DIR__.'/auth.php';

@@ -23,7 +23,7 @@
 			<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST" action="{{url('jasper-daftar_agenda-report')}}">
+					<form method="POST" action="{{url('jasper-agenda_pertanggal-report')}}">
 					@csrf
 
 					<!-- Filter Tanggal -->

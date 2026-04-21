@@ -1763,11 +1763,22 @@
 
                 <div class="col-md-3">
                     <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
-                      <a href="javascript:addTab('Laporan Agenda per Tanggal', '{{url('rrubahharga_discbudget')}}')" >
+                      <a href="javascript:addTab('Laporan Agenda per Tanggal', '{{url('ragenda_pertanggal')}}')" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                           <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
                         <h6>Laporan Agenda</h6>
                         <h6>per Tanggal</h6>
+                      </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ccffd2;">
+                      <a href="javascript:addTab('Daftar Agenda', '{{url('rdaftar_agenda')}}')" >
+                        <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-green"></i>
+                        <h6>Daftar</h6>
+                        <h6>Agenda</h6>
                       </a>
                     </div>
                 </div>
