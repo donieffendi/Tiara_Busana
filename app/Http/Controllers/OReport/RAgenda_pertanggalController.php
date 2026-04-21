@@ -44,7 +44,7 @@ class RAgenda_pertanggalController extends Controller
 			{
 				$tglDrD = date("Y-m-d", strtotime($request->tglDr));
 				$tglSmpD = date("Y-m-d", strtotime($request->tglSmp));
-				$filtertgl = " and brg.TGL between '".$tglDrD."' and '".$tglSmpD."' ";
+				$filtertgl = " and TGL between '".$tglDrD."' and '".$tglSmpD."' ";
 			}
 
 			if($request['cbg'])
@@ -54,7 +54,7 @@ class RAgenda_pertanggalController extends Controller
 
 			if (!empty($request->cbg))
 			{
-				$filtercbg = " and po.CBG='".$request->cbg."' ";
+				$filtercbg = " and CBG='".$request->cbg."' ";
 			}
 
 			$tgl_1 = date("Y-m-d", strtotime($request->tglDr));

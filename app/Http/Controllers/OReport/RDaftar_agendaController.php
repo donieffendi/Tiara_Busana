@@ -23,7 +23,8 @@ class RDaftar_agendaController extends Controller
     {
 		$cbg = Cbg::groupBy('CBG')->get();
 		session()->put('filter_cbg', '');
-
+		session()->put('filter_bukti1', '');
+		session()->put('filter_bukti2', 'ZZZ');
 		session()->put('filter_tglDari', date("d-m-Y"));
 		session()->put('filter_tglSampai', date("d-m-Y"));
 
@@ -40,11 +41,16 @@ class RDaftar_agendaController extends Controller
 
 			// Check Filter
 
+            if (!empty($request->bukti) && !empty($request->bukti2))
+			{
+				$filterbukti = " and NO_BUKTI between '".$request->bukti."' and '".$request->bukti2."' ";
+			}
+
 			if (!empty($request->tglDr) && !empty($request->tglSmp))
 			{
 				$tglDrD = date("Y-m-d", strtotime($request->tglDr));
 				$tglSmpD = date("Y-m-d", strtotime($request->tglSmp));
-				$filtertgl = " and brg.TGL between '".$tglDrD."' and '".$tglSmpD."' ";
+				$filtertgl = " and TGL between '".$tglDrD."' and '".$tglSmpD."' ";
 			}
 
 			if($request['cbg'])
@@ -54,19 +60,23 @@ class RDaftar_agendaController extends Controller
 
 			if (!empty($request->cbg))
 			{
-				$filtercbg = " and po.CBG='".$request->cbg."' ";
+				$filtercbg = " and CBG='".$request->cbg."' ";
 			}
 
 			$tgl_1 = date("Y-m-d", strtotime($request->tglDr));
 			$tgl_2 = date("Y-m-d", strtotime($request->tglSmp));
+			$bukti_1 = $request->bukti;
+			$bukti_2 = $request->bukti2;
 
 			session()->put('filter_tglDari', $request->tglDr);
 			session()->put('filter_tglSampai', $request->tglSmp);
 			session()->put('filter_cbg', $request->cbg);
+			session()->put('filter_bukti1', $request->bukti);
+			session()->put('filter_bukti2', $request->bukti2);
 
 			$query = DB::SELECT("SELECT AGD, AGD_TG, AGD_SP, SUP_NAMA, AGD_TOT_NET, TOT
                                 from brg
-                                $filtertgl $filterkodes
+                                $filtertgl $filterbukti $filtercbg
                                 ORDER BY AGD;
 			");
 
@@ -91,6 +101,8 @@ class RDaftar_agendaController extends Controller
 				'TOT' => $query[$key]->TOT,
 				'TGL_1' => $tgl_1,
 				'TGL_2' => $tgl_2,
+				'bukti_1' => $bukti_1,
+				'bukti_2' => $bukti_2,
 			));
 		}
 		$PHPJasperXML->setData($data);
