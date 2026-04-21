@@ -1812,5 +1812,11 @@ Route::post('/jasper-ubbrgdw-report', 'App\Http\Controllers\OReport\Rubbrgdw@jas
 Route::get('/get-ubbrgdw', 'App\Http\Controllers\OTransaksi\UbbrgdwController@getUbbrgdw')->middleware(['auth'])->name('get-ubbrgdw');
 Route::get('/get-ubbrgdw-new', 'App\Http\Controllers\OTransaksi\UbbrgdwController@getUbbrgdw')->middleware(['auth'])->name('get-ubbrgdw-new');
 
+// Pencetakan Label Harga
+Route::get('/lbharga', 'App\Http\Controllers\OTransaksi\LabelHargaController@index')->middleware(['auth'])->name('lbharga');
+Route::post('/lbharga/store', 'App\Http\Controllers\OTransaksi\LabelHargaController@store')->middleware(['auth'])->name('lbharga/store');
+Route::get('/get-lbharga', 'App\Http\Controllers\OTransaksi\LabelHargaController@getHarga')->middleware(['auth'])->name('get-lbharga');
+Route::get('/lbharga/edit', 'App\Http\Controllers\OTransaksi\LabelHargaController@edit')->name('lbharga.edit');
+Route::post('/lbharga/update/{lbharga}', 'App\Http\Controllers\OTransaksi\LabelHargaController@update')->name('lbharga.update');
 
 require __DIR__.'/auth.php';
