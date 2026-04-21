@@ -742,7 +742,7 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                <a href="javascript:addTab('Usulan Perubahan Komponen Harga', '{{url('ubbrgdw?flagz=KZ')}}')">
+                <a href="javascript:addTab('Usulan Perubahan Komponen Harga', '{{url('ubbrgdw')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Usulan Perubahan</h6>
@@ -753,7 +753,7 @@
 
         <div class="col-md-3">
             <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-                <a href="javascript:addTab('Usulan Penghapusan Harga Komponen', '{{url('ubbrgdw?flagz=KZ')}}')">
+                <a href="javascript:addTab('Usulan Penghapusan Harga Komponen', '{{url('ubbrgdw')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
                   <h6>Usulan Penghapusan</h6>
