@@ -42,7 +42,7 @@ class VbrgDwController extends Controller
     {
         // ganti 5
 
-        $vbrg = DB::SELECT("SELECT a.NO_ID, a.SUB, a.KDBAR, a.NMBAR, a.SUPP, b.NAMA, a.HB, a.DIS_A, a.DIS_B, a.DIS_C, a.PPN, a.DISC
+        $vbrg = DB::SELECT("SELECT a.NO_ID, a.SUB, a.KDBAR, a.NMBAR, a.SUPP, b.NAMA, a.HB, a.DIS_A, a.DIS_B, a.DIS_C, a.PPN, a.DISC, a.DT
                             FROM nwmasbar a, nwmassup b
                             WHERE a.SUPP = b.NO_SUPL ORDER BY KDBAR ");
 
