@@ -42,6 +42,19 @@
 								</div>
 							</div>
 
+                            <!-- Filter Tanggal -->
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <input class="form-control date tglDr" id="tglDr" name="tglDr"
+                                    type="text" autocomplete="off" value="{{ session()->get('filter_tglDari') }}">
+                                </div>
+                                <div>s.d.</div>
+                                <div class="col-md-3">
+                                    <input class="form-control date tglSmp" id="tglSmp" name="tglSmp"
+                                    type="text" autocomplete="off" value="{{ session()->get('filter_tglSampai') }}">
+                                </div>
+                            </div>
+
 							<div class="form-group row">
 								<div class="col-md-2">
 									<label><strong>Periode :</strong></label>
