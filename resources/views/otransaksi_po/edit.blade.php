@@ -154,6 +154,13 @@
 										<div class="col-md-2">
 											<select id="CBG" class="form-control"  name="CBG">
 												<option value="DC1" {{ ($header->CBG == 'DC1') ? 'selected' : '' }}>DC1</option>
+												<option value="FSA" {{ ($header->CBG == 'FSA') ? 'selected' : '' }}>FSA</option>
+												<option value="TGZ" {{ ($header->CBG == 'TGZ') ? 'selected' : '' }}>TGZ</option>
+												<option value="SOP" {{ ($header->CBG == 'SOP') ? 'selected' : '' }}>SOP</option>
+												<option value="TMM" {{ ($header->CBG == 'TMM') ? 'selected' : '' }}>TMM</option>
+												<option value="TDY" {{ ($header->CBG == 'TDY') ? 'selected' : '' }}>TDY</option>
+												<option value="FGT" {{ ($header->CBG == 'FGT') ? 'selected' : '' }}>FGT</option>
+												<option value="FCK" {{ ($header->CBG == 'FCK') ? 'selected' : '' }}>FCK</option>
 												<option value="-" {{ ($header->CBG == '-') ? 'selected' : '' }}>-</option>
 											</select>
 										</div>
@@ -202,7 +209,7 @@
 											<input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Pilih"value="{{$header->KODES}}" style="text-align: left" readonly >
 											<button type="button" class="btn btn-primary" onclick="browseSupplier()"><i class="fa fa-search"></i></button>
 										</div>
-										
+
 										<div class="col-md-3">
 											<input type="text" class="form-control NAMAS" id="NAMAS" name="NAMAS" placeholder=""  value="{{$header->NAMAS}}"  readonly >
 										</div>
@@ -704,7 +711,7 @@
 		loadDataBSupplier = function(){
 			$.ajax(
 			{
-				type: 'GET',    
+				type: 'GET',
 				url: '{{url('sup/browse')}}',
 				success: function( response )
 				{
@@ -713,7 +720,7 @@
 						dTableBSupplier.clear();
 					}
 					for(i=0; i<resp.length; i++){
-						
+
 						dTableBSupplier.row.add([
 							'<a href="javascript:void(0);" onclick="chooseSupplier(\''+resp[i].NO_SUPL+'\',  \''+resp[i].NAMA+'\')">'+resp[i].NO_SUPL+'</a>',
 							resp[i].NAMA,
@@ -725,29 +732,29 @@
 				}
 			});
 		}
-		
+
 		dTableBSupplier = $("#table-bsupplier").DataTable({
-			
+
 		});
-		
+
 		browseSupplier = function(){
 			loadDataBSupplier();
 			$("#browseSupplierModal").modal("show");
 		}
-		
+
 		chooseSupplier = function(NO_SUPL,NAMA){
 			$("#KODES").val(NO_SUPL);
 			$("#NAMAS").val(NAMA);
 			$("#browseSupplierModal").modal("hide");
 
 		}
-		
+
 		$("#KODES").keypress(function(e){
 			if(e.keyCode == 46){
 				e.preventDefault();
 				browseSupplier();
 			}
-		}); 
+		});
 
 
 
