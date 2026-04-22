@@ -152,7 +152,7 @@
 											<label for="CBG" class="form-label">Cabang</label>
 										</div>
 										<div class="col-md-2">
-											<select id="CBG" class="form-control"  name="CBG">
+											{{-- <select id="CBG" class="form-control"  name="CBG">
 												<option value="DC1" {{ ($header->CBG == 'DC1') ? 'selected' : '' }}>DC1</option>
 												<option value="FSA" {{ ($header->CBG == 'FSA') ? 'selected' : '' }}>FSA</option>
 												<option value="TGZ" {{ ($header->CBG == 'TGZ') ? 'selected' : '' }}>TGZ</option>
@@ -162,7 +162,13 @@
 												<option value="FGT" {{ ($header->CBG == 'FGT') ? 'selected' : '' }}>FGT</option>
 												<option value="FCK" {{ ($header->CBG == 'FCK') ? 'selected' : '' }}>FCK</option>
 												<option value="-" {{ ($header->CBG == '-') ? 'selected' : '' }}>-</option>
-											</select>
+											</select> --}}
+
+                                            <input type="text" class="form-control"
+                                                value="{{ $header->CBG ?? Auth::user()->CBG }}" readonly>
+
+                                            <input type="hidden" name="CBG"
+                                                value="{{ $header->CBG ?? Auth::user()->CBG }}">
 										</div>
 
 										<div class="col-md-1" align="left" hidden>
