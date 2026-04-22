@@ -85,6 +85,11 @@
                                                             value="4" id="columnPemilik" checked>
                                                         <label class="form-check-label" for="columnPemilik">Pemilik</label>
                                                     </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="5" id="columnDept" checked>
+                                                        <label class="form-check-label" for="columnDept">Dept</label>
+                                                    </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -133,6 +138,7 @@
                                             <th scope="col" style="text-align: center">Kode</th>
                                             <th scope="col" style="text-align: center">Nama</th>
                                             <th scope="col" style="text-align: center">Pemilik</th>
+                                            <th scope="col" style="text-align: center">Dept</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -210,6 +216,10 @@
                     {
                         data: 'PEMILIK',
                         name: 'PEMILIK'
+                    },
+                    {
+                        data: 'DEPT',
+                        name: 'DEPT'
                     },
                 ],
                 columnDefs: [{

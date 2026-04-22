@@ -181,6 +181,8 @@
                                         <th scope="col" style="text-align: center">Diskon 3</th>
                                         <th scope="col" style="text-align: center">Diskon 4</th>
                                         <th scope="col" style="text-align: center">PPN (%)</th>
+                                        <th scope="col" style="text-align: center">Sub</th>
+                                        <th scope="col" style="text-align: center">Departemen</th>
                                         <!-- <th scope="col" style="text-align: center">Stock Gd</th> -->
                                     </tr>
                                 </thead>
@@ -245,18 +247,21 @@
                 {
                     data: 'NMBAR',
                     name: 'NMBAR'
-                    
-                }, {
+
+                },
+                {
                     data: 'SUPP',
                     name: 'SUPP',
 
-                }, {
+                },
+                {
                     data: 'NAMA',
                     name: 'NAMA',
                     render: function(data, type, row, meta) {
                         return ' <h5><span class="badge badge-pill badge-info">' + data + '</span></h5>';
                     }
-                }, {
+                },
+                {
                     data: 'HB',
                     name: 'HB',
                     render: function (data, type, row, meta) {
@@ -272,26 +277,45 @@
                         return data;
                     }
 
-                }, {
+                },
+                {
                     data: 'DISC',
                     name: 'DISC',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },{
+                },
+                {
                     data: 'DIS_A',
                     name: 'DIS_A',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },{
+                },
+                {
                     data: 'DIS_B',
                     name: 'DIS_B',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },{
+                },
+                {
                     data: 'DIS_C',
                     name: 'DIS_C',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },{
+                },
+                {
                     data: 'PPN',
                     name: 'PPN',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
+                },
+                {
+                    data: 'SUB',
+                    name: 'SUB',
+                    render: function(data, type, row, meta) {
+                        return ' <h5><span class="badge badge-pill badge-info">' + data + '</span></h5>';
+                    }
+                },
+                {
+                    data: 'DT',
+                    name: 'DT',
+                    render: function(data, type, row, meta) {
+                        return ' <h5><span class="badge badge-pill badge-info">' + data + '</span></h5>';
+                    }
                 },
 
             ],
@@ -299,7 +323,7 @@
                 {
                     "className": "dt-center",
                     "targets": [0, 1, 2, 3]
-                }, 
+                },
                 {
                     "className": "dt-right",
                     "targets": [6, 7, 8, 9, 10]

@@ -83,7 +83,7 @@ class LabelHargaController extends Controller
 
 
 
-    public function getHarga(Request $request)
+    public function getLabelHarga(Request $request)
     {
         // ganti 5
 
@@ -113,19 +113,19 @@ class LabelHargaController extends Controller
                 if ( (Auth::user()->divisi=="programmer" ) || (Auth::user()->divisi=="gudang" ))
 				{
                     //CEK POSTED di index dan edit
-                    $url = "'".url("harga/delete/" . $row->NO_ID . "/?flagz=" . $row->flag . "&golz=" . $this->GOLZ)."'";
+                    $url = "'".url("lbharga/delete/" . $row->NO_ID . "/?flagz=" . $row->flag . "&golz=" . $this->GOLZ)."'";
 
                     // $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '&golz=' . $row->GOL . '"';					
                     if (Auth::user()->divisi == 'gudang') {
                         // khusus gudang, cek CETAK
                         $btnEdit = ($row->CETAK == 1)
                             ? ' onclick="alert(\'LPB ini sudah dicetak, tidak bisa edit.\')" href="#" '
-                            : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '"';
+                            : ' href="lbharga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '"';
                     } else {
                         // user lain, tetap cek POSTED
                         $btnEdit = ($row->POSTED == 1)
                             ? ' onclick="alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" '
-                            : ' href="harga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '"';
+                            : ' href="lbharga/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->flag . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '"';
                     }
                     
                     
@@ -231,12 +231,16 @@ class LabelHargaController extends Controller
         $query = DB::table('belibsnz')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', $FLAGZ )->where('CBG', $CBG)
                     ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
+        $last = $query[0]->NO_BUKTI;
+        $cbgLast = substr($CBG, -1);
+
         if ($query != '[]') {
-            $query = substr($query[0]->NO_BUKTI, -4);
-            $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-            $no_bukti = 'LB'  . $CBG . $tahun . $bulan . '-' . $query;
+            // ambil 4 digit sebelum huruf terakhir
+            $angka = substr($last, -5, 4);
+            $angka = str_pad($angka + 1, 4, 0, STR_PAD_LEFT);
+            $no_bukti = 'LB'  . $tahun . $bulan . '-' . $angka . $cbgLast;
         } else {
-            $no_bukti = 'LB'  . $CBG . $tahun . $bulan . '-0001';
+            $no_bukti = 'LB'  . $tahun . $bulan . '-0001' . $cbgLast;
         }
 
 
@@ -252,7 +256,7 @@ class LabelHargaController extends Controller
                 'NAMAS'            => ($request['NAMAS']==null) ? "" : $request['NAMAS'],				
                 'ACNO'            => ($request['ACNO']==null) ? "" : $request['ACNO'],				
                 'NACNO'            => ($request['NACNO']==null) ? "" : $request['NACNO'],				
-                'total'            => (float) str_replace(',', '', $request['TOTAL']),
+                'total'            => (float) str_replace(',', '', $request['TTOTAL']),
                 'usrnm'            => Auth::user()->username,
                 'tg_smp'           => Carbon::now(),
 				'created_by'       => Auth::user()->username,
@@ -307,12 +311,9 @@ class LabelHargaController extends Controller
                             SET  belibsnzd.ID = belibsnz.NO_ID  WHERE  belibsnz.NO_BUKTI =  belibsnzd.NO_BUKTI 
 							AND  belibsnz.NO_BUKTI='$no_buktix';");
 
-		
-
-        // $variablell = DB::select('call hargains(?)', array($no_buktix));
        
         // return redirect('/harga/edit/?idx=' . $harga->NO_ID . '&tipx=edit&flagz=' . $FLAGZ . '&judul=' . $this->judul . '&golz=' . $this->GOLZ . '');
-        return redirect('/harga?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
+        return redirect('/lbharga?flagz='.$FLAGZ.'&golz='.$GOLZ)->with(['judul' => $judul, 'golz' => $GOLZ, 'flagz' => $FLAGZ ]);
 
 					
     }

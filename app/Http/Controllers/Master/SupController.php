@@ -43,7 +43,7 @@ class SupController extends Controller
         } else {
 			$sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA
                             from nwmassup
-                            where RAK = '$dept'
+                            where DEPT = '$dept'
                             ORDER BY NAMA ");
 		}
 
@@ -69,9 +69,10 @@ class SupController extends Controller
 
     public function getSup( Request $request )
     {
-		// $PPN = Auth::user()->PPN;
 
-        $sup = DB::SELECT("SELECT * from nwmassup ORDER BY NO_SUPL ASC");
+        $dept = session()->get('periode')['dept'];
+        $cabang = session()->get('periode')['cabang'];
+        $sup = DB::SELECT("SELECT * from nwmassup WHERE DEPT = '$dept' ORDER BY NO_SUPL ASC");
 
         return Datatables::of($sup)
             ->addIndexColumn()
@@ -190,7 +191,7 @@ class SupController extends Controller
                 'BEBAN'       => (float) str_replace(',', '', $request['BEBAN']),
                 'ACC'     => ($request['ACC'] == null) ? "" : $request['ACC'],
                 'PMSR_PROD'     => ($request['PMSR_PROD'] == null) ? "" : $request['PMSR_PROD'],
-                'DEPT'      => ($request['DEPT'] == null) ? "" : $request['DEPT'],
+                'DEPT'      => ($request['dept'] == null) ? "" : $request['dept'],
                 // 'TGL_M'     => date('Y-m-d', strtotime($request['TGL_M'])),
 
                 // 'USRNM'     => Auth::user()->username,

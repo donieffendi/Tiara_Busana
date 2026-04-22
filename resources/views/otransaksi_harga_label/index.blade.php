@@ -211,7 +211,7 @@
             "order": [[ 0, "asc" ]],
             ajax: 
             {
-                url: "{{ route('get-harga') }}",
+                url: "{{ route('get-lbharga') }}",
 				        data: 
                 {
                     flagz : $('#flagz').val(),

@@ -144,15 +144,15 @@
 									</div>
 
 									<div class="col-md-1" align="left">
-										<label for="CNT" class="form-label">Counter</label>
+										<label for="KODES" class="form-label">Supplier</label>
 									</div>
 									<div class="col-md-2">
-										<input type="text" class="form-control CNT" id="CNT" name="CNT" placeholder="Pilih Counter"value="{{$header->CNT}}" style="text-align: left" >
+										<input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Pilih Supplier" value="{{$header->KODES}}" style="text-align: left" >
 									</div>
 
 									<div class="col-md-4 input-group" >
-										<input type="text" class="form-control NCNT" id="NCNT" name="NCNT" placeholder=""value="{{$header->NCNT}}" style="text-align: left" >
-										<button type="button" class="btn btn-primary" onclick="browseCounter()"><i class="fa fa-search"></i></button>
+										<input type="text" class="form-control NAMAS" id="NAMAS" name="NAMAS" placeholder="" value="{{$header->NAMAS}}" style="text-align: left" >
+										<button type="button" class="btn btn-primary" onclick="browseSupplier()"><i class="fa fa-search"></i></button>
 									</div>
                         	</div>
 
@@ -343,21 +343,23 @@
         </div>
     </div>
 
-	<div class="modal fade" id="browseCounterModal" tabindex="-1" role="dialog" aria-labelledby="browseCounterModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
+	<div class="modal fade" id="browseSupplierModal" tabindex="-1" role="dialog" aria-labelledby="browseSupplierModalLabel" aria-hidden="true">
+	  <div class="modal-dialog mw-100 w-75" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseCounterModalLabel">Cari Counter</h5>
+			<h5 class="modal-title" id="browseSupplierModalLabel">Cari Suplier</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bcounter">
+			<table class="table table-stripped table-bordered" id="table-bsupplier">
 				<thead>
 					<tr>
-						<th>Counter</th>
-						<th>Nama Counter</th>
+						<th>Suplier</th>
+						<th>Nama</th>
+						<th>Alamat</th>
+						<th>Kota</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -468,54 +470,54 @@
 		});
 
 
-		//CHOOSE Counter
-		var dTableBCounter;
-		loadDataBCounter = function(){
-
+		var dTableBSupplier;
+		loadDataBSupplier = function(){
 			$.ajax(
 			{
-				type: 'GET',
-				url: '{{url('retur/browse_cnt')}}',
-
-                    beforeSend: function() {
-                        $("#LOADX").show();
-                    },
-
-                    success: function(response) {
-                        $("#LOADX").hide();
-
+				type: 'GET',    
+				url: '{{url('sup/browse')}}',
+				success: function( response )
+				{
 					resp = response;
-					if(dTableBCounter){
-						dTableBCounter.clear();
+					if(dTableBSupplier){
+						dTableBSupplier.clear();
 					}
 					for(i=0; i<resp.length; i++){
-
-						dTableBCounter.row.add([
-							'<a href="javascript:void(0);" onclick="chooseCounter(\''+resp[i].CNT+'\', \''+resp[i].NCNT+'\')">'+resp[i].CNT+'</a>',
-							resp[i].NCNT
+						
+						dTableBSupplier.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSupplier(\''+resp[i].NO_SUPL+'\',  \''+resp[i].NAMA+'\')">'+resp[i].NO_SUPL+'</a>',
+							resp[i].NAMA,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
 						]);
 					}
-					dTableBCounter.draw();
+					dTableBSupplier.draw();
 				}
 			});
 		}
-
-		dTableBCounter = $("#table-bcounter").DataTable({
-
+		
+		dTableBSupplier = $("#table-bsupplier").DataTable({
+			
 		});
-
-		browseCounter = function(){
-			loadDataBCounter();
-			$("#browseCounterModal").modal("show");
+		
+		browseSupplier = function(){
+			loadDataBSupplier();
+			$("#browseSupplierModal").modal("show");
 		}
+		
+		chooseSupplier = function(NO_SUPL,NAMA){
+			$("#KODES").val(NO_SUPL);
+			$("#NAMAS").val(NAMA);
+			$("#browseSupplierModal").modal("hide");
 
-		chooseCounter = function(CNT,NCNT){
-
-			$("#CNT").val(CNT);
-			$("#NCNT").val(NCNT);
-			$("#browseCounterModal").modal("hide");
-			// getBelid(NO_BUKTI);
 		}
+		
+		$("#KODES").keypress(function(e){
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseSupplier();
+			}
+		}); 
 
 
 
@@ -531,7 +533,7 @@
 				url: "{{url('retur/browse_brg')}}",
 				async : false,
 				data: {
-						'CNT': $("#CNT").val()
+						'KODES': $("#KODES").val()
 				},
 				success: function( response )
 

@@ -131,6 +131,11 @@
                                                             value="13" id="columnTotal">
                                                         <label class="form-check-label" for="columnTotal">Total</label>
                                                     </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input column-checkbox" type="checkbox"
+                                                            value="14" id="columnDept">
+                                                        <label class="form-check-label" for="columnDept">Dept</label>
+                                                    </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -212,6 +217,7 @@
                                             <th scope="col" style="text-align: center">Dis 2</th>
                                             <th scope="col" style="text-align: center">Dis 3</th>
                                             <th scope="col" style="text-align: center">Total</th>
+                                            <th scope="col" style="text-align: center">Dept</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -316,12 +322,16 @@
                     {data: 'DIS_A', name: 'DIS_A', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                     {data: 'DIS_B', name: 'DIS_B', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                     {data: 'DIS_C', name: 'DIS_C', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
-                    {data: 'TOT_BL', name: 'TOT_BL', render: $.fn.dataTable.render.number( ',', '.', 0, '' )}
+                    {data: 'TOT_BL', name: 'TOT_BL', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                    {
+                        data: 'DEPT',
+                        name: 'DEPT'
+                    },
                 ],
                 columnDefs: [
                     {
                         "className": "dt-center",
-                        "targets": 0
+                        "targets": [0, 15]
                     },
                     {
                         "className": "dt-right",

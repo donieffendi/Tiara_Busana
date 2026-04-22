@@ -166,8 +166,8 @@ class ReturController extends Controller
     public function browse_brg(Request $request)
     {
         // $KD_BRG = $request->KD_BRG;
-        $CNT   = $request->CNT;
-        $retur = DB::SELECT("SELECT KD_BRG, NA_BRG, BARCODE, DATE_FORMAT(TG_BELI,'%d-%m-%Y') AS TGL_MULAI, BEL AS QTY, HBELI AS HARGA FROM brgbsn WHERE CNT = '$CNT'");
+        $KODES   = $request->KODES;
+        $retur = DB::SELECT("SELECT KDBAR AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HB AS HARGA, 1 AS STOK FROM nwmasbar WHERE SUPP = '$KODES'");
         return response()->json($retur);
     }
     // ganti 4

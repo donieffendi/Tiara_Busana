@@ -30,6 +30,8 @@ class RRubahharga_discbudgetController extends Controller
 
 		session()->put('filter_nabrg1', '');
 		session()->put('filter_kdgd1', '');
+		session()->put('filter_tglDari', date("d-m-Y"));
+		session()->put('filter_tglSampai', date("d-m-Y"));
 
         return view('oreport_rubahharga_discbudget.report')->with(['cbg' => $cbg])->with(['per' => $per])->with(['hasil' => []]);
     }
@@ -51,16 +53,28 @@ class RRubahharga_discbudgetController extends Controller
 
 			$plu = $request->kode1;
 
+			if (!empty($request->tglDr) && !empty($request->tglSmp))
+			{
+				$tglDrD = date("Y-m-d", strtotime($request->tglDr));
+				$tglSmpD = date("Y-m-d", strtotime($request->tglSmp));
+				$filtertgl = " and TGL between '".$tglDrD."' and '".$tglSmpD."' ";
+			}
+
+
+			$tgl_1 = date("Y-m-d", strtotime($request->tglDr));
+			$tgl_2 = date("Y-m-d", strtotime($request->tglSmp));
 
 			session()->put('filter_cbg', $request->cbg);
 			session()->put('filter_periode', $request->per);
 			session()->put('filter_kode1', $request->kode1);
 			session()->put('filter_nama1', $request->nama1);
+			session()->put('filter_tglDari', $request->tglDr);
+			session()->put('filter_tglSampai', $request->tglSmp);
 
 		$query = DB::SELECT(" SELECT NO_BUKTI, TGL, JTEMPO, KODEC, NAMAC,
 									TOTAL_QTY, TOTAL, TDPP AS DPP, TPPN AS PPN, NETT
 							FROM jual
-							WHERE FLAG = 'JL' AND PER = '$per' AND CBG = '$cbg'
+							WHERE FLAG = 'JL' AND PER = '$per' AND CBG = '$cbg' $filtertgl
 							ORDER BY NO_BUKTI;
 
 		");
