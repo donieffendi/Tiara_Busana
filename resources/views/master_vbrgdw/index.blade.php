@@ -179,10 +179,7 @@
                                         <th scope="col" style="text-align: center">Diskon</th>
                                         <th scope="col" style="text-align: center">Diskon 2</th>
                                         <th scope="col" style="text-align: center">Diskon 3</th>
-                                        <th scope="col" style="text-align: center">Diskon 4</th>
                                         <th scope="col" style="text-align: center">PPN (%)</th>
-                                        <th scope="col" style="text-align: center">Sub</th>
-                                        <th scope="col" style="text-align: center">Departemen</th>
                                         <!-- <th scope="col" style="text-align: center">Stock Gd</th> -->
                                     </tr>
                                 </thead>
@@ -241,29 +238,26 @@
                 },
 
                 {
-                    data: 'KDBAR',
-                    name: 'KDBAR'
+                    data: 'KD_BRG',
+                    name: 'KD_BRG'
                 },
                 {
-                    data: 'NMBAR',
-                    name: 'NMBAR'
+                    data: 'NA_BRG',
+                    name: 'NA_BRG'
+                    
+                }, {
+                    data: 'KODES',
+                    name: 'KODES',
 
-                },
-                {
-                    data: 'SUPP',
-                    name: 'SUPP',
-
-                },
-                {
-                    data: 'NAMA',
-                    name: 'NAMA',
+                }, {
+                    data: 'NAMAS',
+                    name: 'NAMAS',
                     render: function(data, type, row, meta) {
                         return ' <h5><span class="badge badge-pill badge-info">' + data + '</span></h5>';
                     }
-                },
-                {
-                    data: 'HB',
-                    name: 'HB',
+                }, {
+                    data: 'HARGA',
+                    name: 'HARGA',
                     render: function (data, type, row, meta) {
                         if (type === 'display' || type === 'filter') {
                             let rupiah = new Intl.NumberFormat('id-ID', {
@@ -277,56 +271,33 @@
                         return data;
                     }
 
-                },
-                {
+                }, {
                     data: 'DISC',
                     name: 'DISC',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },
-                {
-                    data: 'DIS_A',
-                    name: 'DIS_A',
+                },{
+                    data: 'DISC2',
+                    name: 'DISC2',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },
-                {
-                    data: 'DIS_B',
-                    name: 'DIS_B',
+                },{
+                    data: 'DISC3',
+                    name: 'DISC3',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },
-                {
-                    data: 'DIS_C',
-                    name: 'DIS_C',
-                    render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },
-                {
+                },{
                     data: 'PPN',
                     name: 'PPN',
                     render: $.fn.dataTable.render.number( ',', '.', 2, '' )
-                },
-                {
-                    data: 'SUB',
-                    name: 'SUB',
-                    render: function(data, type, row, meta) {
-                        return ' <h5><span class="badge badge-pill badge-info">' + data + '</span></h5>';
-                    }
-                },
-                {
-                    data: 'DT',
-                    name: 'DT',
-                    render: function(data, type, row, meta) {
-                        return ' <h5><span class="badge badge-pill badge-info">' + data + '</span></h5>';
-                    }
                 },
 
             ],
             columnDefs: [
                 {
                     "className": "dt-center",
-                    "targets": [0, 1, 2, 3]
-                },
+                    "targets": [0, 1, 2, 3, 9]
+                }, 
                 {
                     "className": "dt-right",
-                    "targets": [6, 7, 8, 9, 10]
+                    "targets": [6, 7, 8]
                 }
         ],
             dom: "<'row'<'col-md-6'><'col-md-6'>>" +

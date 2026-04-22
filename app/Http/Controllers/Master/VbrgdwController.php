@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
-// ganti 1
 
-use App\Models\Master\Vbrg;
-use App\Models\Master\VbrgDetail;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
@@ -27,7 +24,7 @@ class VbrgDwController extends Controller
 
     public function browse(Request $request){
         $KD_BRG = $request->KD_BRG;
-        $vbrgdw = DB::SELECT("SELECT * from vbrgdw WHERE KD_BRG = ? ORDER BY KD_BRG ", [$KD_BRG]);
+        $vbrgdw = DB::SELECT("SELECT * from nwkomponen WHERE KD_BRG = ? ORDER BY KD_BRG ", [$KD_BRG]);
 
         return response()->json($vbrgdw);
     }
@@ -42,17 +39,15 @@ class VbrgDwController extends Controller
     {
         // ganti 5
 
-        $vbrg = DB::SELECT("SELECT a.NO_ID, a.SUB, a.KDBAR, a.NMBAR, a.SUPP, b.NAMA, a.HB, a.DIS_A, a.DIS_B, a.DIS_C, a.PPN, a.DISC, a.DT
-                            FROM nwmasbar a, nwmassup b
-                            WHERE a.SUPP = b.NO_SUPL ORDER BY KDBAR ");
+        $vbrg = DB::SELECT("SELECT * from nwkomponen ORDER BY KD_BRG  ");
 
         return Datatables::of($vbrg)
             ->addIndexColumn()
-
+            
             ->rawColumns(['action'])
             ->make(true);
-
-
+			
+			
     }
     public function store(Request $request)
     {
@@ -64,13 +59,13 @@ class VbrgDwController extends Controller
         $HARGAAWAL = $request->HARGAAWAL;
         $HARGA = $request->HARGA;
         $DISCAWAL = $request->DISCAWAL;
-        $DISC = $request->DISC;
+        $DISC = $request->DISC;        
         $DISCAWAL2 = $request->DISCAWAL2;
-        $DISC2 = $request->DISC2;
+        $DISC2 = $request->DISC2;       
         $DISCAWAL3 = $request->DISCAWAL3;
-        $DISC3 = $request->DISC3;
+        $DISC3 = $request->DISC3;        
         $DISCAWAL4 = $request->DISCAWAL4;
-        $DISC4 = $request->DISC4;
+        $DISC4 = $request->DISC4;      
         $PPNAWAL = $request->PPNAWAL;
         $PPN = $request->PPN;
         $STATUS = $request->STATUS;
@@ -92,7 +87,7 @@ class VbrgDwController extends Controller
 
                 // update jika harga atau disc berubah
                 if ($harga != $hargaAwal ||  $disc != $discAwal || $disc2 != $discAwal2 || $disc3 != $discAwal3 || $disc4 != $discAwal4 || $ppn != $ppnawal) {
-                    DB::table('vbrgdw')
+                    DB::table('nwkomponen')
                         ->where('KD_BRG', $KD_BRG)
                         ->where('NA_BRG', $NA_BRG)
                         ->where('KODES', $KODES[$i])
@@ -108,7 +103,7 @@ class VbrgDwController extends Controller
                 }
             } else {
                 // insert jika tidak ada status
-                DB::table('vbrgdw')->insert([
+                DB::table('nwkomponen')->insert([
                     'KD_BRG' => $KD_BRG,
                     'NA_BRG' => $NA_BRG,
                     'KODES'  => $KODES[$i],
@@ -134,7 +129,7 @@ class VbrgDwController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
+    
 
     // ganti 15
 
