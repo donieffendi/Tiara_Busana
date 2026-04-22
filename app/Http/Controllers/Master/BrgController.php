@@ -57,7 +57,7 @@ class BrgController extends Controller
 
     public function browse_plu(Request $request)
     {
-        $brg = DB::SELECT("SELECT KDBAR, NMBAR, SUB, SUPP FROM nwmasbar ORDER BY KDBAR ");
+        $brg = DB::SELECT("SELECT KDBAR, NMBAR, SUB, SUPP, KET_UK FROM nwmasbar ORDER BY KDBAR ");
 
         return response()->json($brg);
     }
