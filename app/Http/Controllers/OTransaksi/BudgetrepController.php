@@ -161,7 +161,11 @@ class BudgetrepController extends Controller
     {
         // ganti 5
 
-        $periode = $request->per;
+         if ($request->session()->has('periode')) {
+            $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+        } else {
+            $periode = '';
+        }
 
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
@@ -169,7 +173,7 @@ class BudgetrepController extends Controller
         $budgetrep = DB::SELECT("
             SELECT *
             FROM nwbudget
-            WHERE PER= '$per'
+            WHERE PER= '$periode'
             ORDER BY NO_SP
         ");
 
@@ -833,6 +837,174 @@ class BudgetrepController extends Controller
         $result = DB::table('nwbudgetd')->where('NO_SP', $no_bukti)->get();
 
         return response()->json($result);;
+    }
+
+     public function budgetrepOtomatis()
+    {
+        $bulan     = str_pad(session()->get('periode')['bulan'], 2, '0', STR_PAD_LEFT);
+        $tahunFull = session()->get('periode')['tahun'];
+        $tahun     = substr($tahunFull, -2);
+        $periode   = $bulan . '/' . $tahunFull;
+
+        // $CBG       = Auth::user()->CBG;
+        $CBG       = "TGZ";
+        $total_qty = 0;
+
+        $bulanSebelumnya = (int) $bulan - 1;
+
+        if ($bulanSebelumnya <= 0) {
+            $bulanSebelumnya = 12;
+        }
+
+        $bulanSebelumnya = str_pad($bulanSebelumnya, 2, '0', STR_PAD_LEFT);
+
+        $fieldAK = 'AK' . $bulanSebelumnya;
+
+        $hitung = DB::SELECT("SELECT
+                                        a.KDBAR,
+                                        a.NMBAR,
+                                        a.IDEAL,
+                                        a.SUPP,
+
+                                        COALESCE(b.$fieldAK, 0) AS stock_akhir,
+                                        a.TOT_JL,
+                                        a.HB,
+                                        a.JLRATA_RP,a.JLRATA_QTY,
+
+
+                                        CASE
+                                            WHEN COALESCE(sp.selisih, 0) <> 0 THEN sp.selisih
+                                            ELSE 0
+                                        END AS on_sp,
+
+                                        a.JLRATA_RP *(a.IDEAL - (
+                                            COALESCE(b.$fieldAK, 0) +
+                                            CASE
+                                                WHEN COALESCE(sp.selisih, 0) <> 0 THEN sp.selisih
+                                                ELSE 0
+                                            END
+                                        )) AS budget,
+                                         (a.JLRATA_QTY * a.HB) AS nilai_sp,
+                                         (
+                                             a.JLRATA_RP *(a.IDEAL - (
+                                            COALESCE(b.$fieldAK, 0) +
+                                            CASE
+                                                WHEN COALESCE(sp.selisih, 0) <> 0 THEN sp.selisih
+                                                ELSE 0
+                                            END
+                                        ))
+                                            - (a.JLRATA_QTY * a.HB)
+                                        ) AS nilai_barang_baru
+
+
+
+                                    FROM nwmasbar a
+                                    JOIN nwmasbard b
+                                        ON a.KDBAR = b.KDBAR
+
+                                    LEFT JOIN (
+                                        SELECT
+                                            nwbudgetd.KD_BRG,
+                                            SUM(nwbudget.Q_SALDO) - COALESCE(SUM(nwagendd.QTY), 0) AS selisih
+                                        FROM nwbudget
+                                        JOIN nwbudgetd
+                                            ON nwbudget.NO_BUKTI = nwbudgetd.NO_BUKTI
+                                        JOIN nwagend
+                                            ON nwbudget.NO_BUKTI = nwagend.SP
+                                        LEFT JOIN nwagendd
+                                            ON nwagend.NO_BUKTI = nwagendd.NO_BUKTI
+                                        GROUP BY nwbudgetd.KD_BRG
+                                    ) sp
+                                        ON a.KDBAR = sp.KD_BRG
+
+                                    WHERE a.TD_OD NOT LIKE '%*%'
+                                     AND COALESCE(b.$fieldAK,0) = 0 AND a.LAKU='L'
+                                    AND b.CBG = 'TGZ'  ");
+
+        if (count($hitung) == 0) {
+            return back()->with('error', 'Data kosong');
+        }
+
+        $data = collect($hitung)->groupBy('SUPP');
+
+        foreach ($data as $supp => $items) {
+
+            $lastNumber = DB::table('nwbudget')
+                ->where('NO_BUKTI', 'LIKE', 'PB' . $CBG . $tahun . $bulan . '-%')
+                ->select(DB::raw('MAX(RIGHT(NO_BUKTI,4)) as last'))
+                ->value('last');
+
+            $nextNumber = $lastNumber ? ((int) $lastNumber + 1) : 1;
+
+            $supplier = DB::table('nwmassup')
+            ->where('NO_SUPL', $supp)
+            ->first();
+
+            foreach ($items->chunk(85) as $chunk) {
+
+                $validItems = $chunk->filter(function ($item) {
+                    return $item->JLRATA_QTY > 0;
+                });
+
+                if ($validItems->isEmpty()) {
+                    continue;
+                }
+
+                $no_bukti = 'POP' . $CBG . $tahun . $bulan . '-' .
+                str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+                $total_budget = $validItems->sum('budget');
+
+                $header = Nwbudget::create([
+                    'NO_BUKTI' => $no_bukti,
+                    'TGL'      => now(),
+                    'PER'      => $periode,
+                    'FLAG'     => 'PB',
+                    'CBG'      => $CBG,
+                    'NOTES'    => 'OTOMATIS',
+                    'USRNM'    => Auth::user()->username,
+                    'TG_SMP'   => Carbon::now(),
+                    'BUDGET'   => $total_budget,
+                    'KODES'    => $supp,
+                     'NAMAS'    => $supplier->NAMA ,
+
+                ]);
+
+                $REC = 1;
+
+                foreach ($validItems as $item) {
+
+                    $barang = DB::table('nwmasbar')
+                        ->where('KDBAR', $item->KDBAR)
+                        ->first();
+
+                    if (! $barang) {
+                        continue;
+                    }
+
+                    NwbudgetDetail::create([
+                        'NO_BUKTI'   => $no_bukti,
+                        'ID'         => $header->NO_ID,
+                        'REC'        => $REC,
+                        'PER'        => $periode,
+                        'FLAG'       => 'PP',
+                        'GOL'        => 'J',
+                        'KD_BRG'     => $item->KDBAR,
+                        'NA_BRG'     => $barang->NMBAR,
+                        'BARCODE'     => $barang->BARCODE,
+                        'QTY'        => $item->JLRATA_QTY,
+                        'HARGA'      => $item->HB,
+                        'TOTAL'      => $item->JLRATA_QTY * $item->HB,
+                        'BUDGET_BRG' => $item->nilai_barang_baru,
+                    ]);
+
+                    $REC++;
+                }
+
+                $nextNumber++;
+            }
+        }
+        return redirect('/budgetpk');
     }
 
 }

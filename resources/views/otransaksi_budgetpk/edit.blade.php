@@ -108,7 +108,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{($tipx=='new')? url('/pantau/store') : url('/pantau/update/'.$header->NO_ID.'' ) }}" method="POST" name ="entri" id="entri" >
+                    <form action="{{($tipx=='new')? url('/budgetpk/store') : url('/budgetpk/update/'.$header->NO_ID.'' ) }}" method="POST" name ="entri" id="entri" >
 
                         @csrf
 
@@ -311,7 +311,7 @@
 												</td>
 
 												<td>
-													<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->BARCODE}}">
+													<input name="BARCODE[]" id="BARCODE{{$no}}" type="text" class="form-control BARCODE " value="{{$detail->BARCODE}}" readonly>
 												</td>
 
 												<td>
@@ -322,7 +322,7 @@
 												</td>
 
 												<td>
-													<input name="HARGA[]"  onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
+													<input name="HARGA[]"  onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA" readonly>
 												</td>
 
 												<td>
@@ -335,7 +335,7 @@
 												</td>
 
 												<td>
-													<input name="SISA[]" onclick="select()" onblur="hitung()"  value="{{$detail->BUDGET_BRG}}"  id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA" >
+													<input name="SISA[]" onclick="select()" onblur="hitung()"  value="{{$detail->BUDGET_BRG}}"  id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA" readonly >
 												</td>
 
 												{{-- <td>
@@ -1586,7 +1586,7 @@
 			$("#XQTY" + i.toString()).attr("readonly", false);
 			$("#KALI" + i.toString()).attr("readonly", false);
 			$("#QTY" + i.toString()).attr("readonly", true);
-			$("#HARGA" + i.toString()).attr("readonly", false);
+			$("#HARGA" + i.toString()).attr("readonly", true);
 			$("#TOTAL" + i.toString()).attr("readonly", true);
 			$("#DISK" + i.toString()).attr("readonly", false);
 			$("#KET" + i.toString()).attr("readonly", false);
@@ -1710,7 +1710,7 @@
 					confirmButtonText: 'OK'
 				}).then(() => {
 					// Redirect to delete the data after user confirms the success message
-	            	loc = "{{ url('/pantau/delete/'.$header->NO_ID) }}";
+	            	loc = "{{ url('/budgetpk/delete/'.$header->NO_ID) }}";
 
 		            // alert(loc);
 	            	window.location = loc;
@@ -1733,7 +1733,7 @@
 			cancelButtonText: 'No, stay here'
 		}).then((result) => {
 			if (result.isConfirmed) {
-	        	loc = "{{ url('/pantau/') }}";
+	        	loc = "{{ url('/budgetpk/') }}";
 				window.location = loc ;
 			} else {
 				Swal.fire({

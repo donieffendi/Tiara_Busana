@@ -1,151 +1,260 @@
-<?php
-namespace App\Http\Controllers\OReport;
+@extends('layouts.plain')
+@section('styles')
+    <!-- <link rel="stylesheet" href="{{ url('http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css') }}"> -->
+    <link rel="stylesheet" href="{{ asset('foxie_js_css/jquery.dataTables.min.css') }}" />
+@endsection
 
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use DB;
-use Illuminate\Http\Request;
-
-include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
-
-class RStokidealController extends Controller
-{
-    public function report()
-    {
-        return view('oreport_stokideal.report');
+<style>
+    .card {
+        padding: 5px 10px !important;
     }
 
-    public function proses2(Request $request)
-    {
-        DB::beginTransaction();
 
-        try {
+    .table thead {
+        background-color: #FFFFFF;
+        color: #000000;
+    }
 
-            $tglAwal  = Carbon::now()->subMonths(3)->format('Y-m-d');
-            $tglAkhir = Carbon::now()->format('Y-m-d');
 
-            // Reset dulu
-            DB::table('nwmasbar')->update(['IDEAL' => 0]);
+    .datatable tbody td {
+        padding: 5px !important;
+        background-color: #FFFFFF;
+    }
 
-            // Update dari penjualan
-            DB::statement("
-				UPDATE nwmasbar m
-				JOIN (
-					SELECT d.KD_BRG, SUM(d.QTY) * 2 AS IDEAL
-					FROM juald d
-					JOIN jual j ON d.NO_BUKTI = j.NO_BUKTI
-					WHERE j.TGL BETWEEN ? AND ?
-					GROUP BY d.KD_BRG
-				) x ON m.KDBAR = x.KD_BRG
-				SET m.IDEAL = x.IDEAL
-			", [$tglAwal, $tglAkhir]);
+    .datatable {
+        border-right: solid 2px #000;
+        border-left: solid 2px #000;
+    }
 
-            DB::commit();
 
-            return back()->with('success', 'Proses Stock Ideal berhasil!');
+    .btn-secondary {
+        background-color: #42047e !important;
+    }
 
-        } catch (\Exception $e) {
 
-            DB::rollBack();
+    th {
+        font-size: 12px;
+    }
 
-            return back()->with('error', 'Proses gagal! ' . $e->getMessage());
+    td {
+        font-size: 12px;
+    }
+
+    /* menghilangkan padding */
+    .content-header {
+        padding: 0 !important;
+    }
+</style>
+
+
+@section('content')
+    <!-- Sweetalert delete -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--  -->
+    <div class="content-wrapper">
+
+
+        <!-- Status -->
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+
+            <!-- tambahan notifikasinya untuk delete di index -->
+            <script>
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Data has been deleted. {{ session('status') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
+            </script>
+            <!-- tutupannya -->
+        @endif
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {{-- <div class="form-group row">
+                    <div class="col-md-1" align="right">
+                        <label class="form-label">Periode</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select name="per" id="per" class="form-control per" style="width: 200px">
+                            <option value="">--Pilih Periode--</option>
+                            @foreach ($per as $perD)
+                                <option value="{{$perD->PERIO}}"  {{ (session()->get('filter_periode') == $perD->PERIO) ? 'selected' : '' }}>{{$perD->PERIO}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button id="btn-proses" class="btn btn-primary">Proses</button>
+                    </div>
+                </div> --}}
+
+                                <table class="table table-fixed table-striped table-border table-hover nowrap datatable"
+                                    id="datatable">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th scope="col" style="text-align: center">#</th>
+                                            <th scope="col" style="text-align: center">-</th>
+                                            <th scope="col" style="text-align: left">No.Bukti</th>
+                                            <th scope="col" style="text-align: left">Kodes</th>
+                                            <th scope="col" style="text-align: left">Nama</th>
+                                            <th scope="col" style="text-align: left">Budget</th>
+                                            <th scope="col" style="text-align: left">Posted</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('javascripts')
+    <!-- filter kolom di index -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- batas filter  -->
+
+    <script>
+        $(document).ready(function() {
+
+            var dataTable = $('.datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                // 'scrollX': true,
+                // 'scrollY': '400px',
+                "order": [
+                    [0, "asc"]
+                ],
+                ajax: {
+                    url: "{{ route('get-budgetpk') }}",
+                    data: {
+                        'per': $('#per').val(),
+                    },
+                },
+
+                columns: [{
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    },
+                    {
+                        data: 'NO_BUKTI',
+                        name: 'NO_BUKTI'
+                    },
+                    {
+                        data: 'KODES',
+                        name: 'KODES'
+                    },
+                    {
+                        data: 'NAMAS',
+                        name: 'NAMAS'
+                    },
+                    {
+                        data: 'BUDGET',
+                        name: 'BUDGET',
+                        render: $.fn.dataTable.render.number(',', '.', 2, '')
+                    },
+
+                    {
+                        data: 'POSTED',
+                        name: 'POSTED'
+                    },
+                ],
+                columnDefs: [
+                    // {
+                    //     "className": "dt-center",
+                    //     "targets": [0,10]
+                    // },
+                    // {
+                    //   targets: 4,
+                    //   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
+                    // },
+
+
+
+
+                ],
+                lengthMenu: [
+                    [8, 10, 20, 50, 100, -1],
+                    [8, 10, 20, 50, 100, "All"]
+                ],
+                dom: "<'row'<'col-md-6'><'col-md-6'>>" +
+                    "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
+                    "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
+                stateSave: true,
+
+            });
+
+            // event tombol proses
+            $('#btn-proses').on('click', function() {
+                dataTable.ajax.reload();
+            });
+
+            $("div.test_btn").html(
+                '  <a class="btn btn-lg btn-md btn-warning" href="{{ url('budgetpk/budgetpk-otomatis') }}">Otomatis</a>'
+
+            );
+
+            $(document).on("click", "#btnOtomatis", function(e) {
+                let btn = $(this);
+
+                if (btn.hasClass("disabled")) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                btn.addClass("disabled");
+                btn.css("pointer-events", "none");
+
+                btn.html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+
+            });
+        });
+
+        function deleteRow(link) {
+            console.log('Masuk');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Are you sure?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = link;
+                }
+            });
         }
-    }
 
-    public function proses(Request $request)
-    {
-        DB::beginTransaction();
 
-        try {
+        function simpan() {
+            var check = '0';
+            var min = '0';
 
-            // QTY
-            $kolomQty = [
-                "COALESCE(JL_LL,0)",
-                "COALESCE(JL_LL2,0)",
-                "COALESCE(JL_LL3,0)",
-            ];
 
-            // RP
-            $kolomRp = [
-                "COALESCE(JLRP_LL,0)",
-                "COALESCE(JLRP_LL2,0)",
-                "COALESCE(JLRP_LL3,0)",
-            ];
+            document.getElementById("entri").submit();
 
-            $totalQty = implode(' + ', $kolomQty);
-            $totalRp  = implode(' + ', $kolomRp);
-
-            $jumlahBulan = count($kolomQty);
-
-            DB::table('nwmasbar')->update([
-                'IDEAL'      => 0,
-                'JLRATA_QTY' => 0,
-                'JLRATA_RP'  => 0,
-            ]);
-
-            DB::statement("
-            UPDATE nwmasbar
-            SET
-                JLRATA_QTY = ($totalQty) / $jumlahBulan,
-                JLRATA_RP  = ($totalRp) / $jumlahBulan,
-                IDEAL      = (($totalQty) / $jumlahBulan) * 2
-        ");
-
-            DB::commit();
-
-            return back()->with('success', 'Proses Stock Ideal & Rata-rata berhasil!');
-
-        } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            return back()->with('error', 'Proses gagal! ' . $e->getMessage());
         }
-    }
-
-    // public function proses(Request $request)
-    // {
-    //     DB::beginTransaction();
-
-    //     try {
-
-    //         $bulan   = date('m');
-    //         $tahun   = date('Y');
-    //         $periode = $bulan . '/' . $tahun;
-
-    //         $getKolom = function ($b) {
-    //             if ($b <= 0) {
-    //                 $b += 12;
-    //             }
-    //             return 'JLRP_LL' . ($b == 1 ? '' : $b);
-    //         };
-    //         $koloms = [];
-    //         for ($i = 1; $i < $bulan; $i++) {
-    //             $koloms[] = "COALESCE(" . $getKolom($bulan - $i) . ",0)";
-    //         }
-
-    //         $totalJl     = implode(' + ', $koloms);
-    //         $jumlahBulan = count($koloms);
-
-    //         // Reset dulu
-    //         DB::table('nwmasbar')->update(['IDEAL' => 0]);
-
-    //         if ($jumlahBulan > 0) {
-    //             DB::statement("
-    //             UPDATE nwmasbar
-    //             SET IDEAL = (($totalJl) / $jumlahBulan) * 2
-    //         ");
-    //         }
-
-    //         DB::commit();
-
-    //         return back()->with('success', 'Proses Stock Ideal berhasil!');
-
-    //     } catch (\Exception $e) {
-
-    //         DB::rollBack();
-
-    //         return back()->with('error', 'Proses gagal! ' . $e->getMessage());
-    //     }
-    // }
-}
+    </script>
+@endsection

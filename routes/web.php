@@ -371,6 +371,7 @@ Route::post('/budgetrep/store', 'App\Http\Controllers\OTransaksi\BudgetrepContro
 Route::get('/budgetrep/edit', 'App\Http\Controllers\OTransaksi\BudgetrepController@edit')->middleware(['auth'])->name('budgetrep.edit');
 Route::post('/budgetrep/update/{budgetrep}', 'App\Http\Controllers\OTransaksi\BudgetrepController@update')->middleware(['auth'])->name('budgetrep.update');
 Route::get('/budgetrep/delete/{budgetrep}', 'App\Http\Controllers\OTransaksi\BudgetrepController@destroy')->middleware(['auth'])->name('budgetrep.delete');
+Route::get('/budgetrep/budgetrep-otomatis', 'App\Http\Controllers\OTransaksi\BudgetrepController@budgetrepOtomatis')->middleware(['auth'])->name('budgetrep/budgetrep-otomatis');
 
 
 // Operational Transaksi Orderk

@@ -74,12 +74,12 @@ class SupController extends Controller
         $cabang = session()->get('periode')['cabang'];
 
         if ($cabang == 'TMM') {
-    $connection = 'mysql_tmm';
-} elseif ($cabang == 'TGZ') {
-    $connection = 'mysql';
-} else {
-    $connection = 'mysql';
-}
+            $connection = 'mysql_tmm';
+        } elseif ($cabang == 'TGZ') {
+            $connection = 'mysql';
+        } else {
+            $connection = 'mysql';
+        }
 // dd($connection);
         $sup = DB::connection($connection)
     ->select("SELECT * FROM nwmassup WHERE DEPT = ? ORDER BY NO_SUPL ASC", [$dept]);

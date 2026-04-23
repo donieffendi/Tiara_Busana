@@ -76,7 +76,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <div class="col-md-1" align="right">
                         <label class="form-label">Periode</label>
                     </div>
@@ -92,16 +92,16 @@
                     <div class="col-md-2">
                         <button id="btn-proses" class="btn btn-primary">Proses</button>
                     </div>
-                </div>
+                </div> --}}
 
                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
                     <thead class="table-dark">
                         <tr>
                             <th scope="col" style="text-align: center">#</th>
                             <th scope="col" style="text-align: center">-</th>
-                            <th scope="col" style="text-align: left">No. Bukti</th>
+                            <th scope="col" style="text-align: center">No. Bukti</th>
                             <th scope="col" style="text-align: center">Budget</th>
-                            <th scope="col" style="text-align: left">Keterangan</th>
+                            <th scope="col" style="text-align: center">Posted</th>
                         </tr>
                     </thead>
 
@@ -132,7 +132,7 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            deferLoading: 0,
+            // deferLoading: 0,
             // 'scrollX': true,
             // 'scrollY': '400px',
             "order": [[ 0, "asc" ]],
@@ -149,9 +149,9 @@
             [
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'action', name: 'action'},
-                { data: 'NO_SP', name: 'NO_SP'},
+                { data: 'NO_BUKTI', name: 'NO_BUKTI'},
                 { data: 'BUDGET', name: 'BUDGET', render: $.fn.dataTable.render.number( ',', '.', 2, '' )},
-                { data: 'CAT', name: 'KODES'},
+                { data: 'POSTED', name: 'POSTED'},
             ],
             columnDefs:
             [
@@ -189,10 +189,10 @@
             dataTable.ajax.reload();
         });
 
-        // $("div.test_btn").html(
-        // '<a class="btn btn-lg btn-md btn-success" href="{{url('.pantau/edit&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a'
+       $("div.test_btn").html(
+                '  <a class="btn btn-lg btn-md btn-warning" href="{{ url('budgetrep/budgetrep-otomatis') }}">Otomatis</a>'
 
-        // );
+            );
     });
 
     function deleteRow(link) {
