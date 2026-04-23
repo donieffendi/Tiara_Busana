@@ -1,20 +1,18 @@
 <?php
-
 namespace App\Http\Controllers\OTransaksi;
 
 use App\Http\Controllers\Controller;
 // ganti 1
 
-use App\Models\OTransaksi\Po;
-use App\Models\OTransaksi\PoDetail;
+use App\Models\Master\Sup;
 use App\Models\OTransaksi\Nwbudget;
 use App\Models\OTransaksi\NwbudgetDetail;
-use App\Models\Master\Sup;
-use Illuminate\Http\Request;
-use DataTables;
+use App\Models\OTransaksi\Po;
 use Auth;
-use DB;
 use Carbon\Carbon;
+use DataTables;
+use DB;
+use Illuminate\Http\Request;
 
 include_once base_path() . "/vendor/simitgroup/phpjasperxml/version/1.1/PHPJasperXML.inc.php";
 use PHPJasperXML;
@@ -28,7 +26,6 @@ class BudgetpkController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
     public function index(Request $request)
     {
         $per = DB::select("SELECT PERIO FROM perid WHERE PERIO LIKE CONCAT('%/', YEAR(NOW()))");
@@ -36,11 +33,11 @@ class BudgetpkController extends Controller
         return view('otransaksi_budgetpk.index')->with(['per' => $per]);
     }
 
-	public function browse(Request $request)
+    public function browse(Request $request)
     {
         $tanggal = date('Y-m-d');
         $CBG     = Auth::user()->CBG;
-        $kodes = $request->kodes;
+        $kodes   = $request->kodes;
 
         //
         $budgetpk = DB::SELECT("SELECT distinct PO.NO_SP , PO.KODES, PO.NAMAS,
@@ -55,7 +52,7 @@ class BudgetpkController extends Controller
     public function browse_brg(Request $request)
     {
         // $KD_BRG = $request->KD_BRG;
-		$sup = $request->sup;
+        $sup      = $request->sup;
         $budgetpk = DB::SELECT("SELECT KDBAR, NMBAR, BARCODE, HB AS HARGA, 1 AS STOK FROM nwmasbar WHERE SUPP = '$sup'");
         return response()->json($budgetpk);
     }
@@ -63,22 +60,19 @@ class BudgetpkController extends Controller
     public function browse_sup(Request $request)
     {
 
+        if (! empty(request('q'))) {
 
-    	if (!empty(request('q'))) {
-
-
-                 $budgetpk = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
+            $budgetpk = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
                             from nwmassup
                             WHERE  NAMA LIKE ('%$request->q%')
                             ORDER BY NAMA ");
 
-
         } else {
-			$budgetpk = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
+            $budgetpk = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA
                             from nwmassup
 
                             ORDER BY NAMA ");
-		}
+        }
 
         return response()->json($budgetpk);
     }
@@ -87,82 +81,70 @@ class BudgetpkController extends Controller
     {
         $CBG = Auth::user()->CBG;
 
-		$budgetpk = DB::SELECT("SELECT NO_SP,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
+        $budgetpk = DB::SELECT("SELECT NO_SP,TGL,  KODES, NAMAS, TOTAL,  BAYAR,
                                 TOTAL-BAYAR) AS SISA, ALAMAT, KOTA from po
 		                WHERE LNS <> 1 AND CBG = '$CBG' ORDER BY NO_SP; ");
 
         return response()->json($budgetpk);
     }
 
-
-	public function index_posting(Request $request)
+    public function index_posting(Request $request)
     {
 
         return view('otransaksi_budgetpk.post');
     }
 
-	public function browse_pod(Request $request)
+    public function browse_pod(Request $request)
     {
         $sup = $request->kodes;
 
-
-
-            $budgetpkd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.BARCODE, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, a.TOTAL,
+        $budgetpkd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.BARCODE, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, a.TOTAL,
                                 a.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.HJ, b.MARGIN, b.RAK AS JNS
                             from nwbudgetd a
                             LEFT JOIN nwmasbar b
                                 ON b.KDBAR = a.KD_BRG
-                            where a.NO_SP='".$request->nobukti."' ");
+                            where a.NO_SP='" . $request->nobukti . "' ");
 
+        return response()->json($budgetpkd);
+    }
 
-
-		return response()->json($budgetpkd);
-	}
-
-	public function browse_detail(Request $request)
+    public function browse_detail(Request $request)
     {
-		$filterbukti = '';
-		if($request->NO_PO)
-		{
+        $filterbukti = '';
+        if ($request->NO_PO) {
 
-			$filterbukti = " WHERE a.NO_SP='".$request->NO_PO."' AND a.KD_BHN = b.KD_BHN ";
-		}
-		$budgetpkd = DB::SELECT("SELECT a.REC, a.KD_BHN, a.NA_BHN, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
+            $filterbukti = " WHERE a.NO_SP='" . $request->NO_PO . "' AND a.KD_BHN = b.KD_BHN ";
+        }
+        $budgetpkd = DB::SELECT("SELECT a.REC, a.KD_BHN, a.NA_BHN, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.KALI AS KALI
                             from pod a, bhn b
                             $filterbukti ORDER BY NO_SP ");
 
-
-		return response()->json($budgetpkd);
-	}
-
+        return response()->json($budgetpkd);
+    }
 
     public function browse_detail2(Request $request)
     {
-		$filterbukti = '';
-		if($request->NO_PO)
-		{
+        $filterbukti = '';
+        if ($request->NO_PO) {
 
-			$filterbukti = " WHERE NO_SP='".$request->NO_PO."' AND a.KD_BRG = b.KD_BRG ";
-		}
-		$budgetpkd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
+            $filterbukti = " WHERE NO_SP='" . $request->NO_PO . "' AND a.KD_BRG = b.KD_BRG ";
+        }
+        $budgetpkd = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA,
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, b.KALI AS KALI
                             from pod a, brg b
                             $filterbukti ORDER BY NO_SP ");
 
-
-		return response()->json($budgetpkd);
-	}
+        return response()->json($budgetpkd);
+    }
     // ganti 4
-
-
 
     public function getBudgetpk(Request $request)
     {
         // ganti 5
 
         // $periode = $request->per;
-          if ($request->session()->has('periode')) {
+        if ($request->session()->has('periode')) {
             $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
         } else {
             $periode = '';
@@ -171,7 +153,6 @@ class BudgetpkController extends Controller
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
 
-
         $budgetpk = DB::SELECT("
             SELECT *
             FROM nwbudget
@@ -179,26 +160,23 @@ class BudgetpkController extends Controller
             ORDER BY NO_SP
         ");
 
-
         // ganti 6
 
         return Datatables::of($budgetpk)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                if (Auth::user()->divisi=="programmer" )
-				{
+                if (Auth::user()->divisi == "programmer") {
                     //CEK POSTED di index dan edit
 
                     // url untuk delete di index
-                    $url = "'".url("budgetpk/delete/" . $row->NO_ID)."'";
+                    $url = "'" . url("budgetpk/delete/" . $row->NO_ID) . "'";
                     // batas
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' href="budgetpk/edit/?idx=' . $row->NO_ID . '&tipx=edit';
-                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')"';
-
+                    $btnEdit   = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' href="budgetpk/edit/?idx=' . $row->NO_ID . '&tipx=edit';
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow(' . $url . ')"';
 
                     $btnPrivilege =
-                        '
+                    '
                                 <a class="dropdown-item" ' . $btnEdit . '>
                                 <i class="fas fa-edit"></i>
                                     Edit
@@ -236,19 +214,17 @@ class BudgetpkController extends Controller
                 return $actionBtn;
             })
 
-
-			->addColumn('cek', function ($row) {
-                return
-                    '
+            ->addColumn('cek', function ($row) {
+                return;
+                '
                     <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->POSTED == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->POSTED == 2) ? "disabled" : "") . '></input>
                     ';
 
             })
 
-            ->rawColumns(['action','cek'])
+            ->rawColumns(['action', 'cek'])
             ->make(true);
     }
-
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -261,15 +237,13 @@ class BudgetpkController extends Controller
     public function store(Request $request)
     {
 
-
         $this->validate(
             $request,
             // GANTI 9
 
             [
- //               'NO_PO'       => 'required',
-                'TGL'      => 'required'
-
+                //               'NO_PO'       => 'required',
+                'TGL' => 'required',
 
             ]
         );
@@ -282,88 +256,81 @@ class BudgetpkController extends Controller
 
         /////////////////////////////////////////
 
-
-		/////////////////////////////////////////
-
+        /////////////////////////////////////////
 
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
 
-        $bulan    = session()->get('periode')['bulan'];
-        $tahun    = substr(session()->get('periode')['tahun'], -2);
+        $bulan = session()->get('periode')['bulan'];
+        $tahun = substr(session()->get('periode')['tahun'], -2);
 
         $query = DB::table('nwbudget')->select('NO_SP')->where('PER', $periode)->where('CBG', $CBG)
-                ->orderByDesc('NO_SP')->limit(1)->get();
-
+            ->orderByDesc('NO_SP')->limit(1)->get();
 
         if ($query != '[]') {
-            $query = substr($query[0]->NO_SP, -4);
-            $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-            $no_bukti = 'PA'  . $CBG . $tahun . $bulan . '-' . $query;
+            $query    = substr($query[0]->NO_SP, -4);
+            $query    = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
+            $no_bukti = 'PA' . $CBG . $tahun . $bulan . '-' . $query;
         } else {
-            $no_bukti = 'PA'  . $CBG . $tahun . $bulan . '-0001';
+            $no_bukti = 'PA' . $CBG . $tahun . $bulan . '-0001';
         }
-
-
 
         $budgetpk = Nwbudget::create(
             [
-                'NO_SP'         => $no_bukti,
-                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
-                'PER'              => $periode,
-				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-                'NA_CNT'           => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
-				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
-                'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'CBG'              => ($request['CBG'] == null) ? "" : $request['CBG'],
-                'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'Q_SALDO'          => (float) str_replace(',', '', $request['TTOTAL_QTY']),
-                'R_SALDO'          => (float) str_replace(',', '', $request['TTOTAL']),
-                'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
+                'NO_SP'   => $no_bukti,
+                'TGL'     => date('Y-m-d', strtotime($request['TGL'])),
+                'JTEMPO'  => date('Y-m-d', strtotime($request['JTEMPO'])),
+                'PER'     => $periode,
+                'CNT'     => ($request['CNT'] == null) ? "" : $request['CNT'],
+                'NA_CNT'  => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
+                'KODES'   => ($request['KODES'] == null) ? "" : $request['KODES'],
+                'NAMAS'   => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
+                'CBG'     => ($request['CBG'] == null) ? "" : $request['CBG'],
+                'NOTES'   => ($request['NOTES'] == null) ? "" : $request['NOTES'],
+                'Q_SALDO' => (float) str_replace(',', '', $request['TTOTAL_QTY']),
+                'R_SALDO' => (float) str_replace(',', '', $request['TTOTAL']),
+                'USRNM'   => Auth::user()->username,
+                'TG_SMP'  => Carbon::now(),
             ]
         );
 
-
-		$REC        = $request->input('REC');
-		$KD_BRG     = $request->input('KD_BRG');
-        $NA_BRG     = $request->input('NA_BRG');
-        $BARCODE    = $request->input('BARCODE');
-        $QTY        = $request->input('QTY');
-        $HARGA      = $request->input('HARGA');
-        $TOTAL      = $request->input('TOTAL');
-        $SISA       = $request->input('SISA');
-        $KDLAKU     = $request->input('KDLAKU');
-        $KET        = $request->input('KET');
+        $REC     = $request->input('REC');
+        $KD_BRG  = $request->input('KD_BRG');
+        $NA_BRG  = $request->input('NA_BRG');
+        $BARCODE = $request->input('BARCODE');
+        $QTY     = $request->input('QTY');
+        $HARGA   = $request->input('HARGA');
+        $TOTAL   = $request->input('TOTAL');
+        $SISA    = $request->input('SISA');
+        $KDLAKU  = $request->input('KDLAKU');
+        $KET     = $request->input('KET');
 
         // Check jika value detail ada/tidak
         if ($REC) {
             foreach ($REC as $key => $value) {
                 // Declare new data di Model
-                $detail    = new NwbudgetDetail;
+                $detail = new NwbudgetDetail;
 
                 // Insert ke Database
-                $detail->NO_SP       = $no_bukti;
-                $detail->REC         = $REC[$key];
-                $detail->PER         = $periode;
-                $detail->CBG 	     = $CBG;
-                $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
-                $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
-                $detail->BARCODE     = ($BARCODE[$key] == null) ? "" :  $BARCODE[$key];
-                $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);
-                $detail->HARGA       = (float) str_replace(',', '', $HARGA[$key]);
-                $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]);
-                $detail->SISA        = (float) str_replace(',', '', $QTY[$key]);
-                $detail->KDLAKU      = ($KDLAKU[$key] == null) ? "" :  $KDLAKU[$key];
-                $detail->KET         = ($KET[$key] == null) ? "" :  $KET[$key];
+                $detail->NO_SP   = $no_bukti;
+                $detail->REC     = $REC[$key];
+                $detail->PER     = $periode;
+                $detail->CBG     = $CBG;
+                $detail->KD_BRG  = ($KD_BRG[$key] == null) ? "" : $KD_BRG[$key];
+                $detail->NA_BRG  = ($NA_BRG[$key] == null) ? "" : $NA_BRG[$key];
+                $detail->BARCODE = ($BARCODE[$key] == null) ? "" : $BARCODE[$key];
+                $detail->QTY     = (float) str_replace(',', '', $QTY[$key]);
+                $detail->HARGA   = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->TOTAL   = (float) str_replace(',', '', $TOTAL[$key]);
+                $detail->SISA    = (float) str_replace(',', '', $QTY[$key]);
+                $detail->KDLAKU  = ($KDLAKU[$key] == null) ? "" : $KDLAKU[$key];
+                $detail->KET     = ($KET[$key] == null) ? "" : $KET[$key];
                 $detail->save();
             }
         }
 
-		$no_buktix = $no_bukti;
+        $no_buktix = $no_bukti;
 
-		$budgetpk = Nwbudget::where('NO_SP', $no_buktix )->first();
-
+        $budgetpk = Nwbudget::where('NO_SP', $no_buktix)->first();
 
         DB::SELECT("UPDATE nwbudget, nwmassup
                     SET nwbudget.NAMAS = nwmassup.NAMA  WHERE nwbudget.KODES = nwmassup.NO_SUPL
@@ -381,187 +348,145 @@ class BudgetpkController extends Controller
 
     }
 
-   public function edit( Request $request , Nwbudget $budgetpk)
+    public function edit(Request $request, Nwbudget $budgetpk)
     {
 
-
-		$per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
-
+        $per = session()->get('periode')['bulan'] . '/' . session()->get('periode')['tahun'];
 
         // $cekperid = DB::SELECT("SELECT POSTED from perid WHERE PERIO='$per'");
         // if ($cekperid[0]->POSTED==1)
         // {
         //     return redirect('/po')
-		// 	       ->with('status', 'Maaf Periode sudah ditutup!')
+        // 	       ->with('status', 'Maaf Periode sudah ditutup!')
         //            ->with(['judul' => $judul, 'flagz' => $FLAGZ]);
         // }
 
         $tipx = $request->tipx;
 
-		$idx = $request->idx;
+        $idx = $request->idx;
 
         $CBG = Auth::user()->CBG;
         $PPN = Auth::user()->PPN;
 
-		if ( $idx =='0' && $tipx=='undo'  )
-	    {
-			$tipx ='top';
+        if ($idx == '0' && $tipx == 'undo') {
+            $tipx = 'top';
 
-		   }
+        }
 
+        if ($tipx == 'search') {
 
+            $buktix = $request->buktix;
 
-		if ($tipx=='search') {
-
-
-    	   $buktix = $request->buktix;
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
+            $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
 		                 where PER ='$per'
                          AND CBG = '$CBG'
 						 and NO_SP = '$buktix'
-		                 ORDER BY NO_SP ASC  LIMIT 1" );
+		                 ORDER BY NO_SP ASC  LIMIT 1");
 
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = 0;
+            }
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0;
-			  }
+        }
 
+        if ($tipx == 'top') {
 
-		}
-
-		if ($tipx=='top') {
-
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
+            $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
 		                 where PER ='$per'
                          AND CBG = '$CBG'
-		                 ORDER BY NO_SP ASC  LIMIT 1" );
+		                 ORDER BY NO_SP ASC  LIMIT 1");
 
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = 0;
+            }
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0;
-			  }
+        }
 
+        if ($tipx == 'prev') {
 
-		}
+            $buktix = $request->buktix;
 
-
-		if ($tipx=='prev' ) {
-
-    	   $buktix = $request->buktix;
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
+            $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
 		             where PER ='$per'
                      AND CBG = '$CBG'
                      and NO_SP <
-					 '$buktix' ORDER BY NO_SP DESC LIMIT 1" );
+					 '$buktix' ORDER BY NO_SP DESC LIMIT 1");
 
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = $idx;
+            }
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = $idx;
-			  }
+        }
 
-		}
+        if ($tipx == 'next') {
 
+            $buktix = $request->buktix;
 
-		if ($tipx=='next' ) {
-
-
-      	   $buktix = $request->buktix;
-
-		   $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
+            $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
 		             where PER ='$per'
                      AND CBG = '$CBG'
                      and NO_SP >
-					 '$buktix' ORDER BY NO_SP ASC LIMIT 1" );
+					 '$buktix' ORDER BY NO_SP ASC LIMIT 1");
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = $idx;
-			  }
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = $idx;
+            }
 
+        }
 
-		}
+        if ($tipx == 'bottom') {
 
-		if ($tipx=='bottom') {
-
-    		$bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
+            $bingco = DB::SELECT("SELECT NO_ID, NO_SP from nwbudget
 						where PER ='$per'
                         AND CBG = '$CBG'
-		                ORDER BY NO_SP DESC  LIMIT 1" );
+		                ORDER BY NO_SP DESC  LIMIT 1");
 
-			if(!empty($bingco))
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0;
-			  }
+            if (! empty($bingco)) {
+                $idx = $bingco[0]->NO_ID;
+            } else {
+                $idx = 0;
+            }
 
+        }
 
-		}
+        if ($tipx == 'undo' || $tipx == 'search') {
 
+            $tipx = 'edit';
 
-		if ( $tipx=='undo' || $tipx=='search' )
-	    {
+        }
 
-			$tipx ='edit';
+        if ($idx != 0) {
+            $budgetpk = Nwbudget::where('NO_ID', $idx)->first();
+        } else {
+            $budgetpk         = new Nwbudget;
+            $budgetpk->TGL    = Carbon::now();
+            $budgetpk->JTEMPO = Carbon::now();
 
-		   }
-
-
-
-       	if ( $idx != 0 )
-		{
-			$budgetpk = Nwbudget::where('NO_ID', $idx )->first();
-	     }
-		 else
-		 {
-				$budgetpk = new Nwbudget;
-                $budgetpk->TGL = Carbon::now();
-                $budgetpk->JTEMPO = Carbon::now();
-
-
-		 }
+        }
 
         $no_bukti = $budgetpk->NO_BUKTI;
 
         $budgetpkDetail = DB::table('nwbudgetd')->where('NO_BUKTI', $no_bukti)->orderBy('REC')->get();
 
-		$data = [
-            'header'        => $budgetpk,
-			'detail'        => $budgetpkDetail
+        $data = [
+            'header' => $budgetpk,
+            'detail' => $budgetpkDetail,
 
         ];
-
-
 
         return view('otransaksi_budgetpk.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx]);
 
     }
 
-  /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -578,7 +503,7 @@ class BudgetpkController extends Controller
             $request,
             [
 
-                'TGL'      => 'required'
+                'TGL' => 'required',
             ]
         );
 
@@ -586,46 +511,44 @@ class BudgetpkController extends Controller
 
         $CBG = Auth::user()->CBG;
 
-
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
-
 
         $budgetpk->update(
             [
 
-                'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
-                'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),
-				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
-                'NA_CNT'           => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
-				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
-                'CBG'              => $CBG,
-                'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'Q_SALDO'          => (float) str_replace(',', '', $request['TTOTAL_QTY']),
-                'R_SALDO'          => (float) str_replace(',', '', $request['TTOTAL']),
-				'USRNM'            => Auth::user()->username,
-                'TG_SMP'           => Carbon::now(),
+                'TGL'     => date('Y-m-d', strtotime($request['TGL'])),
+                'JTEMPO'  => date('Y-m-d', strtotime($request['JTEMPO'])),
+                'CNT'     => ($request['CNT'] == null) ? "" : $request['CNT'],
+                'NA_CNT'  => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
+                'KODES'   => ($request['KODES'] == null) ? "" : $request['KODES'],
+                'CBG'     => $CBG,
+                'NOTES'   => ($request['NOTES'] == null) ? "" : $request['NOTES'],
+                'Q_SALDO' => (float) str_replace(',', '', $request['TTOTAL_QTY']),
+                'R_SALDO' => (float) str_replace(',', '', $request['TTOTAL']),
+                'USRNM'   => Auth::user()->username,
+                'TG_SMP'  => Carbon::now(),
             ]
         );
 
-		$no_buktix = $budgetpk->NO_SP;
+        $no_buktix = $budgetpk->NO_SP;
 
         // Update Detail
         $length = sizeof($request->input('REC'));
         $NO_ID  = $request->input('NO_ID');
 
-        $REC    = $request->input('REC');
+        $REC = $request->input('REC');
 
-        $KD_BRG     = $request->input('KD_BRG');
-        $NA_BRG     = $request->input('NA_BRG');
-        $BARCODE    = $request->input('BARCODE');
-        $QTY        = $request->input('QTY');
-        $HARGA      = $request->input('HARGA');
-        $TOTAL      = $request->input('TOTAL');
-        $SISA       = $request->input('SISA');
-        $KDLAKU     = $request->input('KDLAKU');
-        $KET        = $request->input('KET');
+        $KD_BRG  = $request->input('KD_BRG');
+        $NA_BRG  = $request->input('NA_BRG');
+        $BARCODE = $request->input('BARCODE');
+        $QTY     = $request->input('QTY');
+        $HARGA   = $request->input('HARGA');
+        $TOTAL   = $request->input('TOTAL');
+        $SISA    = $request->input('SISA');
+        $KDLAKU  = $request->input('KDLAKU');
+        $KET     = $request->input('KET');
 
-        $query = DB::table('nwbudgetd')->where('no_bukti', $request->no_bukti)->whereNotIn('NO_ID',  $NO_ID)->delete();
+        $query = DB::table('nwbudgetd')->where('no_bukti', $request->no_bukti)->whereNotIn('NO_ID', $NO_ID)->delete();
 
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
@@ -634,47 +557,47 @@ class BudgetpkController extends Controller
                 $insert = NwbudgetDetail::create(
                     [
                         'NO_SP'   => $request->no_bukti,
-                        'REC'        => $REC[$i],
-                        'PER'        => $periode,
-                        'CBG'        => $CBG,
-                        'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
-                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
-                        'SISA'       => (float) str_replace(',', '', $SISA[$i]),
-                        'KDLAKU'     => ($KDLAKU[$i] == null) ? "" :  $KDLAKU[$i],
-                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
+                        'REC'     => $REC[$i],
+                        'PER'     => $periode,
+                        'CBG'     => $CBG,
+                        'KD_BRG'  => ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i],
+                        'NA_BRG'  => ($NA_BRG[$i] == null) ? "" : $NA_BRG[$i],
+                        'BARCODE' => ($BARCODE[$i] == null) ? "" : $BARCODE[$i],
+                        'QTY'     => (float) str_replace(',', '', $QTY[$i]),
+                        'HARGA'   => (float) str_replace(',', '', $HARGA[$i]),
+                        'TOTAL'   => (float) str_replace(',', '', $TOTAL[$i]),
+                        'SISA'    => (float) str_replace(',', '', $SISA[$i]),
+                        'KDLAKU'  => ($KDLAKU[$i] == null) ? "" : $KDLAKU[$i],
+                        'KET'     => ($KET[$i] == null) ? "" : $KET[$i],
                     ]
                 );
             } else {
                 // Update jika NO_ID sudah ada
                 $upsert = NwbudgetDetail::updateOrCreate(
                     [
-                        'NO_SP'  => $request->NO_SP,
-                        'NO_ID'     => (int) str_replace(',', '', $NO_ID[$i])
+                        'NO_SP' => $request->NO_SP,
+                        'NO_ID' => (int) str_replace(',', '', $NO_ID[$i]),
                     ],
 
                     [
-                        'REC'        => $REC[$i],
-                        'CBG'        => $CBG,
-                        'per'        => $periode,
-                        'KD_BRG'     => ($KD_BRG[$i] == null) ? "" :  $KD_BRG[$i],
-                        'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
-                        'BARCODE'    => ($BARCODE[$i] == null) ? "" :  $BARCODE[$i],
-                        'qty'        => (float) str_replace(',', '', $QTY[$i]),
-                        'harga'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'total'      => (float) str_replace(',', '', $TOTAL[$i]),
-                        'SISA'       => (float) str_replace(',', '', $SISA[$i]),
-                        'KDLAKU'     => ($KDLAKU[$i] == null) ? "" :  $KDLAKU[$i],
-                        'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
+                        'REC'     => $REC[$i],
+                        'CBG'     => $CBG,
+                        'per'     => $periode,
+                        'KD_BRG'  => ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i],
+                        'NA_BRG'  => ($NA_BRG[$i] == null) ? "" : $NA_BRG[$i],
+                        'BARCODE' => ($BARCODE[$i] == null) ? "" : $BARCODE[$i],
+                        'qty'     => (float) str_replace(',', '', $QTY[$i]),
+                        'harga'   => (float) str_replace(',', '', $HARGA[$i]),
+                        'total'   => (float) str_replace(',', '', $TOTAL[$i]),
+                        'SISA'    => (float) str_replace(',', '', $SISA[$i]),
+                        'KDLAKU'  => ($KDLAKU[$i] == null) ? "" : $KDLAKU[$i],
+                        'KET'     => ($KET[$i] == null) ? "" : $KET[$i],
                     ]
                 );
             }
         }
 
- 		$budgetpk = Nwbudget::where('NO_SP', $no_buktix )->first();
+        $budgetpk = Nwbudget::where('NO_SP', $no_buktix)->first();
 
         $no_bukti = $budgetpk->NO_SP;
 
@@ -693,7 +616,6 @@ class BudgetpkController extends Controller
         // $variablell = DB::select('call poins(?)', array($budgetpk['NO_SP']));
 
         return redirect('/budgetpk')->with('statusInsert', 'Data baru berhasil diupdate');
-
 
     }
 
@@ -715,26 +637,26 @@ class BudgetpkController extends Controller
         // hapus header
         DB::table('nwbudget')->where('NO_ID', $budgetpk->NO_ID)->delete();
 
-        return redirect('/po')->with('statusHapus','Data '.$budgetpk->NO_SP.' berhasil dihapus');
+        return redirect('/po')->with('statusHapus', 'Data ' . $budgetpk->NO_SP . ' berhasil dihapus');
     }
 
     public function cetak(Nwbudget $budgetpk, Request $request)
     {
         $no_po = $budgetpk->NO_SP;
-        $tipe = $request->tipe;
+        $tipe  = $request->tipe;
 
         if ($tipe == 'lampiran') {
-            $file     = 'poc_l';
+            $file = 'poc_l';
         } else {
-            $file     = 'poc';
+            $file = 'poc';
         }
 
         $PHPJasperXML = new PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
-        $data = DB::table('nwbudget')->where('NO_SP', $no_po)->first();
+        $data  = DB::table('nwbudget')->where('NO_SP', $no_po)->first();
         $jenis = ($data->POSTED == 0) ? 'ASLI' : 'COPY';
 
-        if($tipe != 'lampiran') {
+        if ($tipe != 'lampiran') {
             DB::update("UPDATE nwbudget SET POSTED = 1 WHERE NO_SP = ?", [$no_po]);
         }
 
@@ -759,15 +681,12 @@ class BudgetpkController extends Controller
         ob_end_clean();
         $PHPJasperXML->outpage("I");
 
-
     }
 
-
-
-	 public function posting(Request $request)
+    public function posting(Request $request)
     {
 
-        $CEK = $request->input('cek');
+        $CEK   = $request->input('cek');
         $NO_SP = $request->input('NO_SP');
 
         $usrnmx = Auth::user()->username;
@@ -775,64 +694,55 @@ class BudgetpkController extends Controller
         $hasil = "";
 
         if ($CEK) {
-            foreach ($CEK as $key => $value)
-			{
+            foreach ($CEK as $key => $value) {
 
-                    //$STA = $request->input('STA');
+                //$STA = $request->input('STA');
 
-					$periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
-					$bulan    = session()->get('periode')['bulan'];
-					$tahun    = substr(session()->get('periode')['tahun'], -2);
+                $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+                $bulan   = session()->get('periode')['bulan'];
+                $tahun   = substr(session()->get('periode')['tahun'], -2);
 
-			   $NO_SPXZ  = $NO_SP[$key];
+                $NO_SPXZ = $NO_SP[$key];
 
+                DB::SELECT("UPDATE po SET POSTED = 1 WHERE po.NO_SP='$NO_SPXZ'");
 
-                    DB::SELECT("UPDATE po SET POSTED = 1 WHERE po.NO_SP='$NO_SPXZ'");
-
-			}
-		}
-		else
-		{
-			$hasil = $hasil ."Tidak ada PO yang dipilih! ; ";
-		}
-
-            if($hasil!='')
-            {
-                return redirect('/budgetpkindex-posting')->with('status', 'Proses Posting PO ..')->with('gagal', $hasil);
             }
-            else
-            {
-                return redirect('/budgetpkindex-posting')->with('status', 'Posting Posting PO selesai..');
-            }
+        } else {
+            $hasil = $hasil . "Tidak ada PO yang dipilih! ; ";
+        }
+
+        if ($hasil != '') {
+            return redirect('/budgetpkindex-posting')->with('status', 'Proses Posting PO ..')->with('gagal', $hasil);
+        } else {
+            return redirect('/budgetpkindex-posting')->with('status', 'Posting Posting PO selesai..');
+        }
 
     }
 
-
-	public function jtempo ( Request $request)
+    public function jtempo(Request $request)
     {
-		$tgl = $request->input('TGL');
-		$hari = substr($tgl,0,2);
-		$bulan = substr($tgl,3,2);
-		$tahun = substr($tgl,6,4);
-		$harix = $request->HARI;
+        $tgl   = $request->input('TGL');
+        $hari  = substr($tgl, 0, 2);
+        $bulan = substr($tgl, 3, 2);
+        $tahun = substr($tgl, 6, 4);
+        $harix = $request->HARI;
 
-		$datex = Carbon::createFromDate($tahun, $bulan, $hari );
+        $datex = Carbon::createFromDate($tahun, $bulan, $hari);
 
-        $datex ->addDays($harix);
+        $datex->addDays($harix);
 
         $datey = $datex->format('d-m-Y');
-		return  $datey;
+        return $datey;
 
+    }
 
-	}
-
-
-	public function getDetailPo(){
+    public function getDetailPo()
+    {
 
         $no_bukti = $_GET['no_bukti'];
-        $result = DB::table('nwbudgetd')->where('NO_SP', $no_bukti)->get();
+        $result   = DB::table('nwbudgetd')->where('NO_SP', $no_bukti)->get();
 
-        return response()->json($result);;
+        return response()->json($result);
     }
 
     public function budgetpkOtomatis()
@@ -846,7 +756,7 @@ class BudgetpkController extends Controller
         $CBG       = "TGZ";
         $total_qty = 0;
 
-       $bulanSebelumnya = (int)$bulan - 1;
+        $bulanSebelumnya = (int) $bulan - 1;
 
         if ($bulanSebelumnya <= 0) {
             $bulanSebelumnya = 12;
@@ -856,38 +766,7 @@ class BudgetpkController extends Controller
 
         $fieldAK = 'AK' . $bulanSebelumnya;
 
-
-        // $query = DB::table('nwmasbar as a')
-        //         ->join('nwmasbard as b', function ($join) {
-        //             $join->on('a.KDBAR', '=', 'b.KDBAR');
-        //         })
-        //         // ->where('a.LAKU', 'Y')
-        //         ->where('a.TD_OD', 'not like', '%*%')
-        //         ->where('b.CBG', $CBG)
-        //         ->select('a.*', 'b.*')
-        //         ->get();
-
-
-            // --- pengecekan untuk nilai ON_SP , jika selisih 0 maka tidak masuk
-            //             SELECT
-            //     SUM(nwbudget.Q_SALDO) - SUM(nwagendd.QTY) AS selisih
-            // FROM nwbudget
-            // JOIN nwagend
-            //     ON nwbudget.NO_BUKTI = nwagend.SP
-            // LEFT JOIN nwagendd
-            //     ON nwagendd.NO_BUKTI = nwagend.NO_BUKTI;
-
-            // $onSpSub = DB::table('nwbudget')
-            //             ->join('nwagend', 'nwbudget.NO_BUKTI', '=', 'nwagend.SP')
-            //             ->leftJoin('nwagendd', 'nwagend.NO_BUKTI', '=', 'nwagendd.NO_BUKTI')
-            //             ->select(
-            //                 'nwbudget.KDBAR',
-            //                 DB::raw('SUM(nwbudget.Q_SALDO) - COALESCE(SUM(nwagendd.QTY),0) as selisih')
-            //             )
-            //             ->groupBy('nwbudget.KDBAR');
-
-
-            $hitung = DB::SELECT("SELECT
+        $hitung = DB::SELECT("SELECT
                                         a.KDBAR,
                                         a.NMBAR,
                                         a.IDEAL,
@@ -952,81 +831,145 @@ class BudgetpkController extends Controller
             return back()->with('error', 'Data kosong');
         }
 
-        $lastNumber = DB::table('nwbudget')
-            ->where('NO_BUKTI', 'LIKE', 'PB' . $CBG . $tahun . $bulan . '-%')
-            ->select(DB::raw('MAX(RIGHT(NO_BUKTI,4)) as last'))
-            ->value('last');
+        // $lastNumber = DB::table('nwbudget')
+        //     ->where('NO_BUKTI', 'LIKE', 'PB' . $CBG . $tahun . $bulan . '-%')
+        //     ->select(DB::raw('MAX(RIGHT(NO_BUKTI,4)) as last'))
+        //     ->value('last');
 
-        $nextNumber = $lastNumber ? ((int) $lastNumber + 1) : 1;
+        // $nextNumber = $lastNumber ? ((int) $lastNumber + 1) : 1;
 
-        $data = collect($hitung);
         // dd($data);
 
         // Pecah per 85 detail
-        foreach ($data->chunk(85) as $chunk) {
+        // foreach ($data->chunk(85) as $chunk) {
 
-            $no_bukti = 'PB' . $CBG . $tahun . $bulan . '-' .
-            str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        //     $no_bukti = 'PB' . $CBG . $tahun . $bulan . '-' .
+        //     str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
-            $total_budget = $chunk->sum('budget');
+        //     $total_budget = $chunk->sum('budget');
 
+        //     $header = Nwbudget::create([
+        //         'NO_BUKTI'   => $no_bukti,
+        //         'TGL'        => now(),
+        //         'PER'        => $periode,
+        //         'FLAG'       => 'PO',
+        //         'CBG'        => $CBG,
+        //         'NOTES'      => 'OTOMATIS',
+        //         'USRNM'      => Auth::user()->username,
+        //         'TG_SMP'     => Carbon::now(),
+        //         'BUDGET'    => $total_budget,
+        //         'KODES'    => $chunk[0]->SUPP,
+        //         'NAMAS'    => '',
 
-            $header = Nwbudget::create([
-                'NO_BUKTI'   => $no_bukti,
-                'TGL'        => now(),
-                'PER'        => $periode,
-                'FLAG'       => 'PO',
-                'CBG'        => $CBG,
-                'NOTES'      => 'OTOMATIS',
-                'USRNM'      => Auth::user()->username,
-                'TG_SMP'     => Carbon::now(),
-                'BUDGET'    => $total_budget,
-                'KODES'    => $chunk[0]->SUPP,
-                'NAMAS'    => '',
+        //     ]);
 
-            ]);
+        //     $REC = 1;
 
-            $REC = 1;
+        //     foreach ($chunk as $item) {
 
-            foreach ($chunk as $item) {
+        //         if ($item->JLRATA_QTY > 0) {
 
-                if ($item->JLRATA_QTY > 0) {
+        //             $barang = DB::table('nwmasbar')
+        //                 ->where('KDBAR', $item->KDBAR)
+        //                 ->first();
 
-                    $barang = DB::table('nwmasbar')
-                        ->where('KDBAR', $item->KDBAR)
-                        ->first();
+        //             if (! $barang) {
+        //                 continue;
+        //             }
+        //             // dd($barang);
 
-                    if (! $barang) {
-                        continue;
+        //             NwbudgetDetail::create([
+        //                 'NO_BUKTI' => $no_bukti,
+        //                 'ID'       => $header->NO_ID,
+        //                 'REC'      => $REC,
+        //                 'PER'      => $periode,
+        //                 'FLAG'     => 'PP',
+        //                 'GOL'      => 'J',
+        //                 'KD_BRG'   => $item->KDBAR,
+        //                 'NA_BRG'   => $barang->NMBAR,
+        //                 'QTY'      => $item->JLRATA_QTY,
+        //                 'HARGA'    => $item->HB,
+        //                 'TOTAL'    =>  $item->JLRATA_QTY*$item->HB,
+        //                 'BUDGET_BRG'   => $item->nilai_barang_baru
+
+        //             ]);
+
+        //             $REC++;
+        //         }
+        //     }
+
+        //     $nextNumber++;
+        // }
+
+        $data = collect($hitung)->groupBy('SUPP');
+
+        foreach ($data as $supp => $items) {
+
+            $lastNumber = DB::table('nwbudget')
+                ->where('NO_BUKTI', 'LIKE', 'PB' . $CBG . $tahun . $bulan . '-%')
+                ->select(DB::raw('MAX(RIGHT(NO_BUKTI,4)) as last'))
+                ->value('last');
+
+            $nextNumber = $lastNumber ? ((int) $lastNumber + 1) : 1;
+
+            foreach ($items->chunk(85) as $chunk) {
+
+                $no_bukti = 'PB' . $CBG . $tahun . $bulan . '-' .
+                str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+                $total_budget = $chunk->sum('budget');
+
+                $header = Nwbudget::create([
+                    'NO_BUKTI' => $no_bukti,
+                    'TGL'      => now(),
+                    'PER'      => $periode,
+                    'FLAG'     => 'PO',
+                    'CBG'      => $CBG,
+                    'NOTES'    => 'OTOMATIS',
+                    'USRNM'    => Auth::user()->username,
+                    'TG_SMP'   => Carbon::now(),
+                    'BUDGET'   => $total_budget,
+                    'KODES'    => $supp,
+                    'NAMAS'    => '',
+                ]);
+
+                $REC = 1;
+
+                foreach ($chunk as $item) {
+
+                    if ($item->JLRATA_QTY > 0) {
+
+                        $barang = DB::table('nwmasbar')
+                            ->where('KDBAR', $item->KDBAR)
+                            ->first();
+
+                        if (! $barang) {
+                            continue;
+                        }
+
+                        NwbudgetDetail::create([
+                            'NO_BUKTI'   => $no_bukti,
+                            'ID'         => $header->NO_ID,
+                            'REC'        => $REC,
+                            'PER'        => $periode,
+                            'FLAG'       => 'PP',
+                            'GOL'        => 'J',
+                            'KD_BRG'     => $item->KDBAR,
+                            'NA_BRG'     => $barang->NMBAR,
+                            'QTY'        => $item->JLRATA_QTY,
+                            'HARGA'      => $item->HB,
+                            'TOTAL'      => $item->JLRATA_QTY * $item->HB,
+                            'BUDGET_BRG' => $item->nilai_barang_baru,
+                        ]);
+
+                        $REC++;
                     }
-                    // dd($barang);
-
-                    NwbudgetDetail::create([
-                        'NO_BUKTI' => $no_bukti,
-                        'ID'       => $header->NO_ID,
-                        'REC'      => $REC,
-                        'PER'      => $periode,
-                        'FLAG'     => 'PP',
-                        'GOL'      => 'J',
-                        'KD_BRG'   => $item->KDBAR,
-                        'NA_BRG'   => $barang->NMBAR,
-                        // 'SATUAN'   => $barang->SATUAN,
-
-                        'QTY'      => $item->JLRATA_QTY,
-                        'HARGA'    => $item->HB,
-                        'TOTAL'    =>  $item->JLRATA_QTY*$item->HB,
-                        'BUDGET_BRG'   => $item->nilai_barang_baru
-
-                    ]);
-
-                    $REC++;
                 }
-            }
 
-            $nextNumber++;
+                $nextNumber++;
+            }
         }
         return redirect('/budgetpk');
-        // return redirect()->to("pp/edit?idx={$pp->NO_ID}&tipx=edit&flagz=PP&judul=Default Judul&golz=J");
     }
 
 }
