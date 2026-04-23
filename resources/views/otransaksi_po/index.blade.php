@@ -204,6 +204,7 @@
                                             <th scope="col" style="text-align: left">Kode</th>
                                             <th scope="col" style="text-align: left">Suplier</th>
                                             <th scope="col" style="text-align: left">Notes</th>
+                                            <th scope="col" style="text-align: left">Cabang</th>
                                             <th scope="col" style="text-align: center">Posted</th>
                                         </tr>
                                     </thead>
@@ -309,6 +310,10 @@
                         name: 'NOTES'
                     },
                     {
+                        data: 'CBG',
+                        name: 'CBG'
+                    },
+                    {
                         data: 'POSTED',
                         name: 'POSTED',
                         render: function(data, type, row, meta) {
@@ -321,10 +326,10 @@
                     },
                 ],
                 columnDefs: [
-                    // {
-                    //     "className": "dt-center",
-                    //     "targets": [0,10]
-                    // },
+                    {
+                        "className": "dt-center",
+                        "targets": [0,1,2,8,9]
+                    },
                     {
                         targets: 4,
                         render: $.fn.dataTable.render.moment('DD-MM-YYYY')

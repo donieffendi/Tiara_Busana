@@ -197,11 +197,11 @@ class BeliController extends Controller
 
 		$this->setFlag($request);
         $FLAG = $this->FLAGZ;
-		$CBG = Auth::user()->CBG;
+		$CBG = session()->get('periode')['cabang'];
 
         $beli = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, KODES, NAMAS, SP AS NO_PO, TOTAL, NETT, USRNM, POSTED, FLAG
                                     FROM nwagend
-                                    where PER = '$periode' AND CBG= 'DC1' AND FLAG= '$FLAG'
+                                    where PER = '$periode' AND CBG= '$CBG' AND FLAG= '$FLAG'
                                     order by NO_BUKTI ");
 
 
@@ -317,7 +317,7 @@ class BeliController extends Controller
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
 
-        $CBG = 'DC1';
+        $CBG = session()->get('periode')['cabang'];
 
         $CBG_KODE = DB::table('toko')
             ->where('KODE', $CBG)
@@ -331,15 +331,9 @@ class BeliController extends Controller
         $last = DB::table('nwagend')
             ->where('PER', $periode)
             ->where('FLAG', $FLAGZ)
-            ->where('CBG', 'DC1')
+            ->where('CBG', $CBG)
             ->orderByDesc('NO_BUKTI')
             ->value('NO_BUKTI');
-
-        // if ($last) {
-        //     $urut = str_pad(substr($last, -5, 4) + 1, 4, '0', STR_PAD_LEFT);
-        // } else {
-        //     $urut = '0001';
-        // }
 
         if ($last) {
             preg_match('/-(\d+)/', $last, $matches);
@@ -427,13 +421,30 @@ class BeliController extends Controller
                 $detail->HARGA_JL       = (float) str_replace(',', '', $HARGA_JL[$key]);
                 $detail->BLT       = (float) str_replace(',', '', $BLT[$key]);
                 $detail->save();
+
+                // update harga terbaru ke master barang jika ada perubahan harga
+                $hargaBaru = (float) str_replace(',', '', $HARGA[$key]);
+
+                $barang = DB::table('nwmasbar')
+                    ->where('KDBAR', $KD_BRG[$key])
+                    ->first();
+
+                if ($barang) {
+                    $hbLama = (float) $barang->HB;
+
+                    if ($hbLama != $hargaBaru) {
+                        DB::table('nwmasbar')
+                            ->where('KDBAR', $KD_BRG[$key])
+                            ->update([
+                                'HBLAMA' => $hbLama,
+                                'HB'     => $hargaBaru
+                            ]);
+                    }
+                }
+
             }
         }
 
-
-
-
-        //  ganti 11
 
 		$no_buktix = $no_bukti;
 
@@ -630,7 +641,7 @@ class BeliController extends Controller
         // $belidetail = DB::table('nwagendd')->where('NO_BUKTI', $no_bukti)->orderBy('rec')->get();
 
         $belidetail = NwagendDetail::select('nwagendd.*',
-                                    'nwmasbar.HB as HARGALAMA',
+                                    'nwmasbar.HBLAMA as HARGALAMA',
                                     'nwmasbar.DIS_A as DISKLAMA1',
                                     'nwmasbar.DIS_B as DISKLAMA2',
                                     'nwmasbar.DIS_C as DISKLAMA3'
@@ -739,6 +750,8 @@ class BeliController extends Controller
 
         $query = DB::table('nwagendd')->where('NO_BUKTI', $request->NO_BUKTI)->whereNotIn('NO_ID',  $NO_ID)->delete();
 
+        $updatedBarang = [];
+
         // Update / Insert
         for ($i = 0; $i < $length; $i++) {
             // Insert jika NO_ID baru
@@ -794,10 +807,34 @@ class BeliController extends Controller
                     ]
                 );
             }
+
+            $kdBrg = ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i];
+            $hargaBaru = (float) str_replace(',', '', $HARGA[$i]);
+
+            // CEK & UPDATE HB 
+            if ($kdBrg != "" && !in_array($kdBrg, $updatedBarang)) {
+
+                $barang = DB::table('nwmasbar')
+                    ->where('KDBAR', $kdBrg)
+                    ->first();
+
+                if ($barang) {
+                    $hbLama = (float) $barang->HB;
+
+                    if ($hbLama != $hargaBaru) {
+                        DB::table('nwmasbar')
+                            ->where('KDBAR', $kdBrg)
+                            ->update([
+                                'HBLAMA' => $hbLama,
+                                'HB'     => $hargaBaru
+                            ]);
+                    }
+                }
+
+                $updatedBarang[] = $kdBrg;
+            }
+
         }
-
-
-        //  ganti 21
 
  		$beli = Nwagend::where('NO_BUKTI', $no_buktix )->first();
 
@@ -936,7 +973,7 @@ class BeliController extends Controller
                                 nwagend.TOTAL AS BRUTO, nwagend.PROM, nwagend.PPN, nwagend.DPP, nwagend.NETT,
                                 nwagendd.KD_BRG, nwagendd.NA_BRG, nwagendd.BARCODE, nwagendd.QTY, nwagendd.HARGA,
                                 nwagendd.DISKON1, nwagendd.DISKON2, nwagendd.DISKON3, nwagendd.DISKON4, nwagendd.TOTAL, nwagendd.HARGA_JL,
-                                nwmassup.DISC_PS
+                                nwmassup.DISC_PS, nwagend.POSTED
                             FROM nwagend
                             JOIN nwagendd
                                 ON nwagend.NO_BUKTI = nwagendd.NO_BUKTI
@@ -945,7 +982,12 @@ class BeliController extends Controller
                             WHERE nwagend.NO_BUKTI = '$no_beli'
                         ");
         // dd($query);
-        DB::SELECT("UPDATE nwagend SET POSTED = 1 WHERE NO_BUKTI='$no_beli';");
+
+        $POSTED = $query->POSTED;
+        if($POSTED == 0) {
+            DB::select("call belibsnins(?)", [$no_beli]);
+            DB::SELECT("UPDATE nwagend SET POSTED = 1 WHERE NO_BUKTI='$no_beli';");
+        }
 
         $cleanData = json_decode(json_encode($query), true);
         $PHPJasperXML->setData($cleanData);

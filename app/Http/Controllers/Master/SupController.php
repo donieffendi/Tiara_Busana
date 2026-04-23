@@ -35,13 +35,13 @@ class SupController extends Controller
     	if (!empty(request('q'))) {
 
 
-                 $sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA from nwmassup
+                 $sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA, DEPT from nwmassup
                             WHERE  NAMA LIKE ('%$request->q%') and RAK ='$dept'
                             ORDER BY NAMA ");
 
 
         } else {
-			$sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA
+			$sup = DB::SELECT("SELECT NO_ID, NO_SUPL, NAMA, ALMT_K AS ALAMAT, KOTA, DEPT
                             from nwmassup
                             where DEPT = '$dept'
                             ORDER BY NAMA ");
@@ -72,8 +72,18 @@ class SupController extends Controller
 
         $dept = session()->get('periode')['dept'];
         $cabang = session()->get('periode')['cabang'];
-        $sup = DB::SELECT("SELECT * from nwmassup WHERE DEPT = '$dept' ORDER BY NO_SUPL ASC");
 
+        if ($cabang == 'TMM') {
+    $connection = 'mysql_tmm';
+} elseif ($cabang == 'TGZ') {
+    $connection = 'mysql';
+} else {
+    $connection = 'mysql';
+}
+// dd($connection);
+        $sup = DB::connection($connection)
+    ->select("SELECT * FROM nwmassup WHERE DEPT = ? ORDER BY NO_SUPL ASC", [$dept]);
+    //    dd($sup);
         return Datatables::of($sup)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -350,7 +360,7 @@ class SupController extends Controller
              $sup = new Sup;
 		 }
 
-         $dept = DB::select("SELECT KD_DEPT FROM nwdept"); 
+         $dept = DB::select("SELECT KD_DEPT FROM nwdept");
 
 		 $data = [
 						'header' => $sup,
@@ -505,7 +515,7 @@ class SupController extends Controller
 
         // === Konversi hasil ke array untuk Jasper ===
         $data = [];
-        
+
         $data = json_decode(json_encode($result), true);
 
         // Kirim data ke Jasper

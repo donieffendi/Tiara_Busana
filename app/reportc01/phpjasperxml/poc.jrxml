@@ -240,6 +240,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$F{PKP}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="450" y="110" width="59" height="15" uuid="93b89ded-865a-49a1-a4eb-2bbf7c2ef13a">
@@ -648,7 +649,7 @@
 				<textFieldExpression><![CDATA["Distribusi :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="67" width="160" height="15" uuid="e466af61-a270-45bd-bfac-0878e23a96fc">
+				<reportElement x="0" y="67" width="500" height="15" uuid="e466af61-a270-45bd-bfac-0878e23a96fc">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>

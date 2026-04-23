@@ -462,6 +462,7 @@
 						<th>Nama</th>
 						<th>Alamat</th>
 						<th>Kota</th>
+						<th>Dept</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -732,6 +733,7 @@
 							resp[i].NAMA,
 							resp[i].ALAMAT,
 							resp[i].KOTA,
+							resp[i].DEPT,
 						]);
 					}
 					dTableBSupplier.draw();

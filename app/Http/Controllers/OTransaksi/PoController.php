@@ -60,26 +60,8 @@ class PoController extends Controller
 	public function browse(Request $request)
     {
         $tanggal = date('Y-m-d');
-        $CBG     = Auth::user()->CBG;
+        $CBG     = session()->get('periode')['cabang'];
         $kodes = $request->kodes;
-
-        //
-        // $po = DB::select("SELECT DISTINCT PO.NO_BUKTI, PO.KODES, PO.NAMAS,
-        //                             PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
-        //                     FROM nwbudget AS PO
-        //                     JOIN nwbudgetd AS POD ON PO.NO_BUKTI = POD.NO_BUKTI
-        //                     WHERE PO.KODES = ?
-        //                     AND POD.SISA > 0
-        //                     AND PO.POSTED = 1
-        //                     AND PO.JTEMPO > ?
-        //                     AND NOT EXISTS (
-        //                         SELECT 1 
-        //                         FROM nwagend 
-        //                         WHERE nwagend.SP = PO.NO_BUKTI
-        //                     )
-        //                     GROUP BY PO.NO_BUKTI, PO.KODES, PO.NAMAS,
-        //                             PO.ALAMAT, PO.KOTA, PO.JTEMPO, PO.NOTES
-        //                 ", [$kodes, $tanggal]);
 
         $po = DB::SELECT("SELECT DISTINCT 
                             PO.NO_BUKTI, PO.KODES, PO.NAMAS,
@@ -90,6 +72,7 @@ class PoController extends Controller
                             AND POD.SISA > 0
                             AND PO.POSTED = 1
                             AND PO.JTEMPO > ?
+                            AND PO.CBG = ?
                             AND NOT EXISTS (
                                 SELECT 1 
                                 FROM nwagend 
@@ -107,11 +90,12 @@ class PoController extends Controller
                             AND BS.SISA > 0
                             AND BS.POSTED = 1
                             AND BS.JTEMPO > ?
+                            AND BS.CBG = ?
                             AND NOT EXISTS (
                                 SELECT 1 
                                 FROM nwagend 
                                 WHERE nwagend.SP = BS.NO_BUKTI
-                            )", [$kodes, $tanggal, $kodes, $tanggal]);
+                            )", [$kodes, $tanggal, $CBG, $kodes, $tanggal, $CBG]);
 
         return response()->json($po);
     }
@@ -415,6 +399,7 @@ class PoController extends Controller
         $judul = $this->judul;
 
         $CBG = Auth::user()->CBG;
+        $cabang    = session()->get('periode')['cabang'];
 
         /////////////////////////////////////////
 
@@ -427,16 +412,16 @@ class PoController extends Controller
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('nwbudget')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', 'DC1')
+        $query = DB::table('nwbudget')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'PO')->where('CBG', $cabang)
                 ->where('GOL', $this->GOLZ )->orderByDesc('NO_BUKTI')->limit(1)->get();
 
 
         if ($query != '[]') {
             $query = substr($query[0]->NO_BUKTI, -4);
             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-            $no_bukti = $GOLZ  . 'DC1' . $tahun . $bulan . '-' . $query;
+            $no_bukti = 'PO'  . $cabang . $tahun . $bulan . '-' . $query;
         } else {
-            $no_bukti = $GOLZ  . 'DC1' . $tahun . $bulan . '-0001';
+            $no_bukti = 'PO'  . $cabang . $tahun . $bulan . '-0001';
         }
 
 
@@ -485,7 +470,7 @@ class PoController extends Controller
                 $detail->REC         = $REC[$key];
                 $detail->PER         = $periode;
                 $detail->FLAG        = $FLAGZ;
-                $detail->GOL 	     = $GOLZ;
+                $detail->GOL 	     = 'PO';
                 $detail->CBG 	     = $CBG;
                 $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
