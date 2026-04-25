@@ -194,31 +194,33 @@ class BudgetrepController extends Controller
                     $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_SP . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')"';
 
 
-                    $btnPrivilege =
-                        '
-                                <a class="dropdown-item" ' . $btnEdit . '>
-                                <i class="fas fa-edit"></i>
-                                    Edit
-                                </a>
-                                <a class="dropdown-item btn btn-danger" target="_blank" href="budgetrep/cetak/' . $row->NO_ID . '">
-                                    <i class="fa fa-print" aria-hidden="true"></i>
-                                    Print
-                                </a>
+                    $btnPrivilege = '
+                        <a class="dropdown-item" ' . $btnEdit . '>
+                            <i class="fas fa-edit"></i>
+                            Edit
+                        </a>
+                        <a class="dropdown-item btn btn-danger" target="_blank" href="budgetrep/cetak/' . $row->NO_ID . '">
+                            <i class="fa fa-print"></i>
+                            Print
+                        </a>
+                    ';
 
-                                @if ($row->POSTED == 1)
-                                    <a class="dropdown-item btn btn-danger" target="_blank" href="budgetrep/cetak/{{ $row->NO_ID }}">
-                                        <i class="fa fa-print"></i>
-                                        Cetak Ulang
-                                    </a>
-                                @endif
-
-                                <hr></hr>
-                                <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
-
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Hapus
-                                </a>
+                    if ($row->POSTED == 1) {
+                        $btnPrivilege .= '
+                            <a class="dropdown-item btn btn-danger" target="_blank" href="budgetrep/cetak/' . $row->NO_ID . '">
+                                <i class="fa fa-print"></i>
+                                Cetak Ulang
+                            </a>
                         ';
+                    }
+
+                    $btnPrivilege .= '
+                        <hr>
+                        <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
+                            <i class="fa fa-trash"></i>
+                            Hapus
+                        </a>
+                    ';
                 } else {
                     $btnPrivilege = '';
                 }
@@ -877,7 +879,7 @@ class BudgetrepController extends Controller
                                             ELSE 0
                                         END AS on_sp,
 
-                                        a.JLRATA_RP *(a.IDEAL - (
+                                            a.JLRATA_RP *(a.IDEAL - (
                                             COALESCE(b.$fieldAK, 0) +
                                             CASE
                                                 WHEN COALESCE(sp.selisih, 0) <> 0 THEN sp.selisih
@@ -935,6 +937,76 @@ class BudgetrepController extends Controller
                 ->value('last');
 
             $nextNumber = $lastNumber ? ((int) $lastNumber + 1) : 1;
+
+            $supplier = DB::table('nwmassup')
+            ->where('NO_SUPL', $supp)
+            ->first();
+
+            // foreach ($items->chunk(85) as $chunk) {
+
+            //     $validItems = $chunk->filter(function ($item) {
+            //         return $item->JLRATA_QTY > 0;
+            //     });
+
+            //     if ($validItems->isEmpty()) {
+            //         continue;
+            //     }
+
+            //     $no_bukti = 'POP' . $CBG . $tahun . $bulan . '-' .
+            //     str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+            //     $total_budget = $validItems->sum('budget');
+
+            //     $header = Nwbudget::create([
+            //         'NO_BUKTI' => $no_bukti,
+            //         'TGL'      => now(),
+            //         'PER'      => $periode,
+            //         'FLAG'     => 'PB',
+            //         'CBG'      => $CBG,
+            //         'NOTES'    => 'OTOMATIS',
+            //         'USRNM'    => Auth::user()->username,
+            //         'TG_SMP'   => Carbon::now(),
+            //         'BUDGET'   => $total_budget,
+            //         'KODES'    => $supp,
+            //          'NAMAS'    => $supplier->NAMA ,
+
+            //     ]);
+
+            //     $REC = 1;
+
+            //     foreach ($validItems as $item) {
+
+            //         $barang = DB::table('nwmasbar')
+            //             ->where('KDBAR', $item->KDBAR)
+            //             ->first();
+
+            //         if (! $barang) {
+            //             continue;
+            //         }
+
+            //         NwbudgetDetail::create([
+            //             'NO_BUKTI'   => $no_bukti,
+            //             'ID'         => $header->NO_ID,
+            //             'REC'        => $REC,
+            //             'PER'        => $periode,
+            //             'FLAG'       => 'PP',
+            //             'GOL'        => 'J',
+            //             'KD_BRG'     => $item->KDBAR,
+            //             'NA_BRG'     => $barang->NMBAR,
+            //             'BARCODE'     => $barang->BARCODE,
+            //             'QTY'        => $item->JLRATA_QTY,
+            //             'HARGA'      => $item->HB,
+            //             'TOTAL'      => $item->JLRATA_QTY * $item->HB,
+            //             'BUDGET_BRG' => $item->nilai_barang_baru,
+            //         ]);
+
+            //         $REC++;
+            //     }
+
+            //     $nextNumber++;
+            // }
+
+
 
             $supplier = DB::table('nwmassup')
             ->where('NO_SUPL', $supp)

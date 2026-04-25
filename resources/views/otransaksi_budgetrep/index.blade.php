@@ -151,14 +151,24 @@
                 { data: 'action', name: 'action'},
                 { data: 'NO_BUKTI', name: 'NO_BUKTI'},
                 { data: 'BUDGET', name: 'BUDGET', render: $.fn.dataTable.render.number( ',', '.', 2, '' )},
-                { data: 'POSTED', name: 'POSTED'},
+                {
+                    data: 'POSTED',
+                    name: 'POSTED',
+                    render: function(data, type, row, meta) {
+                        if (row['POSTED'] == "0") {
+                            return '';
+                        } else {
+                            return '<input type="checkbox" checked style="pointer-events: none;">';
+                        }
+                    }
+                },
             ],
             columnDefs:
             [
-                // {
-                //     "className": "dt-center",
-                //     "targets": [0,10]
-                // },
+                {
+                    "className": "dt-center",
+                    "targets": [0,4]
+                },
                 // {
                 //   targets: 4,
                 //   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )

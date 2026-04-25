@@ -175,14 +175,21 @@
 
                     {
                         data: 'POSTED',
-                        name: 'POSTED'
+                        name: 'POSTED',
+                        render: function(data, type, row, meta) {
+                            if (row['POSTED'] == "0") {
+                                return '';
+                            } else {
+                                return '<input type="checkbox" checked style="pointer-events: none;">';
+                            }
+                        }
                     },
                 ],
                 columnDefs: [
-                    // {
-                    //     "className": "dt-center",
-                    //     "targets": [0,10]
-                    // },
+                    {
+                        "className": "dt-center",
+                        "targets": [0,6]
+                    },
                     // {
                     //   targets: 4,
                     //   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
