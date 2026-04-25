@@ -131,32 +131,122 @@ class KirimController extends Controller
         return response()->json($kirim);
     }
 
+    // public function getDataByNoPO(Request $request)
+    // {
+    //     $no_po = $request->no_po;
+
+
+    //     $dataDetail = DB::table('nwagend')
+    //         ->join('nwagendd', 'nwagend.NO_BUKTI', '=', 'nwagendd.NO_BUKTI')
+    //         ->where('nwagend.NO_BUKTI', $no_po)
+    //         ->select(
+    //             'nwagend.NO_BUKTI',
+    //             'nwagend.tgl',
+    //             'nwagend.kodes',
+    //             'nwagend.namas',
+    //             // 'nwagend.cnt',
+    //             // 'nwagend.ncnt',
+    //             'nwagendd.kd_brg',
+    //             'nwagendd.na_brg',
+    //             'nwagendd.satuan',
+    //             'nwagendd.qty',
+    //             'nwagendd.harga',
+    //             'nwagendd.diskon1',
+    //             'nwagendd.diskon2',
+    //             'nwagendd.diskon3',
+    //             'nwagendd.diskon4',
+    //             'nwagendd.margin',
+    //             'nwagendd.barcode'
+    //         )
+    //         ->get();
+
+
+    //     if ($dataDetail->count() > 0) {
+
+    //         $cnt = $dataDetail->first()->kodes;
+
+    //         $items = [];
+    //         foreach ($dataDetail as $row) {
+    //             $items[] = [
+    //                 'kd_brg'  => $row->kd_brg,
+    //                 'na_brg'  => $row->na_brg,
+    //                 'satuan'  => $row->satuan,
+    //                 'qty'     => (float) $row->qty,
+    //                 'harga'   => (float) $row->harga,
+    //                 'diskon1' => (float) $row->diskon1,
+    //                 'diskon2' => (float) $row->diskon2,
+    //                 'diskon3' => (float) $row->diskon3,
+    //                 'diskon4' => (float) $row->diskon4,
+    //                 'margin'  => (float) $row->margin,
+    //                 'barcode' => $row->barcode,
+    //             ];
+
+    //         }
+    //         // dd($items);
+
+    //         $header = DB::table('nwagend')
+    //             ->join('nwagendd', 'nwagend.NO_BUKTI', '=', 'nwagendd.NO_BUKTI')
+    //         ->where('nwagend.NO_BUKTI', $no_po)
+    //             ->select(
+    //                 'nwagendd.margin',
+    //                 'nwagendd.pot_prom',
+    //                 'nwagend.st_pjk',
+    //                 'nwagend.st_nota',
+    //                 'nwagend.JT',
+    //                 'nwagend.KODES',
+    //                 'nwagend.NAMAS',
+    //                 'nwagend.PROM',
+    //                 'nwagend.PPN',
+    //                 // 'cntbsn.kk_sts',
+    //                 // 'cntbsn.ctk_lap',
+    //                 // 'cntbsn.st_cnt',
+    //                 // 'cntbsn.basic',
+    //                 // 'cntbsn.cnt_khs',
+    //                 // 'cntbsn.lbayar',
+    //             )
+    //             ->first();
+    //             // dd($cnt, $items, $header);
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'cnt'     => $cnt,
+    //             'items'   => $items,
+    //             'header'  => $header,
+    //         ]);
+
+    //     }
+
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'Request tidak valid',
+    //     ]);
+    // }
+
+    
     public function getDataByNoPO(Request $request)
     {
         $no_po = $request->no_po;
 
 
-        $dataDetail = DB::table('nwagend')
-            ->join('nwagendd', 'nwagend.NO_BUKTI', '=', 'nwagendd.NO_BUKTI')
-            ->where('nwagend.NO_BUKTI', $no_po)
+        $dataDetail = DB::table('nwbudget')
+            ->join('nwbudgetd', 'nwbudget.NO_BUKTI', '=', 'nwbudgetd.NO_BUKTI')
+            ->where('nwbudget.NO_BUKTI', $no_po)
             ->select(
-                'nwagend.NO_BUKTI',
-                'nwagend.tgl',
-                'nwagend.kodes',
-                'nwagend.namas',
-                // 'nwagend.cnt',
-                // 'nwagend.ncnt',
-                'nwagendd.kd_brg',
-                'nwagendd.na_brg',
-                'nwagendd.satuan',
-                'nwagendd.qty',
-                'nwagendd.harga',
-                'nwagendd.diskon1',
-                'nwagendd.diskon2',
-                'nwagendd.diskon3',
-                'nwagendd.diskon4',
-                'nwagendd.margin',
-                'nwagendd.barcode'
+                'nwbudget.NO_BUKTI',
+                'nwbudget.tgl',
+                'nwbudget.kodes',
+                'nwbudget.namas',
+                'nwbudgetd.kd_brg',
+                'nwbudgetd.na_brg',
+                'nwbudgetd.satuan',
+                'nwbudgetd.qty',
+                'nwbudgetd.harga',
+                'nwbudgetd.diskon1',
+                'nwbudgetd.diskon2',
+                'nwbudgetd.diskon3',
+                'nwbudgetd.diskon4',
+                'nwbudgetd.margin',
+                'nwbudgetd.barcode'
             )
             ->get();
 
@@ -184,25 +274,19 @@ class KirimController extends Controller
             }
             // dd($items);
 
-            $header = DB::table('nwagend')
-                ->join('nwagendd', 'nwagend.NO_BUKTI', '=', 'nwagendd.NO_BUKTI')
-            ->where('nwagend.NO_BUKTI', $no_po)
+            $header = DB::table('nwbudget')
+                ->join('nwbudgetd', 'nwbudget.NO_BUKTI', '=', 'nwbudgetd.NO_BUKTI')
+            ->where('nwbudget.NO_BUKTI', $no_po)
                 ->select(
-                    'nwagendd.margin',
-                    'nwagendd.pot_prom',
-                    'nwagend.st_pjk',
-                    'nwagend.st_nota',
-                    'nwagend.JT',
-                    'nwagend.KODES',
-                    'nwagend.NAMAS',
-                    'nwagend.PROM',
-                    'nwagend.PPN',
-                    // 'cntbsn.kk_sts',
-                    // 'cntbsn.ctk_lap',
-                    // 'cntbsn.st_cnt',
-                    // 'cntbsn.basic',
-                    // 'cntbsn.cnt_khs',
-                    // 'cntbsn.lbayar',
+                    'nwbudgetd.margin',
+                    'nwbudgetd.pot_prom',
+                    'nwbudget.st_pjk',
+                    'nwbudget.st_nota',
+                    'nwbudget.JT',
+                    'nwbudget.KODES',
+                    'nwbudget.NAMAS',
+                    'nwbudget.PROM',
+                    'nwbudget.PPN',
                 )
                 ->first();
                 // dd($cnt, $items, $header);

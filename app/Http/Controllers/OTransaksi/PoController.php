@@ -35,7 +35,7 @@ class PoController extends Controller
     {
         if ( $request->flagz == 'PO' && $request->golz == 'PB' ) {
             $this->judul = "Purchase Order";
-        } else if ( $request->flagz == 'PO' && $request->golz == 'PZ' ) {
+        } else if ( $request->flagz == 'PL' && $request->golz == 'PZ' ) {
             $this->judul = "PO Outlet";
         } else if ( $request->flagz == 'PO' && $request->golz == 'PN' ) {
             $this->judul = "PO Non";
@@ -419,9 +419,9 @@ class PoController extends Controller
         if ($query != '[]') {
             $query = substr($query[0]->NO_BUKTI, -4);
             $query = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-            $no_bukti = 'PO'  . $cabang . $tahun . $bulan . '-' . $query;
+            $no_bukti = $FLAGZ  . $cabang . $tahun . $bulan . '-' . $query;
         } else {
-            $no_bukti = 'PO'  . $cabang . $tahun . $bulan . '-0001';
+            $no_bukti = $FLAGZ  . $cabang . $tahun . $bulan . '-0001';
         }
 
 
@@ -436,9 +436,10 @@ class PoController extends Controller
                 'NA_CNT'           => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                'FLAG'             => 'PO',
+                'FLAG'             => $FLAGZ,
                 'GOL'              => $GOLZ,
                 'CBG'              => ($request['CBG'] == null) ? "" : $request['CBG'],
+                'CBG_TUJU'              => ($request['CBG_TUJU'] == null) ? "" : $request['CBG_TUJU'],
                 'NOTES'              => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'Q_SALDO'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'R_SALDO'            => (float) str_replace(',', '', $request['TTOTAL']),
@@ -470,7 +471,7 @@ class PoController extends Controller
                 $detail->REC         = $REC[$key];
                 $detail->PER         = $periode;
                 $detail->FLAG        = $FLAGZ;
-                $detail->GOL 	     = 'PO';
+                $detail->GOL 	     = $GOLZ;
                 $detail->CBG 	     = $CBG;
                 $detail->KD_BRG      = ($KD_BRG[$key] == null) ? "" :  $KD_BRG[$key];
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
@@ -740,9 +741,10 @@ class PoController extends Controller
 				'CNT'              => ($request['CNT'] == null) ? "" : $request['CNT'],
                 'NA_CNT'           => ($request['NA_CNT'] == null) ? "" : $request['NA_CNT'],
 				'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
-                'FLAG'             => 'PO',
+                'FLAG'             => $FLAGZ,
                 'GOL'              => $GOLZ,
-                'CBG'              => $CBG,
+                'CBG'              => ($request['CBG'] == null) ? "" : $request['CBG'],
+                'CBG_TUJU'              => ($request['CBG_TUJU'] == null) ? "" : $request['CBG_TUJU'],
                 'NOTES'              => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'Q_SALDO'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'R_SALDO'            => (float) str_replace(',', '', $request['TTOTAL']),

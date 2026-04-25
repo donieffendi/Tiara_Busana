@@ -169,6 +169,8 @@
 
                                             <input type="hidden" name="CBG"
                                                 value="{{ $header->CBG ?? Auth::user()->CBG }}">
+
+											<input type="hidden" id="CBG_ASAL" value="{{ Auth::user()->CBG }}">
 										</div>
 
 										<div class="col-md-1" align="left" hidden>
@@ -189,10 +191,30 @@
 
 										</div> -->
 
+										@if($golz == 'PZ')
+										<div class="col-md-1" >
+											<label for="CBG_TUJU" class="form-label">Cabang Minta</label>
+										</div>
+										<div class="col-md-2">
+											<select id="CBG_TUJU" class="form-control"  name="CBG_TUJU">
+												<option value="">-- Pilih Cabang --</option>
+												<option value="DC1">DC1</option>
+												<option value="FSA">FSA</option>
+												<option value="TGZ">TGZ</option>
+												<option value="SOP">SOP</option>
+												<option value="TMM">TMM</option>
+												<option value="TDY">TDY</option>
+												<option value="FGT">FGT</option>
+												<option value="FCK">FCK</option>
+											</select>
+										</div>
+										@endif
+
 										<div class="col-md-1">
 											<input type="checkbox" class="form-check-input" id="POSTED" name="POSTED" value="1" {{ ($header->POSTED == 1) ? 'checked' : '' }}>
 											<label for="POSTED">Posted</label>
 										</div>
+
 									</div>
 
 									<div class="form-group row">
@@ -538,12 +560,51 @@
 
 		setTimeout(function(){
 
-		$("#LOADX").hide();
+			$("#LOADX").hide();
 
 		},500);
 
     idrow=<?=$no?>;
     baris=<?=$no?>;
+
+	let cabangAsal = $("#CBG_ASAL").val();
+
+	let rules = {
+		'TMM': ['SOP','TGZ'],
+		'FCK': ['FSA','TDY'],
+		'FGT': ['FSA','TDY']
+	};
+
+	// semua option asli
+	let allOptions = {
+		'DC1':'DC1',
+		'FSA':'FSA',
+		'TGZ':'TGZ',
+		'SOP':'SOP',
+		'TMM':'TMM',
+		'TDY':'TDY',
+		'FGT':'FGT',
+		'FCK':'FCK'
+	};
+
+	if (rules[cabangAsal]) {
+
+		let allowed = rules[cabangAsal];
+
+		// kosongkan select
+		$("#CBG_TUJU").empty();
+
+		// default option
+		$("#CBG_TUJU").append('<option value="">-- Pilih Cabang --</option>');
+
+		// isi hanya yang boleh
+		allowed.forEach(function(val){
+			$("#CBG_TUJU").append(
+				'<option value="'+val+'">'+allOptions[val]+'</option>'
+			);
+		});
+
+	}
 
 	$('#CNT').select2({
 
@@ -751,11 +812,66 @@
 		}
 
 		chooseSupplier = function(NO_SUPL,NAMA){
-			$("#KODES").val(NO_SUPL);
-			$("#NAMAS").val(NAMA);
-			$("#browseSupplierModal").modal("hide");
+
+			// kalau sudah ada barang, kasih warning
+			let adaBarang = false;
+
+			$("input[id^='KD_BRG']").each(function(){
+				if($(this).val() !== ''){
+					adaBarang = true;
+				}
+			});
+
+			if (adaBarang) {
+				Swal.fire({
+					title: 'Ganti Supplier?',
+					text: 'Barang yang sudah dipilih akan dihapus!',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Ya, Ganti',
+					cancelButtonText: 'Batal'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						setSupplier(NO_SUPL, NAMA);
+					}
+				});
+			} else {
+				setSupplier(NO_SUPL, NAMA);
+			}
+
+			// $("#KODES").val(NO_SUPL);
+			// $("#NAMAS").val(NAMA);
+			// $("#browseSupplierModal").modal("hide");
 
 		}
+
+		function setSupplier(NO_SUPL, NAMA){
+			$("#KODES").val(NO_SUPL);
+			$("#NAMAS").val(NAMA);
+
+			resetBarang();
+
+			$("#browseSupplierModal").modal("hide");
+		}
+
+		function resetBarang(){
+
+			// reset semua input barang per row
+			$("input[id^='KD_BRG']").val('');
+			$("input[id^='NA_BRG']").val('');
+			$("input[id^='BARCODE']").val('');
+			$("input[id^='SISA']").val('');
+			$("input[id^='HARGA']").val('');
+
+			// kalau ada qty dll
+			$("input[id^='QTY']").val('');
+
+			// reset datatable browse barang (optional tapi bagus)
+			if (dTableBBarang) {
+				dTableBBarang.clear().draw();
+			}
+		}
+		
 
 		$("#KODES").keypress(function(e){
 			if(e.keyCode == 46){

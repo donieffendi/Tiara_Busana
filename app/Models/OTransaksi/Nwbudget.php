@@ -21,7 +21,7 @@ class Nwbudget extends Model
     [
         "NO_BUKTI", "TGL", "JTEMPO", "PER","KODES", "NAMAS", "ALAMAT", "KOTA", "FLAG", "GOL",
         "R_SALDO", "Q_SALDO", "NOTES", "USRNM", "TG_SMP",
-        "CBG", "POSTED", "CNT", "NA_CNT", "BUDGET"
+        "CBG", "POSTED", "CNT", "NA_CNT", "BUDGET", "CBG_TUJU"
 
 
     ];

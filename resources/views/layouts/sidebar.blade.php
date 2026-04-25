@@ -419,7 +419,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card"  style="border:1px solid #aabbcc; background-color:#ebd9ff;">
-                <a href="javascript:addTab('PO Outlet', '{{url('po?flagz=PO&golz=PZ')}}')">
+                <a href="javascript:addTab('PO Outlet', '{{url('po?flagz=PL&golz=PZ')}}')">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
                   <i style="margin-left:-8px;font-size: 40px;" class="nav-icon fas fa-cart-plus icon-purple"></i>
                   <h6>PO Outlet</h6>

@@ -985,7 +985,7 @@ class BeliController extends Controller
 
         $POSTED = $query->POSTED;
         if($POSTED == 0) {
-            DB::select("call belibsnins(?)", [$no_beli]);
+            DB::select("call nwbelibsnins(?)", [$no_beli]); // procedurenya masih di server 192.168.0.10
             DB::SELECT("UPDATE nwagend SET POSTED = 1 WHERE NO_BUKTI='$no_beli';");
         }
 
