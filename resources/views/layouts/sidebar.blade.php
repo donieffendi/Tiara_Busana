@@ -1495,7 +1495,8 @@
               </div>
               <div class="col-md-3">
                 <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe6ff;">
-                  <a href="javascript:addTab('Proses Akhir Periode', '{{url('prosesso')}}')">
+                  {{-- <a href="javascript:addTab('Proses Akhir Periode', '{{url('prosesso')}}')"> --}}
+                  <a href="javascript:addTab('Proses Akhir Periode', '{{url('akhir-bulan')}}')">
                     <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-clock icon-pink"></i>
                     <h6>Proses Akhir Periode</h6>
                   </a>

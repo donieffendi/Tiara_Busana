@@ -1735,7 +1735,7 @@ Route::get('/vbrgdw/browse_koreksi', 'App\Http\Controllers\Master\VBrgDwControll
 Route::get('/vbrgdw/browse_hdh', 'App\Http\Controllers\Master\VBrgDwController@browse_hdh')->middleware(['auth'])->name('vbrgdw/browse_hdh');
 
 //Proses Akhir Periode
-Route::get('/prosesso', 'App\Http\Controllers\OReport\RSoController@prosesso')->middleware(['auth'])->name('prosesso');
+// Route::get('/prosesso', 'App\Http\Controllers\OReport\RSoController@prosesso')->middleware(['auth'])->name('prosesso');
 
 // Opertational Tanda Retur Per PLU
 Route::get('/tandaretur', 'App\Http\Controllers\OTransaksi\TandareturController@index')->middleware(['auth'])->name('tandaretur');
@@ -1833,5 +1833,9 @@ Route::post('jasper-agenda_pertanggal-report', 'App\Http\Controllers\OReport\RAg
 Route::get('/rdaftar_agenda', 'App\Http\Controllers\OReport\RDaftar_agendaController@report')->middleware(['auth'])->name('rdaftar_agenda');
 Route::get('/get-daftar_agenda-report', 'App\Http\Controllers\OReport\RDaftar_agendaController@getDaftar_agendaReport')->middleware(['auth'])->name('get-daftar_agenda-report');
 Route::post('jasper-daftar_agenda-report', 'App\Http\Controllers\OReport\RDaftar_agendaController@jasperDaftar_agendaReport')->middleware(['auth']);
+
+// Proses Akhir Bulan
+Route::get('/akhir-bulan', 'App\Http\Controllers\OReport\RAkhirBlnController@report')->middleware(['auth'])->name('akhir-bulan');
+Route::post('/get-akhir-bulan', 'App\Http\Controllers\OReport\RAkhirBlnController@getAkhirBulan')->middleware(['auth']);
 
 require __DIR__.'/auth.php';
