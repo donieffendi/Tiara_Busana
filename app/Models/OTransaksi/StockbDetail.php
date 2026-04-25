@@ -34,5 +34,7 @@ class StockbDetail extends Model
         "tgl_at",
         "flag",
         "cbg",
+        "qty",
+        "riil"
     ];
 }

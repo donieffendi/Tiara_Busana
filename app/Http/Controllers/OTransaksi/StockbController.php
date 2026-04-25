@@ -363,6 +363,8 @@ class StockbController extends Controller
                 $detail->kd_brg   = ($KD_BRG[$key] == null) ? "" : $KD_BRG[$key];
                 $detail->na_brg   = ($NA_BRG[$key] == null) ? "" : $NA_BRG[$key];
                 $detail->saldo    = (float) str_replace(',', '', $SALDO[$key]);
+                $detail->qty      = (float) str_replace(',', '', $QTY[$key]);
+                $detail->riil     = (float) str_replace(',', '', $RIIL[$key]);
                 $detail->KET      = ($KET[$key] == null) ? "" : $KET[$key];
                 $detail->save();
             }
@@ -569,6 +571,8 @@ class StockbController extends Controller
         $KD_BRG = $request->input('KD_BRG');
         $NA_BRG = $request->input('NA_BRG');
         $SALDO  = $request->input('SALDO');
+        $QTY  = $request->input('QTY');
+        $RIIL  = $request->input('RIIL');
         $KET    = $request->input('KET');
 
         $query = DB::table('lapbsnd')->where('no_bukti', $request->no_bukti)->whereNotIn('NO_ID', $NO_ID)->delete();
@@ -584,8 +588,10 @@ class StockbController extends Controller
                         'per'      => $periode,
                         'flag'     => $this->FLAGZ,
                         'kd_brg'   => ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i],
-                        'na-brg'   => ($NA_BRG[$i] == null) ? "" : $NA_BRG[$i],
+                        'na_brg'   => ($NA_BRG[$i] == null) ? "" : $NA_BRG[$i],
                         'saldo'    => (float) str_replace(',', '', $SALDO[$i]),
+                        'qty'      => (float) str_replace(',', '', $QTY[$i]),
+                        'riil'     => (float) str_replace(',', '', $RIIL[$i]),
                         'KET'      => ($KET[$i] == null) ? "" : $KET[$i],
 
                     ]
@@ -603,7 +609,9 @@ class StockbController extends Controller
 
                         'kd_brg' => ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i],
                         'na_brg' => ($NA_BRG[$i] == null) ? "" : $NA_BRG[$i],
-                        'saldo'  => (float) str_replace(',', '', $AK[$i]),
+                        'saldo'  => (float) str_replace(',', '', $SALDO[$i]),
+                        'qty'      => (float) str_replace(',', '', $QTY[$i]),
+                        'riil'     => (float) str_replace(',', '', $RIIL[$i]),
                         'ket'    => ($KET[$i] == null) ? "" : $KET[$i],
                     ]
                 );
