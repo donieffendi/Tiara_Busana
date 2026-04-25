@@ -29,29 +29,29 @@ class RFakturpjController extends Controller
 
         return view('oreport_fakturpj.report')->with(['per' => $per])->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
-	
-	
-	 
-	public function jasperFakturpjReport(Request $request) 
+
+
+
+	public function jasperFakturpjReport(Request $request)
 	{
-		$file 	= 'Laporan_Barang_Datang';
+		$file 	= 'rbarang_datang';
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
-		
+
 		$periode = $request->per;
 		$cbg = $request->cbg;
 
         $bulan = substr($periode,0,2);
         $tahun = substr($periode,3,4);
-			
+
 		if(!empty($cbg))
 		{
-			$filtercbg = " AND beli.CBG = '$cbg'";		
+			$filtercbg = " AND beli.CBG = '$cbg'";
 		}
 
         session()->put('filter_periode', $request->per);
 		session()->put('filter_cbg', $request->cbg);
-		
+
 
 		$query = DB::SELECT("SELECT trim(NO_BUKTI) as NO_BUKTI, TGL, JTEMPO, KODES, NAMAS,
 										TOTAL_QTY, TOTAL, TDPP AS DPP, TPPN AS PPN, NETT
@@ -69,12 +69,12 @@ class RFakturpjController extends Controller
 		}
 
 		$data=[];
-		
+
         $data = json_decode(json_encode($query), true);
 
 		$PHPJasperXML->setData($data);
 		ob_end_clean();
 		$PHPJasperXML->outpage("I");
 	}
-	
+
 }
