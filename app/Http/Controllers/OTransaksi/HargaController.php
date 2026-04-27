@@ -133,7 +133,7 @@ class HargaController extends Controller
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
         $bulan = session()->get('periode')['bulan'];
 
-        $harga = DB::SELECT("SELECT KD_BRG, BARCODE, NA_BRG, JNS, HJUAL AS HARGAJL, HJUAL$bulan AS HARGAKSR, (AWL + QTY_TRM - QTY_JUAL) AS SISA
+        $harga = DB::SELECT("SELECT KD_BRG, BARCODE, NA_BRG, JNS, HJ AS HARGAJL, HJUAL$bulan AS HARGAKSR, (AWL + QTY_TRM - QTY_JUAL) AS SISA
                             FROM nwmasbar WHERE CNT = '$cnt'");
 
         return response()->json($harga);
