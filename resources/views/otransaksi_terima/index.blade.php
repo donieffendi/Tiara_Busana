@@ -80,6 +80,26 @@
                 </button>
                 <!-- Modal -->
 
+                <div class="d-flex align-items-end gap-2 mb-3">
+
+                    <div>
+                        <label class="form-label mb-1">Cabang Tujuan</label>
+                        <select class="form-control" id="cbg_tujuan">
+                            <option value="TMM">TMM</option>
+                            <option value="FCK">FCK</option>
+                            <option value="FGT">FGT</option>
+                        </select>
+                    </div>
+
+                    <button type="button" id="btnFilter" class="btn btn-primary">
+                        Filter
+                    </button>
+
+                </div>
+                <!-- batas filter -->
+
+
+
                 <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
@@ -252,10 +272,10 @@
             ajax:
             {
                 url: "{{ route('get-terima') }}",
-				        data:
+				data:
                 {
                     flagz : $('#flagz').val(),
-
+                    cbg_tujuan : $('#cbg_tujuan').val()
                 }
             },
 

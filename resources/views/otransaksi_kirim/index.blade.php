@@ -184,7 +184,7 @@
                 ],
                 ajax: {
                     url: "{{ route('get-kirim') }}",
-                     data: function(d) {
+                    data: function(d) {
                         d.flagz = $('#flagz').val();
                         d.golz = $('#golz').val();
                         d.cbg_tujuan = $('#cbg_tujuan').val();
