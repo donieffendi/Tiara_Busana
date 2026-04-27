@@ -188,7 +188,7 @@ class ReturController extends Controller
 
         $CBG = Auth::user()->CBG;
 
-        $retur = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, CNT, NCNT, total_qty, notes, POSTED, flag FROM bretur where per='$periode' and flag='$FLAGZ' order by NO_BUKTI");
+        $retur = DB::SELECT("SELECT NO_ID, NO_BUKTI, TGL, CNT, NCNT, total_qty, notes, POSTED, flag, CBG_TUJU FROM bretur where per='$periode' and flag='$FLAGZ' order by NO_BUKTI");
 
         // ganti 6
 
@@ -322,6 +322,7 @@ class ReturController extends Controller
                 'usrnm'     => Auth::user()->username,
                 'tg_smp'    => Carbon::now(),
                 'CBG'       => $CBG,
+                'CBG_TUJU'       => ($request['CBG_TUJU'] == null) ? "" : $request['CBG_TUJU'],
             ]
         );
 
@@ -547,6 +548,7 @@ class ReturController extends Controller
                 'total_qty' => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'usrnm'     => Auth::user()->username,
                 'tg_smp'    => Carbon::now(),
+                'CBG_TUJU'       => ($request['CBG_TUJU'] == null) ? "" : $request['CBG_TUJU'],
             ]
         );
 

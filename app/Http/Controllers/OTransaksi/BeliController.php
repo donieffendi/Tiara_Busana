@@ -156,10 +156,22 @@ class BeliController extends Controller
                             FROM nwmasbar
                             WHERE SUPP = '$SUPP'");
 
-        if(!empty($KD_BRG)) {
+        // if(!empty($KD_BRG)) {
+        //     $beli = DB::SELECT("SELECT KDBAR AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN
+        //                     FROM nwmasbar
+        //                     WHERE KDBAR = '$KD_BRG'");
+        // }
+
+        if ($KD_BRG == ''){
+
             $beli = DB::SELECT("SELECT KDBAR AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN
-                            FROM nwmasbar
-                            WHERE KDBAR = '$KD_BRG'");
+                                FROM nwmasbar");
+
+        } else if ($KD_BRG != ''){
+
+            $beli = DB::SELECT("SELECT KDBAR AS KD_BRG, NMBAR AS NA_BRG, BARCODE, HJ AS HARGA_JL, HB AS HARGA, RAK AS JNS, MARGIN
+                                FROM nwmasbar
+                                WHERE KDBAR = '$KD_BRG' ");
         }
         return response()->json($beli);
     }
@@ -811,7 +823,7 @@ class BeliController extends Controller
             $kdBrg = ($KD_BRG[$i] == null) ? "" : $KD_BRG[$i];
             $hargaBaru = (float) str_replace(',', '', $HARGA[$i]);
 
-            // CEK & UPDATE HB 
+            // CEK & UPDATE HB
             if ($kdBrg != "" && !in_array($kdBrg, $updatedBarang)) {
 
                 $barang = DB::table('nwmasbar')

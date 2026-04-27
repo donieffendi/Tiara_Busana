@@ -165,11 +165,24 @@
 								  <input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
                                 </div>
 
+                                <div class="col-md-1">
+                                        <label for="CBG_TUJU">Cabang Tuju</label>
+                                </div>
+                                <div class="col-md-2">
+                                        <select name="CBG_TUJU" id="CBG_TUJU" class="form-control CBG_TUJU">
+                                            <option value="">-- Pilih --</option>
+                                            <option value="TGZ" {{ $header->CBG_TUJU == 'TGZ' ? 'selected' : '' }}>TGZ</option>
+                                            <option value="SOP" {{ $header->CBG_TUJU == 'SOP' ? 'selected' : '' }}>SOP</option>
+                                            <option value="FSA" {{ $header->CBG_TUJU == 'FSA' ? 'selected' : '' }}>FSA</option>
+                                            <option value="TDY" {{ $header->CBG_TUJU == 'TDY' ? 'selected' : '' }}>TDY</option>
+                                        </select>
+                                </div>
+
                             </div>
 
-                                        <div class="form-group row">
-                                            <!-- code text box baru -->
-                                            <div class="col-md-5 form-group row special-input-label">
+                            <div class="form-group row">
+                                <!-- code text box baru -->
+                                <div class="col-md-5 form-group row special-input-label">
 
 									<input type="text" class="NOTES" id="NOTES" name="NOTES"
 										value="{{$header->NOTES}}" placeholder=" " >
@@ -474,7 +487,7 @@
 		loadDataBSupplier = function(){
 			$.ajax(
 			{
-				type: 'GET',    
+				type: 'GET',
 				url: '{{url('sup/browse')}}',
 				success: function( response )
 				{
@@ -483,7 +496,7 @@
 						dTableBSupplier.clear();
 					}
 					for(i=0; i<resp.length; i++){
-						
+
 						dTableBSupplier.row.add([
 							'<a href="javascript:void(0);" onclick="chooseSupplier(\''+resp[i].NO_SUPL+'\',  \''+resp[i].NAMA+'\')">'+resp[i].NO_SUPL+'</a>',
 							resp[i].NAMA,
@@ -495,29 +508,29 @@
 				}
 			});
 		}
-		
+
 		dTableBSupplier = $("#table-bsupplier").DataTable({
-			
+
 		});
-		
+
 		browseSupplier = function(){
 			loadDataBSupplier();
 			$("#browseSupplierModal").modal("show");
 		}
-		
+
 		chooseSupplier = function(NO_SUPL,NAMA){
 			$("#KODES").val(NO_SUPL);
 			$("#NAMAS").val(NAMA);
 			$("#browseSupplierModal").modal("hide");
 
 		}
-		
+
 		$("#KODES").keypress(function(e){
 			if(e.keyCode == 46){
 				e.preventDefault();
 				browseSupplier();
 			}
-		}); 
+		});
 
 
 

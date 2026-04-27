@@ -79,6 +79,7 @@ class Retur extends Model
         "NOTA_KHS",
         "DPP",
         "HPS",
-        "TYP"
+        "TYP",
+        "CBG_TUJU"
     ];
 }

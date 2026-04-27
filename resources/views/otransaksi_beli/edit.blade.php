@@ -124,7 +124,7 @@
 
                             </div>
 
-							<div class="form-group row">
+							<div class="form-group row" {{( $flagz =='RX') ? 'hidden' : '' }}>
 
 								<div class="col-md-1" align="left">
                                     <label for="NO_PO" class="form-label">No PO</label>
@@ -148,7 +148,7 @@
                             </div>
 
 
-                            <div class="form-group row">
+                            <div class="form-group row" {{( $flagz =='RX') ? 'hidden' : '' }}>
 
 								<div class="col-md-1" align="left">
                                     <label class="form-label">Referensi</label>
@@ -182,10 +182,10 @@
 									<input class="form-control date" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL))}}">
 								</div>
 
-								
+
                             </div>
 
-							<div class="form-group row">
+							<div class="form-group row" {{( $flagz =='RX') ? 'hidden' : '' }}>
 								<div class="col-md-1" align="left">
 									<label for="JTEMPO" class="form-label">Jtempo</label>
 								</div>
@@ -193,7 +193,7 @@
 									<input class="form-control date" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->JTEMPO))}}">
 								</div>
 
-								
+
                             </div>
 
 							<div class="form-group row">
@@ -928,7 +928,7 @@
 	function getPod(bukti)
 	{
 
-	
+
 		$("#detailBrg").attr("hidden", true);
 
 		var mulai = (idrow==baris) ? idrow-1 : idrow;
