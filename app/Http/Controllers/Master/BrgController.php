@@ -96,6 +96,11 @@ class BrgController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                onclick="cetakBarcode('. $row->NO_ID .')">
+                                    <i class="fas fa-id-card"></i>
+                                    Cetak Barcode
+                                </a>
                                 <hr>
                                 </hr>
 
@@ -520,8 +525,8 @@ class BrgController extends Controller
         $supp2 = $request->input('supp2');
         $qty = $request->input('qty', 1);
 
-        // Nama file laporan Jasper
-        $file = 'cetakbcd'; // ubah sesuai nama file .jrxml kamu, misalnya 'brg_list.jrxml'
+        // 
+        $file = 'brg_bcd'; 
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file(base_path('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
         $params = [
@@ -530,7 +535,7 @@ class BrgController extends Controller
 		$PHPJasperXML->arrayParameter = $params;
 
 
-        // === Query utama (sesuai dengan query DataTables kamu) ===
+        // === Query utama 
         $query = DB::table('nwmasbar as a')
             ->join('nwmassup as b', 'a.SUPP', '=', 'b.NO_SUPL')
             ->select(
@@ -557,8 +562,8 @@ class BrgController extends Controller
         }
 
         $result = $query->orderBy('a.SUB')->orderBy('a.KDBAR')->get();
-
-        // === Konversi hasil ke array untuk Jasper ===
+// dd($result);
+        // === Konversi hasil ke array 
         $data = [];
         $resultArray = json_decode(json_encode($result), true);
 
@@ -570,23 +575,25 @@ class BrgController extends Controller
 
         // Kirim data ke Jasper
         $PHPJasperXML->setData($data);
+        $PHPJasperXML->arrayPageSetting["orientation"] = "L";
+        $PHPJasperXML->arrayPageSetting["pageHeight"]  = 1 * 3.7795 * 18;
         ob_end_clean();
         $PHPJasperXML->outpage("I"); // "I" artinya inline (tampil di browser)
     }
 
     public function cetak(Request $request, Brg $brg){
-        $file = 'vbrg';
+        $file = 'brg_bcd';
         $data = [];
         $qty = max((int) $request->query('qty', 1), 1);
 		$jumlahCetak = ceil($qty / 2); // dibagi 2
 
 		for ($i = 0; $i < $jumlahCetak; $i++) {
             $data[] = [
-                "KD_BRG"  => $brg->KD_BRG . " ",
-                "NA_BRG"  => $brg->NA_BRG . " ",
+                "KD_BRG"  => $brg->KDBAR . " ",
+                "NA_BRG"  => $brg->NMBAR . " ",
                 "KET_UK"  => $brg->KET_UK . " ",
                 "BARCODE" => $brg->BARCODE . " ",
-                "SUB"     => $brg->SUB . " ",
+                "SUB"     => " " . $brg->SUB . " ",
                 "SUPP"   => $brg->SUPP . " ",
             ];
         }

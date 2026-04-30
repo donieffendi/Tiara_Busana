@@ -496,5 +496,32 @@
 
             // $('#TYPE').trigger('change');
         });
+
+        function cetakBarcode(no_id){
+            Swal.fire({
+                title: 'Cetak Barcode',
+                text: 'Mau cetak berapa kali?',
+                input: 'number',
+                inputAttributes: {
+                    min: 1
+                },
+                inputValue: 1,
+                showCancelButton: true,
+                confirmButtonText: 'Cetak',
+                cancelButtonText: 'Batal',
+                preConfirm: (value) => {
+                    if (!value || value <= 0) {
+                        Swal.showValidationMessage('Jumlah cetak harus lebih dari 0')
+                    }
+                    return value
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let qty = result.value
+                    window.open(`brg/cetak/${no_id}?qty=${qty}`, '_blank')
+                }
+            })
+        }
+
     </script>
 @endsection
