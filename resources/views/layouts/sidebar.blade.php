@@ -1163,7 +1163,7 @@
 
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
-                <h6>Posting Penjualan (belum)</h6>
+                <h6>Posting Penjualan</h6>
               </a>
           </div>
         </div>
