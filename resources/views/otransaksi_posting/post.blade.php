@@ -32,9 +32,9 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <button class="btn btn-danger" type="button" onclick="simpan()">Posting</button>
 
-                                        @if ($flagz == 'BL' || $flagz == 'B3' || $flagz == 'B5' || $flagz == 'B8' || $flagz == 'TS' || $flagz == 'RB')
+                                        {{-- @if ($flagz == 'BL' || $flagz == 'B3' || $flagz == 'B5' || $flagz == 'B8' || $flagz == 'TS' || $flagz == 'RB') --}}
                                             <h5 class="mb-0 ms-3">MAX PER 15 NO BUKTI UNTUK DIPOSTING</h5>
-                                        @endif
+                                        {{-- @endif --}}
                                     </div>
 
 

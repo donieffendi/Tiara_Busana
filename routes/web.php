@@ -314,8 +314,8 @@ Route::get('po/index-posting', 'App\Http\Controllers\OTransaksi\PoController@ind
 Route::get('/get-detail-po', 'App\Http\Controllers\OTransaksi\PoController@getDetailPo')->middleware(['auth'])->name('get-detail-po');
 
 // Posting
-Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->middleware(['auth']);
-Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
+// Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->middleware(['auth']);
+// Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
 
 
 // Operational Pemantauan Surat Pernyataan
@@ -854,8 +854,8 @@ Route::get('/rfakturpj', 'App\Http\Controllers\OReport\RFakturpjController@repor
 Route::post('jasper-fakturpj-report', 'App\Http\Controllers\OReport\RFakturpjController@jasperFakturpjReport')->middleware(['auth']);
 
 // Posting
-Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->middleware(['auth']);
-Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
+// Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->middleware(['auth']);
+// Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
 
 
 
@@ -894,8 +894,8 @@ Route::post('stockb/posting', 'App\Http\Controllers\OTransaksi\StockbController@
 Route::get('stockb/index-posting', 'App\Http\Controllers\OTransaksi\StockbController@index_posting')->middleware(['auth']);
 
 // Posting
-Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->middleware(['auth']);
-Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
+// Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->middleware(['auth']);
+// Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
 
 
 
