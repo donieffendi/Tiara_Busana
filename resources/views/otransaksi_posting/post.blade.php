@@ -26,10 +26,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <form method="POST" id="entri"
-                                    action="{{ url('posting/proses?flagz=' . $flagz . '&jenis=' . $jenis) }}">
+                                    action="{{ url('posting/proses?flagz=' . $flagz) }}">
                                     @csrf
                                     <input name="flagz" type="hidden" value="{{ $flagz }}">
-                                    <input name="jenis" type="hidden" value="{{ $jenis }}">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <button class="btn btn-danger" type="button" onclick="simpan()">Posting</button>
 
@@ -45,15 +44,11 @@
                                                 <th scope="col" style="text-align: center">#</th>
                                                 <th scope="col" style="text-align: center">No Bukti</th>
                                                 <th scope="col" style="text-align: center">Tanggal</th>
-                                                @if ($jenis != 'order_toko')
-                                                    <th scope="col" style="text-align: center">Supplier</th>
-                                                    <th scope="col" style="text-align: center">Nama</th>
-                                                @endif
+                                                <th scope="col" style="text-align: center">Supplier</th>
+                                                <th scope="col" style="text-align: center">Nama</th>
                                                 <th scope="col" style="text-align: center">Total Qty</th>
                                                 <th scope="col" style="text-align: center">Total / Bruto</th>
-                                                @if ($jenis != 'order_toko')
-                                                    <th scope="col" style="text-align: center">Total Nett</th>
-                                                @endif
+                                                <th scope="col" style="text-align: center">Total Nett</th>
                                                 <th scope="col" style="text-align: center">Notes</th>
                                                 <th scope="col" style="text-align: center">Type</th>
                                                 <th scope="col">Cek</th>
@@ -101,7 +96,6 @@
                     url: "{{ url('get-posting') }}",
                     data: {
                         filterpost: 1,
-                        jenis: "{{ $jenis }}",
                         flagz: "{{ $flagz }}",
                     }
                 },
@@ -119,15 +113,15 @@
                         name: 'TGL',
                         render: $.fn.dataTable.render.moment('DD-MM-YYYY')
                     },
-                    @if ($jenis != 'order_toko')
-                        {
-                            data: 'KODES',
-                            name: 'KODES'
-                        }, {
-                            data: 'NAMAS',
-                            name: 'NAMAS'
-                        },
-                    @endif {
+                    {
+                        data: 'KODES',
+                        name: 'KODES'
+                    },
+                    {
+                        data: 'NAMAS',
+                        name: 'NAMAS'
+                    },
+                    {
                         data: 'TOTAL_QTY',
                         name: 'TOTAL_QTY',
                         render: $.fn.dataTable.render.number(',', '.', 0, '')
@@ -137,13 +131,12 @@
                         name: 'TOTAL',
                         render: $.fn.dataTable.render.number(',', '.', 0, '')
                     },
-                    @if ($jenis != 'order_toko')
-                        {
-                            data: 'NETT',
-                            name: 'NETT',
-                            render: $.fn.dataTable.render.number(',', '.', 0, '')
-                        },
-                    @endif {
+                    {
+                        data: 'NETT',
+                        name: 'NETT',
+                        render: $.fn.dataTable.render.number(',', '.', 0, '')
+                    },
+                    {
                         data: 'NOTES',
                         name: 'NOTES'
                     },
