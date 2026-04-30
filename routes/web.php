@@ -46,6 +46,13 @@ Route::post('/profile/setting/update', 'App\Http\Controllers\ProfileController@u
 
 ////////
 
+// Posting
+Route::get('/posting/index', 'App\Http\Controllers\OTransaksi\PostingController@index')->middleware(['auth']);
+Route::get('/get-posting', 'App\Http\Controllers\OTransaksi\PostingController@getPosting')->middleware(['auth'])->name('get-posting');
+Route::post('/posting/proses', 'App\Http\Controllers\OTransaksi\PostingController@proses')->middleware(['auth']);
+
+///////
+
 // Master Account
 Route::get('/account', 'App\Http\Controllers\FMaster\AccountController@index')->middleware(['auth'])->name('account');
 

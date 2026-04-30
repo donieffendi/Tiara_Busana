@@ -34,6 +34,8 @@ class HargaController extends Controller
             $this->judul = "Pengajuan Harga Jual (Ganti Harga)";
         } else if ( $request->flagz == 'HT') {
             $this->judul = "Pencetakan Label Harga (Turun Harga)";
+        } else if ( $request->flagz == 'HJ') {
+            $this->judul = "Posting Harga Jual";
         }
 
         $this->FLAGZ = $request->flagz;

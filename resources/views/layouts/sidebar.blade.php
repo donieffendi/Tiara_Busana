@@ -1122,7 +1122,9 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Beli', '{{url('beli/post')}}')">
+              {{-- <a href="javascript:addTab('Posting Beli', '{{url('beli/post')}}')"> --}}
+              <a href="javascript:addTab('Post Beli', '{{ url('posting/index?flagz=BL') }}')">
+
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Beli</h6>
@@ -1132,7 +1134,9 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Retur ke TGZ', '{{url('retur?flagz=ROP')}}')">
+              {{-- <a href="javascript:addTab('Posting Retur ke TGZ', '{{url('retur?flagz=ROP')}}')"> --}}
+              <a href="javascript:addTab('Post Retur', '{{ url('posting/index?flagz=ROP') }}')">
+
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Post Retur ke TGZ</h6>
@@ -1143,7 +1147,8 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Terima Retur Outlet', '{{url('retur/post')}}')">
+              {{-- <a href="javascript:addTab('Posting Terima Retur Outlet', '{{url('retur/post')}}')"> --}}
+              <a href="javascript:addTab('Post Terima Retur Outlet', '{{ url('posting/index?flagz=TOR') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Post Terima Retur Outlet</h6>
@@ -1153,7 +1158,9 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Penjualan', '{{url('jual/post')}}')">
+              {{-- <a href="javascript:addTab('Posting Penjualan', '{{url('jual/post')}}')"> --}}
+              <a href="javascript:addTab('Post Penjualan', '{{ url('posting/index?flagz=JL') }}')">
+
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Penjualan (belum)</h6>
@@ -1167,7 +1174,8 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Retur', '{{url('beli/post?flagz=RX')}}')">
+              {{-- <a href="javascript:addTab('Posting Retur', '{{url('beli/post?flagz=RX')}}')"> --}}
+              <a href="javascript:addTab('Post Retur', '{{ url('posting/index?flagz=RX') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Retur</h6>
@@ -1177,7 +1185,8 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Stock Opname', '{{url('stockb/post')}}')">
+              {{-- <a href="javascript:addTab('Posting Stock Opname', '{{url('stockb/post')}}')"> --}}
+              <a href="javascript:addTab('Post Stock Opname', '{{ url('posting/index?flagz=KB') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Stock Opname</h6>
@@ -1187,7 +1196,8 @@
 
          <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Order Outlet', '{{url('stockb?flagz=POU')}}')">
+              {{-- <a href="javascript:addTab('Posting Order Outlet', '{{url('stockb?flagz=POU')}}')"> --}}
+              <a href="javascript:addTab('Post Order Outlet', '{{ url('posting/index?flagz=POU') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Order Outlet</h6>
@@ -1198,7 +1208,9 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Terima TGZ', '{{url('beli/post?flagz=BO')}}')">
+              {{-- <a href="javascript:addTab('Posting Terima TGZ', '{{url('beli/post?flagz=BO')}}')"> --}}
+              <a href="javascript:addTab('Post Terima TGZ', '{{ url('posting/index?flagz=BO') }}')">
+
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Terima TGZ</h6>
@@ -1212,7 +1224,8 @@
 
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
-              <a href="javascript:addTab('Posting Harga Jual', '{{url('harga/post')}}')">
+              {{-- <a href="javascript:addTab('Posting Harga Jual', '{{url('harga/post')}}')"> --}}
+              <a href="javascript:addTab('Post Harga Jual', '{{ url('posting/index?flagz=HJ') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Harga Jual</h6>

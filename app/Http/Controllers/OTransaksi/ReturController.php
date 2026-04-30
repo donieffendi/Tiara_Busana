@@ -36,6 +36,8 @@ class ReturController extends Controller
             $this->judul = "Posting Retur ke TGZ";
         } else if ($request->flagz == 'RSP') {
             $this->judul = "Posting Rencana Retur";
+        }else if ($request->flagz == 'TOR') {
+            $this->judul = "Posting Terima Retur Outlet";
         }
 
         $this->FLAGZ = $request->flagz;
