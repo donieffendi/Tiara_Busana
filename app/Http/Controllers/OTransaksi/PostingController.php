@@ -13,15 +13,15 @@ class PostingController extends Controller
     public function index(Request $request)
     {
         switch (strtoupper($request->flagz)) {
-            case 'BL':
+            case 'BS':
                 $judul = "Posting Beli";
                 break;
 
-            case 'RZ':
+            case 'RO':
                 $judul = "Post Retur ke TGZ";
                 break;
 
-            case 'OX':
+            case 'RM':
                 $judul = "Post Terima Retur Outlet";
                 break;
 
@@ -29,7 +29,7 @@ class PostingController extends Controller
                 $judul = "Posting Penjualan";
                 break;
 
-            case 'RR':
+            case 'RX':
                 $judul = "Posting Retur";
                 break;
 
@@ -37,11 +37,11 @@ class PostingController extends Controller
                 $judul = "Posting Stock Opname";
                 break;
 
-            case 'OL':
+            case 'KO':
                 $judul = "Posting Order Outlet";
                 break;
 
-            case 'B3':
+            case 'BO':
                 $judul = "Posting Terima TGZ";
                 break;
 
