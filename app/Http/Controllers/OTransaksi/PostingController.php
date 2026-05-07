@@ -84,9 +84,9 @@ class PostingController extends Controller
                     ->get();
                 break;
 
-            case 'ROP': // Retur ke TGZ
+            case 'RR': // Retur ke TGZ
             case 'RX':  // Retur
-            case 'TOR': // Terima retur outlet
+            case 'OX': // Terima retur outlet
                 $query = DB::table('retur')
                     ->select('NO_ID', 'NO_BUKTI', 'TGL', 'KODES', 'NAMAS',
                         'total_qty AS TOTAL_QTY', 'total AS TOTAL', 'nett AS NETT',
