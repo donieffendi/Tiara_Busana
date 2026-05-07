@@ -1135,7 +1135,7 @@
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
               {{-- <a href="javascript:addTab('Posting Retur ke TGZ', '{{url('retur?flagz=ROP')}}')"> --}}
-              <a href="javascript:addTab('Post Retur', '{{ url('posting/index?flagz=ROP') }}')">
+              <a href="javascript:addTab('Post Retur', '{{ url('posting/index?flagz=RZ') }}')">
 
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
@@ -1148,7 +1148,7 @@
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
               {{-- <a href="javascript:addTab('Posting Terima Retur Outlet', '{{url('retur/post')}}')"> --}}
-              <a href="javascript:addTab('Post Terima Retur Outlet', '{{ url('posting/index?flagz=TOR') }}')">
+              <a href="javascript:addTab('Post Terima Retur Outlet', '{{ url('posting/index?flagz=OX') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Post Terima Retur Outlet</h6>
@@ -1159,7 +1159,7 @@
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
               {{-- <a href="javascript:addTab('Posting Penjualan', '{{url('jual/post')}}')"> --}}
-              <a href="javascript:addTab('Post Penjualan', '{{ url('posting/index?flagz=JL') }}')">
+              <a href="javascript:addTab('Post Penjualan', '{{ url('posting/index?flagz=JT') }}')">
 
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
@@ -1175,7 +1175,7 @@
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
               {{-- <a href="javascript:addTab('Posting Retur', '{{url('beli/post?flagz=RX')}}')"> --}}
-              <a href="javascript:addTab('Post Retur', '{{ url('posting/index?flagz=RX') }}')">
+              <a href="javascript:addTab('Post Retur', '{{ url('posting/index?flagz=RR') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Retur</h6>
@@ -1197,7 +1197,7 @@
          <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
               {{-- <a href="javascript:addTab('Posting Order Outlet', '{{url('stockb?flagz=POU')}}')"> --}}
-              <a href="javascript:addTab('Post Order Outlet', '{{ url('posting/index?flagz=POU') }}')">
+              <a href="javascript:addTab('Post Order Outlet', '{{ url('posting/index?flagz=OL') }}')">
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                 <h6>Posting Order Outlet</h6>
@@ -1209,7 +1209,7 @@
         <div class="col-md-3">
           <div class="menu-card" style="border:1px solid #aabbcc; background-color:#ffe0ba;">
               {{-- <a href="javascript:addTab('Posting Terima TGZ', '{{url('beli/post?flagz=BO')}}')"> --}}
-              <a href="javascript:addTab('Post Terima TGZ', '{{ url('posting/index?flagz=BO') }}')">
+              <a href="javascript:addTab('Post Terima TGZ', '{{ url('posting/index?flagz=B3') }}')">
 
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>

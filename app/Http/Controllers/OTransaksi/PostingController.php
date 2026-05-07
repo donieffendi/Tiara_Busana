@@ -17,19 +17,19 @@ class PostingController extends Controller
                 $judul = "Posting Beli";
                 break;
 
-            case 'ROP':
+            case 'RZ':
                 $judul = "Post Retur ke TGZ";
                 break;
 
-            case 'TOR':
+            case 'OX':
                 $judul = "Post Terima Retur Outlet";
                 break;
 
-            case 'JL':
+            case 'JT':
                 $judul = "Posting Penjualan";
                 break;
 
-            case 'RX':
+            case 'RR':
                 $judul = "Posting Retur";
                 break;
 
@@ -37,11 +37,11 @@ class PostingController extends Controller
                 $judul = "Posting Stock Opname";
                 break;
 
-            case 'POU':
+            case 'OL':
                 $judul = "Posting Order Outlet";
                 break;
 
-            case 'BO':
+            case 'B3':
                 $judul = "Posting Terima TGZ";
                 break;
 
@@ -72,7 +72,7 @@ class PostingController extends Controller
         switch ($FLAGZ) {
 
             case 'BL': // Posting Beli
-            case 'BO': // Terima TGZ
+            case 'B3': // Terima TGZ
                 $query = DB::table('beli')
                     ->select('NO_ID', 'NO_BUKTI', 'TGL', 'KODES', 'NAMAS',
                         'total_qty AS TOTAL_QTY', 'total AS TOTAL', 'nett AS NETT',
@@ -84,8 +84,8 @@ class PostingController extends Controller
                     ->get();
                 break;
 
-            case 'RR': // Retur ke TGZ
-            case 'RX':  // Retur
+            case 'RZ': // Retur ke TGZ
+            case 'RR':  // Retur
             case 'OX': // Terima retur outlet
                 $query = DB::table('retur')
                     ->select('NO_ID', 'NO_BUKTI', 'TGL', 'KODES', 'NAMAS',
@@ -108,8 +108,19 @@ class PostingController extends Controller
                     ->get();
                 break;
 
-            case 'POU': // Order outlet
-            case 'JL':  // Penjualan
+
+            case 'HJ': // Harga jual
+                $query = DB::table('bhrg')
+                    ->selectRaw("NO_ID, NO_BUKTI, TGL, KODES, NAMAS, TOTAL_QTY, TOTAL, '' AS NETT, NOTES, TYPE, POSTED")
+                    ->where('POSTED', 0)
+                    // ->where('PER', $periode)
+                    ->where('FLAG', $FLAGZ)
+                    ->orderBy('NO_BUKTI', 'ASC')
+                    ->get();
+                break;
+
+            case 'OT': // Order outlet
+            case 'JT':  // Penjualan
                 $query = DB::table('stocka')
                     ->select('NO_ID', 'NO_BUKTI', 'TGL',
                         DB::raw("'' AS KODES"),
