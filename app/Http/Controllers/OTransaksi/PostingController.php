@@ -71,9 +71,10 @@ class PostingController extends Controller
 
         switch ($FLAGZ) {
 
-            case 'BL': // Posting Beli
-            case 'B3': // Terima TGZ
-                $query = DB::table('beli')
+            case 'BS': // Posting Beli
+            case 'BO': // Terima TGZ
+            case 'RX':  // Retur
+                $query = DB::table('belibsn')
                     ->select('NO_ID', 'NO_BUKTI', 'TGL', 'KODES', 'NAMAS',
                         'total_qty AS TOTAL_QTY', 'total AS TOTAL', 'nett AS NETT',
                         'notes AS NOTES', 'TYPE', 'POSTED')
@@ -84,10 +85,9 @@ class PostingController extends Controller
                     ->get();
                 break;
 
-            case 'RZ': // Retur ke TGZ
-            case 'RR':  // Retur
-            case 'OX': // Terima retur outlet
-                $query = DB::table('retur')
+            case 'RO': // Retur ke TGZ
+            case 'RM': // Terima retur outlet
+                $query = DB::table('bretur')
                     ->select('NO_ID', 'NO_BUKTI', 'TGL', 'KODES', 'NAMAS',
                         'total_qty AS TOTAL_QTY', 'total AS TOTAL', 'nett AS NETT',
                         'notes AS NOTES', 'TYPE', 'POSTED')
@@ -99,7 +99,7 @@ class PostingController extends Controller
                 break;
 
             case 'KB': // Stock opname / koreksi
-                $query = DB::table('stockb')
+                $query = DB::table('bstockb')
                     ->selectRaw("NO_ID, NO_BUKTI, TGL, KODES, NAMAS, TOTAL_QTY, TOTAL, '' AS NETT, NOTES, TYPE, POSTED")
                     ->where('POSTED', 0)
                     // ->where('PER', $periode)
@@ -119,9 +119,9 @@ class PostingController extends Controller
                     ->get();
                 break;
 
-            case 'OT': // Order outlet
+            case 'KO': // Order outlet
             case 'JT':  // Penjualan
-                $query = DB::table('stocka')
+                $query = DB::table('bstocka')
                     ->select('NO_ID', 'NO_BUKTI', 'TGL',
                         DB::raw("'' AS KODES"),
                         DB::raw("'' AS NAMAS"),
