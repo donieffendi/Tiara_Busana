@@ -72,6 +72,18 @@ class PostingController extends Controller
         switch ($FLAGZ) {
 
             case 'BS': // Posting Beli
+                $query = DB::table('nwagend')
+                    ->select('NO_ID', 'NO_BUKTI', 'TGL', 'KODES', 'NAMAS',
+                        'total_qty AS TOTAL_QTY', 'total AS TOTAL', 'nett AS NETT',
+                        'notes AS NOTES', 'TYPE', 'POSTED')
+                    ->where('POSTED', 0)
+                    // ->where('PER', $periode)
+                    ->where('FLAG', $FLAGZ)
+                    ->orderBy('NO_BUKTI', 'ASC')
+                    ->get();
+                break;
+
+
             case 'BO': // Terima TGZ
             case 'RX':  // Retur
                 $query = DB::table('belibsn')
