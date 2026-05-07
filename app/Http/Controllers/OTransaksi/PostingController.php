@@ -204,9 +204,9 @@ class PostingController extends Controller
                 $no_bukti = $value; // FIX UTAMA
 
                 /* =========================
-                * FLAG BL
+                * FLAG BS
                 * ========================= */
-                if ($FLAGZ == 'BL') {
+                if ($FLAGZ == 'BS') {
 
                     $header = DB::table('nwagend')
                         ->where('NO_BUKTI', $no_bukti)
@@ -240,9 +240,9 @@ class PostingController extends Controller
                 }
 
                 /* =========================
-                * FLAG ROP / RO / RM
+                * FLAG RO / RM
                 * ========================= */
-                elseif ($FLAGZ == 'ROP') {
+                elseif ($FLAGZ == 'RO' || $FLAGZ == 'RM') {
 
                     $cbg = $CBG;
 
@@ -281,13 +281,57 @@ class PostingController extends Controller
                 }
 
                 /* =========================
+                * FLAG BO / RX
+                * ========================= */
+                elseif ($FLAGZ == 'BO' || $FLAGZ == 'RX') {
+
+                    $cbg = $CBG;
+
+                    $header = DB::table('belibsn')
+                        ->where('no_bukti', $no_bukti)
+                        ->lockForUpdate()
+                        ->first();
+
+                    if (!$header || $header->POSTED == 1) continue;
+
+                    $details = DB::table('belibsn')
+                        ->where('no_bukti', $no_bukti)
+                        ->get();
+
+                    foreach ($details as $row) {
+
+                        DB::update("
+                            UPDATE nwmasbard
+                            SET MA00 = MA00 - ?,
+                                AK00 = AW00 + (MA00 - ?) - KE00 + LN00
+                            WHERE KD_BRG = ? AND CBG = ?
+                        ", [
+                            $row->QTY,
+                            $row->QTY,
+                            $row->KD_BRG,
+                            $CBG
+                        ]);
+                    }
+
+                    DB::table('belibsn')
+                        ->where('no_bukti', $no_bukti)
+                        ->update([
+                            'POSTED' => 1,
+                            'tgl_posted' => now()
+                        ]);
+
+                    $hasil[] = $no_bukti;
+                }
+
+
+                /* =========================
                 * FLAG KB
                 * ========================= */
                 elseif ($FLAGZ == 'KB') {
 
                     $cbg = $CBG;
 
-                    $details = DB::table('breturd')
+                    $details = DB::table('bstockb')
                         ->where('no_bukti', $no_bukti)
                         ->get();
 
@@ -301,7 +345,39 @@ class PostingController extends Controller
                         ", [$d->qty, $d->qty, $d->KD_BRG, $cbg]);
                     }
 
-                    DB::table('bretur')
+                    DB::table('bstockb')
+                        ->where('no_bukti', $no_bukti)
+                        ->update([
+                            'POSTED' => 1,
+                            'tgl_posted' => now()
+                        ]);
+
+                    $hasil[] = $no_bukti;
+                }
+
+
+                /* =========================
+                * FLAG KO
+                * ========================= */
+                elseif ($FLAGZ == 'KO') {
+
+                    $cbg = $CBG;
+
+                    $details = DB::table('bstocka')
+                        ->where('no_bukti', $no_bukti)
+                        ->get();
+
+                    foreach ($details as $d) {
+
+                        DB::update("
+                            UPDATE brgbsnd
+                            SET ln00 = ln00 - ?,
+                                ak00 = aw00 + ma00 - ke00 + (ln00 - ?)
+                            WHERE KD_BRG = ? AND CBG = ?
+                        ", [$d->qty, $d->qty, $d->KD_BRG, $cbg]);
+                    }
+
+                    DB::table('bstocka')
                         ->where('no_bukti', $no_bukti)
                         ->update([
                             'POSTED' => 1,
