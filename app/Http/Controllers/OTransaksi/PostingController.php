@@ -78,7 +78,7 @@ class PostingController extends Controller
                         'total_qty AS TOTAL_QTY', 'total AS TOTAL', 'nett AS NETT',
                         'notes AS NOTES', 'TYPE', 'POSTED')
                     ->where('POSTED', 0)
-                    ->where('PER', $periode)
+                    // ->where('PER', $periode)
                     ->where('FLAG', $FLAGZ)
                     ->orderBy('NO_BUKTI', 'ASC')
                     ->get();
@@ -92,7 +92,7 @@ class PostingController extends Controller
                         'total_qty AS TOTAL_QTY', 'total AS TOTAL', 'nett AS NETT',
                         'notes AS NOTES', 'TYPE', 'POSTED')
                     ->where('POSTED', 0)
-                    ->where('PER', $periode)
+                    // ->where('PER', $periode)
                     ->where('FLAG', $FLAGZ)
                     ->orderBy('NO_BUKTI', 'ASC')
                     ->get();
@@ -102,7 +102,7 @@ class PostingController extends Controller
                 $query = DB::table('stockb')
                     ->selectRaw("NO_ID, NO_BUKTI, TGL, KODES, NAMAS, TOTAL_QTY, TOTAL, '' AS NETT, NOTES, TYPE, POSTED")
                     ->where('POSTED', 0)
-                    ->where('PER', $periode)
+                    // ->where('PER', $periode)
                     ->where('FLAG', $FLAGZ)
                     ->orderBy('NO_BUKTI', 'ASC')
                     ->get();
@@ -118,7 +118,7 @@ class PostingController extends Controller
                         DB::raw("'' AS NETT"),
                         'NOTES', 'TYPE', 'POSTED')
                     ->where('POSTED', 0)
-                    ->where('PER', $periode)
+                    // ->where('PER', $periode)
                     ->where('FLAG', $FLAGZ)
                     ->orderBy('NO_BUKTI', 'ASC')
                     ->get();
