@@ -253,22 +253,14 @@
                                         <table class="table table-striped table-hover nowrap datatable" id="datatable1">
                                             <thead class="table-dark">
                                                 <tr>
-                                                    {{-- <th></th>
-                                                    <th>#</th>
-                                                    <th>-</th>
-                                                    <th>Bukti#</th>
-                                                    <th>Tgl</th>
-                                                    <th>Total_Qty</th>
-                                                    <th>Notes</th>
-                                                    <th>Posted</th> --}}
-
-                                                    <th scope="col" style="text-align: center">No</th>
-                                                    <th scope="col" style="text-align: center">-</th>
-                                                    <th scope="col" style="text-align: center">No Bukti</th>
-                                                    <th scope="col" style="text-align: center">Tanggal</th>
-                                                    <th scope="col" style="text-align: center">Kode Supplier</th>
-                                                    <th scope="col" style="text-align: center">Nama Supplier</th>
-                                                    <th scope="col" style="text-align: center">POSTED</th>
+                                                    <th scope="col" style="text-align:center">+</th>
+                                                    <th scope="col" style="text-align:center">No</th>
+                                                    <th scope="col" style="text-align:center">-</th>
+                                                    <th scope="col" style="text-align:center">No Bukti</th>
+                                                    <th scope="col" style="text-align:center">Tanggal</th>
+                                                    <th scope="col" style="text-align:center">Kode Supplier</th>
+                                                    <th scope="col" style="text-align:center">Nama Supplier</th>
+                                                    <th scope="col" style="text-align:center">POSTED</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -284,21 +276,14 @@
                                         <table class="table table-striped table-hover nowrap datatable" id="datatable2">
                                             <thead class="table-dark">
                                                 <tr>
-                                                    {{-- <th></th>
-                                                    <th>#</th>
-                                                    <th>-</th>
-                                                    <th>Bukti#</th>
-                                                    <th>Tgl</th>
-                                                    <th>Total_Qty</th>
-                                                    <th>Notes</th> --}}
-
-                                                    <th scope="col" style="text-align: center">No</th>
-                                                    <th scope="col" style="text-align: center">-</th>
-                                                    <th scope="col" style="text-align: center">No Bukti</th>
-                                                    <th scope="col" style="text-align: center">Tanggal</th>
-                                                    <th scope="col" style="text-align: center">Kode Supplier</th>
-                                                    <th scope="col" style="text-align: center">Nama Supplier</th>
-                                                    <th scope="col" style="text-align: center">POSTED</th>
+                                                    <th scope="col" style="text-align:center">+</th>
+                                                    <th scope="col" style="text-align:center">No</th>
+                                                    <th scope="col" style="text-align:center">-</th>
+                                                    <th scope="col" style="text-align:center">No Bukti</th>
+                                                    <th scope="col" style="text-align:center">Tanggal</th>
+                                                    <th scope="col" style="text-align:center">Kode Supplier</th>
+                                                    <th scope="col" style="text-align:center">Nama Supplier</th>
+                                                    <th scope="col" style="text-align:center">POSTED</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -333,130 +318,204 @@
         // batas filter
 
         $(document).ready(function() {
-            let table1, table2;
+            let table1 = null;
+            let table2 = null;
 
-            table1 = initDataTable('datatable1', "{{ route('get-vbrgdw-harga-pemula') }}");
+            /*
+            |--------------------------------------------------------------------------
+            | TAB 1
+            |--------------------------------------------------------------------------
+            */
 
-            // TAB 2 load saat diklik
-            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+            table1 = initDataTable(
+                '#datatable1',
+                "{{ route('get-vbrgdw-harga-pemula') }}",
+                'usulan'
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | TAB 2
+            |--------------------------------------------------------------------------
+            */
+
+            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+
                 let target = $(e.target).attr("data-bs-target");
 
-                if (target === '#tab2' && !$.fn.DataTable.isDataTable('#datatable2')) {
-                    table2 = initDataTable('datatable2', "{{ route('get-vbrgdw-harga-pemula-new') }}");
+                if (target === '#tab2') {
+
+                    if (table2 != null) {
+
+                        table2.ajax.reload();
+                        return;
+                    }
+
+                    table2 = initDataTable(
+                        '#datatable2',
+                        "{{ route('get-vbrgdw-harga-pemula-new') }}",
+                        'pengesahan'
+                    );
                 }
             });
 
-            function initDataTable(tableId, url) {
-                return $('#' + tableId).DataTable({
+            /*
+            |--------------------------------------------------------------------------
+            | INIT DATATABLE
+            |--------------------------------------------------------------------------
+            */
+
+            function initDataTable(tableId, url, jenis) {
+
+                console.log('LOAD TABLE : ', tableId);
+                console.log('URL : ', url);
+
+                return $(tableId).DataTable({
+
                     processing: true,
                     serverSide: true,
+                    destroy: true,
                     autoWidth: false,
                     scrollY: '400px',
 
                     ajax: {
                         url: url,
-                        data: {
-                            // flagz: $('#flagz').val()
-                        }
+                        type: 'GET'
                     },
+
                     columns: [
-                        //add tombol +
+
                         {
-                            data: null, // Column for the button
+                            data: null,
                             orderable: false,
                             searchable: false,
-                            render: function(data, type, row, meta) {
+                            render: function (data, type, row) {
 
-                                // tanpa ada POST (posting) di atas
-                                return `<button class="btn btn-success btn-sm toggle-button" data-no_bukti="${row.NO_BUKTI}" onclick="toggleButton(this)">+</button>`;
+                                return `
+                                    <button 
+                                        class="btn btn-success btn-sm toggle-button"
+                                        data-no_bukti="${row.NO_BUKTI}"
+                                        onclick="toggleButton(this)">
+                                        +
+                                    </button>
+                                `;
                             }
                         },
-                        // tutupannya
 
                         {
                             data: 'DT_RowIndex',
                             orderable: false,
                             searchable: false
                         },
+
                         {
                             data: 'action',
-                            name: 'action',
+                            name: 'action'
                         },
+
                         {
                             data: 'NO_BUKTI',
                             name: 'NO_BUKTI'
                         },
+
                         {
                             data: 'TGL',
                             name: 'TGL'
                         },
+
                         {
                             data: 'KODES',
-                            name: 'KODES',
+                            name: 'KODES'
+                        },
 
-                        }, {
+                        {
                             data: 'NAMAS',
                             name: 'NAMAS',
-                            "render": function(data, type, row, meta) {
-                                    // Bisa pakai badge-warning atau badge-success sesuai kebutuhan
-                                    // Misal semua badge warning:
-                                    return `<span class="badge badge-warning badge-pill">${data}</span>`;
-                                }
-                        }, {
-                            data: 'POSTED',
-                            name: 'POSTED',
-                            className: 'text-center',
-                            render: function(data, type, row) {
+                            render: function (data) {
+
                                 return `
-                                    <input type="checkbox"
-                                        ${data == 1 ? 'checked' : ''}
-                                        disabled>
+                                    <span class="badge badge-warning badge-pill">
+                                        ${data}
+                                    </span>
                                 `;
                             }
                         },
+
+                        {
+                            data: 'POSTED',
+                            name: 'POSTED',
+                            className: 'text-center',
+
+                            render: function (data) {
+
+                                let checked = false;
+
+                                // TAB 1 = usulan
+                                if (jenis === 'usulan') {
+                                    checked = (data == 1);
+                                }
+
+                                // TAB 2 = pengesahan
+                                if (jenis === 'pengesahan') {
+                                    checked = (data == 2);
+                                }
+
+                                return `
+                                    <input type="checkbox"
+                                        ${checked ? 'checked' : ''}
+                                        disabled>
+                                `;
+                            }
+                        }
+
                     ],
-                    columnDefs: [{
-                            "className": "dt-center",
-                            "targets": [0, 1, 2, 5]
+
+                    columnDefs: [
+                        {
+                            className: "dt-center",
+                            targets: [0,1,2,5]
                         },
-                        // {
-                        //     "className": "dt-right",
-                        //     "targets": 4
-                        // },
                         {
                             targets: 4,
                             render: $.fn.dataTable.render.moment('DD-MM-YYYY')
                         }
                     ],
+
                     lengthMenu: [
-                        [8, 10, 20, 50, 100, -1],
-                        [8, 10, 20, 50, 100, "All"]
+                        [8,10,20,50,100,-1],
+                        [8,10,20,50,100,"All"]
                     ],
 
-
-                    dom: "<'row'<'col-md-6'><'col-md-6'>>" +
+                    dom:
                         "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
-                        "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
+                        "<'row'<'col-md-12't>>" +
+                        "<'row'<'col-md-12'ip>>"
                 });
-
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | FILTER COLUMN
+            |--------------------------------------------------------------------------
+            */
 
+            $('#applyColumnToggle').on('click', function () {
 
-            // filter kolom di index
+                let activeTable =
+                    $('#tab1').hasClass('active')
+                        ? table1
+                        : table2;
 
-            // Handle column visibility toggle
-            $('#applyColumnToggle').on('click', function() {
-                $('#columnToggleForm .column-checkbox').each(function() {
-                    var column = dataTable.column($(this).val());
+                if (!activeTable) return;
+
+                $('#columnToggleForm .column-checkbox').each(function () {
+
+                    let column = activeTable.column($(this).val());
+
                     column.visible($(this).is(':checked'));
                 });
-                $('#columnModal').modal('hide'); // Close the modal
-            });
 
-            $('#columnToggleForm .column-checkbox').each(function() {
-                var column = dataTable.column($(this).val());
-                column.visible($(this).is(':checked'));
+                $('#columnModal').modal('hide');
             });
 
             // batas filter

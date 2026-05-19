@@ -35,11 +35,11 @@ class VBrgDwHargaPemulaController extends Controller
 
     public function browse(Request $request)
     {
-        $query = DB::table('vbrg')
-            ->orderBy('KODES');
+        $query = DB::table('nwmasbar')
+            ->orderBy('SUPP');
 
         if ($request->filled('KD_BRG')) {
-            $query->where('KD_BRG', 'like', '%' . $request->KD_BRG . '%');
+            $query->where('KDBAR', 'like', '%' . $request->KD_BRG . '%');
         }
 
         $vbrgdw = $query->get();
@@ -56,23 +56,20 @@ class VBrgDwHargaPemulaController extends Controller
     public function browse_kodes(Request $request)
     {
         $q = $request->q;
-
-        $results = DB::table('zsup')
-            ->select('KODES', 'NAMAS')
-            ->when($q, function ($query) use ($q) {
-                $query->where('KODES', 'LIKE', "%{$q}%")
-                    ->orWhere('NAMAS', 'LIKE', "%{$q}%");
-            })
-            ->groupBy('KODES')
-            ->orderBy('KODES', 'desc')
-            ->get();
+        $filtersup = "";
+        if(!empty($q)) {
+            $filtersup = "WHERE NO_SUPL LIKE '%$q%' OR NAMA LIKE '%$q%'";
+        }
+        $results = DB::SELECT("SELECT NO_SUPL AS KODES, NAMA AS NAMAS FROM NWMASSUP 
+                        $filtersup 
+                        GROUP BY NO_SUPL
+                        ORDER BY NO_SUPL DESC");
 
         return response()->json($results);
     }
 
     public function getVbrgdw(Request $request)
     {
-        // ganti 5
 
         $periode = null;
 
@@ -93,7 +90,7 @@ class VBrgDwHargaPemulaController extends Controller
                                 SELECT *,
                                     ROW_NUMBER() OVER (PARTITION BY NO_BUKTI ORDER BY NO_ID) AS rn
                                 FROM vbrgdw
-                                WHERE NO_BUKTI != ''
+                                WHERE NO_BUKTI != '' AND POSTED='0'
                                 $wherePeriode
                             ) x
                             WHERE rn = 1
@@ -156,6 +153,77 @@ class VBrgDwHargaPemulaController extends Controller
             ->make(true);
 
     }
+
+    public function getVBrgDwHargaPemulaNew(Request $request)
+    {
+
+        $periode = null;
+
+        if ($request->session()->has('periode')) {
+            $bulan   = $request->session()->get('periode.bulan');
+            $tahun   = $request->session()->get('periode.tahun');
+            $periode = $bulan . '/' . $tahun;
+        }
+        $wherePeriode = '';
+
+        if ($periode) {
+            $wherePeriode = "AND MONTH(TGL) = $bulan AND YEAR(TGL) = $tahun";
+        }
+
+        $vbrg = DB::select("
+                            SELECT *
+                            FROM (
+                                SELECT *,
+                                    ROW_NUMBER() OVER (PARTITION BY NO_BUKTI ORDER BY NO_ID) AS rn
+                                FROM vbrgdw
+                                WHERE NO_BUKTI != ''  AND POSTED in('1','2')
+                                $wherePeriode
+                            ) x
+                            WHERE rn = 1
+                            ORDER BY NO_BUKTI
+                        ");
+
+        return Datatables::of($vbrg)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                if (Auth::user()->divisi == "programmer" || Auth::user()->divisi == "owner" || Auth::user()->divisi == "sales" || Auth::user()->divisi == 'pembelian') {
+                   // batas
+
+
+                    $btnPrivilege =
+                    '
+                                    <a class="dropdown-item" target="_blank"
+                                        href="' . url('vbrgdw-harga-pemula/print-pengesahan/' . $row->NO_BUKTI) . '">
+                                        <i class="fas fa-file-signature"></i> Print Pengesahan
+                                    </a>
+
+                            ';
+                } else {
+                    $btnPrivilege = '';
+                }
+
+                $actionBtn =
+                    '
+                        <div class="dropdown show" style="text-align: center">
+                            <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bars"></i>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                                ' . $btnPrivilege . '
+                            </div>
+                        </div>
+                        ';
+
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+
+    }
+
+
     public function store(Request $request)
     {
 
@@ -364,6 +432,12 @@ class VBrgDwHargaPemulaController extends Controller
             "TGL" => $TGL,
         ];
 
+        DB::table('vbrgdw')
+            ->where('NO_BUKTI', $no_bukti)
+            ->update([
+                'POSTED' => 1,
+            ]);
+
         $PHPJasperXML->setData($cleanData);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
@@ -380,9 +454,35 @@ class VBrgDwHargaPemulaController extends Controller
         DB::table('vbrgdw')
             ->where('NO_BUKTI', $no_bukti)
             ->update([
-                'POSTED' => 1,
+                'POSTED' => 2,
             ]);
 
+
+        $detail = DB::table('vbrgdw')
+            ->where('NO_BUKTI', $no_bukti)
+            ->get();
+        
+        // INSERT KE NWKOMPONEN
+
+        foreach ($detail as $row) {
+
+            DB::table('nwkomponen')->insert([
+
+                'KODES'  => $row->KODES,
+                'NAMAS'  => $row->NAMAS,
+                'KD_BRG' => $row->KD_BRG,
+                'NA_BRG' => $row->NA_BRG,
+
+                'HARGA'  => $row->HARGA,
+
+                'DISC'   => $row->DISK ?? 0,
+                'DISC1'  => $row->DISK1 ?? 0,
+                'DISC2'  => $row->DISK2 ?? 0,
+                'DISC3'  => $row->DISK3 ?? 0,
+                'DISC4'  => $row->DISK4 ?? 0,
+            ]);
+        }
+        
         $query = DB::SELECT("SELECT * FROM vbrgdw WHERE NO_BUKTI='$no_bukti'");
 
         $cleanData                    = json_decode(json_encode($query), true);

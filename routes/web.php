@@ -1845,4 +1845,15 @@ Route::post('jasper-daftar_agenda-report', 'App\Http\Controllers\OReport\RDaftar
 Route::get('/akhir-bulan', 'App\Http\Controllers\OReport\RAkhirBlnController@report')->middleware(['auth'])->name('akhir-bulan');
 Route::post('/get-akhir-bulan', 'App\Http\Controllers\OReport\RAkhirBlnController@getAkhirBulan')->middleware(['auth']);
 
+// Penghapusan Hrga Beli
+Route::get('/hps_hrgBeli', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@index')->middleware(['auth'])->name('hps_hrgBeli');
+Route::get('/hps_hrgBeli/browse', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@browse')->middleware(['auth'])->name('hps_hrgBeli.browse');
+Route::get('/hps_hrgBeli/cetak/{NO_ID}', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@cetak')->middleware(['auth'])->name('hps_hrgBeli.cetak');
+Route::get('/hps_hrgBeli/browse_detail', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@browse_detail')->middleware(['auth'])->name('hps_hrgBeli.browse_detail');
+Route::get('/hps_hrgBeli/browse_kodes', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@browse_kodes')->middleware(['auth'])->name('hps_hrgBeli.browse_kodes');
+Route::get('/hps_hrgBeli/get_detail_by_kodes', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@get_detail_by_kodes')->middleware(['auth'])->name('hps_hrgBeli.get_detail_by_kodes');
+Route::get('/hps_hrgBeli/edit', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@edit')->middleware(['auth'])->name('hps_hrgBeli.edit');
+Route::post('/hps_hrgBeli/store', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@store')->middleware(['auth'])->name('hps_hrgBeli.store');
+Route::get('/hps_hrgBeli/browseBrg', 'App\Http\Controllers\OTransaksi\HpsHrgBeliController@browseBrg')->middleware(['auth'])->name('hps_hrgBeli/browseBrg');
+
 require __DIR__.'/auth.php';

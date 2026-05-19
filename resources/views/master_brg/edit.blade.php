@@ -114,11 +114,11 @@
 									</div>
 									<div class="col-md-1">
 										<select id="RAK" class="form-control"  name="RAK">
-											<option value="FF" {{ ($header->RAK == 'FF') ? 'selected' : '' }}>FF</option>
-											<option value="NF" {{ ($header->RAK == 'NF') ? 'selected' : '' }}>NF</option>
-											<option value="ST" {{ ($header->RAK == 'ST') ? 'selected' : '' }}>ST</option>
-											<option value="FO" {{ ($header->RAK == 'FO') ? 'selected' : '' }}>FO</option>
-											<option value="PB" {{ ($header->RAK == 'PB') ? 'selected' : '' }}>PB</option>
+											<option value="FF" {{ ($dept == 'FF') ? 'selected' : '' }}>FF</option>
+											<option value="NF" {{ ($dept == 'NF') ? 'selected' : '' }}>NF</option>
+											<option value="ST" {{ ($dept == 'ST') ? 'selected' : '' }}>ST</option>
+											<option value="FO" {{ ($dept == 'FO') ? 'selected' : '' }}>FO</option>
+											<option value="PB" {{ ($dept == 'PB') ? 'selected' : '' }}>PB</option>
 										</select>
 									</div>
 

@@ -520,14 +520,14 @@
 										<input name='NO_ID[]' id='NO_ID${i}' value="${i+1}" type='text' class='form-control NO_ID' readonly>
 									</td>
 									<td>
-										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
+										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KDBAR}" type='text' class='form-control KD_BRG' readonly>
 						            </td>
 						            <td>
-						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
+						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NMBAR}" type='text' class='form-control  NA_BRG' readonly>
 						            </td>
 									<td>
-						 			    <input name='HARGAAWAL[]' id='HARGAAWAL${i}' value="${resp[i].HARGA}" hidden type='text' class='form-control  HARGAAWAL'>
-						 			    <input name='HARGA[]' id='HARGA${i}' value="${resp[i].HARGA}" type='text' class='form-control  HARGA'>
+						 			    <input name='HARGAAWAL[]' id='HARGAAWAL${i}' value="${resp[i].HB}" hidden type='text' class='form-control  HARGAAWAL'>
+						 			    <input name='HARGA[]' id='HARGA${i}' value="${resp[i].HB}" type='text' class='form-control  HARGA'>
 						            </td>
 									<td>
 						 			    <input name='DISCAWAL[]' id='DISCAWAL${i}' value="${resp[i].DISC}" hidden type='text' class='form-control DISCAWAL'>
@@ -835,8 +835,8 @@
 
                         // JIKA DATA DITEMUKAN SATU
                         if (resp.length === 1) {
-                            $("#KD_BRG" + rowidBarang).val(resp[0].KD_BRG);
-                            $("#NA_BRG" + rowidBarang).val(resp[0].NA_BRG);
+                            $("#KD_BRG" + rowidBarang).val(resp[0].KDBAR);
+                            $("#NA_BRG" + rowidBarang).val(resp[0].NMBAR);
                             return;
                         }
 
@@ -850,10 +850,10 @@
                             for (let i = 0; i < resp.length; i++) {
                                 dTableBarang.row.add([
                                     '<a href="javascript:void(0);" onclick="chooseBarang(' +
-                                    '\'' + resp[i].KD_BRG + '\',' +
-                                    '\'' + resp[i].NA_BRG + '\'' +
-                                    ')">' + resp[i].KD_BRG + '</a>',
-                                    resp[i].NA_BRG
+                                    '\'' + resp[i].KDBAR + '\',' +
+                                    '\'' + resp[i].NMBAR + '\'' +
+                                    ')">' + resp[i].KDBAR + '</a>',
+                                    resp[i].NMBAR
                                 ]);
                             }
 
@@ -897,9 +897,9 @@
             }
 
 
-            chooseBarang = function(KD_BRG, NA_BRG, HARGA, DISC, DISC2, DISC3, DISC4) {
-                $("#KD_BRG" + rowidBarang).val(KD_BRG);
-                $("#NA_BRG" + rowidBarang).val(NA_BRG);
+            chooseBarang = function(KDBAR, NMBAR, HARGA, DISC, DISC2, DISC3, DISC4) {
+                $("#KD_BRG" + rowidBarang).val(KDBAR);
+                $("#NA_BRG" + rowidBarang).val(NMBAR);
                 $("#browseBarangModal").modal("hide");
             }
 

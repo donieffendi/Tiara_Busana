@@ -400,182 +400,244 @@
         // batas filter
 
         $(document).ready(function() {
-            let table1, table2;
+            
+            let table1 = null;
+                let table2 = null;
 
-            table1 = initDataTable('datatable1', "{{ route('ubbrgdw.browse') }}");
+                /*
+                |--------------------------------------------------------------------------
+                | TAB 1
+                |--------------------------------------------------------------------------
+                */
 
-            // TAB 2 load saat diklik
-            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
-                let target = $(e.target).attr("data-bs-target");
+                table1 = initDataTable(
+                    '#datatable1',
+                    "{{ route('ubbrgdw.browse') }}",
+                    'usulan'
+                );
 
-                if (target === '#tab2' && !$.fn.DataTable.isDataTable('#datatable2')) {
-                    table2 = initDataTable('datatable2', "{{ route('ubbrgdw.browse') }}");
-                }
-            });
+                /*
+                |--------------------------------------------------------------------------
+                | TAB 2
+                |--------------------------------------------------------------------------
+                */
 
-            function initDataTable(tableId, url) {
-                return $('#' + tableId).DataTable({
-                    processing: true,
-                    serverSide: true,
-                    autoWidth: false,
-                    scrollY: '400px',
+                $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
 
-                    ajax: {
-                        url: url,
-                        data: function(d) {
+                    let target = $(e.target).attr("data-bs-target");
 
-                            d.periode = $('#periode').val();
-                            // flagz: $('#flagz').val()
+                    if (target === '#tab2') {
+
+                        if (table2 != null) {
+
+                            table2.ajax.reload();
+                            return;
                         }
-                    },
-                    columns: [
-                        //add tombol +
-                        {
 
-                            data: null, // Column for the button
-                            orderable: false,
-                            searchable: false,
-                            className: "text-center",
-                            render: function(data, type, row, meta) {
+                        table2 = initDataTable(
+                            '#datatable2',
+                            "{{ route('ubbrgdw.browse-new') }}",
+                            'pengesahan'
+                        );
+                    }
+                });
 
-                                // kalau ada query POST di bagian paling atas, pada onclick perlu di tambah "event.preventDefault()"
-                                return `<button class="btn btn-success btn-sm toggle-button" data-no_bukti="${row.NO_BELI}" onclick="event.preventDefault();toggleButton(this)">+</button>`;
+                /*
+                |--------------------------------------------------------------------------
+                | INIT DATATABLE
+                |--------------------------------------------------------------------------
+                */
+
+                function initDataTable(tableId, url, jenis) {
+
+                    console.log('LOAD TABLE : ', tableId);
+                    console.log('URL : ', url);
+                    console.log('JENIS : ', jenis);
+
+                    return $(tableId).DataTable({
+
+                        processing: true,
+                        serverSide: true,
+                        destroy: true,
+                        autoWidth: false,
+                        scrollY: '400px',
+
+                        ajax: {
+                            url: url,
+                            type: 'GET',
+
+                            data: function (d) {
+
+                                d.periode = $('#periode').val();
+                                d.jenis = jenis;
                             }
                         },
-                        {
-                            "data": null,
-                            "className": "text-center",
-                            "orderable": false,
-                            "render": function(data, type, row, meta) {
-                                return meta.row + meta.settings._iDisplayStart + 1;
-                            }
-                        }, {
-                            "data": "action",
-                            "className": "text-center"
-                        },
 
-                        {
-                            "data": "NO_BELI",
-                            "className": "text-center"
-                        },
-                        {
-                            "data": "NO_BUKTI",
-                            "className": "text-center"
-                        },
-                        {
-                            "data": "TGL",
-                            "className": "text-center"
-                        },
-                        {
-                            "data": "KODES",
-                            "className": "text-center"
-                        },
-                        {
-                            "data": "NAMAS",
-                            "className": "text-left"
-                        },
-                        {
-                            "data": "KET",
-                            "className": "text-left"
-                        },
-                        {
-                            "data": "USRNM",
-                            "className": "text-center"
-                        },
-                        {
-                            data: 'POSTED',
-                            name: 'POSTED',
-                            render: function(data, type, row, meta) {
-                                if (row['POSTED'] == "0") {
-                                    return '';
-                                } else {
-                                    return '<input type="checkbox" checked style="pointer-events: none;">';
+                        columns: [
+
+                            {
+                                data: null,
+                                orderable: false,
+                                searchable: false,
+                                className: "text-center",
+
+                                render: function (data, type, row) {
+
+                                    return `
+                                        <button
+                                            class="btn btn-success btn-sm toggle-button"
+                                            data-no_bukti="${row.NO_BELI}"
+                                            onclick="event.preventDefault();toggleButton(this)">
+                                            +
+                                        </button>
+                                    `;
+                                }
+                            },
+
+                            {
+                                data: null,
+                                className: "text-center",
+                                orderable: false,
+
+                                render: function (data, type, row, meta) {
+
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+
+                            {
+                                data: 'action',
+                                name: 'action',
+                                className: "text-center"
+                            },
+
+                            {
+                                data: 'NO_BELI',
+                                name: 'NO_BELI',
+                                className: "text-center"
+                            },
+
+                            {
+                                data: 'NO_BUKTI',
+                                name: 'NO_BUKTI',
+                                className: "text-center"
+                            },
+
+                            {
+                                data: 'TGL',
+                                name: 'TGL',
+                                className: "text-center"
+                            },
+
+                            {
+                                data: 'KODES',
+                                name: 'KODES',
+                                className: "text-center"
+                            },
+
+                            {
+                                data: 'NAMAS',
+                                name: 'NAMAS',
+
+                                render: function (data) {
+
+                                    return `
+                                        <span class="badge badge-warning badge-pill">
+                                            ${data}
+                                        </span>
+                                    `;
+                                }
+                            },
+
+                            {
+                                data: 'KET',
+                                name: 'KET'
+                            },
+
+                            {
+                                data: 'USRNM',
+                                name: 'USRNM',
+                                className: "text-center"
+                            },
+
+                            {
+                                data: 'POSTED',
+                                name: 'POSTED',
+                                className: 'text-center',
+
+                                render: function (data) {
+
+                                    return `
+                                        <input type="checkbox"
+                                            ${data == 1 ? 'checked' : ''}
+                                            disabled>
+                                    `;
+                                }
+                            },
+
+                            {
+                                data: 'SELESAI',
+                                name: 'SELESAI',
+                                className: 'text-center',
+
+                                render: function (data) {
+
+                                    return `
+                                        <input type="checkbox"
+                                            ${data == 1 ? 'checked' : ''}
+                                            disabled>
+                                    `;
                                 }
                             }
-                        }, {
-                            data: 'SELESAI',
-                            name: 'SELESAI',
-                            render: function(data, type, row, meta) {
-                                if (row['SELESAI'] == "0") {
-                                    return '';
-                                } else {
-                                    return '<input type="checkbox" checked style="pointer-events: none;">';
-                                }
+                        ],
+
+                        columnDefs: [
+
+                            {
+                                className: "dt-center",
+                                targets: [0,1,2,3,4,5,6,9,10,11]
+                            },
+
+                            {
+                                targets: 5,
+                                render: $.fn.dataTable.render.moment('DD-MM-YYYY')
                             }
-                        }
-                    ],
-                    columnDefs: [
-                        {
-                            "className": "dt-center",
-                            "targets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                        },
-                        // {
-                        //     "className": "dt-right",
-                        //     "targets": 4
-                        // },
-                        {
-                            targets: 5,
-                            render: $.fn.dataTable.render.moment('DD-MM-YYYY')
-                        }
-                    ],
-                    lengthMenu: [
-                        [8, 10, 20, 50, 100, -1],
-                        [8, 10, 20, 50, 100, "All"]
-                    ],
+                        ],
 
+                        lengthMenu: [
+                            [8,10,20,50,100,-1],
+                            [8,10,20,50,100,"All"]
+                        ],
 
-                    dom: "<'row'<'col-md-6'><'col-md-6'>>" +
-                        "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
-                        "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-                });
-
-
-
-                // Filter button event
-                $('#filterBtn').click(function() {
-                    table.ajax.reload();
-                });
-
-                // Modal close handlers
-                $(document).on('click', '[data-dismiss="modal"]', function() {
-                    $(this).closest('.modal').modal('hide');
-                });
-                $(document).ready(function() {
-                    $("div.test_btn").html(`
-                        <a class="btn btn-lg btn-md btn-success" href="{{ url('ubbrgdw/edit?idx=0&tipx=new') }}">
-                            <i class="fas fa-plus fa-sm md-3"></i>
-                        </a>
-                        <a id="btn-otomatis" class="btn btn-lg btn-md btn-warning">
-                            Otomatis
-                        </a>
-                    `);
-
-                    $(document).on('click', '#btn-otomatis', function() {
-
-                        $('#loading-overlay').show();
-
-                        $(this).html(`
-                            <span class="spinner-border spinner-border-sm"></span> Proses...
-                        `);
-
-                        $(this).prop('disabled', true);
-
-                        window.location.href = "{{ url('ubbrgdw/ubbrgdw-otomatis') }}";
+                        dom:
+                            "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
+                            "<'row'<'col-md-12't>>" +
+                            "<'row'<'col-md-12'ip>>"
                     });
-                });
+                }
 
-                // Column toggle functionality
-                $('#applyColumnToggle').click(function() {
-                    console.log('Apply column toggle clicked');
-                    console.log('Table object:', table);
-                    console.log('Checkboxes found:', $('.column-checkbox').length);
+                /*
+                |--------------------------------------------------------------------------
+                | FILTER COLUMN
+                |--------------------------------------------------------------------------
+                */
 
-                    $('.column-checkbox').each(function() {
-                        var column = table.column($(this).val());
-                        console.log('Setting column', $(this).val(), 'visible:', $(this).is(
-                            ':checked'));
+                $('#applyColumnToggle').on('click', function () {
+
+                    let activeTable =
+                        $('#tab1').hasClass('active')
+                            ? table1
+                            : table2;
+
+                    if (!activeTable) return;
+
+                    $('#columnToggleForm .column-checkbox').each(function () {
+
+                        let column = activeTable.column($(this).val());
+
                         column.visible($(this).is(':checked'));
                     });
+
                     $('#columnModal').modal('hide');
                 });
 
@@ -754,7 +816,7 @@
                     }
                 });
             }
-        }
+        
 
     </script>
 @endsection

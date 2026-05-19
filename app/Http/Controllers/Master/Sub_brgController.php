@@ -60,7 +60,7 @@ class Sub_brgController extends Controller
         $dept = session()->get('periode')['dept'];
         
         $sub_brg = DB::SELECT("SELECT NO_ID, SUB, KELOMPOK, DEPT
-                        from nwaotprice where DEPT='$dept'
+                        from nwaotprice where DEPT='$dept' and dept <> ''
                         ORDER BY SUB ");
 
         return Datatables::of($sub_brg)

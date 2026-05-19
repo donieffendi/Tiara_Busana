@@ -105,37 +105,112 @@ class UbbrgdwController extends Controller
     }
     public function store(Request $request)
     {
+        // dd("hai");
+		$this->validate(
+            $request,
+
+            [
+                'TGL' => 'required',
+
+            ]
+        );
+
         $periode = $request->session()->get('periode')['bulan'] . '/' . $request->session()->get('periode')['tahun'];
+        $CBG = Auth::user()->CBG;
 
         $bulan = session()->get('periode')['bulan'];
         $tahun = substr(session()->get('periode')['tahun'], -2);
-        if ($request->NO_BUKTI == "+") {
-            $query = DB::table('ubbrgdw')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'BL')->where('NO_BUKTI', 'like', 'DE' . $tahun . $bulan . '%')
+        if ($request->NO_BUKTI == null) {
+            $query = DB::table('ubbrgdw')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'BL')->where('NO_BUKTI', 'like', 'DB' . $tahun . $bulan . '%')
                 ->orderByDesc('NO_BUKTI')->limit(1)->get();
 
             if ($query != '[]') {
                 $query    = substr($query[0]->NO_BUKTI, -4);
                 $query    = str_pad($query + 1, 4, 0, STR_PAD_LEFT);
-                $no_bukti = 'DE' . $tahun . $bulan . '-' . $query;
+                $no_bukti = 'DB' . $tahun . $bulan . '-' . $query;
             } else {
-                $no_bukti = 'DE' . $tahun . $bulan . '-0001';
+                $no_bukti = 'DB' . $tahun . $bulan . '-0001';
             }
             DB::table('ubbrgdw')->where('NO_ID', $request->NO_ID)->update(['NO_BUKTI' => $no_bukti]);
         } else {
             $no_bukti = $request->input('NO_BUKTI');
-            DB::table('ubbrgdwd')->where('ID', $request->NO_ID)->where('NO_BUKTI', $no_bukti)->update(['POSTED' => 0]);
+            // DB::table('ubbrgdwd')->where('ID', $request->NO_ID)->where('NO_BUKTI', $no_bukti)->update(['POSTED' => 0]);
         }
-        $KD_BRG = $request->input('KD_BRG');
+
+        $ubbrgdw = Ubbrgdw::create(
+            [
+                'NO_BUKTI'   => $no_bukti,
+                'TGL'        => date('Y-m-d', strtotime($request['TGL'])),
+                'PER'        => $periode,
+                'FLAG'       => 'BL',
+                'KODES'        => $request['KODES_HEADER'],
+                'NAMAS'        => $request['NAMAS_HEADER'],
+                'KET'        => $request['NOTES'] ?? '',
+                'NO_BELI'        => $request['NO_BELI'],
+                'CBG'        => $CBG,
+                'USRNM'      => Auth::user()->username,
+                'TG_SMP'     => Carbon::now(),
+            ]
+        );
+
         $REC    = $request->input('REC');
+        $KD_BRG = $request->input('KD_BRG');
+        $NA_BRG = $request->input('NA_BRG');
+        $KODES = $request->input('KODES');
+        $NAMAS = $request->input('NAMAS');
+        $QTY = $request->input('QTY');
         $KET    = $request->input('KET');
+        $HARGA    = $request->input('HARGA');
+        $HARGALAMA    = $request->input('HARGALAMA');
+        $DISK    = $request->input('DISK');
+        $DISKLAMA    = $request->input('DISKLAMA');
+        $DISK2    = $request->input('DISK2');
+        $DISKLAMA2    = $request->input('DISKLAMA2');
+        $DISK3    = $request->input('DISK3');
+        $DISKLAMA3    = $request->input('DISKLAMA3');
+        $DISK4    = $request->input('DISK4');
+        $DISKLAMA4    = $request->input('DISKLAMA4');
+
         if ($REC) {
             foreach ($REC as $key => $value) {
-                DB::table('ubbrgdwd')->where('ID', $request->NO_ID)->where('KD_BRG', $KD_BRG[$key])->update(['NO_BUKTI' => $no_bukti, 'KET' => $KET[$key]]);
+                // Declare new data di Model
+                $detail = new UbbrgdwDetail;
+
+                // Insert ke Database
+                $detail->NO_BUKTI = $no_bukti;
+                $detail->REC      = $REC[$key];
+                $detail->PER      = $periode;
+                $detail->FLAG     = 'BL';
+                $detail->KODES   = ($KODES[$key] == null) ? "" : $KODES[$key];
+                $detail->NAMAS   = ($NAMAS[$key] == null) ? "" : $NAMAS[$key];
+                $detail->KD_BRG   = ($KD_BRG[$key] == null) ? "" : $KD_BRG[$key];
+                $detail->NA_BRG   = ($NA_BRG[$key] == null) ? "" : $NA_BRG[$key];
+                $detail->KET   = ($KET[$key] == null) ? "" : $KET[$key];
+                $detail->QTY      = (float) str_replace(',', '', $QTY[$key]);
+                $detail->HARGA     = (float) str_replace(',', '', $HARGA[$key]);
+                $detail->HARGALAMA   = (float) str_replace(',', '', $HARGALAMA[$key]);
+                $detail->DISK   = (float) str_replace(',', '', $DISK[$key]);
+                $detail->DISKLAMA   = (float) str_replace(',', '', $DISKLAMA[$key]);
+                $detail->DISK2   = (float) str_replace(',', '', $DISK2[$key]);
+                $detail->DISKLAMA2   = (float) str_replace(',', '', $DISKLAMA2[$key]);
+                $detail->DISK3   = (float) str_replace(',', '', $DISK3[$key]);
+                $detail->DISKLAMA3   = (float) str_replace(',', '', $DISKLAMA3[$key]);
+                $detail->DISK4   = (float) str_replace(',', '', $DISK4[$key]);
+                $detail->DISKLAMA4   = (float) str_replace(',', '', $DISKLAMA4[$key]);
+                $detail->save();
             }
         }
 
-        return view('otransaksi_ubbrgdw.index');
+        $no_buktix = $no_bukti;
+
+        DB::SELECT("UPDATE ubbrgdw,  ubbrgdwd
+                            SET  ubbrgdwd.ID =  ubbrgdw.NO_ID  WHERE  ubbrgdw.NO_BUKTI =  ubbrgdwd.NO_BUKTI
+							AND  ubbrgdw.NO_BUKTI='$no_buktix';");
+
+        return redirect('ubbrgdw?flagz=KZ');
+
     }
+
     public function browse(Request $request)
     {
         $periode = $request->get('periode');
@@ -156,6 +231,7 @@ class UbbrgdwController extends Controller
                 'ubbrgdw.SELESAI',
             ])
             ->where('ubbrgdw.NO_BUKTI', '<>', '')
+            ->where('ubbrgdw.SELESAI', '=', '0')
             ->get();
 
         /** @var \stdClass $row */
@@ -244,6 +320,89 @@ class UbbrgdwController extends Controller
             ->make(true);
     }
 
+    public function browseNew(Request $request)
+    {
+        $periode = $request->get('periode');
+
+        $query = DB::table('ubbrgdw')
+            ->select([
+                'ubbrgdw.NO_ID',
+                'ubbrgdw.NO_BELI',
+                'ubbrgdw.TGL',
+                'ubbrgdw.FLAG',
+                'ubbrgdw.KODES',
+                'ubbrgdw.NAMAS',
+                'ubbrgdw.ALAMAT',
+                'ubbrgdw.KOTA',
+                'ubbrgdw.KET',
+                'ubbrgdw.USRNM',
+                'ubbrgdw.NO_BUKTI',
+                'ubbrgdw.SELESAI',
+            ])
+            ->where('ubbrgdw.NO_BUKTI', '<>', '')
+            ->where('ubbrgdw.SELESAI', '=', '1')
+            ->get();
+
+        /** @var \stdClass $row */
+        foreach ($query as $row) {
+            $row->POSTED = DB::table('ubbrgdwd')
+                ->where('NO_BUKTI', $row->NO_BUKTI)->limit(1)
+                ->value('POSTED');
+        }
+
+        // Filter by period if provided
+        if ($periode) {
+            $period = explode('/', $periode);
+            if (count($period) == 2) {
+                $month = str_pad($period[0], 2, '0', STR_PAD_LEFT);
+                $year  = $period[1];
+                $query->whereRaw("DATE_FORMAT(TGL, '%m/%Y') = ?", [$month . '/' . $year]);
+            }
+        }
+
+        return DataTables::of($query)
+            ->addColumn('action', function ($row) {
+                // batas
+                $url = "'" . url("ubbrgdw/delete/" . $row->NO_BUKTI . "/?flagz=" . $row->FLAG) . "'";
+
+                $btnPrivilege =
+                '
+                                <a class="dropdown-item btn btn-danger" ' .
+                                    (($row->POSTED == false) ?
+                                        ' onclick="alert(\'Perubahan harga ' . $row->NO_BUKTI . ' Belum Diusulkan!\')" href="#" ' :
+                                        ' target="_blank" href="' . route('ubbrgdw.cetak', ['NO_ID' => $row->NO_ID, 'selesai' => 'true']) . '"'
+                                    ) . '>
+                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                    Print Laporan
+                                </a>
+
+                        ';
+
+                $actionBtn =
+                    '
+                    <div class="dropdown show" style="text-align: center">
+                        <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+
+                            ' . $btnPrivilege . '
+                        </div>
+                    </div>
+                    ';
+
+                return $actionBtn;
+            })
+
+            ->editColumn('TGL', function ($row) {
+                return date('d-m-Y', strtotime($row->TGL));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
     public function cetak($id, Request $request)
     {
         $selesai = $request->get('selesai');
@@ -251,9 +410,9 @@ class UbbrgdwController extends Controller
         $no_ubbrgdw = $id;
 
         if ($selesai) {
-            $file = 'ubbrgdw-l-baru';
+            $file = 'ubbrgdw-l-baru1';
         } else {
-            $file = 'usulan_ubah_harga';
+            $file = 'ubbrgdw-u-baru';
 
         }
         $PHPJasperXML = new PHPJasperXML();
@@ -262,7 +421,7 @@ class UbbrgdwController extends Controller
         //pp.GUDANG setelah pp.NETT dihapus
         $query = DB::SELECT("SELECT ubbrgdw.NO_BUKTI, ubbrgdw.TGL, ubbrgdw.KODES, ubbrgdw.NAMAS, ubbrgdw.NO_BELI,
                                     ubbrgdwd.KD_BRG, ubbrgdwd.NA_BRG, ubbrgdwd.KET, ubbrgdwd.QTY, ubbrgdwd.HARGA, ubbrgdwd.HARGALAMA, ubbrgdwd.DISK, ubbrgdwd.DISK2, ubbrgdwd.DISK3,ubbrgdwd.DISK4, ubbrgdwd.DISKLAMA, ubbrgdwd.DISKLAMA2, ubbrgdwd.DISKLAMA3,ubbrgdwd.DISKLAMA4,
-                                    vbrg.KET_UK, vbrg.KET_KEM, VBRG.KLK, VBRG.MO1, VBRG.PPN, VBRG.HJUAL, ubbrgdwd.HJUALLAMA
+                                    vbrg.KET_UK, vbrg.KET_KEM, VBRG.KLK, VBRG.MO1, VBRG.PPN, VBRG.HJUAL, ubbrgdwd.HJUALLAMA, ubbrgdw.SELESAI
                             FROM ubbrgdw, ubbrgdwd, vbrg
                             WHERE ubbrgdw.NO_ID='$no_ubbrgdw' AND ubbrgdw.NO_BUKTI = ubbrgdwd.NO_BUKTI AND ubbrgdwd.KD_BRG=vbrg.KD_BRG
                             ;
@@ -301,8 +460,23 @@ class UbbrgdwController extends Controller
                 'HJUALLAMA'       => $query[$key]->HJUALLAMA,
             ]);
         }
-        if ($selesai) {
+        $selesaix = $query[0]->SELESAI;
+        if ($selesaix == 0 && $selesai) {
             DB::SELECT("UPDATE ubbrgdw SET SELESAI = 1 WHERE NO_ID='$no_ubbrgdw';");
+
+            DB::statement("
+                UPDATE vbrgdw
+                JOIN ubbrgdwd ON ubbrgdwd.KD_BRG = vbrgdw.KD_BRG
+                JOIN ubbrgdw ON ubbrgdw.NO_BUKTI = ubbrgdwd.NO_BUKTI
+                SET
+                    vbrgdw.HARGA = ubbrgdwd.HARGA,
+                    vbrgdw.DISC  = ubbrgdwd.DISK,
+                    vbrgdw.DISC2 = ubbrgdwd.DISK2,
+                    vbrgdw.DISC3 = ubbrgdwd.DISK3,
+                    vbrgdw.DISC4 = ubbrgdwd.DISK4
+                WHERE ubbrgdw.NO_ID = ?
+            ", [$no_ubbrgdw]);
+
         } else {
             DB::SELECT("UPDATE ubbrgdwd SET POSTED = 1 WHERE ID='$no_ubbrgdw' AND NO_BUKTI = '" . $query[0]->NO_BUKTI . "';");
         }
@@ -459,30 +633,30 @@ class UbbrgdwController extends Controller
         $no_bukti = $request->NO_BUKTI ?? '';
 
         $sql = "
-        SELECT DISTINCT
-            beli.NO_BUKTI AS NO_BELI
-        FROM beli
-        INNER JOIN belid
-            ON beli.NO_BUKTI = belid.NO_BUKTI
-        LEFT JOIN vbrgdw
-            ON belid.KD_BRG = vbrgdw.KD_BRG
-        WHERE beli.NO_BUKTI LIKE '%BL%'
-    ";
+            SELECT DISTINCT
+                nwagend.NO_BUKTI AS NO_BELI
+            FROM nwagend
+            INNER JOIN nwagendd
+                ON nwagend.NO_BUKTI = nwagendd.NO_BUKTI
+            LEFT JOIN vbrgdw
+                ON nwagendd.KD_BRG = vbrgdw.KD_BRG
+            WHERE nwagend.NO_BUKTI LIKE '%BS%'
+        ";
 
         if (! empty($no_bukti)) {
-            $sql .= " AND beli.NO_BUKTI LIKE '%$no_bukti%'";
+            $sql .= " AND nwagend.NO_BUKTI LIKE '%$no_bukti%'";
         }
 
         $sql .= "
-        AND (
-            belid.HARGA <> vbrgdw.HARGA
-            OR belid.DISK  <> vbrgdw.DISCLAMA
-            OR belid.DISK2 <> vbrgdw.DISCLAMA2
-            OR belid.DISK3 <> vbrgdw.DISCLAMA3
-            OR belid.DISK4 <> vbrgdw.DISCLAMA4
-        )
-        ORDER BY beli.NO_BUKTI DESC
-    ";
+            AND (
+                nwagendd.HARGA <> vbrgdw.HARGA
+                OR nwagendd.DISKON1  <> vbrgdw.DISCLAMA
+                OR nwagendd.DISKON2 <> vbrgdw.DISCLAMA2
+                OR nwagendd.DISKON3 <> vbrgdw.DISCLAMA3
+                OR nwagendd.DISKON4 <> vbrgdw.DISCLAMA4
+            )
+            ORDER BY nwagend.NO_BUKTI DESC
+        ";
 
         $results = DB::select($sql);
 
@@ -494,20 +668,20 @@ class UbbrgdwController extends Controller
         $no_beli = $request->get('no_beli');
         //
         $header = DB::select("SELECT
-                                beli.NO_BUKTI,
-                                beli.TGL,
-                                beli.TG_SMP,
-                                beli.KODES,
-                                beli.NAMAS,
-                                sup.TLP_K,
+                                nwagend.NO_BUKTI,
+                                nwagend.TGL,
+                                nwagend.TG_SMP,
+                                nwagend.KODES,
+                                nwagend.NAMAS,
+                                nwmassup.TLP_K,
 
-                                belid.KD_BRG,
-                                belid.NA_BRG,
-                                belid.HARGA,
-                                belid.DISK,
-                                belid.DISK2,
-                                belid.DISK3,
-                                belid.DISK4,
+                                nwagendd.KD_BRG,
+                                nwagendd.NA_BRG,
+                                nwagendd.HARGA,
+                                nwagendd.DISKON1,
+                                nwagendd.DISKON2,
+                                nwagendd.DISKON3,
+                                nwagendd.DISKON4,
 
 
 								vbrgdw.HARGA as HARGALAMA,
@@ -517,63 +691,55 @@ class UbbrgdwController extends Controller
                                 vbrgdw.DISCLAMA3     AS DISKLAMA3,
                                 vbrgdw.DISCLAMA4     AS DISKLAMA4,
 
-                                belid.QTY,
-                                belid.PPN,
-                                vbrg.KET_UK
+                                nwagendd.QTY,
+                                nwagendd.PPN,
+                                nwmasbar.KET_UK
 
-                            FROM beli
-                            INNER JOIN belid
-                                ON beli.NO_BUKTI = belid.NO_BUKTI
+                            FROM nwagend
+                            INNER JOIN nwagendd
+                                ON nwagend.NO_BUKTI = nwagendd.NO_BUKTI
 
-                            LEFT JOIN vbrg
-                                ON belid.KD_BRG = vbrg.KD_BRG
+                            LEFT JOIN nwmasbar
+                                ON nwagendd.KD_BRG = nwmasbar.KDBAR
 
                             LEFT JOIN vbrgdw
-                                ON belid.KD_BRG = vbrgdw.KD_BRG
+                                ON nwagendd.KD_BRG = vbrgdw.KD_BRG
 
-                            LEFT JOIN sup
-                                ON beli.KODES = sup.KODES
+                            LEFT JOIN nwmassup
+                                ON nwagend.KODES = nwmassup.NO_SUPL
 
-                            WHERE beli.NO_BUKTI = ?
-							AND beli.NO_BUKTI LIKE '%BL%'
+                            WHERE nwagend.NO_BUKTI = ?
+							AND nwagend.NO_BUKTI LIKE '%BS%'
                             AND (
-                                    belid.HARGA <> vbrgdw.HARGA
-                                OR belid.DISK  <> vbrgdw.DISCLAMA
-                                OR belid.DISK2 <> vbrgdw.DISCLAMA2
-                                OR belid.DISK3 <> vbrgdw.DISCLAMA3
-                                OR belid.DISK4 <> vbrgdw.DISCLAMA4
+                                    nwagendd.HARGA <> vbrgdw.HARGA
+                                OR nwagendd.DISKON1  <> vbrgdw.DISCLAMA
+                                OR nwagendd.DISKON2 <> vbrgdw.DISCLAMA2
+                                OR nwagendd.DISKON3 <> vbrgdw.DISCLAMA3
+                                OR nwagendd.DISKON4 <> vbrgdw.DISCLAMA4
                             )
 
                                  ", [$no_beli]);
-        // Get header data
-        // $header = DB::table('ubbrgdw')
-        //     ->where('NO_BELI', $no_beli)
-        //     ->where('POSTED', 1)
-        //     ->first();
+        
         if (! $header) {
             return response()->json(['error' => 'Data not found'], 404);
         }
 
-        // Get detail data
-        // $details = DB::table('ubbrgdwd')
-        //     ->where('ID', $header->NO_ID)->where('NO_BUKTI', '')
-        //     ->orderBy('REC')
-        //     ->get();
+        
         $details = DB::select("SELECT
-                                beli.NO_BUKTI,
-                                beli.TGL,
-                                beli.TG_SMP,
-                                beli.KODES,
-                                beli.NAMAS,
-                                sup.TLP_K,
+                                nwagend.NO_BUKTI,
+                                nwagend.TGL,
+                                nwagend.TG_SMP,
+                                nwagend.KODES,
+                                nwagend.NAMAS,
+                                nwmassup.TLP_K,
 
-                                belid.KD_BRG,
-                                belid.NA_BRG,
-                                belid.HARGA,
-                                belid.DISK,
-                                belid.DISK2,
-                                belid.DISK3,
-                                belid.DISK4,
+                                nwagendd.KD_BRG,
+                                nwagendd.NA_BRG,
+                                nwagendd.HARGA,
+                                nwagendd.DISKON1,
+                                nwagendd.DISKON2,
+                                nwagendd.DISKON3,
+                                nwagendd.DISKON4,
 
 
 								vbrgdw.HARGA as HARGALAMA,
@@ -583,31 +749,31 @@ class UbbrgdwController extends Controller
                                 vbrgdw.DISCLAMA3     AS DISKLAMA3,
                                 vbrgdw.DISCLAMA4     AS DISKLAMA4,
 
-                                belid.QTY,
-                                belid.PPN,
-                                vbrg.KET_UK
+                                nwagendd.QTY,
+                                nwagendd.PPN,
+                                nwmasbar.KET_UK
 
-                            FROM beli
-                            INNER JOIN belid
-                                ON beli.NO_BUKTI = belid.NO_BUKTI
+                            FROM nwagend
+                            INNER JOIN nwagendd
+                                ON nwagend.NO_BUKTI = nwagendd.NO_BUKTI
 
-                            LEFT JOIN vbrg
-                                ON belid.KD_BRG = vbrg.KD_BRG
+                            LEFT JOIN nwmasbar
+                                ON nwagendd.KD_BRG = nwmasbar.KDBAR
 
                             LEFT JOIN vbrgdw
-                                ON belid.KD_BRG = vbrgdw.KD_BRG
+                                ON nwagendd.KD_BRG = vbrgdw.KD_BRG
 
-                            LEFT JOIN sup
-                                ON beli.KODES = sup.KODES
+                            LEFT JOIN nwmassup
+                                ON nwagend.KODES = nwmassup.NO_SUPL
 
-                            WHERE beli.NO_BUKTI = ?
-							AND beli.NO_BUKTI LIKE '%BL%'
+                            WHERE nwagend.NO_BUKTI = ?
+							AND nwagend.NO_BUKTI LIKE '%BS%'
                             AND (
-                                    belid.HARGA <> vbrgdw.HARGA
-                                OR belid.DISK  <> vbrgdw.DISCLAMA
-                                OR belid.DISK2 <> vbrgdw.DISCLAMA2
-                                OR belid.DISK3 <> vbrgdw.DISCLAMA3
-                                OR belid.DISK4 <> vbrgdw.DISCLAMA4
+                                    nwagendd.HARGA <> vbrgdw.HARGA
+                                OR nwagendd.DISKON1  <> vbrgdw.DISCLAMA
+                                OR nwagendd.DISKON2 <> vbrgdw.DISCLAMA2
+                                OR nwagendd.DISKON3 <> vbrgdw.DISCLAMA3
+                                OR nwagendd.DISKON4 <> vbrgdw.DISCLAMA4
                             )
 
                                  ", [$no_beli]);

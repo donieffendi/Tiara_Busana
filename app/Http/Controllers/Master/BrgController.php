@@ -35,7 +35,9 @@ class BrgController extends Controller
 
     public function browse_sub(Request $request)
     {
-        $brg = DB::SELECT("SELECT SUB, KELOMPOK, DEPT FROM nwaotprice ORDER BY SUB ");
+        
+        $dept = session()->get('periode')['dept'];
+        $brg = DB::SELECT("SELECT SUB, KELOMPOK, DEPT FROM nwaotprice where DEPT <> '' AND DEPT = '$dept' ORDER BY SUB ");
 
         return response()->json($brg);
     }
@@ -149,7 +151,7 @@ class BrgController extends Controller
      */
     public function store(Request $request)
     {
-
+//dd($request->all());
         $this->validate(
             $request,
             // GANTI 8 SESUAI NAMA KOLOM DI NAVICAT //
@@ -184,7 +186,7 @@ class BrgController extends Controller
             $BARCODE = $KDBAR.$urutbarcode;
         }
 
-
+//dd($KDBAR);
         $brg = Brg::create(
             [
                 'RAK'       => ($request['RAK'] == null) ? "" : $request['RAK'],
@@ -363,8 +365,11 @@ class BrgController extends Controller
              $brg = new Brg;
 		 }
 
+         $dept = session()->get('periode')['dept'];
+
 		 $data = [
                     'header' => $brg,
+                    'dept' => $dept
                 ];
 			return view('master_brg.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ]);
     }
